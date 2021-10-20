@@ -1,6 +1,7 @@
-<section>
+<!DOCTYPE html>
+
     <p><br>
-    </p>
+    
     <p><br>
     </p>
     <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span>
@@ -312,11 +313,20 @@ style="color: #008800; font-style: italic; background-color: #0f140f">;; return 
     <p style="margin-left: 40px;">Here is the definition in classic prefix
       Scheme:</p>
     <!-- HTML generated using hilite.me -->
-    <div style="background: #ffffff; overflow:auto;width:auto;border: gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%">(<span style="font-weight: bold">define </span>(fibonacci n)
-  (<span style="font-weight: bold">if </span>(&lt; n 2)
-      n
-      (+ (fibonacci (- n 1)) (fibonacci (- n 2)))))
+    <div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
+style="color: #fb660a; font-weight: bold">define </span><span style="color: #ffffff">(</span><span
+style="color: #ff0086; font-weight: bold">fibonacci</span> <span style="color: #fb660a">n</span><span
+style="color: #ffffff">)</span>
+  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">if </span><span
+style="color: #ffffff">(&lt; </span><span style="color: #fb660a">n</span> <span
+style="color: #0086f7; font-weight: bold">2</span><span style="color: #ffffff">)</span>
+      <span style="color: #fb660a">n</span>
+      <span style="color: #ffffff">(+ (</span><span style="color: #ff0086; font-weight: bold">fibonacci</span> <span
+style="color: #ffffff">(- </span><span style="color: #fb660a">n</span> <span style="color: #0086f7; font-weight: bold">1</span><span
+style="color: #ffffff">))</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">fibonacci</span> <span
+style="color: #ffffff">(- </span><span style="color: #fb660a">n</span> <span style="color: #0086f7; font-weight: bold">2</span><span
+style="color: #ffffff">)))))</span>
 </pre></div>
     <p style="margin-left: 40px;">And here is a definition using "Curly Infix"
       SRFI 105:</p>
@@ -351,17 +361,38 @@ style="color: #ffffff">))</span>
       more than one time.</p>
     <p>Here is a solution in classic Scheme:</p>
     <!-- HTML generated using hilite.me -->
-    <div style="background: #ffffff; overflow:auto;width:auto;border: gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%">(<span style="font-weight: bold">define </span>size0 10000)
-(<span style="font-weight: bold">define </span>memo0 (make-vector size0 0))return
+    <div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
+style="color: #fb660a; font-weight: bold">define </span><span style="color: #fb660a">size0</span> <span
+style="color: #0086f7; font-weight: bold">10000</span><span style="color: #ffffff">)</span>
+<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span
+style="color: #fb660a">memo0</span> <span style="color: #ffffff">(make-vector </span><span
+style="color: #fb660a">size0</span> <span style="color: #0086f7; font-weight: bold">0</span><span
+style="color: #ffffff">))</span><span style="color: #fb660a">return</span>
 
-(<span style="font-weight: bold">define </span>(fibdyna0 n)
-  (<span style="font-weight: bold">cond </span>((&lt; n 2) n)
-	((not (zero? (vector-ref memo0 n))) (vector-ref memo0 n))
-	(<span style="font-weight: bold">else </span>(<span style="font-weight: bold">let </span>((fibn (+ (fibdyna0 (- n 1)) (fibdyna0 (- n 2)))))
-		(vector-set! memo0 n fibn)
-		fibn))))
+<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">fibdyna0</span> <span
+style="color: #fb660a">n</span><span style="color: #ffffff">)</span>
+  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">cond </span><span
+style="color: #ffffff">((&lt; </span><span style="color: #fb660a">n</span> <span
+style="color: #0086f7; font-weight: bold">2</span><span style="color: #ffffff">)</span> <span
+style="color: #fb660a">n</span><span style="color: #ffffff">)</span>
+	<span style="color: #ffffff">((not (zero? (vector-ref </span><span style="color: #fb660a">memo0</span> <span
+style="color: #fb660a">n</span><span style="color: #ffffff">)))</span> <span style="color: #ffffff">(vector-ref </span><span
+style="color: #fb660a">memo0</span> <span style="color: #fb660a">n</span><span style="color: #ffffff">))</span>
+	<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">else </span><span
+style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">let </span><span
+style="color: #ffffff">((</span><span style="color: #ff0086; font-weight: bold">fibn</span> <span
+style="color: #ffffff">(+ (</span><span style="color: #ff0086; font-weight: bold">fibdyna0</span> <span
+style="color: #ffffff">(- </span><span style="color: #fb660a">n</span> <span style="color: #0086f7; font-weight: bold">1</span><span
+style="color: #ffffff">))</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">fibdyna0</span> <span
+style="color: #ffffff">(- </span><span style="color: #fb660a">n</span> <span style="color: #0086f7; font-weight: bold">2</span><span
+style="color: #ffffff">)))))</span>
+		<span style="color: #ffffff">(vector-set! </span><span style="color: #fb660a">memo0</span> <span
+style="color: #fb660a">n</span> <span style="color: #fb660a">fibn</span><span style="color: #ffffff">)</span>
+		<span style="color: #fb660a">fibn</span><span style="color: #ffffff">))))</span>
 </pre></div>
+    <!-- HTML generated using hilite.me -->
     <p> </p>
     <br>
     <p>In the example above we can notice that the array access and modification
@@ -632,68 +663,113 @@ style="color: #008800; font-style: italic; background-color: #0f140f">;; return 
     </p>
     <p style="text-align: left;">In classic Scheme the code would be like that
       which is longer than in Scheme+:</p>
-    <p style="text-align: left;"><!-- HTML generated using hilite.me --></p>
-    <div style="background: #ffffff; overflow:auto;width:auto;border: gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%">(<span style="font-weight: bold">define </span>cpt 0)
+    <!-- HTML generated using hilite.me -->
+    <div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
+style="color: #fb660a; font-weight: bold">define </span><span style="color: #fb660a">cpt</span> <span
+style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">)</span>
 
-(<span style="font-weight: bold">define </span>(ssigma-proto L t)
+<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">ssigma-proto</span> <span
+style="color: #fb660a">L</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">)</span>
 
-  (<span style="font-weight: bold">set! </span>cpt <span style="border: 1px  #000000">{</span>cpt + 1<span
-style="border: 1px  #000000">}</span>)
+  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">set! </span><span
+style="color: #fb660a">cpt</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">cpt</span> <span
+style="color: #fb660a">+</span> <span style="color: #0086f7; font-weight: bold">1</span><span
+style="color: #ffffff">})</span>
  
-  (<span style="font-weight: bold">define </span>ls (length L))
-  (<span style="font-weight: bold">define </span>dyn (array-ref dyna ls t))
+  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span
+style="color: #fb660a">ls</span> <span style="color: #ffffff">(length </span><span
+style="color: #fb660a">L</span><span style="color: #ffffff">))</span>
+  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span
+style="color: #fb660a">dyn</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">array-ref</span> <span
+style="color: #fb660a">dyna</span> <span style="color: #fb660a">ls</span> <span
+style="color: #fb660a">t</span><span style="color: #ffffff">))</span>
     
-  <span style="font-style: italic">;; dyna[ls][t] means 0: unknown solution, 1: solution found, 2: no solution</span>
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; dyna[ls][t] means 0: unknown solution, 1: solution found, 2: no solution</span>
 
-  (<span style="font-weight: bold">cond </span>[(not (zero? dyn)) (one? dyn)]
-	[(null? L) (array-set! dyna 2 ls t) #f] <span style="font-style: italic">;; return #f</span>
+  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">cond </span><span
+style="color: #ffffff">[(not (zero? </span><span style="color: #fb660a">dyn</span><span
+style="color: #ffffff">))</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">one?</span> <span
+style="color: #fb660a">dyn</span><span style="color: #ffffff">)]</span>
+	<span style="color: #ffffff">[(null? </span><span style="color: #fb660a">L</span><span
+style="color: #ffffff">)</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">array-set!</span> <span
+style="color: #fb660a">dyna</span> <span style="color: #0086f7; font-weight: bold">2</span> <span
+style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">)</span> <span
+style="color: #0086d2">#f</span><span style="color: #ffffff">]</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; return #f</span>
 	
-	[<span style="font-weight: bold">else </span>(<span style="font-weight: bold">let </span>[(c (first L))]
+	<span style="color: #ffffff">[</span><span style="color: #fb660a; font-weight: bold">else </span><span
+style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">let </span><span
+style="color: #ffffff">[(</span><span style="color: #ff0086; font-weight: bold">c</span> <span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">first</span> <span
+style="color: #fb660a">L</span><span style="color: #ffffff">))]</span>
 		
-		(<span style="font-weight: bold">if </span><span style="border: 1px  #000000">{</span>c = t<span
-style="border: 1px  #000000">}</span> <span style="font-style: italic">;; c is the solution</span>
+		<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">if </span><span
+style="color: #ffffff">{</span><span style="color: #fb660a">c</span> <span style="color: #fb660a">=</span> <span
+style="color: #fb660a">t</span><span style="color: #ffffff">}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; c is the solution</span>
 		      
-		    (begin
-		      (array-set! dyna 1 ls t)
-		      #t)  <span style="font-style: italic">;; return #t</span>
+		    <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">begin</span>
+		      <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">array-set!</span> <span
+style="color: #fb660a">dyna</span> <span style="color: #0086f7; font-weight: bold">1</span> <span
+style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">)</span>
+		      <span style="color: #0086d2">#t</span><span style="color: #ffffff">)</span>  <span
+style="color: #008800; font-style: italic; background-color: #0f140f">;; return #t</span>
 
-		    <span style="font-style: italic">;; else</span>
-		    (<span style="font-weight: bold">let </span>[(R (rest L))]
+		    <span style="color: #008800; font-style: italic; background-color: #0f140f">;; else</span>
+		    <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">let </span><span
+style="color: #ffffff">[(</span><span style="color: #ff0086; font-weight: bold">R</span> <span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">rest</span> <span
+style="color: #fb660a">L</span><span style="color: #ffffff">))]</span>
 		      
-		      (<span style="font-weight: bold">if </span><span style="border: 1px  #000000">{</span>c &gt; t<span
-style="border: 1px  #000000">}</span>   <span style="font-style: italic">;; continue searching a solution in the rest</span>
+		      <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">if </span><span
+style="color: #ffffff">{</span><span style="color: #fb660a">c</span> <span style="color: #fb660a">&gt;</span> <span
+style="color: #fb660a">t</span><span style="color: #ffffff">}</span>   <span style="color: #008800; font-style: italic; background-color: #0f140f">;; continue searching a solution in the rest</span>
 			    
-			  (<span style="font-weight: bold">let </span>[(s (ssigma-proto R t))]
-			    (array-set! dyna
-					(one-two s)
-					ls t)
+			  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">let </span><span
+style="color: #ffffff">[(</span><span style="color: #ff0086; font-weight: bold">s</span> <span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">ssigma-proto</span> <span
+style="color: #fb660a">R</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">))]</span>
+			    <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">array-set!</span> <span
+style="color: #fb660a">dyna</span>
+					<span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">one-two</span> <span
+style="color: #fb660a">s</span><span style="color: #ffffff">)</span>
+					<span style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span
+style="color: #ffffff">)</span>
 			      
-			    s) <span style="font-style: italic">;; return s</span>
+			    <span style="color: #fb660a">s</span><span style="color: #ffffff">)</span> <span
+style="color: #008800; font-style: italic; background-color: #0f140f">;; return s</span>
 			
-			  <span style="font-style: italic">;; else</span>
-			  <span style="font-style: italic">;; c &lt; t at this point</span>
-			  <span style="font-style: italic">;; c is part of the solution or his approximation</span>
-			  <span style="font-style: italic">;; or c is not part of solution</span>
-			  (<span style="font-weight: bold">let </span>[(s <span style="border: 1px  #000000">{</span>(ssigma-proto R <span
-style="border: 1px  #000000">{</span>t - c<span style="border: 1px  #000000">}</span>) <span
-style="font-weight: bold">or </span>(ssigma-proto R t)<span style="border: 1px  #000000">}</span>)]
-			    (array-set! dyna (one-two s)
-					ls t)
-			    s)))))
-	      ] ))
+			  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; else</span>
+			  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; c &lt; t at this point</span>
+			  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; c is part of the solution or his approximation</span>
+			  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; or c is not part of solution</span>
+			  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">let </span><span
+style="color: #ffffff">[(</span><span style="color: #ff0086; font-weight: bold">s</span> <span
+style="color: #ffffff">{(</span><span style="color: #ff0086; font-weight: bold">ssigma-proto</span> <span
+style="color: #fb660a">R</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">t</span> <span
+style="color: #fb660a">-</span> <span style="color: #fb660a">c</span><span style="color: #ffffff">})</span> <span
+style="color: #fb660a; font-weight: bold">or </span><span style="color: #ffffff">(</span><span
+style="color: #ff0086; font-weight: bold">ssigma-proto</span> <span style="color: #fb660a">R</span> <span
+style="color: #fb660a">t</span><span style="color: #ffffff">)})]</span>
+			    <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">array-set!</span> <span
+style="color: #fb660a">dyna</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">one-two</span> <span
+style="color: #fb660a">s</span><span style="color: #ffffff">)</span>
+					<span style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span
+style="color: #ffffff">)</span>
+			    <span style="color: #fb660a">s</span><span style="color: #ffffff">)))))</span>
+	      <span style="color: #ffffff">]</span> <span style="color: #ffffff">))</span>
 </pre></div>
-    <br>
-    <p></p>
+    <p style="text-align: left;">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <br>
+    </p>
     <p style="text-align: left;"><br>
     </p>
-    <p style="text-align: left;">If you want to use a single assignment operator
-      &lt;- it is possible using a declarative programming style with <b>declare
-        </b>macro:</p>
-    <p style="text-align: left;"><br>
-    </p>
-    <!-- HTML generated using hilite.me -->
-    <!-- HTML generated using hilite.me -->
+    <p style="text-align: left;">If you want to use a single
+      assignment operator &lt;- it is possible using a declarative programming
+      style with <b>declare </b>macro:</p>
+    <p> </p>
+    <p><!-- HTML generated using hilite.me --> </p>
     <div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
       <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
 style="color: #ff0086; font-weight: bold">use-modules</span> <span style="color: #ffffff">(</span><span
@@ -1219,5 +1295,4 @@ style="color: #0086f7; font-weight: bold">5</span><span style="color: #ffffff">)
     <p></p>
     <h2><u></u></h2>
     <p> </p>
-  
-</section>
+</p>
