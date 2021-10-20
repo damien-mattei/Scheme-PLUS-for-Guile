@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+<html>
 
     <p><br>
-    
+	</p>
     <p><br>
     </p>
     <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span>
@@ -1295,4 +1295,4 @@ style="color: #0086f7; font-weight: bold">5</span><span style="color: #ffffff">)
     <p></p>
     <h2><u></u></h2>
     <p> </p>
-</p>
+</html>
