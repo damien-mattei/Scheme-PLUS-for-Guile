@@ -18,6 +18,12 @@
     <p style="text-align: center;"> </p>
     <p><br>
     </p>
+	<p style="text-align: center;"><br>
+    </p>
+    <p style="text-align: center;"><a href="Scheme+.html" target="_blank">(if
+        you read this page on the Github site click here for a
+        better view of the programs of this page)</a><br>
+    </p>
     <p><br>
     </p>
     <h2><u>1. Scheme+ at a glance:&nbsp;</u></h2>
