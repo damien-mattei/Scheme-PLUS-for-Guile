@@ -1,8 +1,7 @@
-Do not read the README.md file on github below because it display bad,instead use:
-
+For reading use:
 https://damien-mattei.github.io/Scheme-PLUS-for-Guile/
-or for better code reading:
 
+or for better code reading:
 https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html
 
 <body>
