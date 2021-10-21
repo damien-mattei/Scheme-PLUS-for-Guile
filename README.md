@@ -14,10 +14,11 @@ https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html
           Scheme (and Lisp-like) language. </i></span></h2>
     <h2 style=" text-align: center;">Damien Mattei<br>
     </h2>
-    
-    <p style="text-align: center;">"Doubts are such tiny things.
+    <br>
+    <p style="text-align: center;">"<i>Doubts are such tiny things.
       A mind with no room for doubts
-      must have no room for thoughts either." -R. Patti </p>
+	    must have no room for thoughts either.</i>" -R. Patti </p>
+	<br>
     <h2 style="text-align: center; background-color: white;"><b><span style="color: #999999;">version
           1.0</span></b></h2>
     <p style="text-align: center;"> </p>
