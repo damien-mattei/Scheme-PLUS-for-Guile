@@ -1,4 +1,4 @@
-For reading from the Github repository go to:
+From the Github repository go to:
 https://damien-mattei.github.io/Scheme-PLUS-for-Guile/
 
 or for better code reading:
