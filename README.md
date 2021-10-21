@@ -601,8 +601,7 @@ style="color: #ffffff">[</span><span style="color: #fb660a">ls</span> <span styl
 style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span
 style="color: #0086f7; font-weight: bold">2</span><span style="color: #ffffff">}</span>  <span
 style="color: #0086d2">#f</span><span style="color: #ffffff">]</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; return #f</span>
-	 
-	 <span style="color: #ffffff">[</span><span style="color: #fb660a">exec</span> <span
+<span style="color: #ffffff">[</span><span style="color: #fb660a">exec</span> <span
 style="color: #ffffff">{</span><span style="color: #fb660a">c</span> <span style="color: #fb660a">&lt;+</span> <span
 style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">first</span> <span
 style="color: #fb660a">L</span><span style="color: #ffffff">)}]</span>	 
