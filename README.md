@@ -1,4 +1,4 @@
-Do not read the README.md file on github,instead use:
+Do not read the README.md file on github below because it display bad,instead use:
 
 https://damien-mattei.github.io/Scheme-PLUS-for-Guile/
 
