@@ -38,7 +38,7 @@ https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html
           LET,LET*,LETREC,LET-VALUES special forms?"</i></b> and <b><i>"Is it
           possible to use a single mechanism for assignment in Scheme?"</i></b></p>
 	<p>It comes also from my idea that <i><b>"A computer language is created by
-          A man, later, a community only bring a library to the language without
+          ONE man, later, a community only bring a library to the language without
           self-questioning any more on the language itself."</b></i><br>
     </p>
     <p><br>
