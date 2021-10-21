@@ -7,8 +7,6 @@ https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html
 <body>
     <p><br>
     </p>
-    <p><br>
-    </p>
     <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span>
         <br>
       </b></h1>
