@@ -1,7 +1,7 @@
-From the Github repository go to:
+If you have problem displaying this page from the Github repository go to:
 https://damien-mattei.github.io/Scheme-PLUS-for-Guile/
 
-or for better code reading:
+and for better and wider displaying programs go to:
 https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html
 
 <body>
