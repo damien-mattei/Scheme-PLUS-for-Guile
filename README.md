@@ -1,4 +1,4 @@
-Do not read this page on github.com but on github.io:
+Do not read this document on github.com but on github.io:
 https://damien-mattei.github.io/Scheme-PLUS-for-Guile/
 
 and for better and wider displaying programs go to:
