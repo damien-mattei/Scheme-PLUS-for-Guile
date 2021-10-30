@@ -298,36 +298,6 @@
 
 
 
-;; (best-sol 100 '(101) '(90 4 3))
-;; (101)
-
-(define (best-sol t L1 L2)
-  ;; (display "L1=")
-  ;; (display L1)
-  ;; (newline)
-  ;; (display "L2=")
-  ;; (display L2)
-  ;; (newline)
-  (let [(s1 (apply + L1))
-	(s2 (apply + L2))]
-    (if {(abs {t - s1}) <= (abs {t - s2})}
-	L1
-	L2)))
-
-(define (best-sol3 t L1 L2 L3)
-  ;; (display "best-sol3") (newline)
-  ;; (display "t=") (display t) (newline)
-  ;; (display "L1=")
-  ;; (display L1)
-  ;; (newline)
-  ;; (display "L2=")
-  ;; (display L2)
-  ;; (newline)
-  ;; (display "L3=")
-  ;; (display L3)
-  ;; (newline)
-  (let [(L22 (best-sol t L2 L3))]
-    (best-sol t L1 L22)))
 
 
 ;; (subset-sum-dyna  L-init t-init)
