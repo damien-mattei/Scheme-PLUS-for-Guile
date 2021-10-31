@@ -29,14 +29,14 @@
 ;;  for curly infix notation put in your .guile:
 ;; (read-enable 'curly-infix)
 
-;; 
 ;; use :
-;; (use-modules (Scheme+Guile))
+;; (use-modules (Scheme+))
 
 ;; or if in a guile subdirectory use it with (use-modules (guile Scheme+Guile.scm))
 ;; note that the above syntax means Scheme+Guile.scm must be in a directory named guile
 ;; and that you have launched Guile in the directory containing the guile subdirectory
 
+;; see Guile module documentation
 
 ;;(define-module (guile Scheme+)
 
