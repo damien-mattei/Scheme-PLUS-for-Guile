@@ -12,6 +12,11 @@
     <h2 style="text-align: center;"><span style="color: #00cccc;"><i>Enhancing
 
 
+
+
+
+
+
           Scheme (and Lisp-like) language. </i></span></h2>
     <h2 style=" text-align: center;">Damien Mattei<br>
     </h2>
@@ -38,6 +43,11 @@
     <p><b>Scheme+ is an extension of the Scheme syntax language.</b><br>
     </p>
     <p>The <b>idea</b> of <b>Scheme+</b> is came from this : <b><i>"Why
+
+
+
+
+
 
           is it so boring to define variables in Scheme with the
           traditionnal set of LET,LET*,LETREC,LET-VALUES special forms?"</i></b>
@@ -123,7 +133,8 @@
   
 </pre>
     </div>
-    <p>Another example with Guile Scheme:</p>
+    <p>Another example with Guile Scheme in the REPL (Read Eval Print
+      Loop):</p>
     <p> </p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
@@ -145,6 +156,11 @@
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt;
 
 
+
+
+
+
+
         (use-modules (Scheme+))</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
@@ -154,6 +170,11 @@
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">;;; <span
           class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span>newer
+
+
+
+
+
 
         than compiled<span class="Apple-converted-space"> <br>
         </span></font></p>
@@ -170,10 +191,20 @@
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt;
 
 
+
+
+
+
+
         (declare L)</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt;
+
+
+
+
+
 
         {L &lt;- '(1 2 3 4)}</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
@@ -183,6 +214,11 @@
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt;
 
+
+
+
+
+
         L</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
@@ -190,6 +226,11 @@
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt;
+
+
+
+
+
 
         {L &lt;- (list 1 2 3 4 5)}</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
@@ -201,6 +242,11 @@
     <h2>2.<u>Download Scheme+:</u></h2>
     <p>The source code of the <b>Scheme+ module</b>, currently only for
       <a href="https://www.gnu.org/software/guile/" target="_blank">Guile
+
+
+
+
+
 
         implementation of Scheme</a> can be retrieved here: (this is the
       only files you need to use <b>Scheme+</b>) </p>
@@ -225,9 +271,19 @@ href="https://raw.githubusercontent.com/damien-mattei/library-FunctProg/master/S
     </h2>
     <p><br>
     </p>
-    <p>Compatible with MacOS,Linux and probably Windows. Require Guile
-      version 3 at least,developed with Guile 3.0.7 on MacOS and Guile
-      3.0.1under Linux,untested under Windows.<br>
+    <p>Scheme+ needs a Scheme interpreter and will be adapted and
+      released for many Scheme (Guile,Racket,...), download Scheme
+      Guile:<br>
+    </p>
+    <a href="https://www.gnu.org/software/guile/"><img
+        moz-do-not-send="true" src="guile-logo.png" title="Guile Scheme"
+        alt="Guile Scheme web site" width="156" height="76" border="0"></a><br>
+    <br>
+    <p>This version needs Guile Scheme version 3. It has been developed
+      with Guile 3.0.7 on <b>Mac</b><font color="#9999ff"><b> </b><b>OS</b></font>
+      and Guile 3.0.1 under <b>Linux</b>.<br>
+      <br>
+      <br>
     </p>
     <p>Guile offers infix notation that can be activated this way: for
       curly infix notation put in your <b>.guile </b>file :<b>
@@ -261,7 +317,10 @@ href="https://raw.githubusercontent.com/damien-mattei/library-FunctProg/master/S
     </b><b>;; set current path in load path</b><b><br>
     </b><b>(set! %load-path (reverse (cons "." (reverse %load-path))))</b><b><br>
     </b><b>;; other solution is to put this in shell:</b><b><br>
-    </b><b>;; export GUILE_LOAD_PATH="...:."</b><br>
+    </b><b>;; export GUILE_LOAD_PATH="...:."<br>
+      <br>
+    </b><br>
+    <b></b>
     <p> </p>
     <h2><br>
     </h2>
@@ -269,15 +328,21 @@ href="https://raw.githubusercontent.com/damien-mattei/library-FunctProg/master/S
     <p><b>Damien Mattei </b>; <b>Scheme+</b> : Copyright 2021 <b>Damien
 
 
+
+
+
+
+
         Mattei </b>under <a
         href="https://www.gnu.org/licenses/gpl-3.0.txt" target="_blank">GNU
-
-
-
-
         GENERAL PUBLIC LICENSE Version 3</a></p>
     <p>Nice - France (commune de Carros) : contact : <a
         href="https://annuaire.univ-cotedazur.fr/" target="_blank">directory
+
+
+
+
+
 
         e-mail<br>
       </a></p>
@@ -292,8 +357,6 @@ href="https://www.corsematin.com/articles/vandalisme-pitie-pour-les-panneaux-rou
           src="intersection-Guagno-Soccia.JPG"
           alt="intersection-Guagno-Soccia."
           title="intersection-Guagno-Soccia." height="100"></a> Photo “<em>Tous
-
-
         droits réservés</em>” Damien Mattei</p>
     <p><br>
     </p>
@@ -337,6 +400,11 @@ href="https://www.corsematin.com/articles/vandalisme-pitie-pour-les-panneaux-rou
     <p>Scheme+ will remove the need for the classic LET set of special
       form, no more need of <strike>LET,LET*,LETREC,LET-VALUES</strike>,...
 
+
+
+
+
+
       and will use an unique infix (or not) assignment operator : &lt;-.
       (also LET are enhanced - the project historically by improving and
       simplifying LET, i simplified it so much that i remove it now! -
@@ -355,6 +423,11 @@ href="https://www.corsematin.com/articles/vandalisme-pitie-pour-les-panneaux-rou
       <li>Assignment operator : <b>&lt;-</b> (can be used in infix
         syntax and from left to right and right to left)</li>
       <li>Square Bracket operator<b> []</b> working with Scheme <b>Vectors,
+
+
+
+
+
 
 
           Arrays,Multidimentional Arrays</b>,Dynamic Arrays (my growable
@@ -483,6 +556,11 @@ href="https://www.corsematin.com/articles/vandalisme-pitie-pour-les-panneaux-rou
         versions of Scheme+</b>. (we will see another more complex
       example with multidimentional array later)</p>
     <p>So <b>{x &lt;- 7} </b>simply assign 7 to the variable x but <b>{m[3]
+
+
+
+
+
 
 
         &lt;- 7}</b> will store 7 in the array <b>m </b>at the
@@ -618,14 +696,29 @@ href="https://en.wikipedia.org/wiki/Subset_sum_problem#Pseudo-polynomial_time_dy
 
 
 
+
+
+
+
+
       [<b>exec</b><i> statements ... </i>]</p>
     <p style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
 
 
+
+
+
+
+
       ...</p>
     <p style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
 
 
 
@@ -838,14 +931,29 @@ href="https://en.wikipedia.org/wiki/Subset_sum_problem#Pseudo-polynomial_time_dy
 
 
 
+
+
+
+
+
       [<b>exec</b><i> statements ... </i>]</p>
     <p style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
 
 
+
+
+
+
+
       ...</p>
     <p style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
 
 
 
@@ -857,6 +965,11 @@ href="https://en.wikipedia.org/wiki/Subset_sum_problem#Pseudo-polynomial_time_dy
       since BASIC !<br>
     </p>
     <p style="text-align: left;">defining new functions with <b>def </b>instead
+
+
+
+
+
 
 
 
@@ -894,6 +1007,11 @@ href="https://lists.gnu.org/archive/html/guile-devel/2021-09/msg00031.html"
     <p>Scheme+ will be implemented for other Scheme. Racket (former
       DrScheme) first,....</p>
     <p>Next version will integrate more features, concerning <b>multiple
+
+
+
+
+
 
         values</b> return for example.</p>
     <p><br>
@@ -1051,7 +1169,7 @@ href="https://raw.githubusercontent.com/damien-mattei/library-FunctProg/master/l
     <br>
     <h2><br>
     </h2>
-    <h2><u>17.Epilogue</u></h2>
+    <h2><u>17.Comments:</u></h2>
     <p>Github web site technology force me to convert this page in
       Github Markup Language, perheaps instead of HTML should i have
       make it directly in GML but i did not know it existed before doing
@@ -1066,6 +1184,11 @@ href="https://raw.githubusercontent.com/damien-mattei/library-FunctProg/master/l
     </p>
     <div style="text-align: right;">
       <h2><a href="https://youtu.be/_kQHOJhzoQw" target="_blank"><i>That's
+
+
+
+
+
 
             all folks !</i></a></h2>
     </div>
