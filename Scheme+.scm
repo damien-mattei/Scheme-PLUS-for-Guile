@@ -44,7 +44,7 @@
 
 (define-module (Scheme+)
 
-  #:export (def $bracket-apply$ <- -> <+ declare $ § condx <> )
+  #:export (def $bracket-apply$ <- -> <+ declare $ & condx <> )
   
   ;; #:replace ((new-lambda . lambda)
   ;; (new-cond . cond)

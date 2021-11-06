@@ -16,11 +16,20 @@
     ((_ ev)  ev)
     ((_ ev ...) (begin ev ...))))
 
-;; not an international char
-(define-syntax §
+;; scheme@(guile-user)> (def bar (& (declare x y) {x <- 1} {y <- 2} (lambda (t) (+ x y t))))
+;;
+;; (def bar (& (declare x y)
+;;             {x <- 1} 
+;;             {y <- 2}
+;;             (lambda (t) (+ x y t))))
+;;
+;; scheme@(guile-user)> (bar 7)
+;; $2 = 10
+(define-syntax &
   (syntax-rules ()
     ((_ ev)  ev)
-    ((_ ev ...) (begin ev ...))))
+    ((_ ev ...) (let () ev ...))))
+
 
 ;; then and else do as BEGINners ;-)
 (define-syntax then-block
@@ -36,8 +45,8 @@
 
 
 ;; damned... this one makes syntax enlightning bug in Emacs
-(define-syntax |
-  (syntax-rules ()
-    ((_ ev)  ev)
-    ((_ ev ...) (begin ev ...))))
+;; (define-syntax |
+;;   (syntax-rules ()
+;;     ((_ ev)  ev)
+;;     ((_ ev ...) (begin ev ...))))
 
