@@ -43,9 +43,9 @@
 
 
 (define-module (Scheme+)
-
-  #:export (def $bracket-apply$ <- -> <+ declare $ & condx <> )
-  
+  #:use-module (growable-vector)
+  #:export (def $bracket-apply$ <- -> <+ declare $ & condx <>)
+	 
   ;; #:replace ((new-lambda . lambda)
   ;; (new-cond . cond)
   ;;          )
