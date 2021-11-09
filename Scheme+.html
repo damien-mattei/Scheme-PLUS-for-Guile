@@ -253,7 +253,8 @@ style="color: #008800; font-style: italic; background-color: #0f140f">;; return 
         target="_blank">Guile implementation of Scheme</a> can be retrieved
       here: <br>
     </p>
-    <br>
+    <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile" target="_blank">https://github.com/damien-mattei/Scheme-PLUS-for-Guile
+      --&gt; Code --&gt; Download ZIP</a> <br>
     <p>Including : (but not necessary to use Scheme+)</p>
     <p>The growable vector module class in the file growable-vector.scm.</p>
     <p>The enhanced set of LET special forms in the file let.scm.</p>
@@ -621,8 +622,8 @@ style="color: #ffffff">))</span>
     <p><br>
     </p>
     <p>Declaration of variable can also be used to <b>declare</b> one or many
-      variables. (for explanation why there exist still &lt;+ and declare and
-      not only &lt;- read the part history of project)</p>
+      variables. (for explanation why there exist still <b>&lt;+</b> and <b>declare</b>
+      and not only <b>&lt;-</b> read the part history of project)</p>
     <p>example: <b>(declare x y z t)</b></p>
     <p> </p>
     <br>
@@ -633,8 +634,9 @@ style="color: #ffffff">))</span>
     <h2>9<u>.Advanced examples:</u><br>
     </h2>
     <p>Here is another example, from the <a href="https://en.wikipedia.org/wiki/Subset_sum_problem#Pseudo-polynomial_time_dynamic_programming_solution"
-        target="_blank">Subset Sum Problem</a> that show the use of &lt;+ and
-      &lt;- (due to the impossibility to have easily a single operator :-( ) :</p>
+        target="_blank">Subset Sum Problem</a> that show the use of <b>&lt;+</b>
+      and <b>&lt;-</b> (due to the impossibility to have easily a single
+      operator :-( ) :</p>
     <!-- HTML generated using hilite.me -->
     <div style="background: #111111;
       overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;"><span
@@ -1267,8 +1269,7 @@ style="color: #008800; font-style: italic; background-color: #0f140f">;; return 
     <p style="text-align: left;"><b>(return </b>v<b>) </b><b> </b></p>
     <p style="text-align: left;"><br>
     </p>
-    <p style="text-align: left;"><b>$ </b>is a macro, it is a shorter to write
-      replacement for <b>begin.<br>
+    <p style="text-align: left;"><b>$ </b>is a macro, it is a shortcut for <b>begin.<br>
       </b></p>
     <p style="text-align: left;">But <b>begin</b> is dual in Scheme, it expands
       differently in <i>expression </i>context and <i>definition </i>context.
@@ -1325,20 +1326,20 @@ style="color: #B8860B">ev</span> <span style="color: #666666">...</span>))))
     </p>
     <p> </p>
     <div id="highlight-preview">
-      <pre class="scheme" style="font-family:monospace;"><span style="color: #66cc66;">(</span>def bar <span
-style="color: #66cc66;">(</span><span style="color: #66cc66;">&amp;</span> <span
-style="color: #66cc66;">(</span>declare x y<span style="color: #66cc66;">)</span>
-            <span style="color: #66cc66;">{</span>x <span style="color: #66cc66;">&lt;-</span> <span
-style="color: #cc66cc;">1</span><span style="color: #66cc66;">}</span> 
-            <span style="color: #66cc66;">{</span>y <span style="color: #66cc66;">&lt;-</span> <span
-style="color: #cc66cc;">2</span><span style="color: #66cc66;">}</span>
-            <span style="color: #66cc66;">(</span><span style="color: #b1b100;">lambda</span> <span
-style="color: #66cc66;">(</span><span style="color: #b1b100;">t</span><span style="color: #66cc66;">)</span> <span
-style="color: #66cc66;">(</span><span style="color: #66cc66;">+</span> x y <span
-style="color: #b1b100;">t</span><span style="color: #66cc66;">)</span><span style="color: #66cc66;">)</span><span
-style="color: #66cc66;">)</span><span style="color: #66cc66;">)<br><br></span><span
-style="color: #66cc66;"></span></pre>
-      <pre>(bar 7)<br>10<br><br><br></pre>
+      <pre class="scheme" style="font-family:monospace;"><span style="color: #006600;">(</span>def bar <span
+style="color: #006600;">(</span><span style="color: #006600;">&amp;</span> <span
+style="color: #006600;">(</span>declare x y<span style="color: #006600;">)</span>
+            <span style="color: #006600;">{</span>x <span style="color: #006600;">&lt;-</span> <span
+style="color: #cc66cc;">1</span><span style="color: #006600;">}</span> 
+            <span style="color: #006600;">{</span>y <span style="color: #006600;">&lt;-</span> <span
+style="color: #cc66cc;">2</span><span style="color: #006600;">}</span>
+            <span style="color: #006600;">(</span><span style="color: #b1b100;">lambda</span> <span
+style="color: #006600;">(</span><span style="color: #b1b100;">t</span><span style="color: #006600;">)</span> <span
+style="color: #006600;">(</span><span style="color: #006600;">+</span> x y <span
+style="color: #b1b100;">t</span><span style="color: #006600;">)</span><span style="color: #006600;">)</span><span
+style="color: #006600;">)</span><span style="color: #006600;">)<br><br></span><span
+style="color: #006600;"></span></pre>
+      <pre>(bar 7)<br>10</pre>
     </div>
     <p style="text-align: left;"> </p>
     <h2 style=" text-align: left;">12.<u>Caveats:</u></h2>
@@ -1372,27 +1373,19 @@ style="color: #66cc66;"></span></pre>
     </p>
     <h2><u>15.Extra features:</u> </h2>
     <p>The <b>growable vector class</b> which is not specific to Scheme+ is
-      included in the download section of Scheme+ because it is intrinsic with
-      &lt;- operator of Scheme+.</p>
+      included in Scheme+ because it is intrinsic with <b>&lt;-</b> operator of
+      Scheme+.</p>
     <p>"Growable vectors" are vectors which size grow dynamically when
       necessary. The documentation and examples are in the source code header.</p>
     <p>Usage: <b>(use-modules (growable-vector))</b></p>
-    <p>The growable vector module is available separately in one file that can
-      be downloaded from here :</p>
-    <p><a href="https://raw.githubusercontent.com/damien-mattei/library-FunctProg/master/guile/growable-vector.scm"
-        target="_blank">https://raw.githubusercontent.com/damien-mattei/library-FunctProg/master/guile/growable-vector.scm</a></p>
-    <p>Note that the growable module directory path is <b>guile/growable-vector.scm</b>
-      ,this is important when using the module but you can change it of place
-      but then you have to describe its new place in the module file too) ; see
-      the Guile documentation about modules for help.</p>
-    <p>Not using it will just show a warning like "possibly undefined function
-      growable-vector?" as it is used in assignment.scm.No problem till you do
-      not create a growable vector, and when you will do it you will have loaded
-      the growable module class before and the warning message will vanish.This
-      is the force of Scheme on other language:you can have an undefined
-      function&nbsp; in your source code and it can run without problem (till
-      the function is not called of course! which is the case in my code if no
-      growable vector exist in your code too)</p>
+    <p>Not using the module will just show a warning like "possibly undefined
+      function growable-vector?" as it is used in assignment.scm.No problem till
+      you do not create a growable vector, and when you will do it you will have
+      loaded the growable module class before and the warning message will
+      vanish.This is the force of Scheme on other language:you can have an
+      undefined function&nbsp; in your source code and it can run without
+      problem (till the function is not called of course! which is the case in
+      my code if no growable vector exist in your code too)</p>
     <p>Other features include a part of my personal functional library when
       functions are not existing already in some <a href="https://srfi.schemers.org/"
         target="_blank">SRFI (Scheme Request For Implementations)</a>.</p>
@@ -1406,10 +1399,9 @@ style="color: #66cc66;"></span></pre>
       assignment operator but i release anyway those set of enhanced and
       simplified LETs, i just give some examples as names are self-explanatory.</p>
     <p>The way to be able to use the new set of LET special form is to load the
-      file let.scm which is available here:</p>
-    <p><a href="https://raw.githubusercontent.com/damien-mattei/library-FunctProg/master/let.scm"
-        target="_blank">https://raw.githubusercontent.com/damien-mattei/library-FunctProg/master/let.scm</a></p>
+      file let.scm which is available in the Scheme+ directory:</p>
     <p><b>(load "let.scm")</b></p>
+    <p>Examples:</p>
     <p><!-- HTML generated using hilite.me --></p>
     <div style="background: #272822;
       overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
@@ -1593,7 +1585,7 @@ style="color: #0086f7; font-weight: bold">5</span><span style="color: #ffffff">)
       pleasure to read and use than i take making and writing it.<br>
       <b>This documentation is at end and it is quite impressive how long it
         takes to document things! </b>Even if i suppose&nbsp; i could have
-      forget a&nbsp; things to talk about.<br>
+      forget&nbsp; things to talk about.<br>
       <br>
     </p>
     <div style="text-align: right;">
