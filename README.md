@@ -350,11 +350,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </h2>
     <h2>4.<u>Author and license:</u></h2>
     <p><b>Damien Mattei </b>; <b>Scheme+</b> : Copyright 2021 <b>Damien
-        Mattei </b>under <a href="https://www.gnu.org/licenses/gpl-3.0.txt" target="_blank">GNU
-
-
-
-        GENERAL PUBLIC LICENSE Version 3</a></p>
+        Mattei </b>under <a href="https://www.gnu.org/licenses/gpl-3.0.txt" target="_blank">GNU GENERAL PUBLIC LICENSE Version 3</a></p>
     <p>Nice - France (commune de Carros) </p>
     <p> contact : <a href="https://annuaire.univ-cotedazur.fr/" target="_blank">directory
         e-mail<br>
