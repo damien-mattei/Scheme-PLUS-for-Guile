@@ -29,7 +29,7 @@ https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html
     <p style="text-align: center;"> </p>
     <p style="text-align: center;"><br>
     </p>
-    <p style="text-align: center;"><a href="Scheme+.html" target="_blank">(click
+    <p style="text-align: center;"><a href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html" target="_blank">(click
         here for a better view of the programs of this page)</a><br>
     </p>
     <p><br>
@@ -94,6 +94,45 @@ https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html
     <p style="text-align: left;"><b> <br>
       </b></p>
     <p>Here is an example of the previous features:</p>
+
+
+```scheme
+(use-modules (Scheme+))
+
+(def (subset-sum-dynamic L t)
+
+  (declare ls dyn c R s) ;; declare multiple variables
+
+  {ls <- (length L)}
+  {dyn <- dyna[ls t]} ;; dyna is a toplevel defined array
+
+  ;; dyna[ls t] means : 0: unknown solution, 1: solution found, 2: no solution
+
+  (if {dyn <> 0} ;; IF or WHEN : it is the same thing here (only one statement)
+      (return (one? dyn)))
+
+  (when (null? L)
+    {dyna[ls t] <- 2}
+    (return #f))
+
+  {c <- (first L)}
+
+  (when {c = t}  ;; c is the solution
+    {dyna[ls t] <- 1}
+    (return #t))
+
+  {R <- (rest L)} ;; continue searching a solution in the rest
+
+  (if {c > t}  ;; c is to big to be a solution
+    {s <- (subset-sum-dynamic R t)}
+    ;; c is part of the solution or c is not part of solution
+    {s <- {(subset-sum-dynamic R {t - c}) or (subset-sum-dynamic R t)}})
+
+  {dyna[ls t] <- (one-two s)}
+  s) ;; return boolean value
+```
+
+
     <p>
       <!-- HTML generated using hilite.me --></p>
     <div style="background: #111111;
