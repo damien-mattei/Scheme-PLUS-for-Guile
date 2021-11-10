@@ -251,15 +251,29 @@ style="color: #008800; font-style: italic; background-color: #0f140f">;; return 
     <h2>2.<u>Download Scheme+:</u></h2>
     <p>The source code of the <b>Scheme+ module</b>, currently only for <a href="https://www.gnu.org/software/guile/"
         target="_blank">Guile implementation of Scheme</a> can be retrieved
-      here: <br>
+      here: </p>
+    <p><br>
     </p>
-    <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile" target="_blank">https://github.com/damien-mattei/Scheme-PLUS-for-Guile
-      --&gt; Code --&gt; Download ZIP</a> <br>
-    <p>Including : (but not necessary to use Scheme+)</p>
-    <p>The growable vector module class in the file growable-vector.scm.</p>
-    <p>The enhanced set of LET special forms in the file let.scm.</p>
-    <p>Many of the examples of this web page are in the source file SssDyna.scm.
+    <p><br>
     </p>
+    <h3 style="    text-align: center;">&gt;&gt;&gt;&nbsp;&nbsp; <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile"
+        target="_blank">https://github.com/damien-mattei/Scheme-PLUS-for-Guile
+        --&gt; Code --&gt; Download ZIP</a>&nbsp;&nbsp; &lt;&lt;&lt;<br>
+    </h3>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p>Including : (but not mandatory to use Scheme+)</p>
+    <p style="margin-left: 40px;">The growable vector module class in the file
+      growable-vector.scm.</p>
+    <div style="margin-left: 40px;"> </div>
+    <p style="margin-left: 40px;">The enhanced set of LET special forms in the
+      file let.scm.</p>
+    <div style="margin-left: 40px;"> </div>
+    <p style="margin-left: 40px;">Many of the examples of this web page are in
+      the source file SssDyna.scm. </p>
+    <p style="margin-left: 40px;">The .guile file i use with Scheme+.</p>
     <h2><br>
     </h2>
     <h2>3<u>.Requirements:</u><br>
@@ -326,7 +340,11 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; other solution is to put this in shell:</span>
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; export GUILE_LOAD_PATH="...:."</span>
 </pre> </div>
+    <p> </p>
     <br>
+    <p>This .guile file is included in the Scheme+ repository.</p>
+    <p><br>
+    </p>
     <h2><br>
     </h2>
     <h2>4.<u>Author and license:</u></h2>
@@ -336,23 +354,27 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 
         GENERAL PUBLIC LICENSE Version 3</a></p>
-    <p>Nice - France (commune de Carros) : contact : <a href="https://annuaire.univ-cotedazur.fr/"
-        target="_blank">directory e-mail<br>
+    <p>Nice - France (commune de Carros) </p>
+    <p> contact : <a href="https://annuaire.univ-cotedazur.fr/" target="_blank">directory
+        e-mail<br>
       </a></p>
-    <p>Guagno - Island of Corsica (Région des Dui Sorru) où une bonne partie de
-      Scheme+ a été inventé; contact : il y a la 4G,la 5G parfois,pour le
-      routage il faut suivre un <i>Protocole développé localement</i> : les <b>"<i><a
-            href="https://www.corsematin.com/articles/vandalisme-pitie-pour-les-panneaux-routiers-des-deux-sorru-527"
+    <p>Guagno - Island of Corsica (Région des Dui Sorru) où m'est venue l'idée
+      de Scheme+ ; contact : il y a la 4G,la 5G parfois,pour le routage il faut
+      suivre un <i>Protocole développé localement</i> : les <b>"<i><a href="https://www.corsematin.com/articles/vandalisme-pitie-pour-les-panneaux-routiers-des-deux-sorru-527"
             target="_blank">Panneaux en Braille</a></i>" </b>ou du moins ce
       qu'il en reste<b>:</b> <a href="intersection-Guagno-Soccia.JPG" target="_blank"><img
           src="intersection-Guagno-Soccia.JPG" alt="intersection-Guagno-Soccia."
           title="intersection-Guagno-Soccia." height="100"></a> Photo “<em>Tous
         droits réservés</em>” Damien Mattei</p>
-    <p><br>
+    <p>mais ne nous égarons pas :-) et revenons au Scheme+ <br>
     </p>
-    mais ne nous égarons pas :-) et revenons au Scheme+ <br>
+    <p> </p>
     <p> </p>
     <br>
+    <p>To subit an issue, a bug or something else related with the Scheme+ code
+      use the <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile/issues"
+        target="_blank">Github issues system</a>.<br>
+    </p>
     <p><br>
     </p>
     <h2><u>5. Idea and rationale:</u></h2>
@@ -929,8 +951,8 @@ style="color: #ffffff">)</span>
     <p style="text-align: left;"><br>
     </p>
     <p style="text-align: left;">If you want to use a single assignment operator
-      &lt;- it is possible using a declarative programming style with <b>declare
-        </b>macro:</p>
+      <b>&lt;-</b> it is possible using a declarative programming style with the
+      <b>declare </b>macro:</p>
     <p> </p>
     <p><!-- HTML generated using hilite.me --> </p>
     <div style="background: #111111;
@@ -1375,7 +1397,7 @@ style="color: #006600;"></span></pre>
     <p>The <b>growable vector class</b> which is not specific to Scheme+ is
       included in Scheme+ because it is intrinsic with <b>&lt;-</b> operator of
       Scheme+.</p>
-    <p>"Growable vectors" are vectors which size grow dynamically when
+    <p>"Growable vectors" are vectors with size growing dynamically when
       necessary. The documentation and examples are in the source code header.</p>
     <p>Usage: <b>(use-modules (growable-vector))</b></p>
     <p>Not using the module will just show a warning like "possibly undefined
@@ -1586,7 +1608,8 @@ style="color: #0086f7; font-weight: bold">5</span><span style="color: #ffffff">)
       <b>This documentation is at end and it is quite impressive how long it
         takes to document things! </b>Even if i suppose&nbsp; i could have
       forget&nbsp; things to talk about.<br>
-      <br>
+    </p>
+    <p><br>
     </p>
     <div style="text-align: right;">
       <h2><a href="https://youtu.be/krRMKAErUNI" target="_blank"><i>That's all

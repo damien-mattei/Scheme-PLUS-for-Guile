@@ -20,7 +20,11 @@
 
 ;;(include "pair.scm") ;; useless,but definitions reused in some not used functions in number.scm 
 (include "number.scm")
-(include "first-and-rest.scm")
+;;(include "first-and-rest.scm")
+
+(include "rest.scm")
+
+(use-modules (srfi srfi-1)) ;; for 'first' procedure
 
 (use-modules (Scheme+))
 
@@ -57,35 +61,35 @@
 ;; $2 = #t
 ;; scheme@(guile-user)> cpt
 ;; $3 = 147801
-(define (ssigma-dyna L t)
+;; (define (ssigma-dyna L t)
 
-  {cpt <- {cpt + 1}}
+;;   {cpt <- {cpt + 1}}
   
-  ;;(display L) (display " ") (display t) (newline)
+;;   ;;(display L) (display " ") (display t) (newline)
   
-  (let*  [(ls (length L))
-	  (dyn (array-ref dyna ls t))]
+;;   (let*  [(ls (length L))
+;; 	  (dyn (array-ref dyna ls t))]
     
-    ;; dyna[ls t] means 0: unknown solution, 1: solution found, 2: no solution
-    (one?
-     (if (not (zero? dyn))
+;;     ;; dyna[ls t] means 0: unknown solution, 1: solution found, 2: no solution
+;;     (one?
+;;      (if (not (zero? dyn))
 	
-	dyn
+;; 	dyn
 	
-	(array-ref-set! dyna ;; set the array but return the variable
-			(one-two
-			 (if (null? L)
-			     #f
-			     (let [ (c (first L))
-				    (R (rest L)) ]
-			       (cond [ {c = t} #t ] ;; c is the solution
-				     [ {c > t} (ssigma-dyna R t) ] ;; c is to big to be a solution but can be an approximation
-				     ;; c < t at this point
-				     ;; c is part of the solution or his approximation
-				     ;; or c is not part of solution or his approximation
-				     [ else {(ssigma-dyna R {t - c}) or (ssigma-dyna R t)} ] ))))
-			ls
-			t  )))))
+;; 	(array-ref-set! dyna ;; set the array but return the variable
+;; 			(one-two
+;; 			 (if (null? L)
+;; 			     #f
+;; 			     (let [ (c (first L))
+;; 				    (R (rest L)) ]
+;; 			       (cond [ {c = t} #t ] ;; c is the solution
+;; 				     [ {c > t} (ssigma-dyna R t) ] ;; c is to big to be a solution but can be an approximation
+;; 				     ;; c < t at this point
+;; 				     ;; c is part of the solution or his approximation
+;; 				     ;; or c is not part of solution or his approximation
+;; 				     [ else {(ssigma-dyna R {t - c}) or (ssigma-dyna R t)} ] ))))
+;; 			ls
+;; 			t  )))))
 
 
 ;; scheme@(guile-user)> (ssigma-dyna-local L-init t-init)
@@ -191,7 +195,7 @@
 			(if (null? L)
 			    #f
 			    ;; TODO: rename $ which is already used by SRFI-9 record utiliser  § ou | (option shift L sur mac)
-			    (§ ;;(display "assignment") (newline)
+			    ($ ;;(display "assignment") (newline)
 			     {c <- (first L)}
 			     {R <- (rest L)}
 			     (cond [ {c = t} #t ] ;; c is the solution
