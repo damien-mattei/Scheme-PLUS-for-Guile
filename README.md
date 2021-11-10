@@ -134,7 +134,7 @@ https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html
 
 
    
-    <p>Another example with Guile Scheme in the REPL (Read Eval Print Loop):</p>
+<p>Another example with Guile Scheme in the REPL (Read Eval Print Loop):</p>
     <p> </p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
