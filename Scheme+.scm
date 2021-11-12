@@ -43,6 +43,7 @@
 
 
 (define-module (Scheme+)
+  
   #:use-module (growable-vector)
   #:export (def $bracket-apply$ <- -> <+ declare $ & condx <>)
 	 
@@ -52,14 +53,15 @@
 
   )
 
+
 ;;(use-modules (system syntax))
 
-(include "def.scm")
-(include "array-square-brackets.scm")
-(include "assignment.scm")
-(include "declare.scm")
+(include-from-path "def.scm")
+(include-from-path "array-square-brackets.scm")
+(include-from-path "assignment.scm")
+(include-from-path "declare.scm")
 
-(include "condx.scm")
-(include "block.scm")
-(include "not-equal.scm")
+(include-from-path "condx.scm")
+(include-from-path "block.scm")
+(include-from-path "not-equal.scm")
 
