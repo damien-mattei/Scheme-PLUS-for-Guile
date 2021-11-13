@@ -1,9 +1,3 @@
-Do not read this document on github.com but on github.io:
-https://damien-mattei.github.io/Scheme-PLUS-for-Guile/
-
-and for better and wider displaying programs go to:
-https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html
-
 <body>
     <p><br>
     </p>
