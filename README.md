@@ -402,7 +402,6 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 <p style="margin-left: 40px;">And here is a definition using "Curly Infix"
       SRFI 105:</p>
-    <p style="margin-left: 40px;">
 ```scheme
 (define (fib n)
   (if {n < 2}
