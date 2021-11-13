@@ -422,41 +422,23 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       will write a faster dynamic version that memorize the results computed
       more than one time.</p>
     <p>Here is a solution in classic Scheme:</p>
-    <!-- HTML generated using hilite.me -->
-    <div style="background: #111111;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
-style="color: #fb660a; font-weight: bold">define </span><span style="color: #fb660a">size0</span> <span
-style="color: #0086f7; font-weight: bold">10000</span><span style="color: #ffffff">)</span>
-<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span
-style="color: #fb660a">memo0</span> <span style="color: #ffffff">(make-vector </span><span
-style="color: #fb660a">size0</span> <span style="color: #0086f7; font-weight: bold">0</span><span
-style="color: #ffffff">))</span><span style="color: #fb660a">return</span>
 
-<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">fibdyna0</span> <span
-style="color: #fb660a">n</span><span style="color: #ffffff">)</span>
-  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">cond </span><span
-style="color: #ffffff">((&lt; </span><span style="color: #fb660a">n</span> <span
-style="color: #0086f7; font-weight: bold">2</span><span style="color: #ffffff">)</span> <span
-style="color: #fb660a">n</span><span style="color: #ffffff">)</span>
-	<span style="color: #ffffff">((not (zero? (vector-ref </span><span style="color: #fb660a">memo0</span> <span
-style="color: #fb660a">n</span><span style="color: #ffffff">)))</span> <span style="color: #ffffff">(vector-ref </span><span
-style="color: #fb660a">memo0</span> <span style="color: #fb660a">n</span><span style="color: #ffffff">))</span>
-	<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">else </span><span
-style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">let </span><span
-style="color: #ffffff">((</span><span style="color: #ff0086; font-weight: bold">fibn</span> <span
-style="color: #ffffff">(+ (</span><span style="color: #ff0086; font-weight: bold">fibdyna0</span> <span
-style="color: #ffffff">(- </span><span style="color: #fb660a">n</span> <span style="color: #0086f7; font-weight: bold">1</span><span
-style="color: #ffffff">))</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">fibdyna0</span> <span
-style="color: #ffffff">(- </span><span style="color: #fb660a">n</span> <span style="color: #0086f7; font-weight: bold">2</span><span
-style="color: #ffffff">)))))</span>
-		<span style="color: #ffffff">(vector-set! </span><span style="color: #fb660a">memo0</span> <span
-style="color: #fb660a">n</span> <span style="color: #fb660a">fibn</span><span style="color: #ffffff">)</span>
-		<span style="color: #fb660a">fibn</span><span style="color: #ffffff">))))</span>
-</pre> </div>
-    <!-- HTML generated using hilite.me -->
-    <p> </p>
+
+
+```scheme
+(define size0 10000)
+(define memo0 (make-vector size0 0))return
+
+(define (fibdyna0 n)
+  (cond ((< n 2) n)
+	((not (zero? (vector-ref memo0 n))) (vector-ref memo0 n))
+	(else (let ((fibn (+ (fibdyna0 (- n 1)) (fibdyna0 (- n 2)))))
+		(vector-set! memo0 n fibn)
+		fibn))))
+```
+
+
+<p> </p>
     <br>
     <p>In the example above we can notice that the array access and modification
       is not easy to read and in the <b>else</b> block i have to use a <b>let</b>
