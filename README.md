@@ -393,20 +393,24 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       infix" notation which is not part of Scheme+ but used by it:</p>
     <p style="margin-left: 40px;">Here is the definition in classic prefix
       Scheme:</p>
+
 ```scheme
 (define (fibonacci n)
   (if (< n 2)
     n
     (+ (fibonacci (- n 1)) (fibonacci (- n 2)))))
 ```
+
 <p style="margin-left: 40px;">And here is a definition using "Curly Infix"
       SRFI 105:</p>
+
 ```scheme
 (define (fib n)
   (if {n < 2}
       n
       {(fib {n - 1}) + (fib {n - 2})} ))
 ```
+
 <p> </p>
     <br>
     <p>note that the last expression of fib: <b>{(fib {n - 1}) + (fib {n - 2})}
