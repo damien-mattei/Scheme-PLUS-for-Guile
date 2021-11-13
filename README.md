@@ -400,29 +400,16 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     (+ (fibonacci (- n 1)) (fibonacci (- n 2)))))
 ```
 
-    <p style="margin-left: 40px;">And here is a definition using "Curly Infix"
+<p style="margin-left: 40px;">And here is a definition using "Curly Infix"
       SRFI 105:</p>
     <p style="margin-left: 40px;">
-      <!-- HTML generated using hilite.me --></p>
-    <div style="background: #111111; overflow:auto;width:auto;border:
-      gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
-style="color: #fb660a; font-weight: bold">define </span><span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">fib</span> <span style="color: #fb660a">n</span><span
-style="color: #ffffff">)</span>
-  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">if </span><span
-style="color: #ffffff">{</span><span style="color: #fb660a">n</span> <span style="color: #fb660a">&lt;</span> <span
-style="color: #0086f7; font-weight: bold">2</span><span style="color: #ffffff">}</span>
-      <span style="color: #fb660a">n</span>
-      <span style="color: #ffffff">{(</span><span style="color: #ff0086; font-weight: bold">fib</span> <span
-style="color: #ffffff">{</span><span style="color: #fb660a">n</span> <span style="color: #fb660a">-</span> <span
-style="color: #0086f7; font-weight: bold">1</span><span style="color: #ffffff">})</span> <span
-style="color: #fb660a">+</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">fib</span> <span
-style="color: #ffffff">{</span><span style="color: #fb660a">n</span> <span style="color: #fb660a">-</span> <span
-style="color: #0086f7; font-weight: bold">2</span><span style="color: #ffffff">})}</span> <span
-style="color: #ffffff">))</span>
-</pre> </div>
-    <p> </p>
+```scheme
+(define (fib n)
+  (if {n < 2}
+      n
+      {(fib {n - 1}) + (fib {n - 2})} ))
+```
+<p> </p>
     <br>
     <p>note that the last expression of fib: <b>{(fib {n - 1}) + (fib {n - 2})}
       </b>could also be expressed in curly infix Scheme like that :<b> {fib({n -
