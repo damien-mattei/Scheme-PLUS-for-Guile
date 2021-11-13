@@ -54,7 +54,6 @@
   )
 
 
-;;(use-modules (system syntax))
 
 (include-from-path "def.scm")
 (include-from-path "array-square-brackets.scm")
