@@ -399,7 +399,6 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     n
     (+ (fibonacci (- n 1)) (fibonacci (- n 2)))))
 ```
-
 <p style="margin-left: 40px;">And here is a definition using "Curly Infix"
       SRFI 105:</p>
 ```scheme
