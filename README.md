@@ -1,10 +1,11 @@
 <body>
-    <p><br>
-    </p>
-
-<div align="center"><br>
-    </div>
-    <div align="center"><img moz-do-not-send="true" src="Scheme+.png" title="by Damien MATTEI"
+  <p>
+      <br>
+  </p>
+  <div align="center">
+    <br>
+  </div>
+  <div align="center"><img moz-do-not-send="true" src="Scheme+.png" title="by Damien MATTEI"
         alt="Scheme+" width="290" height="65"></div>
     <h2 style="text-align: center;"><span style="color: #00cccc;"><i>Enhancing
           Scheme (and Lisp-like) language. </i></span></h2>
