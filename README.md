@@ -92,10 +92,8 @@
     <div style="margin-left: 40px;"> <b>(return </b>v<b>)</b></div>
     <p style="text-align: left;"><b> <br>
       </b></p>
-    <p>Here is an example of the previous features: p </p>
-
+    <p>Here is an example of the previous features:  </p>
 <p>
-
 ```scheme
 (use-modules (Scheme+))
 
@@ -131,7 +129,6 @@
   {dyna[ls t] <- (one-two s)}
   s) ;; return boolean value
 ```
-
 </p>
   <p>Another example with Guile Scheme in the REPL (Read Eval Print Loop):</p>
     <p> </p>
