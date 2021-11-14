@@ -92,7 +92,7 @@
     <div style="margin-left: 40px;"> <b>(return </b>v<b>)</b></div>
     <p style="text-align: left;"><b> <br>
       </b></p>
-    <p>Here is an example of the previous features:</p>
+    <p>Here is an example of the previous features: p </p>
 
 <p>
 
