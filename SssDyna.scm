@@ -339,7 +339,8 @@
   s) ;; return boolean value
 
 
-
+;; scheme@(guile-user)> (subset-sum-dynamic L-init t-init)
+;; $1 = #t
 (def (subset-sum-dynamic L t)
 
   (declare ls dyn c R s) ;; declare multiple variables
