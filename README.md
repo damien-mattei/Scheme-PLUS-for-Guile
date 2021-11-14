@@ -35,7 +35,8 @@
     <h2><u>1. Scheme+ at a glance:&nbsp;</u></h2>
     <p><b>Scheme+ is an extension of the Scheme syntax language.</b><br>
     </p>
-    <p>The <b>idea</b> of <b>Scheme+</b> is came from this : <b><i>"Why is it
+    <p>The <b>idea</b> of <b>Scheme+</b> is came from this : <b>
+	<i>"Why is it
           so boring to define variables in Scheme with the traditionnal set of
           LET,LET*,LETREC,LET-VALUES special forms?"</i></b> and <b><i>"Is it
           possible to use a single mechanism for assignment in Scheme?"</i></b></p>
@@ -93,6 +94,8 @@
       </b></p>
     <p>Here is an example of the previous features:</p>
 
+<p>
+
 ```scheme
 (use-modules (Scheme+))
 
@@ -128,6 +131,8 @@
   {dyna[ls t] <- (one-two s)}
   s) ;; return boolean value
 ```
+
+</p>
   <p>Another example with Guile Scheme in the REPL (Read Eval Print Loop):</p>
     <p> </p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
