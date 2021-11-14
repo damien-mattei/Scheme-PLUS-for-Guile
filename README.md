@@ -1,10 +1,8 @@
-
-
 <body>
     <p><br>
     </p>
 
-    <div align="center"><br>
+<div align="center"><br>
     </div>
     <div align="center"><img moz-do-not-send="true" src="Scheme+.png" title="by Damien MATTEI"
         alt="Scheme+" width="290" height="65"></div>
@@ -28,7 +26,7 @@
     <p style="text-align: center;"><a
     href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html"
     target="_blank">MANDATORY: if you read this page from this exact
-    URL: https://damien-mattei.github.io/Scheme-PLUS-for-Guile/ then  you must click
+    URL: https://damien-mattei.github.io/Scheme-PLUS-for-Guile/ then you must click
         here for a good display of the programs and rest of this page</a><br>
     </p>
     <p><br>
@@ -128,9 +126,8 @@
 
   {dyna[ls t] <- (one-two s)}
   s) ;; return boolean value
-  ```
-  
-    <p>Another example with Guile Scheme in the REPL (Read Eval Print Loop):</p>
+```
+  <p>Another example with Guile Scheme in the REPL (Read Eval Print Loop):</p>
     <p> </p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
