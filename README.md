@@ -25,7 +25,8 @@
     </p>
     <p style="text-align: center;"><a
     href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html"
-    target="_blank">MANDATORY: if you read this page from https://damien-mattei.github.io/Scheme-PLUS-for-Guile/ you must click
+    target="_blank">MANDATORY: if you read this page from this exact
+    URL: https://damien-mattei.github.io/Scheme-PLUS-for-Guile/ then  you must click
         here for a good display of the programs and rest of this page</a><br>
     </p>
     <p><br>
