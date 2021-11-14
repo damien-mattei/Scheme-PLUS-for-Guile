@@ -93,8 +93,9 @@
     <p style="text-align: left;"><b> <br>
       </b></p>
     <p>Here is an example of the previous features:  </p>
-<p>
-```scheme
+	<p>
+	
+```
 (use-modules (Scheme+))
 
 (def (subset-sum-dynamic L t)
@@ -129,6 +130,7 @@
   {dyna[ls t] <- (one-two s)}
   s) ;; return boolean value
 ```
+  
 </p>
   <p>Another example with Guile Scheme in the REPL (Read Eval Print Loop):</p>
     <p> </p>
