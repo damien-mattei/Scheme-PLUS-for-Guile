@@ -90,42 +90,41 @@
     <p>Here is an example of the previous features:</p>
 
 ```scheme
-    (use-modules (Scheme+))
+(use-modules (Scheme+))
 
-    (def (subset-sum-dynamic L t)
+(def (subset-sum-dynamic L t)
 
-    (declare ls dyn c R s) ;; declare multiple variables
+  (declare ls dyn c R s) ;; declare multiple variables
 
-    {ls <- (length L)}
-    {dyn <- dyna[ls t]} ;; dyna is a toplevel defined array
+  {ls <- (length L)}
+  {dyn <- dyna[ls t]} ;; dyna is a toplevel defined array
 
-    ;; dyna[ls t] means : 0: unknown solution, 1: solution found, 2: no solution
+  ;; dyna[ls t] means : 0: unknown solution, 1: solution found, 2: no solution
 
-    (if {dyn <> 0} ;; IF or WHEN : it is the same thing here (only one statement)
-        (return (one? dyn)))
+  (if {dyn <> 0} ;; IF or WHEN : it is the same thing here (only one statement)
+      (return (one? dyn)))
 
-    (when (null? L)
-      {dyna[ls t] <- 2}
-      (return #f))
+  (when (null? L)
+    {dyna[ls t] <- 2}
+    (return #f))
 
-    {c <- (first L)}
+  {c <- (first L)}
 
-    (when {c = t}  ;; c is the solution
-      {dyna[ls t] <- 1}
-      (return #t))
+  (when {c = t}  ;; c is the solution
+    {dyna[ls t] <- 1}
+    (return #t))
 
-    {R <- (rest L)} ;; continue searching a solution in the rest
+  {R <- (rest L)} ;; continue searching a solution in the rest
 
-    (if {c > t}  ;; c is to big to be a solution
-      {s <- (subset-sum-dynamic R t)}
-      ;; c is part of the solution or c is not part of solution
-      {s <- {(subset-sum-dynamic R {t - c}) or (subset-sum-dynamic R t)}})
+  (if {c > t}  ;; c is to big to be a solution
+    {s <- (subset-sum-dynamic R t)}
+    ;; c is part of the solution or c is not part of solution
+    {s <- {(subset-sum-dynamic R {t - c}) or (subset-sum-dynamic R t)}})
 
-    {dyna[ls t] <- (one-two s)}
-    s) ;; return boolean value
+  {dyna[ls t] <- (one-two s)}
+  s) ;; return boolean value
 ```
-
-    <p>Another example with Guile Scheme in the REPL (Read Eval Print Loop):</p>
+  <p>Another example with Guile Scheme in the REPL (Read Eval Print Loop):</p>
     <p> </p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
