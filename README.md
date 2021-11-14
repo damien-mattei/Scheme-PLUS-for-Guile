@@ -23,8 +23,10 @@
     <p style="text-align: center;"> </p>
     <p style="text-align: center;"><br>
     </p>
-    <p style="text-align: center;"><a href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html" target="_blank">(click
-        here for a better view of the programs of this page)</a><br>
+    <p style="text-align: center;"><a
+    href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html"
+    target="_blank">MANDATORY: if you read this page from https://damien-mattei.github.io/Scheme-PLUS-for-Guile/ you must click
+        here for a good display of the programs and rest of this page</a><br>
     </p>
     <p><br>
     </p>
