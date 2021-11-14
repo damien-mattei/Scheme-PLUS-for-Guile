@@ -95,7 +95,8 @@
     <p>Here is an example of the previous features:  </p>
 	<p>
 	
-```
+```scheme
+	
 (use-modules (Scheme+))
 
 (def (subset-sum-dynamic L t)
@@ -129,6 +130,7 @@
 
   {dyna[ls t] <- (one-two s)}
   s) ;; return boolean value
+
 ```
   
 </p>
@@ -448,48 +450,23 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       Guile, the <b>module </b>must be loaded,this is done by inserting the
       statement <b>(use-modules (Scheme+))</b> at the beginning of the Scheme
       source file.</p>
-    <p>Below is the version of the above code written in Scheme+ :</p>
-    <p><!-- HTML generated using hilite.me --></p>
-    <!-- HTML generated using hilite.me -->
-    <div style="background: #111111;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;"><span
-        style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">use-modules</span>
-      <span style="color: #ffffff">(</span><span style="color: #ff0086;
-        font-weight: bold">Scheme+</span><span style="color: #ffffff">))</span>
-    </div>
-    <div style="background: #111111; overflow:auto;width:auto;border:
-      gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">{</span><span
-style="color: #fb660a">size</span> <span style="color: #fb660a">&lt;+</span> <span
-style="color: #0086f7; font-weight: bold">10000</span><span style="color: #ffffff">}</span>
-<span style="color: #ffffff">{</span><span style="color: #fb660a">memo</span> <span
-style="color: #fb660a">&lt;+</span> <span style="color: #ffffff">(make-vector </span><span
-style="color: #fb660a">size</span> <span style="color: #0086f7; font-weight: bold">0</span><span
-style="color: #ffffff">)}</span> 
-  
-<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">fibdyna</span> <span
-style="color: #fb660a">n</span><span style="color: #ffffff">)</span>
-  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">cond </span><span
-style="color: #ffffff">({</span><span style="color: #fb660a">n</span> <span style="color: #fb660a">&lt;</span> <span
-style="color: #0086f7; font-weight: bold">2</span><span style="color: #ffffff">}</span> <span
-style="color: #fb660a">n</span><span style="color: #ffffff">)</span>
-	<span style="color: #ffffff">({</span><span style="color: #fb660a">memo</span><span
-style="color: #ffffff">[</span><span style="color: #fb660a">n</span><span style="color: #ffffff">]</span> <span
-style="color: #fb660a">&lt;&gt;</span> <span style="color: #0086f7; font-weight: bold">0</span><span
-style="color: #ffffff">}</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">memo</span><span
-style="color: #ffffff">[</span><span style="color: #fb660a">n</span><span style="color: #ffffff">]})</span>                
-	<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">else </span><span
-style="color: #ffffff">{</span><span style="color: #fb660a">memo</span><span style="color: #ffffff">[</span><span
-style="color: #fb660a">n</span><span style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span
-style="color: #ffffff">{(</span><span style="color: #ff0086; font-weight: bold">fibdyna</span> <span
-style="color: #ffffff">{</span><span style="color: #fb660a">n</span> <span style="color: #fb660a">-</span> <span
-style="color: #0086f7; font-weight: bold">1</span><span style="color: #ffffff">})</span> <span
-style="color: #fb660a">+</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">fibdyna</span> <span
-style="color: #ffffff">{</span><span style="color: #fb660a">n</span> <span style="color: #fb660a">-</span> <span
-style="color: #0086f7; font-weight: bold">2</span><span style="color: #ffffff">})}})</span> <span
-style="color: #ffffff">))</span>
-</pre> </div>
+      <p>Below is the version of the above code written in Scheme+ :</p>
+<p>
+
+```scheme
+(use-modules (Scheme+))
+
+{size <+ 10000}
+{memo <+ (make-vector size 0)} 
+
+(define (fibdyna n)
+   (cond ({n < 2} n)
+       ({memo[n] <> 0} {memo[n]})
+
+   (else {memo[n] <- {(fibdyna {n - 1}) + (fibdyna {n - 2})}}) ))
+```
+
+</p>
     <p> </p>
     <br>
     <p>The reader can notice the introduction of one new assignment operator <b>&lt;-</b>
