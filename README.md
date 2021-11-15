@@ -982,49 +982,17 @@ style="color: #008800; font-style: italic; background-color: #0f140f">;; return 
     <h2>11.<u>Additional documentation:</u></h2>
     <p><b>condx</b> is a macro that allow execution of arbitrary code between
       conditionals clauses,syntax is :</p>
-    <p>(<b>condx </b>[<i>condition statements </i>...] </p>
-    <p style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+```scheme
+(condx [condition statements ...]
 
+            [exec statements ... ]
 
+            ...
 
+            [else statements ...])
+```
 
-
-
-
-
-
-
-
-      [<b>exec</b><i> statements ... </i>]</p>
-    <p style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-
-
-
-
-
-
-
-
-
-
-      ...</p>
-    <p style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-
-
-
-
-
-
-
-
-
-
-      [<b>else </b><i>statements</i> ...])</p>
     <p style="text-align: left;"><b>condx</b> is not a major feature of <b>Scheme+</b>
       but it can replace a lot of 'if then <b>elif'</b>, i dislike and still
       misunderstand sometimes, '<b>else if</b>' since BASIC !<br>
