@@ -720,96 +720,47 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       illustrate the use of <b>return </b>in a Python/C++ style:</p>
     <p style="text-align: left;"><br>
     </p>
-    <!-- HTML generated using hilite.me -->
-    <!-- HTML generated using hilite.me -->
-    <div style="background: #111111;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">use-modules</span> <span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">Scheme+</span><span style="color: #ffffff">))</span>
-</pre> </div>
-    <div style="background: #111111;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
-style="color: #fb660a">def</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">subset-sum-dyna</span> <span
-style="color: #fb660a">L</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">)</span>
+	
 
-  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">declare</span> <span
-style="color: #fb660a">ls</span> <span style="color: #fb660a">dyn</span><span style="color: #ffffff">)</span> <span
-style="color: #008800; font-style: italic; background-color: #0f140f">;; declare multiple variables</span>
+```scheme
+(use-modules (Scheme+))
 
-  <span style="color: #ffffff">{</span><span style="color: #fb660a">ls</span> <span
-style="color: #fb660a">&lt;-</span> <span style="color: #ffffff">(length </span><span
-style="color: #fb660a">L</span><span style="color: #ffffff">)}</span>
-  <span style="color: #ffffff">{</span><span style="color: #fb660a">dyn</span> <span
-style="color: #fb660a">&lt;-</span> <span style="color: #fb660a">dyna</span><span
-style="color: #ffffff">[</span><span style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span
-style="color: #ffffff">]}</span>
+(def (subset-sum-dyna L t)
 
-  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; dyna[ls t] means : 0: unknown solution, 1: solution found, 2: no solution</span>
+  (declare ls dyn) ;; declare multiple variables
 
-  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">if </span><span
-style="color: #ffffff">{</span><span style="color: #fb660a">dyn</span> <span style="color: #fb660a">&lt;&gt;</span> <span
-style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">}</span> <span
-style="color: #008800; font-style: italic; background-color: #0f140f">;; IF or WHEN : it is the same thing here (only one statement)</span>
-      <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">return</span> <span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">one?</span> <span
-style="color: #fb660a">dyn</span><span style="color: #ffffff">)))</span>
+  {ls <- (length L)}
+  {dyn <- dyna[ls t]}
 
-  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span
-style="color: #ffffff">(null? </span><span style="color: #fb660a">L</span><span
-style="color: #ffffff">)</span>
-    <span style="color: #ffffff">{</span><span style="color: #fb660a">dyna</span><span
-style="color: #ffffff">[</span><span style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span
-style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span
-style="color: #0086f7; font-weight: bold">2</span><span style="color: #ffffff">}</span>
-    <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">return</span> <span
-style="color: #0086d2">#f</span><span style="color: #ffffff">))</span>
+  ;; dyna[ls t] means : 0: unknown solution, 1: solution found, 2: no solution
 
-  <span style="color: #ffffff">{</span><span style="color: #fb660a">c</span> <span
-style="color: #fb660a">&lt;+</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">first</span> <span
-style="color: #fb660a">L</span><span style="color: #ffffff">)}</span>
+  (if {dyn <> 0} ;; IF or WHEN : it is the same thing here (only one statement)
+      (return (one? dyn)))
 
-  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span
-style="color: #ffffff">{</span><span style="color: #fb660a">c</span> <span style="color: #fb660a">=</span> <span
-style="color: #fb660a">t</span><span style="color: #ffffff">}</span>  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; c is the solution</span>
-    <span style="color: #ffffff">{</span><span style="color: #fb660a">dyna</span><span
-style="color: #ffffff">[</span><span style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span
-style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span
-style="color: #0086f7; font-weight: bold">1</span><span style="color: #ffffff">}</span>
-    <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">return</span> <span
-style="color: #0086d2">#t</span><span style="color: #ffffff">))</span>
+  (when (null? L)
+    {dyna[ls t] <- 2}
+    (return #f))
 
-  <span style="color: #ffffff">{</span><span style="color: #fb660a">R</span> <span
-style="color: #fb660a">&lt;+</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">rest</span> <span
-style="color: #fb660a">L</span><span style="color: #ffffff">)}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; continue searching a solution in the rest</span>
+  {c <+ (first L)}
 
-  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">declare</span> <span
-style="color: #fb660a">s</span><span style="color: #ffffff">)</span>
-  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">if </span><span
-style="color: #ffffff">{</span><span style="color: #fb660a">c</span> <span style="color: #fb660a">&gt;</span> <span
-style="color: #fb660a">t</span><span style="color: #ffffff">}</span>  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; c is to big to be a solution</span>
-    <span style="color: #ffffff">{</span><span style="color: #fb660a">s</span> <span
-style="color: #fb660a">&lt;-</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">subset-sum-dyna</span> <span
-style="color: #fb660a">R</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">)}</span>
-    <span style="color: #008800; font-style: italic; background-color: #0f140f">;; c is part of the solution or c is not part of solution</span>
-    <span style="color: #ffffff">{</span><span style="color: #fb660a">s</span> <span
-style="color: #fb660a">&lt;-</span> <span style="color: #ffffff">{(</span><span
-style="color: #ff0086; font-weight: bold">subset-sum-dyna</span> <span style="color: #fb660a">R</span> <span
-style="color: #ffffff">{</span><span style="color: #fb660a">t</span> <span style="color: #fb660a">-</span> <span
-style="color: #fb660a">c</span><span style="color: #ffffff">})</span> <span style="color: #fb660a; font-weight: bold">or </span><span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">subset-sum-dyna</span> <span
-style="color: #fb660a">R</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">)}})</span>
+  (when {c = t}  ;; c is the solution
+    {dyna[ls t] <- 1}
+    (return #t))
 
-  <span style="color: #ffffff">{</span><span style="color: #fb660a">dyna</span><span
-style="color: #ffffff">[</span><span style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span
-style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">one-two</span> <span
-style="color: #fb660a">s</span><span style="color: #ffffff">)}</span>
-  <span style="color: #fb660a">s</span><span style="color: #ffffff">)</span> <span
-style="color: #008800; font-style: italic; background-color: #0f140f">;; return boolean value</span>
-</pre> </div>
-    <h2><br>
+  {R <+ (rest L)} ;; continue searching a solution in the rest
+
+  (declare s)
+  (if {c > t}  ;; c is to big to be a solution
+    {s <- (subset-sum-dyna R t)}
+    ;; c is part of the solution or c is not part of solution
+    {s <- {(subset-sum-dyna R {t - c}) or (subset-sum-dyna R t)}})
+
+  {dyna[ls t] <- (one-two s)}
+  s) ;; return boolean value
+```
+
+    
+<h2><br>
     </h2>
     <h2><br>
     </h2>
@@ -846,26 +797,14 @@ style="color: #008800; font-style: italic; background-color: #0f140f">;; return 
             [else statements ...])
 ```
 
-    <p style="text-align: left;"><b>condx</b> is not a major feature of <b>Scheme+</b>
+<p style="text-align: left;"><b>condx</b> is not a major feature of <b>Scheme+</b>
       but it can replace a lot of 'if then <b>elif'</b>, i dislike and still
       misunderstand sometimes, '<b>else if</b>' since BASIC !<br>
     </p>
     <p style="text-align: left;">&nbsp;<br>
     </p>
-    <p style="text-align: left;">defining new functions with <b>def </b>instead
-
-
-
-
-
-
-
-
-
-
-
-
-      of the classic define we can now use <b>return</b> to escape immediately
+    <p style="text-align: left;">defining new functions with <b>def
+      </b>instead of the classic define we can now use <b>return</b> to escape immediately
       returning the value v:</p>
     <p style="text-align: left;"><b>(return </b>v<b>) </b><b> </b></p>
     <p style="text-align: left;"><br>
@@ -1028,7 +967,7 @@ style="color: #66d9ef">define-syntax </span><span style="color: #f8f8f2">let&lt;
   <span style="color: #f8f8f2">(</span><span style="color: #66d9ef">syntax-rules </span><span
 style="color: #f8f8f2">(</span><span style="color: #a6e22e">&lt;-</span><span style="color: #f8f8f2">)</span>
 
-    <span style="color: #f8f8f2">((</span><span style="color: #a6e22e">_</span> <span
+<span style="color: #f8f8f2">((</span><span style="color: #a6e22e">_</span> <span
 style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">expr</span> <span
 style="color: #f92672">...</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">(</span><span
 style="color: #66d9ef">begin </span><span style="color: #f8f8f2">expr</span> <span
@@ -1063,7 +1002,7 @@ style="color: #f8f8f2">%parse-letrec-bindings-and-evaluate-expressions</span>
   <span style="color: #f8f8f2">(</span><span style="color: #66d9ef">syntax-rules </span><span
 style="color: #f8f8f2">(</span><span style="color: #a6e22e">&lt;-</span><span style="color: #f8f8f2">)</span>
 
-    <span style="color: #f8f8f2">((</span><span style="color: #a6e22e">_</span> <span
+<span style="color: #f8f8f2">((</span><span style="color: #a6e22e">_</span> <span
 style="color: #f8f8f2">(</span><span style="color: #a6e22e">bindings</span> <span
 style="color: #f92672">...</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">(</span><span
 style="color: #a6e22e">var1</span> <span style="color: #f8f8f2">&lt;-</span> <span
