@@ -607,104 +607,56 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </p>
     <p style="text-align: left;">In classic Scheme the code would be like that
       which is longer than in Scheme+:</p>
-    <!-- HTML generated using hilite.me -->
-    <div style="background: #111111;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
-style="color: #fb660a; font-weight: bold">define </span><span style="color: #fb660a">cpt</span> <span
-style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">)</span>
+	  
+```scheme
+(define cpt 0)
 
-<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">ssigma-proto</span> <span
-style="color: #fb660a">L</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">)</span>
+(define (ssigma-proto L t)
 
-  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">set! </span><span
-style="color: #fb660a">cpt</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">cpt</span> <span
-style="color: #fb660a">+</span> <span style="color: #0086f7; font-weight: bold">1</span><span
-style="color: #ffffff">})</span>
+  (set! cpt {cpt + 1})
  
-  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span
-style="color: #fb660a">ls</span> <span style="color: #ffffff">(length </span><span
-style="color: #fb660a">L</span><span style="color: #ffffff">))</span>
-  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span
-style="color: #fb660a">dyn</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">array-ref</span> <span
-style="color: #fb660a">dyna</span> <span style="color: #fb660a">ls</span> <span
-style="color: #fb660a">t</span><span style="color: #ffffff">))</span>
+  (define ls (length L))
+  (define dyn (array-ref dyna ls t))
     
-  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; dyna[ls][t] means 0: unknown solution, 1: solution found, 2: no solution</span>
+  ;; dyna[ls][t] means 0: unknown solution, 1: solution found, 2: no solution
 
-  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">cond </span><span
-style="color: #ffffff">[(not (zero? </span><span style="color: #fb660a">dyn</span><span
-style="color: #ffffff">))</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">one?</span> <span
-style="color: #fb660a">dyn</span><span style="color: #ffffff">)]</span>
-	<span style="color: #ffffff">[(null? </span><span style="color: #fb660a">L</span><span
-style="color: #ffffff">)</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">array-set!</span> <span
-style="color: #fb660a">dyna</span> <span style="color: #0086f7; font-weight: bold">2</span> <span
-style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">)</span> <span
-style="color: #0086d2">#f</span><span style="color: #ffffff">]</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; return #f</span>
+  (cond [(not (zero? dyn)) (one? dyn)]
+	[(null? L) (array-set! dyna 2 ls t) #f] ;; return #f
 	
-	<span style="color: #ffffff">[</span><span style="color: #fb660a; font-weight: bold">else </span><span
-style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">let </span><span
-style="color: #ffffff">[(</span><span style="color: #ff0086; font-weight: bold">c</span> <span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">first</span> <span
-style="color: #fb660a">L</span><span style="color: #ffffff">))]</span>
+	[else (let [(c (first L))]
 		
-		<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">if </span><span
-style="color: #ffffff">{</span><span style="color: #fb660a">c</span> <span style="color: #fb660a">=</span> <span
-style="color: #fb660a">t</span><span style="color: #ffffff">}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; c is the solution</span>
+		(if {c = t} ;; c is the solution
 		      
-		    <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">begin</span>
-		      <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">array-set!</span> <span
-style="color: #fb660a">dyna</span> <span style="color: #0086f7; font-weight: bold">1</span> <span
-style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">)</span>
-		      <span style="color: #0086d2">#t</span><span style="color: #ffffff">)</span>  <span
-style="color: #008800; font-style: italic; background-color: #0f140f">;; return #t</span>
+		    (begin
+		      (array-set! dyna 1 ls t)
+		      #t)  ;; return #t
 
-		    <span style="color: #008800; font-style: italic; background-color: #0f140f">;; else</span>
-		    <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">let </span><span
-style="color: #ffffff">[(</span><span style="color: #ff0086; font-weight: bold">R</span> <span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">rest</span> <span
-style="color: #fb660a">L</span><span style="color: #ffffff">))]</span>
+		    ;; else
+		    (let [(R (rest L))]
 		      
-		      <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">if </span><span
-style="color: #ffffff">{</span><span style="color: #fb660a">c</span> <span style="color: #fb660a">&gt;</span> <span
-style="color: #fb660a">t</span><span style="color: #ffffff">}</span>   <span style="color: #008800; font-style: italic; background-color: #0f140f">;; continue searching a solution in the rest</span>
+		      (if {c > t}   ;; continue searching a solution in the rest
 			    
-			  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">let </span><span
-style="color: #ffffff">[(</span><span style="color: #ff0086; font-weight: bold">s</span> <span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">ssigma-proto</span> <span
-style="color: #fb660a">R</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">))]</span>
-			    <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">array-set!</span> <span
-style="color: #fb660a">dyna</span>
-					<span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">one-two</span> <span
-style="color: #fb660a">s</span><span style="color: #ffffff">)</span>
-					<span style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span
-style="color: #ffffff">)</span>
+			  (let [(s (ssigma-proto R t))]
+			    (array-set! dyna
+					(one-two s)
+					ls t)
 			      
-			    <span style="color: #fb660a">s</span><span style="color: #ffffff">)</span> <span
-style="color: #008800; font-style: italic; background-color: #0f140f">;; return s</span>
+			    s) ;; return s
 			
-			  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; else</span>
-			  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; c &lt; t at this point</span>
-			  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; c is part of the solution or his approximation</span>
-			  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; or c is not part of solution</span>
-			  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">let </span><span
-style="color: #ffffff">[(</span><span style="color: #ff0086; font-weight: bold">s</span> <span
-style="color: #ffffff">{(</span><span style="color: #ff0086; font-weight: bold">ssigma-proto</span> <span
-style="color: #fb660a">R</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">t</span> <span
-style="color: #fb660a">-</span> <span style="color: #fb660a">c</span><span style="color: #ffffff">})</span> <span
-style="color: #fb660a; font-weight: bold">or </span><span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">ssigma-proto</span> <span style="color: #fb660a">R</span> <span
-style="color: #fb660a">t</span><span style="color: #ffffff">)})]</span>
-			    <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">array-set!</span> <span
-style="color: #fb660a">dyna</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">one-two</span> <span
-style="color: #fb660a">s</span><span style="color: #ffffff">)</span>
-					<span style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span
-style="color: #ffffff">)</span>
-			    <span style="color: #fb660a">s</span><span style="color: #ffffff">)))))</span>
-	      <span style="color: #ffffff">]</span> <span style="color: #ffffff">))</span>
-</pre> </div>
-    <p style="text-align: left;"> <br>
+			  ;; else
+			  ;; c < t at this point
+			  ;; c is part of the solution or his approximation
+			  ;; or c is not part of solution
+			  (let [(s {(ssigma-proto R {t - c}) or (ssigma-proto R t)})]
+			    (array-set! dyna (one-two s)
+					ls t)
+			    s)))))
+	      ] ))
+```
+
+
+
+<p style="text-align: left;"> <br>
     </p>
     <p style="text-align: left;"><br>
     </p>
