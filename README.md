@@ -541,132 +541,46 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
         target="_blank">Subset Sum Problem</a> that show the use of <b>&lt;+</b>
       and <b>&lt;-</b> (due to the impossibility to have easily a single
       operator :-( ) :</p>
-    <!-- HTML generated using hilite.me -->
-    <div style="background: #111111;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;"><span
-        style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">use-modules</span>
-      <span style="color: #ffffff">(</span><span style="color: #ff0086;
-        font-weight: bold">Scheme+</span><span style="color: #ffffff">))</span>
-    </div>
-    <div style="background: #111111;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">{</span><span
-style="color: #fb660a">L-init</span> <span style="color: #fb660a">&lt;+</span> <span
-style="color: #ffffff">'(</span><span style="color: #0086f7; font-weight: bold">1</span> <span
-style="color: #0086f7; font-weight: bold">3</span> <span style="color: #0086f7; font-weight: bold">4</span> <span
-style="color: #0086f7; font-weight: bold">16</span> <span style="color: #0086f7; font-weight: bold">17</span> <span
-style="color: #0086f7; font-weight: bold">24</span> <span style="color: #0086f7; font-weight: bold">45</span> <span
-style="color: #0086f7; font-weight: bold">64</span> <span style="color: #0086f7; font-weight: bold">197</span> <span
-style="color: #0086f7; font-weight: bold">256</span> <span style="color: #0086f7; font-weight: bold">275</span> <span
-style="color: #0086f7; font-weight: bold">323</span> <span style="color: #0086f7; font-weight: bold">540</span> <span
-style="color: #0086f7; font-weight: bold">723</span> <span style="color: #0086f7; font-weight: bold">889</span> <span
-style="color: #0086f7; font-weight: bold">915</span> <span style="color: #0086f7; font-weight: bold">1040</span> <span
-style="color: #0086f7; font-weight: bold">1041</span> <span style="color: #0086f7; font-weight: bold">1093</span> <span
-style="color: #0086f7; font-weight: bold">1099</span> <span style="color: #0086f7; font-weight: bold">1111</span> <span
-style="color: #0086f7; font-weight: bold">1284</span> <span style="color: #0086f7; font-weight: bold">1344</span> <span
-style="color: #0086f7; font-weight: bold">1520</span> <span style="color: #0086f7; font-weight: bold">2027</span> <span
-style="color: #0086f7; font-weight: bold">2500</span> <span style="color: #0086f7; font-weight: bold">2734</span> <span
-style="color: #0086f7; font-weight: bold">3000</span> <span style="color: #0086f7; font-weight: bold">3267</span> <span
-style="color: #0086f7; font-weight: bold">3610</span> <span style="color: #0086f7; font-weight: bold">4285</span> <span
-style="color: #0086f7; font-weight: bold">5027</span><span style="color: #ffffff">)}</span>
-<span style="color: #ffffff">{</span><span style="color: #fb660a">t-init</span> <span
-style="color: #fb660a">&lt;+</span> <span style="color: #0086f7; font-weight: bold">35267</span><span
-style="color: #ffffff">}</span>
-<span style="color: #ffffff">{</span><span style="color: #fb660a">ls</span> <span
-style="color: #fb660a">&lt;+</span> <span style="color: #ffffff">(length </span><span
-style="color: #fb660a">L-init</span><span style="color: #ffffff">)}</span>
-<span style="color: #ffffff">{</span><span style="color: #fb660a">dyna</span> <span
-style="color: #fb660a">&lt;+</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">make-array</span> <span
-style="color: #0086f7; font-weight: bold">0</span> <span style="color: #ffffff">{</span><span
-style="color: #fb660a">ls</span> <span style="color: #fb660a">+</span> <span style="color: #0086f7; font-weight: bold">1</span><span
-style="color: #ffffff">}</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">t-init</span> <span
-style="color: #fb660a">+</span> <span style="color: #0086f7; font-weight: bold">1</span><span
-style="color: #ffffff">})}</span>
-</pre> </div>
-    <div style="background: #111111; overflow:auto;width:auto;border:
-      gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">{</span><span
-style="color: #fb660a">cpt</span> <span style="color: #fb660a">&lt;+</span> <span
-style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">}</span> <span
-style="color: #008800; font-style: italic; background-color: #0f140f">;; define cpt to 0</span>
 
-<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">subset-sum-guile</span> <span
-style="color: #fb660a">L</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">)</span>
+```scheme
+(use-modules (Scheme+))
 
-  <span style="color: #ffffff">{</span><span style="color: #fb660a">ls</span> <span
-style="color: #fb660a">&lt;+</span> <span style="color: #ffffff">(length </span><span
-style="color: #fb660a">L</span><span style="color: #ffffff">)}</span>
-  <span style="color: #ffffff">{</span><span style="color: #fb660a">dyn</span> <span
-style="color: #fb660a">&lt;+</span> <span style="color: #fb660a">dyna</span><span
-style="color: #ffffff">[</span><span style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span
-style="color: #ffffff">]}</span>
+{L-init <+ '(1 3 4 16 17 24 45 64 197 256 275 323 540 723 889 915 1040 1041 1093 1099 1111 1284 1344 1520 2027 2500 2734 3000 3267 3610 4285 5027)}
+{t-init <+ 35267}
+{ls <+ (length L-init)}
+{dyna <+ (make-array 0 {ls + 1} {t-init + 1})}
 
-  <span style="color: #ffffff">{</span><span style="color: #fb660a">cpt</span> <span
-style="color: #fb660a">&lt;-</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">cpt</span> <span
-style="color: #fb660a">+</span> <span style="color: #0086f7; font-weight: bold">1</span><span
-style="color: #ffffff">}}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; cpt has been already defined at toplevel</span>
+{cpt <+ 0} ;; define cpt to 0
+
+(define (subset-sum-guile L t)
+
+  {ls <+ (length L)}
+  {dyn <+ dyna[ls t]}
+
+  {cpt <- {cpt + 1}} ;; cpt has been already defined at toplevel
   
-  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; dyna[ls t] means 0: unknown solution, 1: solution found, 2: no solution</span>
+  ;; dyna[ls t] means 0: unknown solution, 1: solution found, 2: no solution
   
-  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">condx</span> <span
-style="color: #ffffff">[{</span><span style="color: #fb660a">dyn</span> <span style="color: #fb660a">&lt;&gt;</span> <span
-style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">}</span> <span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">one?</span> <span
-style="color: #fb660a">dyn</span><span style="color: #ffffff">)]</span>
-	 <span style="color: #ffffff">[(null? </span><span style="color: #fb660a">L</span><span
-style="color: #ffffff">)</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">dyna</span><span
-style="color: #ffffff">[</span><span style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span
-style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span
-style="color: #0086f7; font-weight: bold">2</span><span style="color: #ffffff">}</span>  <span
-style="color: #0086d2">#f</span><span style="color: #ffffff">]</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; return #f</span>
-	 <span style="color: #ffffff">[</span><span style="color: #fb660a">exec</span> <span
-style="color: #ffffff">{</span><span style="color: #fb660a">c</span> <span style="color: #fb660a">&lt;+</span> <span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">first</span> <span
-style="color: #fb660a">L</span><span style="color: #ffffff">)}]</span>	 
-	 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; c is the solution</span>
-	 <span style="color: #ffffff">[{</span><span style="color: #fb660a">c</span> <span
-style="color: #fb660a">=</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">}</span> <span
-style="color: #ffffff">{</span><span style="color: #fb660a">dyna</span><span style="color: #ffffff">[</span><span
-style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">]</span> <span
-style="color: #fb660a">&lt;-</span> <span style="color: #0086f7; font-weight: bold">1</span><span
-style="color: #ffffff">}</span>  <span style="color: #0086d2">#t</span><span style="color: #ffffff">]</span>  <span
-style="color: #008800; font-style: italic; background-color: #0f140f">;; return #t</span>
-	 <span style="color: #ffffff">[</span><span style="color: #fb660a">exec</span> <span
-style="color: #ffffff">{</span><span style="color: #fb660a">R</span> <span style="color: #fb660a">&lt;+</span> <span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">rest</span> <span
-style="color: #fb660a">L</span><span style="color: #ffffff">)}]</span>	 
-	 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; continue searching a solution in the rest</span>
-	 <span style="color: #ffffff">[{</span><span style="color: #fb660a">c</span> <span
-style="color: #fb660a">&gt;</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">}</span> <span
-style="color: #ffffff">{</span><span style="color: #fb660a">s</span> <span style="color: #fb660a">&lt;+</span> <span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">subset-sum-guile</span> <span
-style="color: #fb660a">R</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">)}</span>
-	  <span style="color: #ffffff">{</span><span style="color: #fb660a">dyna</span><span
-style="color: #ffffff">[</span><span style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span
-style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">one-two</span> <span
-style="color: #fb660a">s</span><span style="color: #ffffff">)}</span>
-	<span style="color: #fb660a">s</span><span style="color: #ffffff">]</span> <span
-style="color: #008800; font-style: italic; background-color: #0f140f">;; return boolean value</span>
-	<span style="color: #008800; font-style: italic; background-color: #0f140f">;; else : c &lt; t at this point</span>
-	 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; c is part of a solution OR not part of a solution</span>
-	 <span style="color: #ffffff">[</span><span style="color: #fb660a; font-weight: bold">else </span><span
-style="color: #ffffff">{</span><span style="color: #fb660a">s</span> <span style="color: #fb660a">&lt;+</span> <span
-style="color: #ffffff">{(</span><span style="color: #ff0086; font-weight: bold">subset-sum-guile</span> <span
-style="color: #fb660a">R</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">t</span> <span
-style="color: #fb660a">-</span> <span style="color: #fb660a">c</span><span style="color: #ffffff">})</span> <span
-style="color: #fb660a; font-weight: bold">or </span><span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">subset-sum-guile</span> <span style="color: #fb660a">R</span> <span
-style="color: #fb660a">t</span><span style="color: #ffffff">)}}</span>
-	  <span style="color: #ffffff">{</span><span style="color: #fb660a">dyna</span><span
-style="color: #ffffff">[</span><span style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span
-style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span
-style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">one-two</span> <span
-style="color: #fb660a">s</span><span style="color: #ffffff">)}</span>
-	   <span style="color: #fb660a">s</span><span style="color: #ffffff">]))</span> <span
-style="color: #008800; font-style: italic; background-color: #0f140f">;; return boolean value</span>
-</pre> </div>
+  (condx [{dyn <> 0} (one? dyn)]
+	 [(null? L) {dyna[ls t] <- 2}  #f] ;; return #f
+	 
+	 [exec {c <+ (first L)}]	 
+	 ;; c is the solution
+	 [{c = t} {dyna[ls t] <- 1}  #t]  ;; return #t
+	 
+	 [exec {R <+ (rest L)}]	 
+	 ;; continue searching a solution in the rest
+	 [{c > t} {s <+ (subset-sum-guile R t)}
+	          {dyna[ls t] <- (one-two s)}
+		  s] ;; return boolean value
+			
+	 ;; else : c < t at this point
+	 ;; c is part of a solution OR not part of a solution
+	 [else {s <+ {(subset-sum-guile R {t - c}) or (subset-sum-guile R t)}}
+	       {dyna[ls t] <- (one-two s)}
+	       s])) ;; return boolean value
+```
+
     <p> </p>
     <br>
     <p><b>scheme@(guile-user)&gt; (subset-sum-guile&nbsp; L-init t-init)</b></p>
