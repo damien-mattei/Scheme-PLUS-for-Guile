@@ -581,7 +581,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 	       s])) ;; return boolean value
 ```
 
-    <p> </p>
+<p> </p>
     <br>
     <p><b>scheme@(guile-user)&gt; (subset-sum-guile&nbsp; L-init t-init)</b></p>
     <p><b>#t</b><br>
@@ -590,54 +590,19 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p style="text-align: center;">note: in the example above condx is a macro
       that allow execution of arbitrary code between conditionals
       clauses,general syntax is:</p>
-    <p style="text-align: left; margin-left: 40px;">(<b>condx </b>[<i>condition
-        statements </i>...]</p>
-    <div style="margin-left: 40px;"> </div>
-    <p style="text-align: left; margin-left: 40px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
+```scheme
+(condx [condition statements ...]
 
+            [exec statements ... ]
 
+            ...
 
+            [else statements ...])
+```
 
-
-
-
-
-
-
-      [<b>exec</b><i> statements ... </i>]</p>
-    <div style="margin-left: 40px;"> </div>
-    <p style="text-align: left; margin-left: 40px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-
-
-
-
-
-
-
-
-
-
-      ...</p>
-    <div style="margin-left: 40px;"> </div>
-    <p style="text-align: left; margin-left: 40px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-
-
-
-
-
-
-
-
-
-
-      [<b>else </b><i>statements</i> ...])</p>
-    <div style="margin-left: 40px;"> </div>
+<div style="margin-left: 40px;"> </div>
     <p style="text-align: center;"><br>
     </p>
     <p style="text-align: left;">In classic Scheme the code would be like that
