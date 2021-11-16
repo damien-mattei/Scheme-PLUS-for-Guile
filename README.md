@@ -26,9 +26,7 @@
     </p>
     <p style="text-align: center;"><a
     href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html"
-    target="_blank">MANDATORY: if you read this page from this exact
-    URL: https://damien-mattei.github.io/Scheme-PLUS-for-Guile/ then you must click
-        here for a good display of the programs and rest of this page</a><br>
+    target="_blank">for a better view click here to go to https://damien-mattei.github.io/Scheme-PLUS-for-Guile/ or do not care of highlighting tag when code is display</a><br>
     </p>
     <p><br>
     </p>
@@ -95,6 +93,7 @@
     <p>Here is an example of the previous features:  </p>
 	<p>
 	
+{% highlight scheme %}
 ```scheme
 	
 (use-modules (Scheme+))
@@ -132,6 +131,7 @@
   s) ;; return boolean value
 
 ```
+{% endhighlight %}
   
 </p>
   <p>Another example with Guile Scheme in the REPL (Read Eval Print Loop):</p>
@@ -386,22 +386,26 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p style="margin-left: 40px;">Here is the definition in classic prefix
       Scheme:</p>
 
+{% highlight scheme %}
 ```scheme
 (define (fibonacci n)
   (if (< n 2)
     n
     (+ (fibonacci (- n 1)) (fibonacci (- n 2)))))
 ```
+{% endhighlight %}
 
 <p style="margin-left: 40px;">And here is a definition using "Curly Infix"
       SRFI 105:</p>
 
+{% highlight scheme %}
 ```scheme
 (define (fib n)
   (if {n < 2}
       n
       {(fib {n - 1}) + (fib {n - 2})} ))
 ```
+{% endhighlight %}
 
 <p> </p>
     <br>
@@ -417,6 +421,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 
 
+{% highlight scheme %}
 ```scheme
 (define size0 10000)
 (define memo0 (make-vector size0 0))return
@@ -428,6 +433,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 		(vector-set! memo0 n fibn)
 		fibn))))
 ```
+{% endhighlight %}
 
 
 <p> </p>
@@ -445,6 +451,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       <p>Below is the version of the above code written in Scheme+ :</p>
 <p>
 
+{% highlight scheme %}
 ```scheme
 (use-modules (Scheme+))
 
@@ -457,6 +464,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
    (else {memo[n] <- {(fibdyna {n - 1}) + (fibdyna {n - 2})}}) ))
 ```
+{% endhighlight %}
 
 </p>
     <p> </p>
@@ -534,6 +542,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       and <b>&lt;-</b> (due to the impossibility to have easily a single
       operator :-( ) :</p>
 
+{% highlight scheme %}
 ```scheme
 (use-modules (Scheme+))
 
@@ -572,6 +581,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 	       {dyna[ls t] <- (one-two s)}
 	       s])) ;; return boolean value
 ```
+{% endhighlight %}
 
 <p> </p>
     <br>
@@ -584,6 +594,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       clauses,general syntax is:</p>
 
 
+{% highlight scheme %}
 ```scheme
 (condx [condition statements ...]
 
@@ -593,6 +604,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
             [else statements ...])
 ```
+{% endhighlight %}
 
 <div style="margin-left: 40px;"> </div>
     <p style="text-align: center;"><br>
@@ -600,6 +612,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p style="text-align: left;">In classic Scheme the code would be like that
       which is longer than in Scheme+:</p>
 	  
+{% highlight scheme %}
 ```scheme
 (define cpt 0)
 
@@ -645,6 +658,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 			    s)))))
 	      ] ))
 ```
+{% endhighlight %}
 
 
 
@@ -657,6 +671,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       <b>declare </b>macro:</p>
     <p> </p>
 	
+{% highlight scheme %}
 ```scheme
 (use-modules (Scheme+))
 
@@ -702,6 +717,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 	       {dyna[ls t] <- (one-two s)}
 	       s])) ;; return boolean value
 ```
+{% endhighlight %}
 
 
 <p style="text-align: left;">It is also possible to use <b>return</b>
@@ -714,6 +730,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </p>
 	
 
+{% highlight scheme %}
 ```scheme
 (use-modules (Scheme+))
 
@@ -750,6 +767,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
   {dyna[ls t] <- (one-two s)}
   s) ;; return boolean value
 ```
+{% endhighlight %}
 
     
 <h2><br>
@@ -779,6 +797,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p><b>condx</b> is a macro that allow execution of arbitrary code between
       conditionals clauses,syntax is :</p>
 
+{% highlight scheme %}
 ```scheme
 (condx [condition statements ...]
 
@@ -788,6 +807,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
             [else statements ...])
 ```
+{% endhighlight %}
 
 <p style="text-align: left;"><b>condx</b> is not a major feature of <b>Scheme+</b>
       but it can replace a lot of 'if then <b>elif'</b>, i dislike and still
@@ -816,6 +836,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       the first - foo - is erroneous:<br>
     </p>
 
+{% highlight scheme %}
 ```scheme
 (define foo (begin (define x 1)
                    (define y 2)
@@ -826,6 +847,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
               (define y 2)
               (lambda (t) (+ x y t))))
 ```
+{% endhighlight %}
 
 <p style="text-align: left;">error: define: not allowed in an expression
       context in: (define x 1)<br>
@@ -835,12 +857,14 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </p>
     <p style="text-align: left;"> </p>
 
+{% highlight scheme %}
 ```scheme
 (define-syntax &
   (syntax-rules ()
     ((_ ev)  ev)
     ((_ ev ...) (let () ev ...))))
 ```
+{% endhighlight %}
 
  
 <p>We can now define the previous bar function in Scheme+ like this:<br>
@@ -848,6 +872,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p> </p>
 
 
+{% highlight scheme %}
 ```scheme
 (def bar (& (declare x y)
             {x <- 1} 
@@ -857,6 +882,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 (bar 7)
 10
 ```
+{% endhighlight %}
 
 <p style="text-align: left;"> </p>
     <h2 style=" text-align: left;">12.<u>Caveats:</u></h2>
@@ -921,6 +947,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p>Examples:</p>
     <p><!-- HTML generated using hilite.me --></p>
 
+{% highlight scheme %}
 ```scheme
 (let<-rec* [x <- 1
             y <- (+ x 1)
@@ -928,6 +955,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
          z)
 4
 ```
+{% endhighlight %}
 
 <p> </p>
     <p>and here is the source code of this <b>recursive macro</b> defined with
