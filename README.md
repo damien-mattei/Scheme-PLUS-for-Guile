@@ -304,15 +304,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p> contact : <a href="https://annuaire.univ-cotedazur.fr/" target="_blank">directory
         e-mail<br>
       </a></p>
-    <p>Guagno - Island of Corsica (Région des Dui Sorru) où m'est venue l'idée
-      de Scheme+ ; contact : il y a la 4G,la 5G parfois,pour le routage il faut
-      suivre un <i>Protocole développé localement</i> : les <b>"<i><a href="https://www.corsematin.com/articles/vandalisme-pitie-pour-les-panneaux-routiers-des-deux-sorru-527"
-            target="_blank">Panneaux en Braille</a></i>" </b>ou du moins ce
-      qu'il en reste<b>:</b> <a href="intersection-Guagno-Soccia.JPG" target="_blank"><img
-          src="intersection-Guagno-Soccia.JPG" alt="intersection-Guagno-Soccia."
-          title="intersection-Guagno-Soccia." height="100"></a> Photo “<em>Tous
-        droits réservés</em>” Damien Mattei</p>
-    <p>mais ne nous égarons pas :-) et revenons au Scheme+ <br>
+    <p>Guagno - Island of Corsica
     </p>
     <p> </p>
     <p> </p>
@@ -823,29 +815,18 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p style="text-align: left;">As example consider those two definitions where
       the first - foo - is erroneous:<br>
     </p>
-    <!-- HTML generated using hilite.me -->
-    <div style="background: #f8f8f8;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%">(<span style="color: #AA22FF; font-weight: bold">define </span><span
-style="color: #B8860B">foo</span> (<span style="color: #AA22FF; font-weight: bold">begin </span>(<span
-style="color: #AA22FF; font-weight: bold">define </span><span style="color: #B8860B">x</span> <span
-style="color: #666666">1</span>)
-                   (<span style="color: #AA22FF; font-weight: bold">define </span><span
-style="color: #B8860B">y</span> <span style="color: #666666">2</span>)
-                   (<span style="color: #AA22FF; font-weight: bold">lambda </span>(<span
-style="color: #00A000">t</span>) (<span style="color: #AA22FF">+ </span><span style="color: #B8860B">x</span> <span
-style="color: #B8860B">y</span> <span style="color: #B8860B">t</span>))))
 
-(<span style="color: #AA22FF; font-weight: bold">define </span><span style="color: #B8860B">bar</span> (<span
-style="color: #AA22FF; font-weight: bold">let </span>()
-              (<span style="color: #AA22FF; font-weight: bold">define </span><span
-style="color: #B8860B">x</span> <span style="color: #666666">1</span>)
-              (<span style="color: #AA22FF; font-weight: bold">define </span><span
-style="color: #B8860B">y</span> <span style="color: #666666">2</span>)
-              (<span style="color: #AA22FF; font-weight: bold">lambda </span>(<span
-style="color: #00A000">t</span>) (<span style="color: #AA22FF">+ </span><span style="color: #B8860B">x</span> <span
-style="color: #B8860B">y</span> <span style="color: #B8860B">t</span>))))
-</pre> </div>
+```scheme
+(define foo (begin (define x 1)
+                   (define y 2)
+                   (lambda (t) (+ x y t))))
+
+(define bar (let ()
+              (define x 1)
+              (define y 2)
+              (lambda (t) (+ x y t))))
+```
+
     <p style="text-align: left;">error: define: not allowed in an expression
       context in: (define x 1)<br>
     </p>
@@ -1129,13 +1110,6 @@ style="color: #0086f7; font-weight: bold">5</span><span style="color: #ffffff">)
     </p>
     <p><br>
     </p>
-    <div style="text-align: right;">
-      <h2><a href="https://youtu.be/FLUrPy_ah18" target="_blank"><i>That</i></a><a
-href="https://youtu.be/ms4DpPfXPNY" target="_blank"><i>'s </i></a>
-<a href="https://youtu.be/mMx228QVT3E" target="_blank"><i>all </i></a>
-<a href="https://youtu.be/krRMKAErUNI" target="_blank"><i>folks</i></a>
-<a href="https://youtu.be/_kQHOJhzoQw" target="_blank"><i> !</i></a></h2>
-    </div>
     <p> </p>
 
 
