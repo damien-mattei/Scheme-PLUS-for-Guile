@@ -139,63 +139,63 @@
   <p>Another example with Guile Scheme in the REPL (Read Eval Print Loop):</p>
     <p> </p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">mattei@MBP-Touch-Bar ~ % cd
         Dropbox/git/Scheme-PLUS-for-Guile</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">mattei@MBP-Touch-Bar
         Scheme-PLUS-for-Guile % guile</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">GNU Guile 3.0.7</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">Copyright (C) 1995-2021 Free
         Software Foundation, Inc.</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt;
         (use-modules (Scheme+))</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">;;; note: source file
         ./Scheme+.scm</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">;;; <span class="Apple-converted-space">&nbsp;
           &nbsp; &nbsp; </span>newer than compiled<span class="Apple-converted-space">
           <br>
         </span></font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">;;; compiling ./Scheme+.scm</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">;;; compiled<span class="Apple-converted-space">&nbsp;</span></font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt;
         (declare L)</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt; {L
         &lt;- '(1 2 3 4)}</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">$1 = (1 2 3 4)</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt; L</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">$2 = (1 2 3 4)</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt; {L
         &lt;- (list 1 2 3 4 5)}</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
-      #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
+      #ffffcc"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">$3 = (1 2 3 4 5)</font></p>
     <br>
     <p>for the rest read below and the documentation.</p>
