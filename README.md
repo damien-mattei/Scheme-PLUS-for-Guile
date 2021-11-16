@@ -920,98 +920,46 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p><b>(load "let.scm")</b></p>
     <p>Examples:</p>
     <p><!-- HTML generated using hilite.me --></p>
-    <div style="background: #272822;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #f8f8f2">(</span><span
-style="color: #a6e22e">let&lt;-rec*</span> <span style="color: #f8f8f2">[x</span> <span
-style="color: #f8f8f2">&lt;-</span> <span style="color: #ae81ff">1</span>
-            <span style="color: #f8f8f2">y</span> <span style="color: #f8f8f2">&lt;-</span> <span
-style="color: #f8f8f2">(+ x</span> <span style="color: #ae81ff">1</span><span style="color: #f8f8f2">)</span>
-            <span style="color: #f8f8f2">z</span> <span style="color: #f8f8f2">&lt;-</span> <span
-style="color: #f8f8f2">(+ </span><span style="color: #ae81ff">2</span> <span style="color: #f8f8f2">y)]</span>
-         <span style="color: #f8f8f2">z)</span>
-<span style="color: #ae81ff">4</span>
-</pre> </div>
-    <p> </p>
+
+```scheme
+(let<-rec* [x <- 1
+            y <- (+ x 1)
+            z <- (+ 2 y)]
+         z)
+4
+```
+
+<p> </p>
     <p>and here is the source code of this <b>recursive macro</b> defined with
       an <b>accumulator</b>:</p>
     <p><!-- HTML generated using hilite.me --></p>
-    <div style="background: #272822;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #f8f8f2">(</span><span
-style="color: #66d9ef">define-syntax </span><span style="color: #f8f8f2">let&lt;-rec*</span>
 
-  <span style="color: #f8f8f2">(</span><span style="color: #66d9ef">syntax-rules </span><span
-style="color: #f8f8f2">(</span><span style="color: #a6e22e">&lt;-</span><span style="color: #f8f8f2">)</span>
+```scheme
+(define-syntax let<-rec*
 
-<span style="color: #f8f8f2">((</span><span style="color: #a6e22e">_</span> <span
-style="color: #f8f8f2">()</span> <span style="color: #f8f8f2">expr</span> <span
-style="color: #f92672">...</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">(</span><span
-style="color: #66d9ef">begin </span><span style="color: #f8f8f2">expr</span> <span
-style="color: #f92672">...</span><span style="color: #f8f8f2">))</span> <span style="color: #75715e">;;  case empty let</span>
-    <span style="color: #f8f8f2">((</span><span style="color: #a6e22e">_</span> <span
-style="color: #f8f8f2">(</span><span style="color: #a6e22e">var1</span> <span style="color: #f8f8f2">&lt;-</span> <span
-style="color: #f8f8f2">val1)</span> <span style="color: #f8f8f2">expr</span>  <span
-style="color: #f92672">...</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">(</span><span
-style="color: #a6e22e">letrec*</span> <span style="color: #f8f8f2">((</span><span
-style="color: #a6e22e">var1</span> <span style="color: #f8f8f2">val1))</span> <span
-style="color: #f8f8f2">expr</span> <span style="color: #f92672">...</span><span
-style="color: #f8f8f2">))</span> <span style="color: #75715e">;; case single binding</span>
-    <span style="color: #f8f8f2">((</span><span style="color: #a6e22e">_</span> <span
-style="color: #f8f8f2">(</span><span style="color: #a6e22e">var1</span> <span style="color: #f8f8f2">&lt;-</span> <span
-style="color: #f8f8f2">val1</span> <span style="color: #75715e">;; multiple binding</span>
-	 <span style="color: #f8f8f2">var2</span> <span style="color: #f8f8f2">&lt;-</span> <span
-style="color: #f8f8f2">val2</span> <span style="color: #f92672">...</span><span
-style="color: #f8f8f2">)</span>
-	<span style="color: #f8f8f2">expr</span> <span style="color: #f92672">...</span><span
-style="color: #f8f8f2">)</span>
-     <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">%parse-letrec-bindings-and-evaluate-expressions</span> <span
-style="color: #f8f8f2">((</span><span style="color: #a6e22e">var1</span> <span style="color: #f8f8f2">val1))</span>  <span
-style="color: #f8f8f2">(</span><span style="color: #a6e22e">var2</span> <span style="color: #f8f8f2">&lt;-</span> <span
-style="color: #f8f8f2">val2</span> <span style="color: #f92672">...</span><span
-style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">expr</span> <span style="color: #f92672">...</span><span
-style="color: #f8f8f2">))))</span>
+  (syntax-rules (<-)
 
-<span style="color: #75715e">;; recursive macro with accumulator</span>
-<span style="color: #f8f8f2">(</span><span style="color: #66d9ef">define-syntax </span><span
-style="color: #f8f8f2">%parse-letrec-bindings-and-evaluate-expressions</span>
+    ((_ () expr ...) (begin expr ...)) ;;  case empty let
+    ((_ (var1 <- val1) expr  ...) (letrec* ((var1 val1)) expr ...)) ;; case single binding
+    ((_ (var1 <- val1 ;; multiple binding
+	 var2 <- val2 ...)
+	expr ...)
+     (%parse-letrec-bindings-and-evaluate-expressions ((var1 val1))  (var2 <- val2 ...) expr ...))))
 
-  <span style="color: #f8f8f2">(</span><span style="color: #66d9ef">syntax-rules </span><span
-style="color: #f8f8f2">(</span><span style="color: #a6e22e">&lt;-</span><span style="color: #f8f8f2">)</span>
+;; recursive macro with accumulator
+(define-syntax %parse-letrec-bindings-and-evaluate-expressions
 
-<span style="color: #f8f8f2">((</span><span style="color: #a6e22e">_</span> <span
-style="color: #f8f8f2">(</span><span style="color: #a6e22e">bindings</span> <span
-style="color: #f92672">...</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">(</span><span
-style="color: #a6e22e">var1</span> <span style="color: #f8f8f2">&lt;-</span> <span
-style="color: #f8f8f2">val1)</span> <span style="color: #f8f8f2">expr</span> <span
-style="color: #f92672">...</span><span style="color: #f8f8f2">)</span>  <span style="color: #f8f8f2">(</span><span
-style="color: #a6e22e">letrec*</span> <span style="color: #f8f8f2">(</span><span
-style="color: #a6e22e">bindings</span> <span style="color: #f92672">...</span> <span
-style="color: #f8f8f2">(</span><span style="color: #a6e22e">var1</span> <span style="color: #f8f8f2">val1))</span> <span
-style="color: #75715e">;; last binding</span>
-							  <span style="color: #f8f8f2">expr</span> <span style="color: #f92672">...</span><span
-style="color: #f8f8f2">))</span> <span style="color: #75715e">;; we evaluate expressions</span>
-    <span style="color: #f8f8f2">((</span><span style="color: #a6e22e">_</span> <span
-style="color: #f8f8f2">(</span><span style="color: #a6e22e">bindings</span> <span
-style="color: #f92672">...</span><span style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">(</span><span
-style="color: #a6e22e">var1</span> <span style="color: #f8f8f2">&lt;-</span> <span
-style="color: #f8f8f2">val1</span> <span style="color: #75715e">;; multiple binding</span>
-			<span style="color: #f8f8f2">var2</span> <span style="color: #f8f8f2">&lt;-</span> <span
-style="color: #f8f8f2">val2</span> <span style="color: #f92672">...</span><span
-style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">expr</span> <span style="color: #f92672">...</span><span
-style="color: #f8f8f2">)</span>
-     <span style="color: #75715e">;; store (var1 val1) binding in accumulator and continue parsing</span>
-       <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">%parse-letrec-bindings-and-evaluate-expressions</span> <span
-style="color: #f8f8f2">(</span><span style="color: #a6e22e">bindings</span> <span
-style="color: #f92672">...</span> <span style="color: #f8f8f2">(</span><span style="color: #a6e22e">var1</span> <span
-style="color: #f8f8f2">val1))</span> <span style="color: #f8f8f2">(</span><span
-style="color: #a6e22e">var2</span> <span style="color: #f8f8f2">&lt;-</span> <span
-style="color: #f8f8f2">val2</span> <span style="color: #f92672">...</span><span
-style="color: #f8f8f2">)</span> <span style="color: #f8f8f2">expr</span> <span style="color: #f92672">...</span><span
-style="color: #f8f8f2">))))</span> 
-    
-</pre> </div>
-    <p> </p>
+  (syntax-rules (<-)
+
+    ((_ (bindings ...) (var1 <- val1) expr ...)  (letrec* (bindings ... (var1 val1)) ;; last binding
+							  expr ...)) ;; we evaluate expressions
+    ((_ (bindings ...) (var1 <- val1 ;; multiple binding
+			var2 <- val2 ...) expr ...)
+     ;; store (var1 val1) binding in accumulator and continue parsing
+       (%parse-letrec-bindings-and-evaluate-expressions (bindings ... (var1 val1)) (var2 <- val2 ...) expr ...))))
+```
+
+<p> </p>
     <br>
     <p>a few others special forms simplifying the LETs (but still obsolete in my
       opinion):</p>
