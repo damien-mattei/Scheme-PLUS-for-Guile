@@ -95,7 +95,8 @@
 	
 {% highlight scheme %}
 ```scheme
-	
+
+
 (use-modules (Scheme+))
 
 (def (subset-sum-dynamic L t)
@@ -129,6 +130,7 @@
 
   {dyna[ls t] <- (one-two s)}
   s) ;; return boolean value
+
 
 ```
 {% endhighlight %}
@@ -386,22 +388,32 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p style="margin-left: 40px;">Here is the definition in classic prefix
       Scheme:</p>
 
+{% highlight scheme %}
+```scheme
 
-    (define (fibonacci n)
-      (if (< n 2)
-        n
-        (+ (fibonacci (- n 1)) (fibonacci (- n 2)))))
 
+(define (fibonacci n)
+  (if (< n 2)
+    n
+    (+ (fibonacci (- n 1)) (fibonacci (- n 2)))))
+
+
+```
+{% endhighlight %}
 
 <p style="margin-left: 40px;">And here is a definition using "Curly Infix"
       SRFI 105:</p>
 
 {% highlight scheme %}
 ```scheme
+
+
 (define (fib n)
   (if {n < 2}
       n
       {(fib {n - 1}) + (fib {n - 2})} ))
+
+
 ```
 {% endhighlight %}
 
@@ -421,6 +433,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 {% highlight scheme %}
 ```scheme
+
+
 (define size0 10000)
 (define memo0 (make-vector size0 0))return
 
@@ -430,6 +444,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 	(else (let ((fibn (+ (fibdyna0 (- n 1)) (fibdyna0 (- n 2)))))
 		(vector-set! memo0 n fibn)
 		fibn))))
+
+
 ```
 {% endhighlight %}
 
@@ -451,6 +467,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 {% highlight scheme %}
 ```scheme
+
+
 (use-modules (Scheme+))
 
 {size <+ 10000}
@@ -461,6 +479,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
        ({memo[n] <> 0} {memo[n]})
 
    (else {memo[n] <- {(fibdyna {n - 1}) + (fibdyna {n - 2})}}) ))
+
+
 ```
 {% endhighlight %}
 
@@ -542,6 +562,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 {% highlight scheme %}
 ```scheme
+
+
 (use-modules (Scheme+))
 
 {L-init <+ '(1 3 4 16 17 24 45 64 197 256 275 323 540 723 889 915 1040 1041 1093 1099 1111 1284 1344 1520 2027 2500 2734 3000 3267 3610 4285 5027)}
@@ -578,6 +600,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 	 [else {s <+ {(subset-sum-guile R {t - c}) or (subset-sum-guile R t)}}
 	       {dyna[ls t] <- (one-two s)}
 	       s])) ;; return boolean value
+
+
 ```
 {% endhighlight %}
 
@@ -594,6 +618,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 {% highlight scheme %}
 ```scheme
+
+
 (condx [condition statements ...]
 
             [exec statements ... ]
@@ -601,6 +627,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
             ...
 
             [else statements ...])
+
+
 ```
 {% endhighlight %}
 
@@ -612,6 +640,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 	  
 {% highlight scheme %}
 ```scheme
+
+
 (define cpt 0)
 
 (define (ssigma-proto L t)
@@ -655,6 +685,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 					ls t)
 			    s)))))
 	      ] ))
+
+
 ```
 {% endhighlight %}
 
@@ -671,6 +703,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 	
 {% highlight scheme %}
 ```scheme
+
+
 (use-modules (Scheme+))
 
 (declare L-init t-init ls dyna cpt)
@@ -714,6 +748,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 	 [else {s <- {(subset-sum-guile-dec R {t - c}) or (subset-sum-guile-dec R t)}}
 	       {dyna[ls t] <- (one-two s)}
 	       s])) ;; return boolean value
+
+
 ```
 {% endhighlight %}
 
@@ -730,6 +766,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 {% highlight scheme %}
 ```scheme
+
+
 (use-modules (Scheme+))
 
 (def (subset-sum-dyna L t)
@@ -764,6 +802,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
   {dyna[ls t] <- (one-two s)}
   s) ;; return boolean value
+
+
 ```
 {% endhighlight %}
 
@@ -797,6 +837,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 {% highlight scheme %}
 ```scheme
+
+
 (condx [condition statements ...]
 
             [exec statements ... ]
@@ -804,6 +846,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
             ...
 
             [else statements ...])
+
+
 ```
 {% endhighlight %}
 
@@ -836,6 +880,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 {% highlight scheme %}
 ```scheme
+
+
 (define foo (begin (define x 1)
                    (define y 2)
                    (lambda (t) (+ x y t))))
@@ -844,6 +890,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
               (define x 1)
               (define y 2)
               (lambda (t) (+ x y t))))
+
+
 ```
 {% endhighlight %}
 
@@ -857,10 +905,14 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 {% highlight scheme %}
 ```scheme
+
+
 (define-syntax &
   (syntax-rules ()
     ((_ ev)  ev)
     ((_ ev ...) (let () ev ...))))
+
+
 ```
 {% endhighlight %}
 
@@ -872,6 +924,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 {% highlight scheme %}
 ```scheme
+
+
 (def bar (& (declare x y)
             {x <- 1} 
             {y <- 2}
@@ -879,8 +933,11 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 (bar 7)
 10
+
+
 ```
 {% endhighlight %}
+
 
 <p style="text-align: left;"> </p>
     <h2 style=" text-align: left;">12.<u>Caveats:</u></h2>
@@ -947,11 +1004,15 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 {% highlight scheme %}
 ```scheme
+
+
 (let<-rec* [x <- 1
             y <- (+ x 1)
             z <- (+ 2 y)]
          z)
 4
+
+
 ```
 {% endhighlight %}
 
@@ -963,6 +1024,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 {% highlight scheme %}
 ```scheme
+
 
 (define-syntax let<-rec*
 
@@ -986,6 +1048,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 			var2 <- val2 ...) expr ...)
      ;; store (var1 val1) binding in accumulator and continue parsing
        (%parse-letrec-bindings-and-evaluate-expressions (bindings ... (var1 val1)) (var2 <- val2 ...) expr ...))))
+
 
 ```
 {% endhighlight %}
