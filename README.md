@@ -386,14 +386,12 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p style="margin-left: 40px;">Here is the definition in classic prefix
       Scheme:</p>
 
-{% highlight scheme %}
-```scheme
-(define (fibonacci n)
-  (if (< n 2)
-    n
-    (+ (fibonacci (- n 1)) (fibonacci (- n 2)))))
-```
-{% endhighlight %}
+
+    (define (fibonacci n)
+      (if (< n 2)
+        n
+        (+ (fibonacci (- n 1)) (fibonacci (- n 2)))))
+
 
 <p style="margin-left: 40px;">And here is a definition using "Curly Infix"
       SRFI 105:</p>
