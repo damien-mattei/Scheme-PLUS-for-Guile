@@ -4,3 +4,11 @@ description: [Enhancing Scheme (and Lisp-like) languages.]
 show_downloads: true
 
 
+#Others
+markdown: kramdown
+
+# Syntax highlighting
+highlighter: rouge
+kramdown:
+    input: GFM 
+    syntax_highlighter: rouge
