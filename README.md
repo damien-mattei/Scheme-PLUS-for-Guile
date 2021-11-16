@@ -827,42 +827,38 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
               (lambda (t) (+ x y t))))
 ```
 
-    <p style="text-align: left;">error: define: not allowed in an expression
+<p style="text-align: left;">error: define: not allowed in an expression
       context in: (define x 1)<br>
     </p>
     <p style="text-align: left;">for this reason i provide a <b>&amp; </b>macro
       that is defined with a <b>let </b>as this:<br>
     </p>
     <p style="text-align: left;"> </p>
-    <pre style="margin: 0; line-height: 125%">(<span style="color: #AA22FF; font-weight: bold">define-syntax </span><span
-style="color: #B8860B">&amp;</span>
-  (<span style="color: #AA22FF; font-weight: bold">syntax-rules </span>()
-    ((<span style="color: #00A000">_</span> <span style="color: #B8860B">ev</span>)  <span
-style="color: #B8860B">ev</span>)
-    ((<span style="color: #00A000">_</span> <span style="color: #B8860B">ev</span> <span
-style="color: #666666">...</span>) (<span style="color: #AA22FF; font-weight: bold">let </span>() <span
-style="color: #B8860B">ev</span> <span style="color: #666666">...</span>))))
-</pre>
-    <p>We can now define the previous bar function in Scheme+ like this:<br>
+
+```scheme
+(define-syntax &
+  (syntax-rules ()
+    ((_ ev)  ev)
+    ((_ ev ...) (let () ev ...))))
+```
+
+ 
+<p>We can now define the previous bar function in Scheme+ like this:<br>
     </p>
     <p> </p>
-    <div id="highlight-preview">
-      <pre class="scheme" style="font-family:monospace;"><span style="color: #006600;">(</span>def bar <span
-style="color: #006600;">(</span><span style="color: #006600;">&amp;</span> <span
-style="color: #006600;">(</span>declare x y<span style="color: #006600;">)</span>
-            <span style="color: #006600;">{</span>x <span style="color: #006600;">&lt;-</span> <span
-style="color: #cc66cc;">1</span><span style="color: #006600;">}</span> 
-            <span style="color: #006600;">{</span>y <span style="color: #006600;">&lt;-</span> <span
-style="color: #cc66cc;">2</span><span style="color: #006600;">}</span>
-            <span style="color: #006600;">(</span><span style="color: #b1b100;">lambda</span> <span
-style="color: #006600;">(</span><span style="color: #b1b100;">t</span><span style="color: #006600;">)</span> <span
-style="color: #006600;">(</span><span style="color: #006600;">+</span> x y <span
-style="color: #b1b100;">t</span><span style="color: #006600;">)</span><span style="color: #006600;">)</span><span
-style="color: #006600;">)</span><span style="color: #006600;">)<br><br></span><span
-style="color: #006600;"></span></pre>
-      <pre>(bar 7)<br>10</pre>
-    </div>
-    <p style="text-align: left;"> </p>
+
+
+```scheme
+(def bar (& (declare x y)
+            {x <- 1} 
+            {y <- 2}
+            (lambda (t) (+ x y t))))
+
+(bar 7)
+10
+```
+
+<p style="text-align: left;"> </p>
     <h2 style=" text-align: left;">12.<u>Caveats:</u></h2>
     <p>Inherent to Scheme language it as not been possible to simplify more
       assignment operator in a single one case. This is due to the fact that it
