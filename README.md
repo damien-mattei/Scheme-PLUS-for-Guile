@@ -26,7 +26,8 @@
     </p>
     <p style="text-align: center;"><a
     href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html"
-    target="_blank">for a better view click here  or do not care of highlighting tag when code is display</a><br>
+    target="_blank">for a better view click here (or do not care of
+  highlighting tag and triple backquotes when code is displayed!)</a><br>
     </p>
     <p><br>
     </p>
