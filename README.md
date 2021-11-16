@@ -934,7 +934,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       an <b>accumulator</b>:</p>
     <p><!-- HTML generated using hilite.me --></p>
 
-```scheme
+{% highlight scheme %}
 (define-syntax let<-rec*
 
   (syntax-rules (<-)
@@ -957,7 +957,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 			var2 <- val2 ...) expr ...)
      ;; store (var1 val1) binding in accumulator and continue parsing
        (%parse-letrec-bindings-and-evaluate-expressions (bindings ... (var1 val1)) (var2 <- val2 ...) expr ...))))
-```
+{% endhighlight %}
 
 <p> </p>
     <br>
