@@ -9,8 +9,6 @@ markdown: kramdown
 
 # Syntax highlighting
 highlighter: pygments
-kramdown:
-    input: GFM 
-    syntax_highlighter: pygments
+
     
     
