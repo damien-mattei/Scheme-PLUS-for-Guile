@@ -27,7 +27,7 @@
     <p><br>
     </p>
     <h2><u>1. Scheme+ at a glance:&nbsp;</u></h2>
-    <p><b>Scheme+ is an extension of the Scheme syntax language.</b><br>
+    <p><b>Scheme+ is an extension of the syntax of the Scheme language.</b><br>
     </p>
     <p>The <b>idea</b> of <b>Scheme+</b> is came from this : <b>
 	<i>"Why is it
@@ -1072,6 +1072,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 {% highlight scheme %}
 ```scheme
+
+
 (let-arrow* (x ← 1
  	     y ← {x + 1})
            y)
@@ -1103,6 +1105,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 {% highlight scheme %}
 ```scheme
+
+
 (letrec-arrow* [ fact ← (lambda (n)
  			  (if  {n = 1}
  			       1
