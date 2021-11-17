@@ -1076,18 +1076,20 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
  	     y ← {x + 1})
            y)
 2
-```
-{% endhighlight %}
 
-<p> </p>
-    <p><!-- HTML generated using hilite.me --></p>
 
-{% highlight scheme %}
-```scheme
 (let-arrow* ({x ← 1}
              {y ← {x + 1}})
            x
            y)
+
+2
+
+
+(let-arrow* [ x 1
+              y (+ x 1)
+              z (+ 2 y) ]
+            z y)
 
 2
 
@@ -1100,13 +1102,14 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 {% highlight scheme %}
 ```scheme
+(letrec-arrow* [ fact ← (lambda (n)
+ 			  (if  {n = 1}
+ 			       1
+                               {n * (fact {n - 1})} )) ]
+ 	       (fact 5))
 
-(let-arrow* [ x 1
-              y (+ x 1)
-              z (+ 2 y) ]
-            z y)
+120
 
-2
 
 {% endhighlight %}
 
