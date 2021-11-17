@@ -1069,79 +1069,47 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       opinion):</p>
     <p>let-arrow* :</p>
     <p><!-- HTML generated using hilite.me --></p>
-    <div style="background: #111111;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">let-arrow*</span> <span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">x</span> <span style="color: #ffffff">←</span> <span
-style="color: #0086f7; font-weight: bold">1</span>
- 	     <span style="color: #fb660a">y</span> <span style="color: #ffffff">←</span> <span
-style="color: #ffffff">{</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">+</span> <span
-style="color: #0086f7; font-weight: bold">1</span><span style="color: #ffffff">})</span>
-           <span style="color: #fb660a">y</span><span style="color: #ffffff">)</span>
-<span style="color: #0086f7; font-weight: bold">2</span>
-</pre> </div>
-    <p> </p>
-    <p><!-- HTML generated using hilite.me --></p>
-    <div style="background: #111111;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">let-arrow*</span> <span style="color: #ffffff">({</span><span
-style="color: #fb660a">x</span> <span style="color: #ffffff">←</span> <span style="color: #0086f7; font-weight: bold">1</span><span
-style="color: #ffffff">}</span>
-             <span style="color: #ffffff">{</span><span style="color: #fb660a">y</span> <span
-style="color: #ffffff">←</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">x</span> <span
-style="color: #fb660a">+</span> <span style="color: #0086f7; font-weight: bold">1</span><span
-style="color: #ffffff">}})</span>
-           <span style="color: #fb660a">x</span>
-           <span style="color: #fb660a">y</span><span style="color: #ffffff">)</span>
 
-<span style="color: #0086f7; font-weight: bold">2</span>
-</pre> </div>
-    <p> </p>
-    <p><!-- HTML generated using hilite.me --></p>
-    <div style="background: #111111;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">let-arrow*</span> <span style="color: #ffffff">[</span> <span
-style="color: #fb660a">x</span> <span style="color: #0086f7; font-weight: bold">1</span>
-              <span style="color: #fb660a">y</span> <span style="color: #ffffff">(+ </span><span
-style="color: #fb660a">x</span> <span style="color: #0086f7; font-weight: bold">1</span><span
-style="color: #ffffff">)</span>
-              <span style="color: #fb660a">z</span> <span style="color: #ffffff">(+ </span><span
-style="color: #0086f7; font-weight: bold">2</span> <span style="color: #fb660a">y</span><span
-style="color: #ffffff">)</span> <span style="color: #ffffff">]</span>
-            <span style="color: #fb660a">z</span> <span style="color: #fb660a">y</span><span
-style="color: #ffffff">)</span>
+{% highlight scheme %}
+```scheme
+(let-arrow* (x ← 1
+ 	     y ← {x + 1})
+           y)
+2
+```
+{% endhighlight %}
 
-<span style="color: #0086f7; font-weight: bold">2</span>
-</pre> </div>
+<p> </p>
+    <p><!-- HTML generated using hilite.me --></p>
+
+{% highlight scheme %}
+```scheme
+(let-arrow* ({x ← 1}
+             {y ← {x + 1}})
+           x
+           y)
+
+2
+
+{% endhighlight %}
+
     <p> </p>
     <p><br>
     </p>
     <p>letrec-arrow* , the same as let-arrow* but for recursive functions:</p>
-    <!-- HTML generated using hilite.me -->
-    <div style="background: #111111;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">letrec-arrow*</span> <span style="color: #ffffff">[</span> <span
-style="color: #fb660a">fact</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">(</span><span
-style="color: #fb660a; font-weight: bold">lambda </span><span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">n</span><span style="color: #ffffff">)</span>
- 			  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">if </span> <span
-style="color: #ffffff">{</span><span style="color: #fb660a">n</span> <span style="color: #fb660a">=</span> <span
-style="color: #0086f7; font-weight: bold">1</span><span style="color: #ffffff">}</span>
- 			       <span style="color: #0086f7; font-weight: bold">1</span>
-                               <span style="color: #ffffff">{</span><span style="color: #fb660a">n</span> <span
-style="color: #fb660a">*</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">fact</span> <span
-style="color: #ffffff">{</span><span style="color: #fb660a">n</span> <span style="color: #fb660a">-</span> <span
-style="color: #0086f7; font-weight: bold">1</span><span style="color: #ffffff">})}</span> <span
-style="color: #ffffff">))</span> <span style="color: #ffffff">]</span>
- 	       <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">fact</span> <span
-style="color: #0086f7; font-weight: bold">5</span><span style="color: #ffffff">))</span>
 
-<span style="color: #0086f7; font-weight: bold">120</span>
-</pre> </div>
+{% highlight scheme %}
+```scheme
+
+(let-arrow* [ x 1
+              y (+ x 1)
+              z (+ 2 y) ]
+            z y)
+
+2
+
+{% endhighlight %}
+
     <br>
     <h2><br>
     </h2>
