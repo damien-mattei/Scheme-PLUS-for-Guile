@@ -24,15 +24,6 @@
     <p style="text-align: center;"> </p>
     <p style="text-align: center;"><br>
     </p>
-    <p style="text-align: center;"><a
-    href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html"
-    target="_blank">for a better view click here (or do not care of
-  highlighting tag and triple backquotes when code is displayed!)</a><br>
-  Warnings about code highlighting tag due to bugs in Github Markdown system:<br>
-  -if you read this page on github.com the code examples display encapsuled between tags 'highlight scheme' and 'endhighlight' composed also with {} and % characters.<br>  
-  -if you read this page on github.io the code examples display starting with 3 backquotes char , the tag 'scheme' and ending again with 3 backquotes char.<br>
-  Those weirds Markdown and tags should not be displayed and are not part of Scheme+ examples.
-    </p>
     <p><br>
     </p>
     <h2><u>1. Scheme+ at a glance:&nbsp;</u></h2>
@@ -96,8 +87,20 @@
     <p style="text-align: left;"><b> <br>
       </b></p>
     <p>Here is an example of the previous features:  </p>
+
+ <p style="text-align: center;"><a
+    href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html"
+    target="_blank">for a better view click here (or do not care of
+  highlighting tag and triple backquotes when code is displayed!)</a><br>
+  Warnings about code highlighting tag due to bugs in Github Markdown system:<br>
+  -if you read this page on github.com the code examples display encapsuled between tags 'highlight scheme' and 'endhighlight' composed also with {} and % characters.<br>  
+  -if you read this page on github.io the code examples display starting with 3 backquotes char , the tag 'scheme' and ending again with 3 backquotes char.<br>
+  Those weirds Markdown and tags should not be displayed and are not part of Scheme+ examples.
+    </p>
+    
 	<p>
-	
+
+
 {% highlight scheme %}
 ```scheme
 
