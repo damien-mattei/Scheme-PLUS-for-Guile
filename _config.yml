@@ -8,8 +8,8 @@ show_downloads: true
 markdown: kramdown
 
 # Syntax highlighting
-highlighter: rouge
+highlighter: blue
 kramdown:
     input: GFM 
-    syntax_highlighter: rouge
+    syntax_highlighter: blue
     

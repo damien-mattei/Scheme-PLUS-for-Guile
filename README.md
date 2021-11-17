@@ -129,7 +129,9 @@
 
 ```
 {% endhighlight %}
-  
+
+
+
 <p>
   Warnings about code highlighting tag due to bugs in Github Markdown system:<br>
   -if you read this page on github.com the code examples display encapsuled between tags 'highlight scheme' and 'endhighlight' composed also with {} and % characters.<br>  
@@ -140,7 +142,10 @@
     target="_blank">for a better view click here (or do not care of
   highlighting tag and triple backquotes when code is displayed!)</a><br>
     </p>
-    
+
+
+
+
   <p>Another example with Guile Scheme in the REPL (Read Eval Print Loop):</p>
     <p> </p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
