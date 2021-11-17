@@ -1096,7 +1096,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 ```
 {% endhighlight %}
 
-    <p> </p>
+<p> </p>
     <p><br>
     </p>
     <p>letrec-arrow* , the same as let-arrow* but for recursive functions:</p>
@@ -1114,7 +1114,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 ```
 {% endhighlight %}
 
-    <br>
+<br>
     <h2><br>
     </h2>
     <h2><u>17.Comments:</u></h2>
