@@ -318,7 +318,6 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       </a></p>
     <p>Guagno - Island of Corsica
     </p>
-    <p> </p>
     <br>
     <p>To subit an issue, a bug or something else related with the Scheme+ code
       use the <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile/issues"
