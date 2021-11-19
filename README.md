@@ -350,6 +350,13 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p style="margin-left: 40px;"><code>sudo cp *.scm /usr/share/guile/site/3.0</code></p>
     <p style="margin-left: 40px;"><br>
     </p>
+    <p style="margin-left: 40px;">Then you can use Scheme+ from
+      every directory you want as it is site installed:</p>
+    <p style="margin-left: 40px;">(base) mattei@pc-mattei:~/Dropbox/git$
+        guile<br>
+        GNU Guile 3.0.1<br>
+        Copyright (C) 1995-2020 Free Software Foundation, Inc.<br>
+        <br>
 <h2><u>6. Idea and rationale:</u></h2>
     <p>The core language of <a href="https://en.wikipedia.org/wiki/Scheme_%28programming_language%29"
         target="_blank">Scheme</a> and <a href="https://en.wikipedia.org/wiki/Lisp_%28programming_language%29"
