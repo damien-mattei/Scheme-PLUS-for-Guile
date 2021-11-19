@@ -325,7 +325,59 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </p>
     <p><br>
     </p>
-    <h2><u>5. Idea and rationale:</u></h2>
+    <h2>5.<u>Installation:</u></h2>
+    <p>Of course you can use Scheme+ module directly from the directory where
+      the downloaded and expanded Scheme files of Scheme+ are but Scheme Guile
+      have rules to install module sites.</p>
+    <p>Those rules are documented here: <a href="https://www.gnu.org/software/guile/manual/html_node/Installing-Site-Packages.html"
+        target="_blank">https://www.gnu.org/software/guile/manual/html_node/Installing-Site-Packages.html</a></p>
+    <p>For your convenience here is how you can install Scheme+ in a Guile
+      Scheme distribution:</p>
+    <p style="margin-left: 40px;">Launch guile and find the directory of the
+      site modules: <code><br>
+      </code></p>
+    <p style="margin-left: 40px;"><code>scheme@(guile-user)&gt; (%site-dir)</code><br>
+      <code></code><code>"/usr/share/guile/site/3.0"</code></p>
+    <p style="margin-left: 40px;"><code><br>
+      </code></p>
+    <p style="margin-left: 40px;">Create the directory (recursively) if it does
+      not already exist: </p>
+    <p style="margin-left: 40px;"><code>sudo mkdir -p /usr/share/guile/site/3.0</code><br>
+      <code></code></p>
+    <p style="margin-left: 40px;"><br>
+    </p>
+    <p style="margin-left: 40px;">Copy the files:</p>
+    <p style="margin-left: 40px;"><code>sudo cp *.scm /usr/share/guile/site/3.0</code></p>
+    <p style="margin-left: 40px;"><code></code>Then you can use Scheme+ from
+      every directory you want as it is site installed:</p>
+    <p style="margin-left: 40px;"><code>(base) mattei@pc-mattei:~/Dropbox/git$
+        guile<br>
+        GNU Guile 3.0.1<br>
+        Copyright (C) 1995-2020 Free Software Foundation, Inc.<br>
+        <br>
+        Guile comes with ABSOLUTELY NO WARRANTY; for details type `,show w'.<br>
+        This program is free software, and you are welcome to redistribute it<br>
+        under certain conditions; type `,show c' for details.<br>
+        <br>
+        Enter `,help' for help.<br>
+        scheme@(guile-user)&gt; (use-modules (Scheme+))<br>
+        ;;; note: auto-compilation is enabled, set GUILE_AUTO_COMPILE=0<br>
+        ;;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; or pass the --no-auto-compile
+        argument to disable.<br>
+        ;;; compiling /usr/share/guile/site/3.0/Scheme+.scm<br>
+        ;;; compiling /usr/share/guile/site/3.0/growable-vector.scm<br>
+        ;;; compiled
+/home/mattei/.cache/guile/ccache/3.0-LE-8-4.2/usr/share/guile/site/3.0/growable-vector.scm.go<br>;;;
+        compiled
+/home/mattei/.cache/guile/ccache/3.0-LE-8-4.2/usr/share/guile/site/3.0/Scheme+.scm.go<br>scheme@(guile-user)&gt;
+        {x &lt;+ 7}<br>
+        scheme@(guile-user)&gt; x<br>
+        7</code></p>
+    <p style="margin-left: 40px;"><code><br>
+      </code></p>
+    <p style="margin-left: 40px;"><code><br>
+      </code></p>
+    <h2><u>6. Idea and rationale:</u></h2>
     <p>The core language of <a href="https://en.wikipedia.org/wiki/Scheme_%28programming_language%29"
         target="_blank">Scheme</a> and <a href="https://en.wikipedia.org/wiki/Lisp_%28programming_language%29"
         target="_blank">Lisp</a> are based on syntaxic form that date back from
@@ -362,7 +414,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </p>
     <p><br>
     </p>
-    <h2><u>6. Features:</u></h2>
+    <h2><u>7. Features:</u></h2>
     <p>The list of new features is subject to change and will grow by time, this
       version allows:</p>
     <ul>
@@ -387,7 +439,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </h2>
     <p><br>
     </p>
-    <h2><u>7. First Examples:</u></h2>
+    <h2><u>8. First Examples:</u></h2>
     <h3 style=" margin-left: 40px;">The <a href="https://en.wikipedia.org/wiki/Fibonacci_number"
         target="_blank">Fibonacci sequence</a>:</h3>
     <p style="margin-left: 40px;">This example is written in Scheme with and
@@ -525,7 +577,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </h2>
     <h2><br>
     </h2>
-    <h2><u>8.Short documentation</u></h2>
+    <h2><u>9.Short documentation</u></h2>
     <p>Square bracket operator <b>[] </b>is used for vectors,arrays,growable
       vectors,etc.</p>
     <p>example: <b>{T[k]} </b>return value of vector or array T indexed by k.</p>
@@ -561,7 +613,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </p>
     <p><br>
     </p>
-    <h2>9<u>.Advanced examples:</u><br>
+    <h2>10<u>.Advanced examples:</u><br>
     </h2>
     <p>Here is another example, from the <a href="https://en.wikipedia.org/wiki/Subset_sum_problem#Pseudo-polynomial_time_dynamic_programming_solution"
         target="_blank">Subset Sum Problem</a> that show the use of <b>&lt;+</b>
@@ -820,7 +872,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </h2>
     <h2><br>
     </h2>
-    <h2>10<u>. History of project:</u></h2>
+    <h2>11<u>. History of project:</u></h2>
     <p>First i developped a new set of LET special forms with less bracket use
       and after i decided to use another assignment scheme based on infix
       operator for a little part,at some point the new assignment scheme was
@@ -839,7 +891,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </p>
     <p><br>
     </p>
-    <h2>11.<u>Additional documentation:</u></h2>
+    <h2>12.<u>Additional documentation:</u></h2>
     <p><b>condx</b> is a macro that allow execution of arbitrary code between
       conditionals clauses,syntax is :</p>
 
@@ -948,7 +1000,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 
 
 <p style="text-align: left;"> </p>
-    <h2 style=" text-align: left;">12.<u>Caveats:</u></h2>
+    <h2 style=" text-align: left;">13.<u>Caveats:</u></h2>
     <p>Inherent to Scheme language it as not been possible to simplify more
       assignment operator in a single one case. This is due to the fact that it
       can not be written a macro that do define-or-set! and that define can not
@@ -960,7 +1012,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </p>
     <p><br>
     </p>
-    <h2>13.<u>Implementation:</u></h2>
+    <h2>14.<u>Implementation:</u></h2>
     <p>Mainly with <b>Scheme macros</b> which are not recursive (except in some
       obsolete features),so expansion is fast and code also. It also allows a
       great portabilty from one Scheme implementation to another one.</p>
@@ -968,7 +1020,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </p>
     <p><br>
     </p>
-    <h2>14.<u>Future:</u></h2>
+    <h2>15.<u>Future:</u></h2>
     <p>Scheme+ will be implemented for other Scheme. Racket (former DrScheme)
       first,....</p>
     <p>Next version will integrate more features, concerning <b>multiple values</b>
@@ -977,7 +1029,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </p>
     <p><br>
     </p>
-    <h2><u>15.Extra features:</u> </h2>
+    <h2><u>16.Extra features:</u> </h2>
     <p>The <b>growable vector class</b> which is not specific to Scheme+ is
       included in Scheme+ because it is intrinsic with <b>&lt;-</b> operator of
       Scheme+.</p>
@@ -999,7 +1051,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </p>
     <p><br>
     </p>
-    <h2>16.<u>Obsolete features:</u></h2>
+    <h2>17.<u>Obsolete features:</u></h2>
     <p>As mentioned early the project idea was initially to enhance the set of
       LET special form. The use of the LET set is no more need with the new
       assignment operator but i release anyway those set of enhanced and
@@ -1119,7 +1171,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 <br>
     <h2><br>
     </h2>
-    <h2><u>17.Comments:</u></h2>
+    <h2><u>18.Comments:</u></h2>
     <p>Github web site technology force me to convert this page in Github Markup
       Language, perheaps instead of HTML should i have make it directly in GML
       but i did not know it existed before doing it. I did not want to make this
