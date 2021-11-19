@@ -350,8 +350,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p style="margin-left: 40px;"><code>sudo cp *.scm /usr/share/guile/site/3.0</code></p>
     <p style="margin-left: 40px;"><br>
     </p>
-    
-    <h2><u>6. Idea and rationale:</u></h2>
+<h2><u>6. Idea and rationale:</u></h2>
     <p>The core language of <a href="https://en.wikipedia.org/wiki/Scheme_%28programming_language%29"
         target="_blank">Scheme</a> and <a href="https://en.wikipedia.org/wiki/Lisp_%28programming_language%29"
         target="_blank">Lisp</a> are based on syntaxic form that date back from
