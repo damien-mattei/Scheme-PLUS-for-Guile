@@ -350,28 +350,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p style="margin-left: 40px;"><code>sudo cp *.scm /usr/share/guile/site/3.0</code></p>
     <p style="margin-left: 40px;"><br>
     </p>
-    <p style="margin-left: 40px;">Then you can use Scheme+ from
-      every directory you want as it is site installed:</p>
-    <p style="margin-left: 40px;">(base) mattei@pc-mattei:~/Dropbox/git$
-        guile<br>
-        GNU Guile 3.0.1<br>
-        Copyright (C) 1995-2020 Free Software Foundation, Inc.<br>
-        <br>
-        scheme@(guile-user)&gt; (use-modules (Scheme+))<br>
-        ;;; note: auto-compilation is enabled, set GUILE_AUTO_COMPILE=0<br>
-        ;;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; or pass the --no-auto-compile
-        argument to disable.<br>
-        ;;; compiling /usr/share/guile/site/3.0/Scheme+.scm<br>
-        ;;; compiling /usr/share/guile/site/3.0/growable-vector.scm<br>
-        ;;; compiled /home/mattei/.cache/guile/ccache/3.0-LE-8-4.2/usr/share/guile/site/3.0/growable-vector.scm.go<br>
-	;;; compiled /home/mattei/.cache/guile/ccache/3.0-LE-8-4.2/usr/share/guile/site/3.0/Scheme+.scm.go<br>scheme@(guile-user)&gt;
-        {x &lt;+ 7}<br>
-        scheme@(guile-user)&gt; x<br>
-        7</p>
-    <p style="margin-left: 40px;"><code><br>
-      </code></p>
-    <p style="margin-left: 40px;"><code><br>
-      </code></p>
+    
     <h2><u>6. Idea and rationale:</u></h2>
     <p>The core language of <a href="https://en.wikipedia.org/wiki/Scheme_%28programming_language%29"
         target="_blank">Scheme</a> and <a href="https://en.wikipedia.org/wiki/Lisp_%28programming_language%29"
