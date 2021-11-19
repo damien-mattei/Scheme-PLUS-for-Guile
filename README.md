@@ -365,6 +365,9 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
         ;;; compiling /usr/share/guile/site/3.0/growable-vector.scm<br>
         ;;; compiled /home/mattei/.cache/guile/ccache/3.0-LE-8-4.2/usr/share/guile/site/3.0/growable-vector.scm.go<br>
 	;;; compiled /home/mattei/.cache/guile/ccache/3.0-LE-8-4.2/usr/share/guile/site/3.0/Scheme+.scm.go<br>scheme@(guile-user)&gt;
+	{x &lt;+ 7}<br>
+        scheme@(guile-user)&gt; x<br>
+        7</p>
 <h2><u>6. Idea and rationale:</u></h2>
     <p>The core language of <a href="https://en.wikipedia.org/wiki/Scheme_%28programming_language%29"
         target="_blank">Scheme</a> and <a href="https://en.wikipedia.org/wiki/Lisp_%28programming_language%29"
