@@ -368,10 +368,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
         argument to disable.<br>
         ;;; compiling /usr/share/guile/site/3.0/Scheme+.scm<br>
         ;;; compiling /usr/share/guile/site/3.0/growable-vector.scm<br>
-        ;;; compiled
-/home/mattei/.cache/guile/ccache/3.0-LE-8-4.2/usr/share/guile/site/3.0/growable-vector.scm.go<br>;;;
-        compiled
-/home/mattei/.cache/guile/ccache/3.0-LE-8-4.2/usr/share/guile/site/3.0/Scheme+.scm.go<br>scheme@(guile-user)&gt;
+        ;;; compiled /home/mattei/.cache/guile/ccache/3.0-LE-8-4.2/usr/share/guile/site/3.0/growable-vector.scm.go<br>
+	;;; compiled /home/mattei/.cache/guile/ccache/3.0-LE-8-4.2/usr/share/guile/site/3.0/Scheme+.scm.go<br>scheme@(guile-user)&gt;
         {x &lt;+ 7}<br>
         scheme@(guile-user)&gt; x<br>
         7</code></p>
