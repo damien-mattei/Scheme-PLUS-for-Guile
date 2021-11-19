@@ -357,11 +357,6 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
         GNU Guile 3.0.1<br>
         Copyright (C) 1995-2020 Free Software Foundation, Inc.<br>
         <br>
-        Guile comes with ABSOLUTELY NO WARRANTY; for details type `,show w'.<br>
-        This program is free software, and you are welcome to redistribute it<br>
-        under certain conditions; type `,show c' for details.<br>
-        <br>
-        Enter `,help' for help.<br>
         scheme@(guile-user)&gt; (use-modules (Scheme+))<br>
         ;;; note: auto-compilation is enabled, set GUILE_AUTO_COMPILE=0<br>
         ;;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; or pass the --no-auto-compile
