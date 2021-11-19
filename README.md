@@ -348,7 +348,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </p>
     <p style="margin-left: 40px;">Copy the files:</p>
     <p style="margin-left: 40px;"><code>sudo cp *.scm /usr/share/guile/site/3.0</code></p>
-    <p style="margin-left: 40px;"><code></code>Then you can use Scheme+ from
+    <p style="margin-left: 40px;">Then you can use Scheme+ from
       every directory you want as it is site installed:</p>
     <p style="margin-left: 40px;"><code>(base) mattei@pc-mattei:~/Dropbox/git$
         guile<br>
