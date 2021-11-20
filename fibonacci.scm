@@ -63,8 +63,18 @@
   
 (define (fibdyna n)
   (cond ({n < 2} n)
-	({memo[n] <> 0} {memo[n]})                ;; and not Nemo who is a fish ;-) do not make typos as me :-O or you get: Unbound variable: nemo :-)
+	({memo[n] <> 0} {memo[n]}) ;; and not Nemo who is a fish ;-) do not make typos as me :-O or you get: Unbound variable: nemo :-)
 	(else {memo[n] <- {(fibdyna {n - 1}) + (fibdyna {n - 2})}}) ))
 
 
+
+(declare size1 memo1)
+
+{size1 <- 10000}
+{memo1 <- (make-vector size 0)} 
+  
+(define (fibdyna1 n)
+  (cond ({n < 2} n)
+	({memo1[n] <> 0} {memo1[n]})
+	(else {memo1[n] <- {(fibdyna1 {n - 1}) + (fibdyna1 {n - 2})}}) ))
 

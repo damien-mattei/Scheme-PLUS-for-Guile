@@ -573,7 +573,29 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       assign the variables later with the universal <b>&lt;-</b> operator:</p>
     <h2><br>
     </h2>
-    <h2><br>
+
+
+{% highlight scheme %}
+```scheme
+
+
+(use-modules (Scheme+))
+
+(declare size1 memo1)
+
+{size1 <- 10000}
+{memo1 <- (make-vector size 0)} 
+  
+(define (fibdyna1 n)
+  (cond ({n < 2} n)
+	({memo1[n] <> 0} {memo1[n]})
+	(else {memo1[n] <- {(fibdyna1 {n - 1}) + (fibdyna1 {n - 2})}}) ))
+
+
+```
+{% endhighlight %}
+
+<h2><br>
     </h2>
     <h2><u>9.Short documentation</u></h2>
     <p>Square bracket operator <b>[] </b>is used for vectors,arrays,growable
