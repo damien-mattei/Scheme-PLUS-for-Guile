@@ -220,7 +220,17 @@
 Download Scheme+ as [.zip](https://github.com/damien-mattei/Scheme-PLUS-for-Guile/zipball/main)
 
 Download Scheme+ as [.tar.gz](https://github.com/damien-mattei/Scheme-PLUS-for-Guile/tarball/main)
-	
+
+<p><br>
+</p>
+<a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile/zipball/main"
+        target="_blank">Download Scheme+ as .zip</a>
+<p><br>
+<br>
+<a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile/tarball/main"
+        target="_blank">Download Scheme+ as .tar.gz</a>
+<p><br>
+<br>
 <p><br>
     </p>
     <h3 style="    text-align: center;">&gt;&gt;&gt;&nbsp;&nbsp; <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile"
