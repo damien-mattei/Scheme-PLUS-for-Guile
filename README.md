@@ -216,26 +216,19 @@
       here: </p>
     <p><br>
     </p>
-<p><br>
-</p>
 <h3 style="    text-align: center;">&gt;&gt;&gt;&nbsp;&nbsp; <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile/zipball/main"
         target="_blank">Download Scheme+ as .zip</a>
 			</h3>
 <p><br>
-<br>
 <h3 style="    text-align: center;">&gt;&gt;&gt;&nbsp;&nbsp; <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile/tarball/main"
         target="_blank">Download Scheme+ as .tar.gz</a>
 		</h3>
-<p><br>
-<br>
 <p><br>
     </p>
     <h3 style="    text-align: center;">&gt;&gt;&gt;&nbsp;&nbsp; <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile"
         target="_blank">https://github.com/damien-mattei/Scheme-PLUS-for-Guile
         --&gt; Code --&gt; Download ZIP</a>&nbsp;&nbsp; &lt;&lt;&lt;<br>
     </h3>
-    <p><br>
-    </p>
     <p><br>
     </p>
     <p>Including : (but not mandatory to use Scheme+)</p>
