@@ -339,16 +339,16 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p>For your convenience here is how you can install Scheme+ in a Guile
       Scheme distribution:</p>
     <p style="margin-left: 40px;">Launch guile and find the directory of the
-      site modules: <code><br>
-      </code></p>
+      site modules: <br>
+    </p>
     <p style="margin-left: 40px;"><code>scheme@(guile-user)&gt; (%site-dir)</code><br>
-      <code></code><code>"/usr/share/guile/site/3.0"</code></p>
-    <p style="margin-left: 40px;"><code><br>
-      </code></p>
+      <code>"/usr/share/guile/site/3.0"</code></p>
+    <p style="margin-left: 40px;"><br>
+    </p>
     <p style="margin-left: 40px;">Create the directory (recursively) if it does
       not already exist: </p>
     <p style="margin-left: 40px;"><code>sudo mkdir -p /usr/share/guile/site/3.0</code><br>
-      <code></code></p>
+    </p>
     <p style="margin-left: 40px;"><br>
     </p>
     <p style="margin-left: 40px;">Copy the files:</p>
