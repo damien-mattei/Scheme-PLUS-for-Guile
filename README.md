@@ -216,7 +216,9 @@
       here: </p>
     <p><br>
     </p>
-    <p><br>
+[Download Scheme+ as .zip](https://github.com/damien-mattei/Scheme-PLUS-for-Guile/zipball/main)
+[Download Scheme+ as .tar.gz](https://github.com/damien-mattei/Scheme-PLUS-for-Guile/tarball/main)
+	<p><br>
     </p>
     <h3 style="    text-align: center;">&gt;&gt;&gt;&nbsp;&nbsp; <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile"
         target="_blank">https://github.com/damien-mattei/Scheme-PLUS-for-Guile
