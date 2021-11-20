@@ -373,6 +373,8 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 	{x &lt;+ 7}</code><br>
         <code>scheme@(guile-user)&gt; x</code><br>
         <code>7</code></p>
+		<br>
+		<br>
 <h2><u>6. Idea and rationale:</u></h2>
     <p>The core language of <a href="https://en.wikipedia.org/wiki/Scheme_%28programming_language%29"
         target="_blank">Scheme</a> and <a href="https://en.wikipedia.org/wiki/Lisp_%28programming_language%29"
