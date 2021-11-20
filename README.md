@@ -217,11 +217,11 @@
     <p><br>
     </p>
 <h3 style="    text-align: center;">&gt;&gt;&gt;&nbsp;&nbsp; <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile/zipball/main"
-        target="_blank">Download Scheme+ as .zip</a>
+        target="_blank">Download Scheme+ as .zip</a>&nbsp;&nbsp; &lt;&lt;&lt;<br>
 			</h3>
 <p><br>
 <h3 style="    text-align: center;">&gt;&gt;&gt;&nbsp;&nbsp; <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile/tarball/main"
-        target="_blank">Download Scheme+ as .tar.gz</a>
+        target="_blank">Download Scheme+ as .tar.gz</a>&nbsp;&nbsp; &lt;&lt;&lt;<br>
 		</h3>
 <p><br>
     </p>
