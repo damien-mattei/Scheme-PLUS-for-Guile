@@ -135,7 +135,13 @@
 <p>
   Warnings about code highlighting tag due to bugs in Github Markdown system:<br>
   -if you read this page on github.com the code examples display encapsuled between tags 'highlight scheme' and 'endhighlight' composed also with {} and % characters.<br>  
-  -if you read this page on github.io the code examples display starting with 3 backquotes char , the tag 'scheme' and ending again with 3 backquotes char.<br>
+  -if you read this page on github.io the code examples display
+  starting with 3 backquotes char , the tag 'scheme' and ending again
+  with 3 backquotes char. The curly brackets {} display in a
+  rectangular with red background because the Github Jekill rouge
+  theme (unfortunately the ony one available) does not understand the
+  infix notation of Scheme.This of course not what i expected but i
+  can not find any issue to this problem.<br>
   Those weirds Markdown and tags should not be displayed and are not part of Scheme+ examples.
   <a
     href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html"
