@@ -29,7 +29,12 @@
     <h2><u>1. Scheme+ at a glance:&nbsp;</u></h2>
     <p><b>Scheme+ is an extension of the syntax of the Scheme language.</b><br>
     </p>
-    <p>The <b>idea</b> of <b>Scheme+</b> is came from this : <b>
+	<p><b>The idea of Scheme+ first come to my mind when comparing the
+  assignation syntax used in Clojure with Scheme and Lisp, and later
+  the easyness of creating and assigning variables in Python
+  completely convince me that the Scheme system have to be enhanced.</b><br>
+    </p>
+    <p>The <b>idea</b> of <b>Scheme+</b> is also came from this : <b>
 	<i>"Why is it
           so boring to define variables in Scheme with the traditionnal set of
           LET,LET*,LETREC,LET-VALUES special forms?"</i></b> and <b><i>"Is it
