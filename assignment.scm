@@ -61,69 +61,69 @@
     
     ;; one dimension array, example: {a[4] <- 7}
     ;; $bracket-apply$ of SRFI 105
-    ((_ ($bracket-apply$ array index) expr)
-     (let ((tmp expr)) ;; to avoid compute it twice
+    ((_ ($bracket-apply$ container index) expr)
+     (let ((value expr)) ;; to avoid compute it twice
 						 
        ;; (if (equal? (quote $bracket-apply$) (quote funct-or-macro)) ;; test funct-or-macro equal $bracket-apply$
-						 
+       
        ;; normal case
        ;; {T[2] <- 4}
        ;; {T[3] <- T[2]}
        ;;(begin
-	 ;;(display "<- : vector or array set!") (newline)
-	 (if {(vector? array) or (growable-vector? array)}
-	     (vector-set! array index tmp)
-	     (array-set! array tmp index));)
+       ;;(display "<- : vector or array set! or hash-table set!") (newline)
+       (cond ({(vector? container) or (growable-vector? container)} (vector-set! container index value))
+	     ((hash-table? container) (hash-table-set! container index value))
+	     (else (array-set! container value index)));)
        
        ;; rare case  (to prevent any error)
-       ;; (let ((var (funct-or-macro array index))) ;; MUST be in a variable , otherwise:
+       ;; (let ((var (funct-or-macro container index))) ;; MUST be in a variable , otherwise:
        ;; While compiling expression:
        ;;  Syntax error:
        ;;  unknown location: quote: bad syntax in form quote
        ;; 	<- : variable set! after creation
-       ;;  (set! var tmp)))
-					     
-	 tmp))
+       ;;  (set! var value)))
+       
+       value))
 
 
     ;; multi dimensions array :  {a[2 4] <- 7}
     ;; $bracket-apply$ of SRFI 105
     ((_ ($bracket-apply$ array index ...) expr)
-     (let ((tmp expr)) ;; to avoid compute it twice
+     (let ((value expr)) ;; to avoid compute it twice
   						 
        ;; (if (equal? (quote $bracket-apply$) (quote funct-or-macro)) ;; test funct-or-macro equal $bracket-apply$
        ;; normal case
        ;;(begin
 	 ;;(display "<- : multidimensional vector or array set!") (newline)
-	 (array-set! array tmp index ...);)
+	 (array-set! array value index ...);)
 						     
 	 ;; rare case (to prevent any error)
 	 ;; (let ((var (funct-or-macro array index ...))) ;; MUST be in a variable
 	 ;;   (display "<- : variable set! after creation (multidimensional)") (newline)
-	 ;;   (set! var tmp)))
-	 tmp))
+	 ;;   (set! var value)))
+	 value))
 
     ;; compact form but will display a warning: possibly wrong number of arguments to `vector-set!'
     ;; and if i remove ellipsis it is a severe error
-    ;; ((_ (funct-or-macro array index ...) expr) (let ((tmp expr)
+    ;; ((_ (funct-or-macro array index ...) expr) (let ((value expr)
     ;; 						     (var (funct-or-macro array index ...)))
     ;; 						 (if (equal? (quote $bracket-apply$) (quote funct-or-macro)) ;; test funct-or-macro equal $bracket-apply$
     ;; 						     ;; normal case
     ;; 						     (if {(vector? array) or (growable-vector? array)}
-    ;; 							 (vector-set! array index ... tmp)
-    ;; 							 (array-set! array tmp index ...))
+    ;; 							 (vector-set! array index ... value)
+    ;; 							 (array-set! array value index ...))
 						     
     ;; 						     ;; rare case (to prevent any error)
-    ;; 						     (set! var tmp))
+    ;; 						     (set! var value))
 					     
-    ;; 						 tmp))
+    ;; 						 value))
 
 
     ;; not sure this case will be usefull
     ((_ (funct-or-macro arg ...) expr)
      (let ((var (funct-or-macro arg ...))
-	   (tmp expr)) ;; to avoid compute it twice
-       (set! var tmp)
+	   (value expr)) ;; to avoid compute it twice
+       (set! var value)
        var))
 
     
@@ -144,9 +144,9 @@
 (define-syntax ->
   (syntax-rules ()
     ;;  special form like : (-> ($bracket-apply$ T 3) ($bracket-apply$ T 4))
-    ;; changé en (<- expr (funct-or-macro array index))
-    ;;((_ expr (funct-or-macro array index)) {array[index] <- expr}  )
-    ;; ((_ expr (funct-or-macro array index)) (<- (funct-or-macro array index) expr))
+    ;; changé en (<- expr (funct-or-macro container index))
+    ;;((_ expr (funct-or-macro container index)) {container[index] <- expr}  )
+    ;; ((_ expr (funct-or-macro container index)) (<- (funct-or-macro container index) expr))
     
     ;; ;;((_ expr (funct-or-macro array index ...)) {array[index ...] <- expr} )
     ;; ((_ expr (funct-or-macro array index ...)) (<- (funct-or-macro array index ...) expr))

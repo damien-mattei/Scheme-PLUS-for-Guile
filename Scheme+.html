@@ -36,6 +36,11 @@
     <h2><u>1. Scheme+ at a glance:&nbsp;</u></h2>
     <p><b>Scheme+ is an extension of the syntax of the Scheme language.</b><br>
     </p>
+    <p><b>The idea of Scheme+ first come to my mind when comparing the
+  assignation syntax used in Clojure with Scheme and Lisp, and later
+  the easyness of creating and assigning variables in Python
+  completely convince me that the Scheme system have to be enhanced.</b><br>
+    </p>
     <p>The <b>idea</b> of <b>Scheme+</b> is came from this : <b><i>"Why
           is it so boring to define variables in Scheme with the
           traditionnal set of LET,LET*,LETREC,LET-VALUES special forms?"</i></b>
@@ -115,12 +120,21 @@
       .1em .8em;padding:.2em .6em;">
       <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">use-modules</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">Scheme+</span><span style="color: #ffffff">))</span>
 </pre>
-    </div>
-    <!-- HTML generated using hilite.me -->
-    <div style="background: #111111;
-      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em
-      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">def</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">subset-sum-dynamic</span> <span style="color: #fb660a">L</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">)</span>
+<br>
+      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">declare</span> <span style="color: #fb660a">L-init</span> <span style="color: #fb660a">t-init</span> <span style="color: #fb660a">ls</span> <span style="color: #fb660a">dyna</span> <span style="color: #fb660a">cpt</span><span style="color: #ffffff">)</span>
+
+<span style="color: #ffffff">{</span><span style="color: #fb660a">L-init</span> <span style="color: #fb660a">&lt;-</span> <span style="color: #ffffff">'(</span><span style="color: #0086f7; font-weight: bold">1</span> <span style="color: #0086f7; font-weight: bold">3</span> <span style="color: #0086f7; font-weight: bold">4</span> <span style="color: #0086f7; font-weight: bold">16</span> <span style="color: #0086f7; font-weight: bold">17</span> <span style="color: #0086f7; font-weight: bold">24</span> <span style="color: #0086f7; font-weight: bold">45</span> <span style="color: #0086f7; font-weight: bold">64</span> <span style="color: #0086f7; font-weight: bold">197</span> <span style="color: #0086f7; font-weight: bold">256</span> <span style="color: #0086f7; font-weight: bold">275</span> <span style="color: #0086f7; font-weight: bold">323</span> <span style="color: #0086f7; font-weight: bold">540</span> <span style="color: #0086f7; font-weight: bold">723</span> <span style="color: #0086f7; font-weight: bold">889</span> <span style="color: #0086f7; font-weight: bold">915</span> <span style="color: #0086f7; font-weight: bold">1040</span> <span style="color: #0086f7; font-weight: bold">1041</span> <span style="color: #0086f7; font-weight: bold">1093</span> <span style="color: #0086f7; font-weight: bold">1099</span> <span style="color: #0086f7; font-weight: bold">1111</span> <span style="color: #0086f7; font-weight: bold">1284</span> <span style="color: #0086f7; font-weight: bold">1344</span> <span style="color: #0086f7; font-weight: bold">1520</span> <span style="color: #0086f7; font-weight: bold">2027</span> <span style="color: #0086f7; font-weight: bold">2500</span> <span style="color: #0086f7; font-weight: bold">2734</span> <span style="color: #0086f7; font-weight: bold">3000</span> <span style="color: #0086f7; font-weight: bold">3267</span> <span style="color: #0086f7; font-weight: bold">3610</span> <span style="color: #0086f7; font-weight: bold">4285</span> <span style="color: #0086f7; font-weight: bold">5027</span><span style="color: #ffffff">)}</span>
+<span style="color: #ffffff">{</span><span style="color: #fb660a">t-init</span> <span style="color: #fb660a">&lt;-</span> <span style="color: #0086f7; font-weight: bold">35267</span><span style="color: #ffffff">}</span>
+<span style="color: #ffffff">{</span><span style="color: #fb660a">ls</span> <span style="color: #fb660a">&lt;-</span> <span style="color: #ffffff">(length </span><span style="color: #fb660a">L-init</span><span style="color: #ffffff">)}</span>
+<span style="color: #ffffff">{</span><span style="color: #fb660a">dyna</span> <span style="color: #fb660a">&lt;-</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">make-array</span> <span style="color: #0086f7; font-weight: bold">0</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">ls</span> <span style="color: #fb660a">+</span> <span style="color: #0086f7; font-weight: bold">1</span><span style="color: #ffffff">}</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">t-init</span> <span style="color: #fb660a">+</span> <span style="color: #0086f7; font-weight: bold">1</span><span style="color: #ffffff">})}</span>
+
+<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">one-two</span> <span style="color: #fb660a">b</span><span style="color: #ffffff">)</span>
+  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">if </span><span style="color: #fb660a">b</span> <span style="color: #0086f7; font-weight: bold">1</span> <span style="color: #0086f7; font-weight: bold">2</span><span style="color: #ffffff">))</span>
+
+<span style="color: #ffffff">{</span><span style="color: #fb660a">cpt</span> <span style="color: #fb660a">&lt;-</span> <span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">}</span>
+</pre>
+<br>
+<pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">def</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">subset-sum-dynamic</span> <span style="color: #fb660a">L</span> <span style="color: #fb660a">t</span><span style="color: #ffffff">)</span>
 
   <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">declare</span> <span style="color: #fb660a">ls</span> <span style="color: #fb660a">dyn</span> <span style="color: #fb660a">c</span> <span style="color: #fb660a">R</span> <span style="color: #fb660a">s</span><span style="color: #ffffff">)</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; declare multiple variables</span>
 
@@ -154,6 +168,11 @@
   
 </pre>
     </div>
+<pre>
+(subset-sum-dynamic  L-init t-init)
+#t
+<br>
+</pre>
     <p>Another example with Guile Scheme in the REPL (Read Eval Print
       Loop):</p>
     <p> </p>

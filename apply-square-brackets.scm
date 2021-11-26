@@ -19,8 +19,9 @@
 
 
 
-;; SRFI 105 : Curly-infix-expressions allows a syntax like {Array[index]} with vectors
-;; and arrays of any dimensions,size and shape
+;; SRFI 105 : Curly-infix-expressions in conjunction with specialized $bracket-apply$
+;; of Scheme+ allows a syntax like {Container[index]} with vectors
+;; and arrays of any dimensions,size and shape and hash tables
 
 ;; (define T (make-vector 5))
 ;; (vector-set! T 3 7)
@@ -54,11 +55,11 @@
 (define-syntax $bracket-apply$
   (syntax-rules ()
     
-    ((_ array index)
-     ;;(begin ;;(display "$bracket-apply$") (newline)
-	    (if {(vector? array) or (growable-vector? array)}
-		(vector-ref array index)
-		(array-ref array index)));)
+    ((_ container index)
+     (begin ;;(display "$bracket-apply$") (newline)
+     (cond ({(vector? container) or (growable-vector? container)} (vector-ref container index))
+	     ((hash-table? container) (hash-table-ref container index))
+	     (else (array-ref container index)))))
     
     ((_ array index ...)
      ;(begin ;;(display "$bracket-apply$") (newline)

@@ -56,7 +56,7 @@
 
 
 (include-from-path "def.scm")
-(include-from-path "array-square-brackets.scm")
+(include-from-path "apply-square-brackets.scm")
 (include-from-path "assignment.scm")
 (include-from-path "declare.scm")
 (include-from-path "condx.scm")
