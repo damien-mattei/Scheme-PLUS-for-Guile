@@ -45,6 +45,7 @@
 (define-module (Scheme+)
   
   #:use-module (growable-vector)
+  #:use-module (srfi srfi-69)
   #:export (def $bracket-apply$ <- -> <+ declare $ & condx <>)
 	 
   ;; #:replace ((new-lambda . lambda)

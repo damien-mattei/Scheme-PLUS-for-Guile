@@ -88,14 +88,14 @@
 
     ;; multi dimensions array :  {a[2 4] <- 7}
     ;; $bracket-apply$ of SRFI 105
-    ((_ ($bracket-apply$ array index ...) expr)
+    ((_ ($bracket-apply$ array index1 index2 ...) expr)
      (let ((value expr)) ;; to avoid compute it twice
   						 
        ;; (if (equal? (quote $bracket-apply$) (quote funct-or-macro)) ;; test funct-or-macro equal $bracket-apply$
        ;; normal case
        ;;(begin
 	 ;;(display "<- : multidimensional vector or array set!") (newline)
-	 (array-set! array value index ...);)
+	 (array-set! array value index1 index2 ...);)
 						     
 	 ;; rare case (to prevent any error)
 	 ;; (let ((var (funct-or-macro array index ...))) ;; MUST be in a variable
