@@ -243,6 +243,19 @@
       #990033"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">$3 = (1 2 3 4 5)</font></p>
     <br>
+<p>Hash Tables support :</p>
+    <pre>(use-modules (Scheme+))
+(use-modules (srfi srfi-69))  ;; support for SRFI 69 <meta http-equiv="content-type"
+content="text/html; charset=utf-8">Basic hash tables
+
+{my-hash-tbl &lt;+ (make-hash-table)} ;; add an object in the current environment, here a hash table
+(hash-table? my-hash-tbl)
+#t
+<br>{my-hash-tbl["three"] &lt;- 3}
+3<br><br>{my-hash-tbl["three"]}
+3
+
+</pre>
     <p>for the rest read below and the documentation.</p>
     <br>
     <h2>2.<u>Download Scheme+:</u></h2>
@@ -436,6 +449,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p>Also vectors and arrays in Scheme are painfully accessed and modified by
       vector-ref and vector-set! , Scheme+ use a simplier syntax again with the
       &lt;- operator and the [] syntax.</p>
+    <p>This intuitive notation works also with Hash Tables.</p>
     <p>Scheme+ will remove the need for the classic LET set of special form, no
       more need of <strike>LET,LET*,LETREC,LET-VALUES</strike>,... and will use
       an unique infix (or not) assignment operator : &lt;-. (also LET are
@@ -456,7 +470,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
         from left to right and right to left)</li>
       <li>Square Bracket operator<b> []</b> working with Scheme <b>Vectors,
           Arrays,Multidimentional Arrays</b>,Dynamic Arrays (my growable vector
-        class)...</li>
+        class),Hash Tables...</li>
       <li>combination of Assignment operator &lt;- with [] operator for
         Vectors,Arrays,....</li>
       <li>RETURN : <b>return</b> keyword used in any procedure to return from
