@@ -56,13 +56,13 @@
   (syntax-rules ()
     
     ((_ container index)
-     (begin ;;(display "$bracket-apply$") (newline)
+     ;(begin ;;(display "$bracket-apply$") (newline)
      (cond ({(vector? container) or (growable-vector? container)} (vector-ref container index))
-	     ((hash-table? container) (hash-table-ref container index))
-	     (else (array-ref container index)))))
+	   ((hash-table? container) (hash-table-ref container index))
+	   (else (array-ref container index))));)
     
     ((_ array index1 index2 ...)
      ;(begin ;;(display "$bracket-apply$") (newline)
-	    (array-ref array index1 index2 ...))));) 
+     (array-ref array index1 index2 ...))));) 
 
 
