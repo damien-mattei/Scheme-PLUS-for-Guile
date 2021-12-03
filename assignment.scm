@@ -159,6 +159,20 @@
 
 
 
+(define-syntax → ;; under Linux this symbol can be typed with the
+  ;; combination of keys: Ctrl-Shift-u 2192 where 2192 is the unicode of right arrow
+
+  (syntax-rules () 
+
+    ;; note: it is short and infix but seems to work in all case indeed!
+    ((_ expr var) {var <- expr})))
 
 
 
+(define-syntax ← ;; under Linux this symbol can be typed with the
+  ;; combination of keys: Ctrl-Shift-u 2190 where 2190 is the unicode of left arrow
+
+  (syntax-rules ()
+   
+    ;; note: it is short and infix but seems to work in all case indeed!
+    ((_ var expr) {var <- expr})))
