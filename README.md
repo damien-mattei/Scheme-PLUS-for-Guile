@@ -65,7 +65,7 @@
     <p style="margin-left: 40px;">Assignment from left to right :
   <b>{7 → y}</b></p>
 <p><font size="+3">⥆</font>&nbsp; or &lt;+ : Define and assign a
-new variable in the curren environment ,example : <font
+new variable in the current environment ,example : <font
 size="+2">{v ⥆ 7}</font></p>
 <p style="margin-left: 40px;">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
