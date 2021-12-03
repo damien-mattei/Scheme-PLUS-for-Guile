@@ -23,7 +23,6 @@
 
 ;; (def x)
 
-;; TODO: study def of a recursive function
 (define-syntax def
   
   (lambda (stx)
@@ -59,4 +58,17 @@
   (syntax-rules ()
     ((_ var expr) (define var expr))))
 
+(define-syntax ⥆
+  (syntax-rules ()
+    ((_ var expr) (define var expr))))
+
+
+(define-syntax +>
+  (syntax-rules ()
+    ((_ expr var) (define var expr))))
+
+
+(define-syntax ⥅
+  (syntax-rules ()
+    ((_ expr var) (define var expr))))
 

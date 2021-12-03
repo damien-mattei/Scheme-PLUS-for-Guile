@@ -46,7 +46,7 @@
   
   #:use-module (growable-vector)
   #:use-module (srfi srfi-69)
-  #:export (def $bracket-apply$ <- -> <+ declare $ & condx <>)
+  #:export (def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ & condx <> ≠)
 	 
   ;; #:replace ((new-lambda . lambda)
   ;; (new-cond . cond)

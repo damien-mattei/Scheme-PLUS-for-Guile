@@ -56,6 +56,13 @@
     <p style="margin-left: 40px;"><b>{x &lt;- y} </b>infix assignment of the
       value of y to the variable x.</p>
     <div style="margin-left: 40px;"> </div>
+    <p style="margin-left: 40px;">The same thing with a new symbol
+      ←&nbsp; :&nbsp; (unicode 2190 in hexadecimal that can be enter under Linux
+      with Ctrl-Shift u 2190 Enter or Space bar)</p>
+    <p style="margin-left: 40px;"><b>{x ← y}</b></p>
+    <div style="margin-left: 40px;"> </div>
+    <p style="margin-left: 40px;">Assignment from right to left : <b>{y ← 7}</b></p>
+    <p style="margin-left: 40px;">Assignment from left to right : <b>{7 → y}</b></p>
     <p style="margin-left: 40px;"><b>{T[k]} </b>return value of vector or array
       T indexed by k.</p>
     <div style="margin-left: 40px;"> </div>
@@ -73,8 +80,9 @@
       <b><b>{</b>T</b><b>[m n]} </b>return the value of the multi dimension
       array T indexed by m and n</p>
     <div style="margin-left: 40px;"> </div>
-    <p style="margin-left: 40px;"><b><b>{</b>T</b><b>[m n] &lt;- </b><b><b>T</b><b>[m
-          {n + 1}]</b>}</b></p>
+    <p style="margin-left: 40px;"><b><b>{</b>T</b><b>[m n] &lt;- </b><b><b>T</b><b>[m{n + 1}]</b>}</b></p>
+    <p style="margin-left: 40px;"><br>
+      <b><b>{</b>T</b><b>[m n] ← </b><b><b>T</b><b>[m {n + 1}]</b>}</b></p>
     <div style="margin-left: 40px;"> </div>
     <p style="margin-left: 40px;"> no more need of <strike>LET,LET*,LETREC,LET-VALUES</strike>,...
       </p>
@@ -1253,5 +1261,26 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </p>
     <p><br>
     </p>
-
-
+   <p><br>
+    </p>
+    <h2>19. <u>Special characters (for special people):</u></h2>
+    <p>This is about the optional replacement symbols for some operators:</p>
+    <p>The hexadécimal unicode can be entered under Linux with : Ctrl-Shift u
+      following with the hexadecimal unicode and Enter or Space bar,under
+      Windows ask your local guru, under Mac OS you have the character chooser
+      and i have to check it works in terminal.</p>
+    <ul>
+      <li>&lt;- : ← , unicode 2190 (this doesn't looks like but it is an
+        hexadecimal number !) This operator assignment was used in <a href="https://en.wikipedia.org/wiki/APL_%28programming_language%29"
+          target="_blank">APL</a> </li>
+      <li>-&gt; : → ,unicode 2192</li>
+      <li>&lt;+ : ⥆ , unicode 2946 (Add a variable in the current environment)</li>
+      <li>+&gt; : ⥅ , unicode 2945</li>
+      <li>&lt;&gt; : ≠ , unicode 2260</li>
+    </ul>
+    <p>Example:</p>
+    <pre>scheme@(guile-user)&gt; {v ⥆ 7}
+scheme@(guile-user)&gt; v
+7
+</pre>
+    <p> </p>
