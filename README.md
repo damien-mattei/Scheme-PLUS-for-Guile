@@ -64,11 +64,9 @@
     <p style="margin-left: 40px;">Assignment from right to left : <b>{y ← 7}</b></p>
     <p style="margin-left: 40px;">Assignment from left to right :
   <b>{7 → y}</b></p>
-  <blockquote>
 <p><font size="+3">⥆</font>&nbsp; or &lt;+ : Define and assign a
 new variable in the curren environment ,example : <font
 size="+2">{v ⥆ 7}</font></p>
-</blockquote>
 <p style="margin-left: 40px;">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 </p>
