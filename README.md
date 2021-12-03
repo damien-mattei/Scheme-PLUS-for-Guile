@@ -1288,9 +1288,16 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <h2>19. <u>Special characters (for special people):</u></h2>
     <p>This is about the optional replacement symbols for some operators:</p>
     <p>The hexadécimal unicode can be entered under Linux with : Ctrl-Shift u
-      following with the hexadecimal unicode and Enter or Space bar,under
-      Windows ask your local guru, under Mac OS you have the character chooser
-      and i have to check it works in terminal.</p>
+      following with the hexadecimal unicode and Enter or Space bar,<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+on <a
+href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-characters-without-using-the-mouse"
+moz-do-not-send="true">Mac OS use </a> <a
+href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-characters-without-using-the-mouse"
+moz-do-not-send="true">CTRL+CMD+space to bring up the characters
+popover, </a> <a
+href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-characters-without-using-the-mouse"
+moz-do-not-send="true">then type in u + unicode and hit Enter to
+get it</a>.</p>
     <ul>
       <li>&lt;- : ← , unicode 2190 (this doesn't looks like but it is an
         hexadecimal number !) This operator assignment was used in <a href="https://en.wikipedia.org/wiki/APL_%28programming_language%29"
