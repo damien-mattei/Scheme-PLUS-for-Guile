@@ -62,8 +62,32 @@
     <p style="margin-left: 40px;"><b>{x ← y}</b></p>
     <div style="margin-left: 40px;"> </div>
     <p style="margin-left: 40px;">Assignment from right to left : <b>{y ← 7}</b></p>
-    <p style="margin-left: 40px;">Assignment from left to right : <b>{7 → y}</b></p>
-    <p style="margin-left: 40px;"><b>{T[k]} </b>return value of vector or array
+    <p style="margin-left: 40px;">Assignment from left to right :
+  <b>{7 → y}</b></p>
+  <blockquote>
+<p><font size="+3">⥆</font>&nbsp; or &lt;+ : Define and assign a
+new variable in the curren environment ,example : <font
+size="+2">{v ⥆ 7}</font></p>
+</blockquote>
+<p style="margin-left: 40px;">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</p>
+<p style="margin-left: 40px;">(unicode 2946 , on <a
+href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-characters-without-using-the-mouse"
+moz-do-not-send="true">Mac OS use </a>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<a
+href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-characters-without-using-the-mouse"
+moz-do-not-send="true">CTRL+CMD+space to bring up the characters
+popover, </a>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<a
+href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-characters-without-using-the-mouse"
+moz-do-not-send="true">then type in u + unicode and hit Enter to
+get it</a>)<br>
+<br>
+</p>
+<p style="margin-left: 40px;"><b>{T[k]} </b>return value of vector or array
       T indexed by k.</p>
     <div style="margin-left: 40px;"> </div>
     <p style="margin-left: 40px;"><b>{T</b><b>[k] &lt;- x} </b>infix assignment
