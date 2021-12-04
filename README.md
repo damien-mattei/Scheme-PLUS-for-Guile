@@ -678,7 +678,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     </h2>
     <h2><u>9.Short documentation</u></h2>
     <p>Square bracket operator <b>[] </b>is used for vectors,arrays,growable
-      vectors,etc.</p>
+      vectors,hash tables,etc.</p>
     <p>example: <b>{T[k]} </b>return value of vector or array T indexed by k.</p>
     <p><br>
     </p>
@@ -693,7 +693,9 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       <li><b>{m[3] &lt;- 7}</b></li>
       <li><b>{T</b><b>[k] &lt;- x}</b></li>
       <li><b>{T</b><b>[k] &lt;- </b><b><b>T</b><b>[{k + 1}]</b>}</b></li>
-      <li><b><b>{</b>T</b><b>[m n] &lt;- </b><b><b>T</b><b>[m {n + 1}]</b>}</b></li>
+      <li><b><b>{</b>T</b><b>[m n] &lt;- </b><b><b>T</b><b>[m {n +
+    1}]</b>}</b></li>
+	<li><b>{my-hash-tbl["three"] &lt;- 3}</b></li>
     </ol>
     <p><br>
     </p>
