@@ -712,6 +712,15 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <br>
     <p><br>
     </p>
+    <br>
+    <p><u>How to load a Scheme+ program:</u></p>
+    <p>Scheme+ programs are loaded the usual way,example:</p>
+    <pre>(load "start-λογικι-guile+.scm")<br><br>(infix-symb-min-dnf '{{(not a) and (not b) and (not c) and (not d)} or {(not a) and (not b) and (not c) and d} or {(not a) and (not b) and c and (not d)} or {(not a) and b and (not c) and d} or {(not a) and b and c and (not d)} or {(not a) and b and c and d} or {a and (not b) and (not c) and (not d)} or {a and (not b) and (not c) and d} or {a and (not b) and c and (not d)} or {c and (not d)}} )
+disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and (not a) (not b) (not c) d) (and (not a) b (not c) d) (and (not a) b c d) (and a (not b) (not c) (not d)) (and a (not b) (not c) d))
+<br>((!b ^ !c) v (c ^ !d) v (!a ^ b ^ d))</pre>
+    <p>We can use a convention to name the Scheme+ programs and function with a
+      + at end, keeping the .scm extension unchanged for compatibility.<br>
+    </p>
     <p><br>
     </p>
     <h2>10<u>.Advanced examples:</u><br>
