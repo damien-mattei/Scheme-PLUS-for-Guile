@@ -501,7 +501,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
         from left to right and right to left)</li>
       <li>Square Bracket operator<b> []</b> working with Scheme <b>Vectors,
           Arrays,Multidimentional Arrays</b>,Dynamic Arrays (my growable vector
-        class),Hash Tables...</li>
+        class),<b>Hash Tables</b>...</li>
       <li>combination of Assignment operator &lt;- with [] operator for
         Vectors,Arrays,....</li>
       <li>RETURN : <b>return</b> keyword used in any procedure to return from
