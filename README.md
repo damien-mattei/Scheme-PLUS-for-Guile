@@ -615,7 +615,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 (define (fibdyna n)
    (cond ({n < 2} n)
          ({memo[n] <> 0} {memo[n]})
-		 (else {memo[n] <- {(fibdyna {n - 1}) + (fibdyna {n - 2})}}) ))
+         (else {memo[n] <- {(fibdyna {n - 1}) + (fibdyna {n - 2})}}) ))
 
 
 ```
