@@ -22,7 +22,7 @@
           style="color: #999999;"> <font size="+2">version 1.0 for Guile Scheme<br>
           </font></span></b></h1>
     <p style="text-align: center;">
-	Display options:<br><br>
+	Display options for viewing this documentation:<br><br>
     <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile/blob/main/README.md">Click here for a larger page view that improve code
   display.</a>
   <br>
