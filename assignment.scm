@@ -55,7 +55,9 @@
 ;; scheme@(guile-user)> {T[3]}
 ;; $bracket-apply$
 ;; $5 = 4
+
 (define-syntax <-
+  
   (syntax-rules ()
     ;;  special form like : (<- ($bracket-apply$ T 3) ($bracket-apply$ T 4))
     
@@ -94,8 +96,10 @@
        ;; (if (equal? (quote $bracket-apply$) (quote funct-or-macro)) ;; test funct-or-macro equal $bracket-apply$
        ;; normal case
        ;;(begin
-	 ;;(display "<- : multidimensional vector or array set!") (newline)
-	 (array-set! array value index1 index2 ...);)
+       ;;(display "<- : multidimensional vector or array set!") (newline)
+       (if (vector? array)
+	   (array-n-dim-set! array value index1 index2 ...)
+	   (array-set! array value index1 index2 ...));)
 						     
 	 ;; rare case (to prevent any error)
 	 ;; (let ((var (funct-or-macro array index ...))) ;; MUST be in a variable
@@ -167,6 +171,8 @@
     ;; note: it is short and infix but seems to work in all case indeed!
     ((_ expr var) {var <- expr})))
 
+
+;; Mac OS use CTRL+CMD+space to bring up the characters popover, then type in u + unicode and hit Enter to get it)
 
 
 (define-syntax ← ;; under Linux this symbol can be typed with the

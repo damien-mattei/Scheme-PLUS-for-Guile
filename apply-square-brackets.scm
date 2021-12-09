@@ -63,6 +63,8 @@
     
     ((_ array index1 index2 ...)
      ;(begin ;;(display "$bracket-apply$") (newline)
-     (array-ref array index1 index2 ...))));) 
+     (if (vector? array)
+	 (array-n-dim-ref array index1 index2 ...)
+	 (array-ref array index1 index2 ...)))));) 
 
 
