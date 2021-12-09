@@ -24,14 +24,14 @@
     <p style="text-align: center;">
     <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile/blob/main/README.md">Click here for a larger page view that improve code
   display.</a>
+  <br>
     <a href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html">Click here for the light HTML page version of this
   page.</a>
+  <br>
     <a
   href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+io.html">Click
   here for the dark Hacker Theme version of this page.</a>
    </p>
-    <p style="text-align: center;"><br>
-    </p>
     <p><br>
     </p>
     <h2><u>1. Scheme+ at a glance:&nbsp;</u></h2>
