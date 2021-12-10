@@ -1351,7 +1351,7 @@ scheme@(guile-user)&gt; v
 <div style="text-align: left;"><br>
     </div>
     <div style="text-align: left;">
-      <h2><u>20 Scheme+ in action:</u></h2>
+      <h2><u>20. Scheme+ in action:</u></h2>
       <p>Example based on the <a href="https://en.wikipedia.org/wiki/Petrick%27s_method"
           target="_blank">Petrick method</a> algorithm:</p>
       <p><br>
