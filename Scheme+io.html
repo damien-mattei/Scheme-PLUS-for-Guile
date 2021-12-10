@@ -1327,10 +1327,83 @@ scheme@(guile-user)&gt; v
 <div style="text-align: center;"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/IBM2741.JPG" alt="IBM 2741" title="IBM 2741" width="450"></div>
     <div style="text-align: center;">IBM 2741 Terminal </div>
     <p> </p>
-<p></p>
+<p></p>  
+   
+ <p><br>
+ </p>
+      <h2><u>20. Scheme+ in action:</u></h2>
+      <p>Example based on the <a href="https://en.wikipedia.org/wiki/Petrick%27s_method" target="_blank">Petrick method</a> algorithm:</p>
+      <p><br />
+      </p>
 
-      </section>
-    </div>
+
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+
+<span class="p">(</span><span class="nf">def</span> <span class="p">(</span><span class="nf">Petrick</span> <span class="nv">non-essential-prime-implicants</span> <span class="nv">var-list</span><span class="p">)</span>
+
+  <span class="c1">;; create the conjunction of disjunction expression</span>
+
+  <span class="p">(</span><span class="nf">declare</span> <span class="nv">mt</span> <span class="nv">conj-expr</span> <span class="nv">prim-imp</span> <span class="nv">col</span> <span class="nv">disj-expr</span> <span class="nv">disj-expr-sorted</span> <span class="nv">mt-var</span> <span class="nv">missing-term</span><span class="p">)</span>
+
+  <span class="p">(</span><span class="nf">display-nl</span> <span class="s">"Entering Petrick..."</span><span class="p">)</span>
   
+  <span class="p">(</span><span class="nf">for</span> <span class="p">(</span><span class="nf">x</span> <span class="mi">1</span> <span class="nv">lgt-mt</span><span class="p">)</span> <span class="c1">;; loop over minterms</span>
+       
+       <span class="p">{</span><span class="nv">mt</span> <span class="p">←</span> <span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="mi">0</span><span class="p">]</span><span class="p">}</span>
+       
+       <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">member</span> <span class="nv">mt</span> <span class="nv">non-expressed-minterms</span><span class="p">)</span> <span class="c1">;; non expressed minterm</span>
+	 
+	 <span class="p">{</span><span class="nv">col</span> <span class="p">←</span> <span class="o">'</span><span class="p">()</span><span class="p">}</span>
+	 
+	 <span class="p">(</span><span class="nf">for</span> <span class="p">(</span><span class="nf">y</span> <span class="mi">1</span> <span class="nv">lgt-pi</span><span class="p">)</span> <span class="c1">;; loop over prime implicants</span>
+	      
+	      <span class="p">{</span><span class="nv">prim-imp</span> <span class="p">←</span> <span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y</span><span class="p">]</span><span class="p">}</span> <span class="c1">;; prime implicant</span>
+	      
+	      <span class="c1">;; check wether prime implicant is a non essential one?</span>
+	      <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">member</span> <span class="nv">prim-imp</span> <span class="nv">non-essential-prime-implicants</span><span class="p">)</span>
+		
+		<span class="c1">;; is the non essential prime implicant expressing this minterms?</span>
+		<span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">string=?</span> <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span><span class="p">}</span> <span class="s">" * "</span><span class="p">)</span>
+		  <span class="p">(</span><span class="nf">insert-set!</span> <span class="p">(</span><span class="nf">minterm-&gt;var</span> <span class="nv">prim-imp</span><span class="p">)</span> <span class="nv">col</span><span class="p">))))</span>
+	 
+	 <span class="c1">;; end for y</span>
+	 
+	 <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nf">singleton-set?</span> <span class="nv">col</span><span class="p">)</span>
+	     <span class="p">{</span><span class="nv">col</span> <span class="p">←</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">col</span><span class="p">)</span><span class="p">}</span>  <span class="c1">;; ( V ) -&gt; V</span>
+	     <span class="p">(</span><span class="nf">insert-set!</span> <span class="ss">'or</span> <span class="nv">col</span><span class="p">))</span>  <span class="c1">;; (V1 V2 ...) -&gt; (or V1 V2 ...)</span>
+	 
+	 <span class="p">(</span><span class="nf">insert-set!</span> <span class="nv">col</span> <span class="nv">conj-expr</span><span class="p">)))</span>
+  
+  <span class="c1">;; end for x</span>
 
-</body></html>
+  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nf">singleton-set?</span> <span class="nv">conj-expr</span><span class="p">)</span>
+      <span class="p">{</span><span class="nv">conj-expr</span> <span class="p">←</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">conj-expr</span><span class="p">)</span><span class="p">}</span>  <span class="c1">;; ( conj-expr ) -&gt; conj-expr</span>
+      <span class="p">(</span><span class="nf">insert-set!</span> <span class="ss">'and</span> <span class="nv">conj-expr</span><span class="p">))</span>  <span class="c1">;; (e1 e2 ...) -&gt; (and e1 e2 ...)</span>
+
+
+  <span class="c1">;; find the disjunctive form</span>
+  <span class="p">{</span><span class="nv">disj-expr</span> <span class="p">←</span> <span class="p">(</span><span class="nf">dnf-n-arity-simp</span> <span class="nv">conj-expr</span><span class="p">)</span><span class="p">}</span>
+  
+  <span class="c1">;; sorting terms</span>
+  <span class="c1">;; sort by x &lt; 1 &lt; 0</span>
+  <span class="p">{</span><span class="nv">disj-expr-sorted</span> <span class="p">←</span> <span class="p">(</span><span class="nf">sort-arguments-in-operation-most-little-literal-first</span> <span class="nv">disj-expr</span><span class="p">)</span><span class="p">}</span>
+ 
+  <span class="c1">;; get the shortest minterm</span>
+  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nf">isOR-AND?</span> <span class="nv">disj-expr-sorted</span><span class="p">)</span>
+      <span class="p">{</span><span class="nv">mt-var</span> <span class="p">←</span> <span class="p">(</span><span class="nf">first</span> <span class="p">(</span><span class="nf">args</span> <span class="nv">disj-expr-sorted</span><span class="p">))</span><span class="p">}</span>
+      <span class="p">{</span><span class="nv">mt-var</span> <span class="p">←</span> <span class="nv">disj-expr-sorted</span><span class="p">}</span><span class="p">)</span>
+
+  <span class="p">{</span><span class="nv">mt</span> <span class="p">←</span> <span class="p">(</span><span class="nf">var-&gt;minterm</span> <span class="nv">mt-var</span><span class="p">)</span><span class="p">}</span>
+
+  <span class="c1">;; TODO: possible bug missing term could be an expression ? (multiple terms)</span>
+  <span class="p">{</span><span class="nv">missing-term</span> <span class="p">←</span> <span class="p">(</span><span class="nf">essential-prime-implicants-list-&gt;formula</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">mt</span><span class="p">)</span>
+							    <span class="nv">var-list</span><span class="p">)</span><span class="p">}</span>
+
+  <span class="nv">missing-term</span>
+      
+<span class="p">)</span>
+</code></pre></figure>
+ </div>
+    </section>
+  </body>
+</html>
