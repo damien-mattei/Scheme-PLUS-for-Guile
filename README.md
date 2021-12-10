@@ -1348,3 +1348,81 @@ scheme@(guile-user)&gt; v
         alt="IBM 2741" title="IBM 2741" width="450"></div>
     <div style="text-align: center;">IBM 2741 Terminal </div>
     <p> </p>
+<div style="text-align: left;"><br>
+    </div>
+    <div style="text-align: left;">
+      <h2><u>20 Scheme+ in action:</u></h2>
+      <p>Example based on the <a href="https://en.wikipedia.org/wiki/Petrick%27s_method"
+          target="_blank">Petrick method</a> algorithm:</p>
+      <p><br>
+      </p>
+
+{% highlight scheme %}
+```scheme
+
+(def (Petrick non-essential-prime-implicants var-list)
+
+  ;; create the conjunction of disjunction expression
+
+  (declare mt conj-expr prim-imp col disj-expr disj-expr-sorted mt-var missing-term)
+
+  (display-nl "Entering Petrick...")
+  
+  (for (x 1 lgt-mt) ;; loop over minterms
+       
+       {mt ← iepi[x 0]}
+       
+       (when (member mt non-expressed-minterms) ;; non expressed minterm
+	 
+	 {col ← '()}
+	 
+	 (for (y 1 lgt-pi) ;; loop over prime implicants
+	      
+	      {prim-imp ← iepi[0 y]} ;; prime implicant
+	      
+	      ;; check wether prime implicant is a non essential one?
+	      (when (member prim-imp non-essential-prime-implicants)
+		
+		;; is the non essential prime implicant expressing this minterms?
+		(when (string=? {iepi[x y]} " * ")
+		  (insert-set! (minterm->var prim-imp) col))))
+	 
+	 ;; end for y
+	 
+	 (if (singleton-set? col)
+	     {col ← (car col)}  ;; ( V ) -> V
+	     (insert-set! 'or col))  ;; (V1 V2 ...) -> (or V1 V2 ...)
+	 
+	 (insert-set! col conj-expr)))
+  
+  ;; end for x
+
+  (if (singleton-set? conj-expr)
+      {conj-expr ← (car conj-expr)}  ;; ( conj-expr ) -> conj-expr
+      (insert-set! 'and conj-expr))  ;; (e1 e2 ...) -> (and e1 e2 ...)
+
+
+  ;; find the disjunctive form
+  {disj-expr ← (dnf-n-arity-simp conj-expr)}
+  
+  ;; sorting terms
+  ;; sort by x < 1 < 0
+  {disj-expr-sorted ← (sort-arguments-in-operation-most-little-literal-first disj-expr)}
+ 
+  ;; get the shortest minterm
+  (if (isOR-AND? disj-expr-sorted)
+      {mt-var ← (first (args disj-expr-sorted))}
+      {mt-var ← disj-expr-sorted})
+
+  {mt ← (var->minterm mt-var)}
+
+  ;; TODO: possible bug missing term could be an expression ? (multiple terms)
+  {missing-term ← (essential-prime-implicants-list->formula (list mt)
+							    var-list)}
+
+  missing-term
+      
+)
+
+```
+{% endhighlight %}

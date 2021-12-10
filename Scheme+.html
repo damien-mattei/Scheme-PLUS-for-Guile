@@ -1921,5 +1921,147 @@ scheme@(guile-user)&gt; v
     <div style="text-align: center;"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/IBM2741.JPG"
         alt="IBM 2741" title="IBM 2741" width="450"></div>
     <div style="text-align: center;">IBM 2741 Terminal </div>
+    <div style="text-align: center;"><br>
+    </div>
+    <div style="text-align: left;"><br>
+    </div>
+    <div style="text-align: left;">
+      <h2><u>20 Scheme+ in action:</u></h2>
+      <p>Example based on the <a href="https://en.wikipedia.org/wiki/Petrick%27s_method"
+          target="_blank">Petrick method</a> algorithm:</p>
+      <p><br>
+      </p>
+      <!-- HTML generated using hilite.me -->
+      <div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+        <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
+style="color: #ff0086; font-weight: bold">def</span> <span style="color: #ffffff">(</span><span
+style="color: #ff0086; font-weight: bold">Petrick</span> <span style="color: #fb660a">non-essential-prime-implicants</span> <span
+style="color: #fb660a">var-list</span><span style="color: #ffffff">)</span>
+
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; create the conjunction of disjunction expression</span>
+
+  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">declare</span> <span
+style="color: #fb660a">mt</span> <span style="color: #fb660a">conj-expr</span> <span
+style="color: #fb660a">prim-imp</span> <span style="color: #fb660a">col</span> <span
+style="color: #fb660a">disj-expr</span> <span style="color: #fb660a">disj-expr-sorted</span> <span
+style="color: #fb660a">mt-var</span> <span style="color: #fb660a">missing-term</span><span
+style="color: #ffffff">)</span>
+
+  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">display-nl</span> <span
+style="color: #0086d2">"Entering Petrick..."</span><span style="color: #ffffff">)</span>
+  
+  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">for</span> <span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">x</span> <span
+style="color: #0086f7; font-weight: bold">1</span> <span style="color: #fb660a">lgt-mt</span><span
+style="color: #ffffff">)</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; loop over minterms</span>
+       
+       <span style="color: #ffffff">{</span><span style="color: #fb660a">mt</span> <span
+style="color: #ffffff">←</span> <span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span
+style="color: #fb660a">x</span> <span style="color: #0086f7; font-weight: bold">0</span><span
+style="color: #ffffff">]}</span>
+       
+       <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span
+style="color: #ffffff">(member </span><span style="color: #fb660a">mt</span> <span
+style="color: #fb660a">non-expressed-minterms</span><span style="color: #ffffff">)</span> <span
+style="color: #008800; font-style: italic; background-color: #0f140f">;; non expressed minterm</span>
+	 
+	 <span style="color: #ffffff">{</span><span style="color: #fb660a">col</span> <span
+style="color: #ffffff">←</span> <span style="color: #ffffff">'()}</span>
+	 
+	 <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">for</span> <span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">y</span> <span
+style="color: #0086f7; font-weight: bold">1</span> <span style="color: #fb660a">lgt-pi</span><span
+style="color: #ffffff">)</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; loop over prime implicants</span>
+	      
+	      <span style="color: #ffffff">{</span><span style="color: #fb660a">prim-imp</span> <span
+style="color: #ffffff">←</span> <span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span
+style="color: #0086f7; font-weight: bold">0</span> <span style="color: #fb660a">y</span><span
+style="color: #ffffff">]}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; prime implicant</span>
+	      
+	      <span style="color: #008800; font-style: italic; background-color: #0f140f">;; check wether prime implicant is a non essential one?</span>
+	      <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span
+style="color: #ffffff">(member </span><span style="color: #fb660a">prim-imp</span> <span
+style="color: #fb660a">non-essential-prime-implicants</span><span style="color: #ffffff">)</span>
+		
+		<span style="color: #008800; font-style: italic; background-color: #0f140f">;; is the non essential prime implicant expressing this minterms?</span>
+		<span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span
+style="color: #ffffff">(string=? {</span><span style="color: #fb660a">iepi</span><span
+style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y</span><span
+style="color: #ffffff">]}</span> <span style="color: #0086d2">" * "</span><span
+style="color: #ffffff">)</span>
+		  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">insert-set!</span> <span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">minterm-&gt;var</span> <span
+style="color: #fb660a">prim-imp</span><span style="color: #ffffff">)</span> <span
+style="color: #fb660a">col</span><span style="color: #ffffff">))))</span>
+	 
+	 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; end for y</span>
+	 
+	 <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">if </span><span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">singleton-set?</span> <span
+style="color: #fb660a">col</span><span style="color: #ffffff">)</span>
+	     <span style="color: #ffffff">{</span><span style="color: #fb660a">col</span> <span
+style="color: #ffffff">←</span> <span style="color: #ffffff">(car </span><span style="color: #fb660a">col</span><span
+style="color: #ffffff">)}</span>  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; ( V ) -&gt; V</span>
+	     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">insert-set!</span> <span
+style="color: #0086d2">'or</span> <span style="color: #fb660a">col</span><span style="color: #ffffff">))</span>  <span
+style="color: #008800; font-style: italic; background-color: #0f140f">;; (V1 V2 ...) -&gt; (or V1 V2 ...)</span>
+	 
+	 <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">insert-set!</span> <span
+style="color: #fb660a">col</span> <span style="color: #fb660a">conj-expr</span><span
+style="color: #ffffff">)))</span>
+  
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; end for x</span>
+
+  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">if </span><span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">singleton-set?</span> <span
+style="color: #fb660a">conj-expr</span><span style="color: #ffffff">)</span>
+      <span style="color: #ffffff">{</span><span style="color: #fb660a">conj-expr</span> <span
+style="color: #ffffff">←</span> <span style="color: #ffffff">(car </span><span style="color: #fb660a">conj-expr</span><span
+style="color: #ffffff">)}</span>  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; ( conj-expr ) -&gt; conj-expr</span>
+      <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">insert-set!</span> <span
+style="color: #0086d2">'and</span> <span style="color: #fb660a">conj-expr</span><span
+style="color: #ffffff">))</span>  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; (e1 e2 ...) -&gt; (and e1 e2 ...)</span>
+
+
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; find the disjunctive form</span>
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">disj-expr</span> <span
+style="color: #ffffff">←</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dnf-n-arity-simp</span> <span
+style="color: #fb660a">conj-expr</span><span style="color: #ffffff">)}</span>
+  
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; sorting terms</span>
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; sort by x &lt; 1 &lt; 0</span>
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">disj-expr-sorted</span> <span
+style="color: #ffffff">←</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">sort-arguments-in-operation-most-little-literal-first</span> <span
+style="color: #fb660a">disj-expr</span><span style="color: #ffffff">)}</span>
+ 
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; get the shortest minterm</span>
+  <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">if </span><span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">isOR-AND?</span> <span
+style="color: #fb660a">disj-expr-sorted</span><span style="color: #ffffff">)</span>
+      <span style="color: #ffffff">{</span><span style="color: #fb660a">mt-var</span> <span
+style="color: #ffffff">←</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">first</span> <span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">args</span> <span
+style="color: #fb660a">disj-expr-sorted</span><span style="color: #ffffff">))}</span>
+      <span style="color: #ffffff">{</span><span style="color: #fb660a">mt-var</span> <span
+style="color: #ffffff">←</span> <span style="color: #fb660a">disj-expr-sorted</span><span
+style="color: #ffffff">})</span>
+
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">mt</span> <span
+style="color: #ffffff">←</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">var-&gt;minterm</span> <span
+style="color: #fb660a">mt-var</span><span style="color: #ffffff">)}</span>
+
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; TODO: possible bug missing term could be an expression ? (multiple terms)</span>
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">missing-term</span> <span
+style="color: #ffffff">←</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">essential-prime-implicants-list-&gt;formula</span> <span
+style="color: #ffffff">(list </span><span style="color: #fb660a">mt</span><span
+style="color: #ffffff">)</span>
+							    <span style="color: #fb660a">var-list</span><span style="color: #ffffff">)}</span>
+
+  <span style="color: #fb660a">missing-term</span>
+      
+<span style="color: #ffffff">)</span>
+</pre></div>
+    </div>
+    <br>
   </body>
 </html>
