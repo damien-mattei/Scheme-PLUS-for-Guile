@@ -1426,3 +1426,69 @@ scheme@(guile-user)&gt; v
 
 ```
 {% endhighlight %}
+
+<p>Example based on the <a href="https://en.wikipedia.org/wiki/Quine%E2%80%93McCluskey_algorithm"
+          target="_blank">Quine–McCluskey</a> algorithm:</p>
+      <p><br>
+      </p>
+
+
+{% highlight scheme %}
+```scheme
+
+(def (Quine-Mc-Cluskey disj-norm-form var-list)
+     
+     (display-nl "Entering Quine-Mc-Cluskey")
+     
+     {and-terms ⥆ (args disj-norm-form)} ;; conjunctives minterms
+     ;; variable list of expanded minterms 
+     {expanded-var-terms  ⥆ ($ {debug-mode-save ← debug-mode}
+			        {debug-mode  ← #t}
+				(when debug-mode
+				  (dv and-terms)) ;; dv:display value
+				{debug-mode  ← debug-mode-save}
+				(apply append
+				       (map (lambda (min-term)
+					      (expand-minterm var-list min-term))
+					    and-terms)))}
+
+     {sorted-expanded-var-terms  ⥆ (map sort-arguments expanded-var-terms)} ;; sorted variable list of expanded minterms
+     {binary-minterms ⥆ (map var->binary sorted-expanded-var-terms)} ;; minterms in binary form
+     {sorted-binary-minterms ⥆ (sort binary-minterms minterm-binary-weight-number<?)} ;; sorted binary minterms
+     {uniq-sorted-binary-minterms ⥆ (remove-duplicates-sorted sorted-binary-minterms)}  ;; prevoir uniq pourquoi???? sais plus !
+     {minterms ⥆ uniq-sorted-binary-minterms}
+     {set-of-sets-of-minterms ⥆ (order-by-weight-minterms uniq-sorted-binary-minterms)} ;; set of sets of minterms ordered by weight
+     {unified-minterms ⥆ ($ {debug-mode-save ← debug-mode}
+			     {debug-mode ← #t}
+			     (when debug-mode (display-nl "Quine-Mc-Cluskey:"))
+			     (init-hash-table-with-set-and-value minterms-ht minterms #f)
+			     (dv minterms-ht)
+			     {debug-mode ← debug-mode-save}
+			     (recursive-unify-minterms-set-of-sets  set-of-sets-of-minterms))}
+	 
+     {essential-prime-implicants ⥆ ($ {prime-implicants-lst ← ($ {debug-mode ← debug-mode-save}
+								  (prime-implicants minterms-ht))}
+				       (identify-essential-prime-implicants prime-implicants-lst minterms))}
+       
+     ;; dv : display value
+     (dv disj-norm-form)
+     (dv var-list)
+     (dv and-terms)
+     (dv expanded-var-terms)
+     (dv sorted-expanded-var-terms)
+     (dv binary-minterms)
+     (dv sorted-binary-minterms)
+     (dv uniq-sorted-binary-minterms)
+     (dvsos set-of-sets-of-minterms)
+     (dv unified-minterms)
+     (dv minterms-ht)
+     (dv prime-implicants-lst)
+     (dv essential-prime-implicants)
+     (display-nl "function expressed by essential prime implicants ?")
+     (dv feepi)
+     essential-prime-implicants)
+
+
+
+```
+{% endhighlight %}
