@@ -1403,6 +1403,69 @@ scheme@(guile-user)&gt; v
       
 <span class="p">)</span>
 </code></pre></figure>
+<br />
+<br />
+<p>Example based on the <a href="https://en.wikipedia.org/wiki/Quine%E2%80%93McCluskey_algorithm" target="_blank">Quine–McCluskey</a> algorithm:</p>
+      <p><br />
+      </p>
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
+
+<span class="p">(</span><span class="nf">def</span> <span class="p">(</span><span class="nf">Quine-Mc-Cluskey</span> <span class="nv">disj-norm-form</span> <span class="nv">var-list</span><span class="p">)</span>
+     
+     <span class="p">(</span><span class="nf">display-nl</span> <span class="s">"Entering Quine-Mc-Cluskey"</span><span class="p">)</span>
+     
+     <span class="p">{</span><span class="nv">and-terms</span> <span class="p">⥆</span> <span class="p">(</span><span class="nf">args</span> <span class="nv">disj-norm-form</span><span class="p">)</span><span class="p">}</span> <span class="c1">;; conjunctives minterms</span>
+     <span class="c1">;; variable list of expanded minterms </span>
+     <span class="p">{</span><span class="nv">expanded-var-terms</span>  <span class="p">⥆</span> <span class="p">(</span><span class="nf">$</span> <span class="p">{</span><span class="nv">debug-mode-save</span> <span class="p">←</span> <span class="nv">debug-mode</span><span class="p">}</span>
+			        <span class="p">{</span><span class="nv">debug-mode</span>  <span class="p">←</span> <span class="no">#t</span><span class="p">}</span>
+				<span class="p">(</span><span class="nf">when</span> <span class="nv">debug-mode</span>
+				  <span class="p">(</span><span class="nf">dv</span> <span class="nv">and-terms</span><span class="p">))</span> <span class="c1">;; dv:display value</span>
+				<span class="p">{</span><span class="nv">debug-mode</span>  <span class="p">←</span> <span class="nv">debug-mode-save</span><span class="p">}</span>
+				<span class="p">(</span><span class="nb">apply</span> <span class="nv">append</span>
+				       <span class="p">(</span><span class="nb">map</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">min-term</span><span class="p">)</span>
+					      <span class="p">(</span><span class="nf">expand-minterm</span> <span class="nv">var-list</span> <span class="nv">min-term</span><span class="p">))</span>
+					    <span class="nv">and-terms</span><span class="p">)))</span><span class="p">}</span>
+
+     <span class="p">{</span><span class="nv">sorted-expanded-var-terms</span>  <span class="p">⥆</span> <span class="p">(</span><span class="nb">map</span> <span class="nv">sort-arguments</span> <span class="nv">expanded-var-terms</span><span class="p">)</span><span class="p">}</span> <span class="c1">;; sorted variable list of expanded minterms</span>
+     <span class="p">{</span><span class="nv">binary-minterms</span> <span class="p">⥆</span> <span class="p">(</span><span class="nb">map</span> <span class="nv">var-&gt;binary</span> <span class="nv">sorted-expanded-var-terms</span><span class="p">)</span><span class="p">}</span> <span class="c1">;; minterms in binary form</span>
+     <span class="p">{</span><span class="nv">sorted-binary-minterms</span> <span class="p">⥆</span> <span class="p">(</span><span class="nf">sort</span> <span class="nv">binary-minterms</span> <span class="nv">minterm-binary-weight-number&lt;?</span><span class="p">)</span><span class="p">}</span> <span class="c1">;; sorted binary minterms</span>
+     <span class="p">{</span><span class="nv">uniq-sorted-binary-minterms</span> <span class="p">⥆</span> <span class="p">(</span><span class="nf">remove-duplicates-sorted</span> <span class="nv">sorted-binary-minterms</span><span class="p">)</span><span class="p">}</span>  <span class="c1">;; prevoir uniq pourquoi???? sais plus !</span>
+     <span class="p">{</span><span class="nv">minterms</span> <span class="p">⥆</span> <span class="nv">uniq-sorted-binary-minterms</span><span class="p">}</span>
+     <span class="p">{</span><span class="nv">set-of-sets-of-minterms</span> <span class="p">⥆</span> <span class="p">(</span><span class="nf">order-by-weight-minterms</span> <span class="nv">uniq-sorted-binary-minterms</span><span class="p">)</span><span class="p">}</span> <span class="c1">;; set of sets of minterms ordered by weight</span>
+     <span class="p">{</span><span class="nv">unified-minterms</span> <span class="p">⥆</span> <span class="p">(</span><span class="nf">$</span> <span class="p">{</span><span class="nv">debug-mode-save</span> <span class="p">←</span> <span class="nv">debug-mode</span><span class="p">}</span>
+			     <span class="p">{</span><span class="nv">debug-mode</span> <span class="p">←</span> <span class="no">#t</span><span class="p">}</span>
+			     <span class="p">(</span><span class="nf">when</span> <span class="nv">debug-mode</span> <span class="p">(</span><span class="nf">display-nl</span> <span class="s">"Quine-Mc-Cluskey:"</span><span class="p">))</span>
+			     <span class="p">(</span><span class="nf">init-hash-table-with-set-and-value</span> <span class="nv">minterms-ht</span> <span class="nv">minterms</span> <span class="no">#f</span><span class="p">)</span>
+			     <span class="p">(</span><span class="nf">dv</span> <span class="nv">minterms-ht</span><span class="p">)</span>
+			     <span class="p">{</span><span class="nv">debug-mode</span> <span class="p">←</span> <span class="nv">debug-mode-save</span><span class="p">}</span>
+			     <span class="p">(</span><span class="nf">recursive-unify-minterms-set-of-sets</span>  <span class="nv">set-of-sets-of-minterms</span><span class="p">))</span><span class="p">}</span>
+	 
+     <span class="p">{</span><span class="nv">essential-prime-implicants</span> <span class="p">⥆</span> <span class="p">(</span><span class="nf">$</span> <span class="p">{</span><span class="nv">prime-implicants-lst</span> <span class="p">←</span> <span class="p">(</span><span class="nf">$</span> <span class="p">{</span><span class="nv">debug-mode</span> <span class="p">←</span> <span class="nv">debug-mode-save</span><span class="p">}</span>
+								  <span class="p">(</span><span class="nf">prime-implicants</span> <span class="nv">minterms-ht</span><span class="p">))</span><span class="p">}</span>
+				       <span class="p">(</span><span class="nf">identify-essential-prime-implicants</span> <span class="nv">prime-implicants-lst</span> <span class="nv">minterms</span><span class="p">))</span><span class="p">}</span>
+       
+     <span class="c1">;; dv : display value</span>
+     <span class="p">(</span><span class="nf">dv</span> <span class="nv">disj-norm-form</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">dv</span> <span class="nv">var-list</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">dv</span> <span class="nv">and-terms</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">dv</span> <span class="nv">expanded-var-terms</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">dv</span> <span class="nv">sorted-expanded-var-terms</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">dv</span> <span class="nv">binary-minterms</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">dv</span> <span class="nv">sorted-binary-minterms</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">dv</span> <span class="nv">uniq-sorted-binary-minterms</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">dvsos</span> <span class="nv">set-of-sets-of-minterms</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">dv</span> <span class="nv">unified-minterms</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">dv</span> <span class="nv">minterms-ht</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">dv</span> <span class="nv">prime-implicants-lst</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">dv</span> <span class="nv">essential-prime-implicants</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">display-nl</span> <span class="s">"function expressed by essential prime implicants ?"</span><span class="p">)</span>
+     <span class="p">(</span><span class="nf">dv</span> <span class="nv">feepi</span><span class="p">)</span>
+     <span class="nv">essential-prime-implicants</span><span class="p">)</span>
+
+
+
+<span class="o">```</span></code></pre></figure>
+
     </div>
     </section>
   </body>
