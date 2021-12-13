@@ -1426,7 +1426,8 @@ scheme@(guile-user)&gt; v
 
 ```
 {% endhighlight %}
-
+<br>
+<br>
 <p>Example based on the <a href="https://en.wikipedia.org/wiki/Quine%E2%80%93McCluskey_algorithm"
           target="_blank">Quine–McCluskey</a> algorithm:</p>
       <p><br>

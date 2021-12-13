@@ -2063,8 +2063,145 @@ style="color: #ffffff">)</span>
 </pre></div>
     </div>
     <p> </p>
-    <br>
     <p><br>
     </p>
+    <p><br>
+    </p>
+    <p>Example based on the <a href="https://en.wikipedia.org/wiki/Quine%E2%80%93McCluskey_algorithm"
+        target="_blank">Quine–McCluskey</a> algorithm:</p>
+    <p><br>
+    </p>
+    <p><!-- HTML generated using hilite.me --></p>
+    <div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
+      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
+style="color: #ff0086; font-weight: bold">def</span> <span style="color: #ffffff">(</span><span
+style="color: #ff0086; font-weight: bold">Quine-Mc-Cluskey</span> <span style="color: #fb660a">disj-norm-form</span> <span
+style="color: #fb660a">var-list</span><span style="color: #ffffff">)</span>
+     
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">display-nl</span> <span
+style="color: #0086d2">"Entering Quine-Mc-Cluskey"</span><span style="color: #ffffff">)</span>
+     
+     <span style="color: #ffffff">{</span><span style="color: #fb660a">and-terms</span> <span
+style="color: #ffffff">⥆</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">args</span> <span
+style="color: #fb660a">disj-norm-form</span><span style="color: #ffffff">)}</span> <span
+style="color: #008800; font-style: italic; background-color: #0f140f">;; conjunctives minterms</span>
+     <span style="color: #008800; font-style: italic; background-color: #0f140f">;; variable list of expanded minterms </span>
+     <span style="color: #ffffff">{</span><span style="color: #fb660a">expanded-var-terms</span>  <span
+style="color: #ffffff">⥆</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">$</span> <span
+style="color: #ffffff">{</span><span style="color: #fb660a">debug-mode-save</span> <span
+style="color: #ffffff">←</span> <span style="color: #fb660a">debug-mode</span><span
+style="color: #ffffff">}</span>
+			        <span style="color: #ffffff">{</span><span style="color: #fb660a">debug-mode</span>  <span
+style="color: #ffffff">←</span> <span style="color: #0086d2">#t</span><span style="color: #ffffff">}</span>
+				<span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span
+style="color: #fb660a">debug-mode</span>
+				  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">and-terms</span><span style="color: #ffffff">))</span> <span
+style="color: #008800; font-style: italic; background-color: #0f140f">;; dv:display value</span>
+				<span style="color: #ffffff">{</span><span style="color: #fb660a">debug-mode</span>  <span
+style="color: #ffffff">←</span> <span style="color: #fb660a">debug-mode-save</span><span
+style="color: #ffffff">}</span>
+				<span style="color: #ffffff">(apply </span><span style="color: #fb660a">append</span>
+				       <span style="color: #ffffff">(map (</span><span style="color: #fb660a; font-weight: bold">lambda </span><span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">min-term</span><span
+style="color: #ffffff">)</span>
+					      <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">expand-minterm</span> <span
+style="color: #fb660a">var-list</span> <span style="color: #fb660a">min-term</span><span
+style="color: #ffffff">))</span>
+					    <span style="color: #fb660a">and-terms</span><span style="color: #ffffff">)))}</span>
+
+     <span style="color: #ffffff">{</span><span style="color: #fb660a">sorted-expanded-var-terms</span>  <span
+style="color: #ffffff">⥆</span> <span style="color: #ffffff">(map </span><span style="color: #fb660a">sort-arguments</span> <span
+style="color: #fb660a">expanded-var-terms</span><span style="color: #ffffff">)}</span> <span
+style="color: #008800; font-style: italic; background-color: #0f140f">;; sorted variable list of expanded minterms</span>
+     <span style="color: #ffffff">{</span><span style="color: #fb660a">binary-minterms</span> <span
+style="color: #ffffff">⥆</span> <span style="color: #ffffff">(map </span><span style="color: #fb660a">var-&gt;binary</span> <span
+style="color: #fb660a">sorted-expanded-var-terms</span><span style="color: #ffffff">)}</span> <span
+style="color: #008800; font-style: italic; background-color: #0f140f">;; minterms in binary form</span>
+     <span style="color: #ffffff">{</span><span style="color: #fb660a">sorted-binary-minterms</span> <span
+style="color: #ffffff">⥆</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">sort</span> <span
+style="color: #fb660a">binary-minterms</span> <span style="color: #fb660a">minterm-binary-weight-number&lt;?</span><span
+style="color: #ffffff">)}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; sorted binary minterms</span>
+     <span style="color: #ffffff">{</span><span style="color: #fb660a">uniq-sorted-binary-minterms</span> <span
+style="color: #ffffff">⥆</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">remove-duplicates-sorted</span> <span
+style="color: #fb660a">sorted-binary-minterms</span><span style="color: #ffffff">)}</span>  <span
+style="color: #008800; font-style: italic; background-color: #0f140f">;; prevoir uniq pourquoi???? sais plus !</span>
+     <span style="color: #ffffff">{</span><span style="color: #fb660a">minterms</span> <span
+style="color: #ffffff">⥆</span> <span style="color: #fb660a">uniq-sorted-binary-minterms</span><span
+style="color: #ffffff">}</span>
+     <span style="color: #ffffff">{</span><span style="color: #fb660a">set-of-sets-of-minterms</span> <span
+style="color: #ffffff">⥆</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">order-by-weight-minterms</span> <span
+style="color: #fb660a">uniq-sorted-binary-minterms</span><span style="color: #ffffff">)}</span> <span
+style="color: #008800; font-style: italic; background-color: #0f140f">;; set of sets of minterms ordered by weight</span>
+     <span style="color: #ffffff">{</span><span style="color: #fb660a">unified-minterms</span> <span
+style="color: #ffffff">⥆</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">$</span> <span
+style="color: #ffffff">{</span><span style="color: #fb660a">debug-mode-save</span> <span
+style="color: #ffffff">←</span> <span style="color: #fb660a">debug-mode</span><span
+style="color: #ffffff">}</span>
+			     <span style="color: #ffffff">{</span><span style="color: #fb660a">debug-mode</span> <span
+style="color: #ffffff">←</span> <span style="color: #0086d2">#t</span><span style="color: #ffffff">}</span>
+			     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span
+style="color: #fb660a">debug-mode</span> <span style="color: #ffffff">(</span><span
+style="color: #ff0086; font-weight: bold">display-nl</span> <span style="color: #0086d2">"Quine-Mc-Cluskey:"</span><span
+style="color: #ffffff">))</span>
+			     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">init-hash-table-with-set-and-value</span> <span
+style="color: #fb660a">minterms-ht</span> <span style="color: #fb660a">minterms</span> <span
+style="color: #0086d2">#f</span><span style="color: #ffffff">)</span>
+			     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">minterms-ht</span><span style="color: #ffffff">)</span>
+			     <span style="color: #ffffff">{</span><span style="color: #fb660a">debug-mode</span> <span
+style="color: #ffffff">←</span> <span style="color: #fb660a">debug-mode-save</span><span
+style="color: #ffffff">}</span>
+			     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">recursive-unify-minterms-set-of-sets</span>  <span
+style="color: #fb660a">set-of-sets-of-minterms</span><span style="color: #ffffff">))}</span>
+	 
+     <span style="color: #ffffff">{</span><span style="color: #fb660a">essential-prime-implicants</span> <span
+style="color: #ffffff">⥆</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">$</span> <span
+style="color: #ffffff">{</span><span style="color: #fb660a">prime-implicants-lst</span> <span
+style="color: #ffffff">←</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">$</span> <span
+style="color: #ffffff">{</span><span style="color: #fb660a">debug-mode</span> <span
+style="color: #ffffff">←</span> <span style="color: #fb660a">debug-mode-save</span><span
+style="color: #ffffff">}</span>
+								  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">prime-implicants</span> <span
+style="color: #fb660a">minterms-ht</span><span style="color: #ffffff">))}</span>
+				       <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">identify-essential-prime-implicants</span> <span
+style="color: #fb660a">prime-implicants-lst</span> <span style="color: #fb660a">minterms</span><span
+style="color: #ffffff">))}</span>
+       
+     <span style="color: #008800; font-style: italic; background-color: #0f140f">;; dv : display value</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">disj-norm-form</span><span style="color: #ffffff">)</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">var-list</span><span style="color: #ffffff">)</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">and-terms</span><span style="color: #ffffff">)</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">expanded-var-terms</span><span style="color: #ffffff">)</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">sorted-expanded-var-terms</span><span style="color: #ffffff">)</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">binary-minterms</span><span style="color: #ffffff">)</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">sorted-binary-minterms</span><span style="color: #ffffff">)</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">uniq-sorted-binary-minterms</span><span style="color: #ffffff">)</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dvsos</span> <span
+style="color: #fb660a">set-of-sets-of-minterms</span><span style="color: #ffffff">)</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">unified-minterms</span><span style="color: #ffffff">)</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">minterms-ht</span><span style="color: #ffffff">)</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">prime-implicants-lst</span><span style="color: #ffffff">)</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">essential-prime-implicants</span><span style="color: #ffffff">)</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">display-nl</span> <span
+style="color: #0086d2">"function expressed by essential prime implicants ?"</span><span
+style="color: #ffffff">)</span>
+     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">dv</span> <span
+style="color: #fb660a">feepi</span><span style="color: #ffffff">)</span>
+     <span style="color: #fb660a">essential-prime-implicants</span><span style="color: #ffffff">)</span>
+</pre></div>
+    <p> </p>
   </body>
 </html>
