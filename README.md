@@ -119,7 +119,7 @@ get it</a>)<br>
       <b><b>{</b>T</b><b>[m n]} </b>return the value of the multi dimension
       array T indexed by m and n</p>
     <div style="margin-left: 40px;"> </div>
-    <p style="margin-left: 40px;"><b><b>{</b>T</b><b>[m n] &lt;- </b><b><b>T</b><b>[m{n + 1}]</b>}</b></p>
+    <p style="margin-left: 40px;"><b><b>{</b>T</b><b>[m n] &lt;- </b><b><b>T</b><b>[m {n + 1}]</b>}</b></p>
     <p style="margin-left: 40px;"><br>
       <b><b>{</b>T</b><b>[m n] ← </b><b><b>T</b><b>[m {n + 1}]</b>}</b></p>
     <div style="margin-left: 40px;"> </div>
