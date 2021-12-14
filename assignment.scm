@@ -56,6 +56,9 @@
 ;; $bracket-apply$
 ;; $5 = 4
 
+;; TODO : make this works:
+;; scheme@(guile-user)> '{x <- y <- 7}
+;; $1 = (<- x y 7)
 (define-syntax <-
   
   (syntax-rules ()
@@ -137,7 +140,35 @@
      (begin
        ;;(display "<- : variable set!") (newline)
        (set! var expr)
-       var))))
+       var))
+
+    
+    ;; (declare x y z t)
+    ;; {x <- y <- z <- t <- 7}
+    ;; 7
+    ;; (list x y z t)
+    ;; (7 7 7 7)
+
+    ;; (declare I)
+    ;; {I <- (make-array 0 4 4)}
+    ;; #2((0 0 0 0)
+    ;;    (0 0 0 0)
+    ;;    (0 0 0 0)
+    ;;    (0 0 0 0))
+    ;;
+    ;; {I[0 0] <- I[1 1] <- I[2 2] <- I[3 3] <- 1}
+    ;; 1
+    ;; 
+    ;; I
+    ;; #2((1 0 0 0)
+    ;;    (0 1 0 0)
+    ;;    (0 0 1 0)
+    ;;    (0 0 0 1))
+
+    ((_ var var1 var2 ...)
+     (<- var (<- var1 var2 ...)))
+     
+    ))
 
 
 
@@ -157,7 +188,28 @@
     
     ;; (-> 5 x)
     ;; note: it is short and infix but seems to work in all case indeed!
-    ((_ expr var) {var <- expr})))
+    ((_ expr var) {var <- expr})
+
+
+    ;; (declare I)
+    ;; {I <- (make-array 0 4 4)}
+    ;; #2((0 0 0 0)
+    ;;    (0 0 0 0)
+    ;;    (0 0 0 0)
+    ;;    (0 0 0 0))
+    ;; {1 -> I[0 0] -> I[1 1] -> I[2 2] -> I[3 3]}
+    ;; 1
+    ;;
+    ;; I
+    ;; #2((1 0 0 0)
+    ;;    (0 1 0 0)
+    ;;    (0 0 1 0)
+    ;;    (0 0 0 1))
+
+    ((_ expr var var1 ...)
+     (-> (-> expr var) var1 ...))
+
+    ))
 
 
 
@@ -169,11 +221,27 @@
   (syntax-rules () 
 
     ;; note: it is short and infix but seems to work in all case indeed!
-    ((_ expr var) {var <- expr})))
+    ((_ expr var) {var <- expr})
+
+    ((_ expr var var1 ...)
+     (-> (-> expr var) var1 ...))
+    
+    ))
 
 
 ;; Mac OS use CTRL+CMD+space to bring up the characters popover, then type in u + unicode and hit Enter to get it)
 
+;; (declare I)
+;; {I <- (make-array 0 2 2)}
+;; #2((0 0)
+;;    (0 0))
+;;
+;; {I[0 0] ← I[1 1] ← 1}
+;; 1
+;;
+;; I
+;; #2((1 0)
+;;    (0 1))
 
 (define-syntax ← ;; under Linux this symbol can be typed with the
   ;; combination of keys: Ctrl-Shift-u 2190 where 2190 is the unicode of left arrow
@@ -181,4 +249,9 @@
   (syntax-rules ()
    
     ;; note: it is short and infix but seems to work in all case indeed!
-    ((_ var expr) {var <- expr})))
+    ((_ var expr) {var <- expr})
+
+    ((_ var var1 var2 ...)
+     (<- var (<- var1 var2 ...)))
+
+    ))
