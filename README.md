@@ -126,6 +126,32 @@ get it</a>)<br>
     <p style="margin-left: 40px;"> no more need of <strike>LET,LET*,LETREC,LET-VALUES</strike>,...
       </p>
     <div style="margin-left: 40px;"> </div>
+    <p style="margin-left: 40px;"><b>←</b><b> is an n-arity operator,
+        example :</b></p>
+    <p style="margin-left: 40px;">(declare x y z t)<br>
+      {x ← y ← z ← t ← 7}<br>
+      &nbsp;7<br>
+      &nbsp;(list x y z t)<br>
+      &nbsp;(7 7 7 7)</p>
+    <p style="margin-left: 40px;">Another example which build an
+      identity matrix:</p>
+    <p style="margin-left: 40px;">&nbsp;(declare I)<br>
+      &nbsp;{I ← (make-array 0 4 4)}<br>
+      &nbsp; #2((0 0 0 0)<br>
+      &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; (0 0 0 0)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (0 0 0 0)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (0 0 0 0))<br>
+      &nbsp;&nbsp;&nbsp; <br>
+      &nbsp; {I[0 0] ← I[1 1] ← I[2 2] ← I[3 3] ← 1}<br>
+      &nbsp; 1<br>
+      &nbsp;&nbsp;&nbsp; <br>
+      &nbsp;&nbsp; I<br>
+      &nbsp;&nbsp; #2((1 0 0 0)<br>
+      &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; (0 1 0 0)<br>
+      &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; (0 0 1 0)<br>
+      &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; (0 0 0 1))<br>
+      <br>
+      </p>
     <p style="margin-left: 40px;"><br>
       defining new functions with <b>def </b>instead of the classic define we
       can now use <b>return</b> to escape immediately :<br>
