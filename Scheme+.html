@@ -1660,6 +1660,143 @@ scheme@(guile-user)&gt; v
      <span style="color: #fb660a">essential-prime-implicants</span><span style="color: #ffffff">)</span>
 </pre>
     </div>
+<!-- HTML generated using hilite.me --><div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-style: italic; background-color: #0f140f">;; e element</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; s set</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; sos set of sets</span>
+<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">put-elements-of-set-of-sets-in-minterms-ht</span> <span style="color: #fb660a">sos</span><span style="color: #ffffff">)</span>
+  <span style="color: #ffffff">(map </span><span style="color: #008800; font-style: italic; background-color: #0f140f">;; deal with sets of the &#39;set of sets&#39;</span>
+   <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">lambda </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">s</span><span style="color: #ffffff">)</span> <span style="color: #ffffff">(map </span><span style="color: #008800; font-style: italic; background-color: #0f140f">;; deal with elements of a set</span>
+		<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">lambda </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">e</span><span style="color: #ffffff">)</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">minterms-ht</span><span style="color: #ffffff">[</span><span style="color: #fb660a">e</span><span style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span style="color: #0086d2">#f</span><span style="color: #ffffff">})</span>
+		<span style="color: #fb660a">s</span><span style="color: #ffffff">))</span>
+   <span style="color: #fb660a">sos</span><span style="color: #ffffff">))</span>
+
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; unify function for two minterms</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;;</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; (function-unify-two-minterms-and-tag &#39;(1 0 0 0) &#39;(1 0 1 0)) -&gt; &#39;(1 0 x 0)</span>
+<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">function-unify-two-minterms-and-tag</span> <span style="color: #fb660a">mt1</span> <span style="color: #fb660a">mt2</span><span style="color: #ffffff">)</span>
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">res</span> <span style="color: #ffffff">⥆</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">unify-two-minterms</span> <span style="color: #fb660a">mt1</span> <span style="color: #fb660a">mt2</span><span style="color: #ffffff">)}</span>
+  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span style="color: #fb660a">res</span>
+    <span style="color: #ffffff">{</span><span style="color: #fb660a">minterms-ht</span><span style="color: #ffffff">[</span><span style="color: #fb660a">mt1</span><span style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span style="color: #0086d2">#t</span><span style="color: #ffffff">}</span>
+    <span style="color: #ffffff">{</span><span style="color: #fb660a">minterms-ht</span><span style="color: #ffffff">[</span><span style="color: #fb660a">mt2</span><span style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span style="color: #0086d2">#t</span><span style="color: #ffffff">})</span>
+  <span style="color: #fb660a">res</span><span style="color: #ffffff">)</span>
+
+
+
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; (init-hash-table-with-set-and-value ht &#39;((1 0 0 0) (0 1 0 1) (1 0 1 0) (1 1 0 0) (0 1 1 1) (1 1 0 1) (1 1 1 0) (1 1 1 1)) #f)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; &#39;(#&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt;)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; &gt; ht</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; &#39;#hash(((1 1 0 1) . #f)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;;        ((1 1 0 0) . #f)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;;        ((0 1 0 1) . #f)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;;        ((0 1 1 1) . #f)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;;        ((1 0 0 0) . #f)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;;        ((1 1 1 1) . #f)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;;        ((1 1 1 0) . #f)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;;        ((1 0 1 0) . #f))</span>
+
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; used by Quine - Mc Cluskey</span>
+<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">init-hash-table-with-set-and-value</span> <span style="color: #fb660a">ht</span> <span style="color: #fb660a">s</span> <span style="color: #fb660a">val</span><span style="color: #ffffff">)</span>
+  <span style="color: #ffffff">(display </span><span style="color: #0086d2">&quot;init-hash-table-with-set-and-value&quot;</span><span style="color: #ffffff">)</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">newline</span><span style="color: #ffffff">)</span>
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">ht</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">make-hash-table</span><span style="color: #ffffff">)}</span>
+  <span style="color: #ffffff">(map (</span><span style="color: #fb660a; font-weight: bold">lambda </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">e</span><span style="color: #ffffff">)</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">ht</span><span style="color: #ffffff">[</span><span style="color: #fb660a">e</span><span style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span style="color: #fb660a">val</span><span style="color: #ffffff">})</span> <span style="color: #fb660a">s</span><span style="color: #ffffff">)</span>
+  <span style="color: #ffffff">(display </span><span style="color: #0086d2">&quot;end of init-hash-table-with-set-and-value&quot;</span><span style="color: #ffffff">)</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">newline</span><span style="color: #ffffff">))</span>
+
+
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; list of non expressed minterms</span>
+<span style="color: #ffffff">{</span><span style="color: #fb660a">non-expressed-minterms</span> <span style="color: #ffffff">⥆</span> <span style="color: #ffffff">&#39;()}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; could also be done with (declare non-expressed-minterms)</span>
+
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; iepi : identifying essential prime implicant array</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; first line : minterms</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; first row : prime-implicants</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; for now i do not know the array dimension</span>
+<span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">declare</span> <span style="color: #fb660a">iepi</span> <span style="color: #fb660a">lgt-pi</span> <span style="color: #fb660a">lgt-mt</span><span style="color: #ffffff">)</span>
+
+
+<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">identify-essential-prime-implicants</span>  <span style="color: #fb660a">prime-implicants</span> <span style="color: #fb660a">minterms</span><span style="color: #ffffff">)</span>
+  
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">vct-prime-implicants</span> <span style="color: #ffffff">⥆</span> <span style="color: #ffffff">(list-&gt;vector </span><span style="color: #fb660a">prime-implicants</span><span style="color: #ffffff">)}</span>
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">essential-prime-implicants-list</span> <span style="color: #ffffff">⥆</span> <span style="color: #ffffff">&#39;()}</span>
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">cpt-mt</span> <span style="color: #ffffff">⥆</span> <span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; counter of minterms</span>
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">y-pos-epi</span> <span style="color: #ffffff">⥆</span> <span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; position of essential prime implicant in colomn if there exists one</span>
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">star-in-column</span> <span style="color: #ffffff">⥆</span> <span style="color: #0086d2">#f</span><span style="color: #ffffff">}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; at the beginning</span>
+  
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">lgt-pi</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">(length </span><span style="color: #fb660a">prime-implicants</span><span style="color: #ffffff">)}</span>
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">lgt-mt</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">(length </span><span style="color: #fb660a">minterms</span><span style="color: #ffffff">)}</span>
+  
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; identifying essential prime implicant array</span>
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; first line : minterms</span>
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; first row : prime-implicants</span>
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">make-array-2d</span> <span style="color: #ffffff">(+ </span><span style="color: #fb660a">lgt-mt</span> <span style="color: #0086f7; font-weight: bold">1</span><span style="color: #ffffff">)</span> <span style="color: #ffffff">(+ </span><span style="color: #fb660a">lgt-pi</span> <span style="color: #0086f7; font-weight: bold">1</span><span style="color: #ffffff">)</span> <span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">)}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; two dimensions array</span>
+ 
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">]</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">(list-&gt;vector (cons &#39;()</span> <span style="color: #fb660a">minterms</span><span style="color: #ffffff">))}</span>
+ 
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; set the title line</span>
+
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; construction of the array</span>
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; set the left column containing prime implicants </span>
+  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">for</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">y</span> <span style="color: #0086f7; font-weight: bold">0</span> <span style="color: #ffffff">(- </span><span style="color: #fb660a">lgt-pi</span> <span style="color: #0086f7; font-weight: bold">1</span><span style="color: #ffffff">))</span>
+         <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #0086f7; font-weight: bold">0</span> <span style="color: #ffffff">(+ </span><span style="color: #fb660a">y</span> <span style="color: #0086f7; font-weight: bold">1</span><span style="color: #ffffff">)]</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">vct-prime-implicants</span><span style="color: #ffffff">[</span><span style="color: #fb660a">y</span><span style="color: #ffffff">]}})</span>
+ 
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; identify prime implicants</span>
+  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">for</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">x</span> <span style="color: #0086f7; font-weight: bold">1</span> <span style="color: #fb660a">lgt-mt</span><span style="color: #ffffff">)</span>
+       
+       <span style="color: #ffffff">{</span><span style="color: #fb660a">cpt-mt</span> <span style="color: #ffffff">←</span> <span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">}</span>
+       
+       <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">for</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">y</span> <span style="color: #0086f7; font-weight: bold">1</span> <span style="color: #fb660a">lgt-pi</span><span style="color: #ffffff">)</span>
+
+	    <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">if </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">compare-minterm-and-implicant</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #0086f7; font-weight: bold">0</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]}</span>
+					       <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">]})</span>
+		<span style="color: #008800; font-style: italic; background-color: #0f140f">;; then</span>
+		<span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">$</span>
+		  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">incf</span> <span style="color: #fb660a">cpt-mt</span><span style="color: #ffffff">)</span>
+		  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span style="color: #ffffff">(= </span><span style="color: #0086f7; font-weight: bold">1</span> <span style="color: #fb660a">cpt-mt</span><span style="color: #ffffff">)</span>
+			<span style="color: #ffffff">{</span><span style="color: #fb660a">y-pos-epi</span> <span style="color: #ffffff">←</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">})</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; position of essential prime implicant</span>
+		  <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]</span> <span style="color: #ffffff">←</span> <span style="color: #0086d2">&quot; * &quot;</span><span style="color: #ffffff">})</span>
+		
+		<span style="color: #008800; font-style: italic; background-color: #0f140f">;; else</span>
+		<span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]</span> <span style="color: #ffffff">←</span> <span style="color: #0086d2">&quot;   &quot;</span><span style="color: #ffffff">}))</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; end for y</span>
+       
+       <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span style="color: #ffffff">(= </span><span style="color: #0086f7; font-weight: bold">1</span> <span style="color: #fb660a">cpt-mt</span><span style="color: #ffffff">)</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; essential prime implicant</span>
+	     <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y-pos-epi</span><span style="color: #ffffff">]</span> <span style="color: #ffffff">←</span> <span style="color: #0086d2">&quot;(*)&quot;</span><span style="color: #ffffff">}</span>
+	     <span style="color: #008800; font-style: italic; background-color: #0f140f">;; add essential prime implicant to list</span>
+	     <span style="color: #ffffff">{</span><span style="color: #fb660a">essential-prime-implicants-list</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">(cons {</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #0086f7; font-weight: bold">0</span> <span style="color: #fb660a">y-pos-epi</span><span style="color: #ffffff">]}</span> <span style="color: #fb660a">essential-prime-implicants-list</span><span style="color: #ffffff">)})</span>
+
+     <span style="color: #ffffff">)</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; end for x</span>
+  
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">essential-prime-implicants-list</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">remove-duplicates</span> <span style="color: #fb660a">essential-prime-implicants-list</span><span style="color: #ffffff">)}</span>
+
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">feepi</span> <span style="color: #ffffff">←</span> <span style="color: #0086d2">#t</span><span style="color: #ffffff">}</span>
+  
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; check if function is expressed by essential implicants</span>
+  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">for/break</span> <span style="color: #fb660a">break-x</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">x</span> <span style="color: #0086f7; font-weight: bold">1</span> <span style="color: #fb660a">lgt-mt</span><span style="color: #ffffff">)</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; loop over minterms</span>
+	     
+	     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">for/break</span> <span style="color: #fb660a">break-y</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">y</span> <span style="color: #0086f7; font-weight: bold">1</span> <span style="color: #fb660a">lgt-pi</span><span style="color: #ffffff">)</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; loop over prime implicants</span>
+
+			<span style="color: #008800; font-style: italic; background-color: #0f140f">;; check wether prime implicant is an essential one?</span>
+			<span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span style="color: #ffffff">(member {</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #0086f7; font-weight: bold">0</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]}</span> <span style="color: #fb660a">essential-prime-implicants-list</span><span style="color: #ffffff">)</span>
+			  			      <span style="color: #008800; font-style: italic; background-color: #0f140f">;; is the essential prime implicant expressing this minterms?</span>
+			      <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">or </span><span style="color: #ffffff">(string=? </span> <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]}</span> <span style="color: #0086d2">&quot;(*)&quot;</span><span style="color: #ffffff">)</span>
+					<span style="color: #ffffff">(string=? </span> <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]}</span> <span style="color: #0086d2">&quot; * &quot;</span><span style="color: #ffffff">))</span>
+				    
+	
+				    <span style="color: #ffffff">{</span><span style="color: #fb660a">star-in-column</span> <span style="color: #ffffff">←</span> <span style="color: #0086d2">#t</span><span style="color: #ffffff">}</span>
+				    
+				    <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">break-y</span><span style="color: #ffffff">))))</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; that&#39;s enought! we know the minterm is expressed.</span>
+
+	     <span style="color: #008800; font-style: italic; background-color: #0f140f">;; end for/break break-y</span>
+	     
+	     <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">unless</span> <span style="color: #fb660a">star-in-column</span>
+		     <span style="color: #ffffff">{</span><span style="color: #fb660a">feepi</span> <span style="color: #ffffff">←</span> <span style="color: #0086d2">#f</span><span style="color: #ffffff">}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; function non expressed by prime implicants</span>
+		     <span style="color: #008800; font-style: italic; background-color: #0f140f">;; add minterm to non expressed minterms list</span>
+		     <span style="color: #ffffff">{</span><span style="color: #fb660a">non-expressed-minterms</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">insert</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">]}</span> <span style="color: #fb660a">non-expressed-minterms</span><span style="color: #ffffff">)}</span>
+		     <span style="color: #008800; font-style: italic; background-color: #0f140f">;;(break-x) ;; removed break-x as we have to check all the minterms now</span>
+		     <span style="color: #ffffff">)</span>
+	     
+	     <span style="color: #ffffff">{</span><span style="color: #fb660a">star-in-column</span> <span style="color: #ffffff">←</span> <span style="color: #0086d2">#f</span><span style="color: #ffffff">})</span>  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; set it for the next loop</span>
+  <span style="color: #008800; font-style: italic; background-color: #0f140f">;; end for/break break-x</span>
+
+  <span style="color: #fb660a">essential-prime-implicants-list</span><span style="color: #ffffff">)</span>
+</pre></div>
     <p> </p>
   </body>
 </html>
