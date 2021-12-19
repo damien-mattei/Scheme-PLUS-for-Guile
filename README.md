@@ -1656,3 +1656,16 @@ scheme@(guile-user)&gt; v
 
 ```
 {% endhighlight %}
+
+<code>
+iepi = </code>
+<code>#(() (0 0 0 0) (0 0 0 1) (0 0 1 0) (1 0 0 0) (0 1 0 1) (0 1 1 0) (1 0 0 1) (1 0 1 0) (0 1 1 1) (1 1 1 0)) </code>
+<code>#((0 x 0 1)      *           *                     ) </code>
+<code>#((0 1 x 1)                  *               *     ) </code>
+<code>#((0 1 1 x)                      *           *     ) </code>
+<code>#((x x 1 0)          *           *       *      (*)) </code>
+<code>#((x 0 0 x)  *   *       *          (*)            ) </code>
+<code>#((x 0 x 0)  *       *   *               *         ) </code>
+
+<br>
+Scheme+ by Damien Mattei
