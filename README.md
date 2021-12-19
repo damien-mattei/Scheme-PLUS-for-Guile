@@ -1516,6 +1516,143 @@ scheme@(guile-user)&gt; v
      essential-prime-implicants)
 
 
+;; e element
+;; s set
+;; sos set of sets
+(define (put-elements-of-set-of-sets-in-minterms-ht sos)
+  (map ;; deal with sets of the 'set of sets'
+   (lambda (s) (map ;; deal with elements of a set
+		(lambda (e) {minterms-ht[e] <- #f})
+		s))
+   sos))
+
+;; unify function for two minterms
+;;
+;; (function-unify-two-minterms-and-tag '(1 0 0 0) '(1 0 1 0)) -> '(1 0 x 0)
+(define (function-unify-two-minterms-and-tag mt1 mt2)
+  {res ⥆ (unify-two-minterms mt1 mt2)}
+  (when res
+    {minterms-ht[mt1] <- #t}
+    {minterms-ht[mt2] <- #t})
+  res)
+
+
+
+;; (init-hash-table-with-set-and-value ht '((1 0 0 0) (0 1 0 1) (1 0 1 0) (1 1 0 0) (0 1 1 1) (1 1 0 1) (1 1 1 0) (1 1 1 1)) #f)
+;; '(#<void> #<void> #<void> #<void> #<void> #<void> #<void> #<void>)
+;; > ht
+;; '#hash(((1 1 0 1) . #f)
+;;        ((1 1 0 0) . #f)
+;;        ((0 1 0 1) . #f)
+;;        ((0 1 1 1) . #f)
+;;        ((1 0 0 0) . #f)
+;;        ((1 1 1 1) . #f)
+;;        ((1 1 1 0) . #f)
+;;        ((1 0 1 0) . #f))
+
+;; used by Quine - Mc Cluskey
+(define (init-hash-table-with-set-and-value ht s val)
+  (display "init-hash-table-with-set-and-value") (newline)
+  {ht ← (make-hash-table)}
+  (map (lambda (e) {ht[e] <- val}) s)
+  (display "end of init-hash-table-with-set-and-value") (newline))
+
+
+;; list of non expressed minterms
+{non-expressed-minterms ⥆ '()} ;; could also be done with (declare non-expressed-minterms)
+
+;; iepi : identifying essential prime implicant array
+;; first line : minterms
+;; first row : prime-implicants
+;; for now i do not know the array dimension
+(declare iepi lgt-pi lgt-mt)
+
+
+(define (identify-essential-prime-implicants  prime-implicants minterms)
+  
+  {vct-prime-implicants ⥆ (list->vector prime-implicants)}
+  {essential-prime-implicants-list ⥆ '()}
+  {cpt-mt ⥆ 0} ;; counter of minterms
+  {y-pos-epi ⥆ 0} ;; position of essential prime implicant in colomn if there exists one
+  {star-in-column ⥆ #f} ;; at the beginning
+  
+  {lgt-pi ← (length prime-implicants)}
+  {lgt-mt ← (length minterms)}
+  
+  ;; identifying essential prime implicant array
+  ;; first line : minterms
+  ;; first row : prime-implicants
+  {iepi ← (make-array-2d (+ lgt-mt 1) (+ lgt-pi 1) 0)} ;; two dimensions array
+ 
+  {iepi[0] ← (list->vector (cons '() minterms))}
+ 
+  ;; set the title line
+
+  ;; construction of the array
+  ;; set the left column containing prime implicants 
+  (for (y 0 (- lgt-pi 1))
+         {iepi[0 (+ y 1)] ← {vct-prime-implicants[y]}})
+ 
+  ;; identify prime implicants
+  (for (x 1 lgt-mt)
+       
+       {cpt-mt ← 0}
+       
+       (for (y 1 lgt-pi)
+
+	    (if (compare-minterm-and-implicant {iepi[0 y]}
+					       {iepi[x 0]})
+		;; then
+		($
+		  (incf cpt-mt)
+		  (when (= 1 cpt-mt)
+			{y-pos-epi ← y}) ;; position of essential prime implicant
+		  {iepi[x y] ← " * "})
+		
+		;; else
+		{iepi[x y] ← "   "})) ;; end for y
+       
+       (when (= 1 cpt-mt) ;; essential prime implicant
+	     {iepi[x y-pos-epi] ← "(*)"}
+	     ;; add essential prime implicant to list
+	     {essential-prime-implicants-list ← (cons {iepi[0 y-pos-epi]} essential-prime-implicants-list)})
+
+     ) ;; end for x
+  
+  {essential-prime-implicants-list ← (remove-duplicates essential-prime-implicants-list)}
+
+  {feepi ← #t}
+  
+  ;; check if function is expressed by essential implicants
+  (for/break break-x (x 1 lgt-mt) ;; loop over minterms
+	     
+	     (for/break break-y (y 1 lgt-pi) ;; loop over prime implicants
+
+			;; check wether prime implicant is an essential one?
+			(when (member {iepi[0 y]} essential-prime-implicants-list)
+			  			      ;; is the essential prime implicant expressing this minterms?
+			      (when (or (string=?  {iepi[x y]} "(*)")
+					(string=?  {iepi[x y]} " * "))
+				    
+	
+				    {star-in-column ← #t}
+				    
+				    (break-y)))) ;; that's enought! we know the minterm is expressed.
+
+	     ;; end for/break break-y
+	     
+	     (unless star-in-column
+		     {feepi ← #f} ;; function non expressed by prime implicants
+		     ;; add minterm to non expressed minterms list
+		     {non-expressed-minterms ← (insert {iepi[x 0]} non-expressed-minterms)}
+		     ;;(break-x) ;; removed break-x as we have to check all the minterms now
+		     )
+	     
+	     {star-in-column ← #f})  ;; set it for the next loop
+  ;; end for/break break-x
+
+  essential-prime-implicants-list)
+
 
 ```
 {% endhighlight %}
