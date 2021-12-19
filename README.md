@@ -43,7 +43,8 @@
     </p>
     <p><b>Scheme+ makes it easy the assignment of Scheme object </b><b>in
         infix </b><b>(works also in prefix) </b><b>notation </b><b>with a few
-        new operators&nbsp;</b><b> </b><b><b><b>← (or&nbsp;</b></b> &lt;-), [],</b><b><font
+        new operators&nbsp;</b><b> </b><b><b><b>← (or&nbsp;</b></b>
+  &lt;-), [ ],</b><b><font
           size="+2">⥆ </font>(or &lt;+) . </b><br>
     </p>
 	<p><b>The idea of Scheme+ first come to my mind when comparing the
