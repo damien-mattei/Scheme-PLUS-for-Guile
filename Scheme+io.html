@@ -1494,7 +1494,7 @@ scheme@(guile-user)&gt; v
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">put-elements-of-set-of-sets-in-minterms-ht</span> <span class="nv">sos</span><span class="p">)</span>
   <span class="p">(</span><span class="nb">map</span> <span class="c1">;; deal with sets of the 'set of sets'</span>
    <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">s</span><span class="p">)</span> <span class="p">(</span><span class="nb">map</span> <span class="c1">;; deal with elements of a set</span>
-		<span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">e</span><span class="p">)</span> <span class="err">{</span><span class="nv">minterms-ht</span><span class="p">[</span><span class="nf">e</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="no">#f</span><span class="err">}</span><span class="p">)</span>
+		<span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">e</span><span class="p">)</span> <span class="p">{</span><span class="nv">minterms-ht</span><span class="p">[</span><span class="nf">e</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="no">#f</span><span class="p">}</span><span class="p">)</span>
 		<span class="nv">s</span><span class="p">))</span>
    <span class="nv">sos</span><span class="p">))</span>
 
@@ -1502,10 +1502,10 @@ scheme@(guile-user)&gt; v
 <span class="c1">;;</span>
 <span class="c1">;; (function-unify-two-minterms-and-tag '(1 0 0 0) '(1 0 1 0)) -&gt; '(1 0 x 0)</span>
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">function-unify-two-minterms-and-tag</span> <span class="nv">mt1</span> <span class="nv">mt2</span><span class="p">)</span>
-  <span class="err">{</span><span class="nv">res</span> <span class="err">⥆</span> <span class="p">(</span><span class="nf">unify-two-minterms</span> <span class="nv">mt1</span> <span class="nv">mt2</span><span class="p">)</span><span class="err">}</span>
+  <span class="p">{</span><span class="nv">res</span> <span class="p">⥆</span> <span class="p">(</span><span class="nf">unify-two-minterms</span> <span class="nv">mt1</span> <span class="nv">mt2</span><span class="p">)</span><span class="p">}</span>
   <span class="p">(</span><span class="nf">when</span> <span class="nv">res</span>
-    <span class="err">{</span><span class="nv">minterms-ht</span><span class="p">[</span><span class="nf">mt1</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="no">#t</span><span class="err">}</span>
-    <span class="err">{</span><span class="nv">minterms-ht</span><span class="p">[</span><span class="nf">mt2</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="no">#t</span><span class="err">}</span><span class="p">)</span>
+    <span class="p">{</span><span class="nv">minterms-ht</span><span class="p">[</span><span class="nf">mt1</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="no">#t</span><span class="p">}</span>
+    <span class="p">{</span><span class="nv">minterms-ht</span><span class="p">[</span><span class="nf">mt2</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="no">#t</span><span class="p">}</span><span class="p">)</span>
   <span class="nv">res</span><span class="p">)</span>
 
 
@@ -1525,13 +1525,13 @@ scheme@(guile-user)&gt; v
 <span class="c1">;; used by Quine - Mc Cluskey</span>
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">init-hash-table-with-set-and-value</span> <span class="nv">ht</span> <span class="nv">s</span> <span class="nv">val</span><span class="p">)</span>
   <span class="p">(</span><span class="nb">display</span> <span class="s">"init-hash-table-with-set-and-value"</span><span class="p">)</span> <span class="p">(</span><span class="nb">newline</span><span class="p">)</span>
-  <span class="err">{</span><span class="nv">ht</span> <span class="err">←</span> <span class="p">(</span><span class="nf">make-hash-table</span><span class="p">)</span><span class="err">}</span>
-  <span class="p">(</span><span class="nb">map</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">e</span><span class="p">)</span> <span class="err">{</span><span class="nv">ht</span><span class="p">[</span><span class="nf">e</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="nv">val</span><span class="err">}</span><span class="p">)</span> <span class="nv">s</span><span class="p">)</span>
+  <span class="p">{</span><span class="nv">ht</span> <span class="p">←</span> <span class="p">(</span><span class="nf">make-hash-table</span><span class="p">)</span><span class="p">}</span>
+  <span class="p">(</span><span class="nb">map</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">e</span><span class="p">)</span> <span class="p">{</span><span class="nv">ht</span><span class="p">[</span><span class="nf">e</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="nv">val</span><span class="p">}</span><span class="p">)</span> <span class="nv">s</span><span class="p">)</span>
   <span class="p">(</span><span class="nb">display</span> <span class="s">"end of init-hash-table-with-set-and-value"</span><span class="p">)</span> <span class="p">(</span><span class="nb">newline</span><span class="p">))</span>
 
 
 <span class="c1">;; list of non expressed minterms</span>
-<span class="err">{</span><span class="nv">non-expressed-minterms</span> <span class="err">⥆</span> <span class="o">'</span><span class="p">()</span><span class="err">}</span> <span class="c1">;; could also be done with (declare non-expressed-minterms)</span>
+<span class="p">{</span><span class="nv">non-expressed-minterms</span> <span class="p">⥆</span> <span class="o">'</span><span class="p">()</span><span class="p">}</span> <span class="c1">;; could also be done with (declare non-expressed-minterms)</span>
 
 <span class="c1">;; iepi : identifying essential prime implicant array</span>
 <span class="c1">;; first line : minterms</span>
@@ -1563,58 +1563,58 @@ scheme@(guile-user)&gt; v
 
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">identify-essential-prime-implicants</span>  <span class="nv">prime-implicants</span> <span class="nv">minterms</span><span class="p">)</span>
   
-  <span class="err">{</span><span class="nv">vct-prime-implicants</span> <span class="err">⥆</span> <span class="p">(</span><span class="nb">list-&gt;vector</span> <span class="nv">prime-implicants</span><span class="p">)</span><span class="err">}</span>
-  <span class="err">{</span><span class="nv">essential-prime-implicants-list</span> <span class="err">⥆</span> <span class="o">'</span><span class="p">()</span><span class="err">}</span>
-  <span class="err">{</span><span class="nv">cpt-mt</span> <span class="err">⥆</span> <span class="mi">0</span><span class="err">}</span> <span class="c1">;; counter of minterms</span>
-  <span class="err">{</span><span class="nv">y-pos-epi</span> <span class="err">⥆</span> <span class="mi">0</span><span class="err">}</span> <span class="c1">;; position of essential prime implicant in colomn if there exists one</span>
-  <span class="err">{</span><span class="nv">star-in-column</span> <span class="err">⥆</span> <span class="no">#f</span><span class="err">}</span> <span class="c1">;; at the beginning</span>
+  <span class="p">{</span><span class="nv">vct-prime-implicants</span> <span class="p">⥆</span> <span class="p">(</span><span class="nb">list-&gt;vector</span> <span class="nv">prime-implicants</span><span class="p">)</span><span class="p">}</span>
+  <span class="p">{</span><span class="nv">essential-prime-implicants-list</span> <span class="p">⥆</span> <span class="o">'</span><span class="p">()</span><span class="p">}</span>
+  <span class="p">{</span><span class="nv">cpt-mt</span> <span class="p">⥆</span> <span class="mi">0</span><span class="p">}</span> <span class="c1">;; counter of minterms</span>
+  <span class="p">{</span><span class="nv">y-pos-epi</span> <span class="p">⥆</span> <span class="mi">0</span><span class="p">}</span> <span class="c1">;; position of essential prime implicant in colomn if there exists one</span>
+  <span class="p">{</span><span class="nv">star-in-column</span> <span class="p">⥆</span> <span class="no">#f</span><span class="p">}</span> <span class="c1">;; at the beginning</span>
   
-  <span class="err">{</span><span class="nv">lgt-pi</span> <span class="err">←</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">prime-implicants</span><span class="p">)</span><span class="err">}</span>
-  <span class="err">{</span><span class="nv">lgt-mt</span> <span class="err">←</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">minterms</span><span class="p">)</span><span class="err">}</span>
+  <span class="p">{</span><span class="nv">lgt-pi</span> <span class="p">←</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">prime-implicants</span><span class="p">)</span><span class="p">}</span>
+  <span class="p">{</span><span class="nv">lgt-mt</span> <span class="p">←</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">minterms</span><span class="p">)</span><span class="p">}</span>
   
   <span class="c1">;; identifying essential prime implicant array</span>
   <span class="c1">;; first line : minterms</span>
   <span class="c1">;; first row : prime-implicants</span>
-  <span class="err">{</span><span class="nv">iepi</span> <span class="err">←</span> <span class="p">(</span><span class="nf">make-array-2d</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">lgt-mt</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">lgt-pi</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span><span class="err">}</span> <span class="c1">;; two dimensions array</span>
+  <span class="p">{</span><span class="nv">iepi</span> <span class="p">←</span> <span class="p">(</span><span class="nf">make-array-2d</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">lgt-mt</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">lgt-pi</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span><span class="p">}</span> <span class="c1">;; two dimensions array</span>
  
-  <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span><span class="p">]</span> <span class="err">←</span> <span class="p">(</span><span class="nb">list-&gt;vector</span> <span class="p">(</span><span class="nb">cons</span> <span class="o">'</span><span class="p">()</span> <span class="nv">minterms</span><span class="p">))</span><span class="err">}</span>
+  <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span><span class="p">]</span> <span class="p">←</span> <span class="p">(</span><span class="nb">list-&gt;vector</span> <span class="p">(</span><span class="nb">cons</span> <span class="o">'</span><span class="p">()</span> <span class="nv">minterms</span><span class="p">))</span><span class="p">}</span>
  
   <span class="c1">;; set the title line</span>
 
   <span class="c1">;; construction of the array</span>
   <span class="c1">;; set the left column containing prime implicants </span>
   <span class="p">(</span><span class="nf">for</span> <span class="p">(</span><span class="nf">y</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">lgt-pi</span> <span class="mi">1</span><span class="p">))</span>
-         <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">y</span> <span class="mi">1</span><span class="p">)]</span> <span class="err">←</span> <span class="err">{</span><span class="nv">vct-prime-implicants</span><span class="p">[</span><span class="nf">y</span><span class="p">]</span><span class="err">}}</span><span class="p">)</span>
+         <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">y</span> <span class="mi">1</span><span class="p">)]</span> <span class="p">←</span> <span class="p">{</span><span class="nv">vct-prime-implicants</span><span class="p">[</span><span class="nf">y</span><span class="p">]</span><span class="p">}}</span><span class="p">)</span>
  
   <span class="c1">;; identify prime implicants</span>
   <span class="p">(</span><span class="nf">for</span> <span class="p">(</span><span class="nf">x</span> <span class="mi">1</span> <span class="nv">lgt-mt</span><span class="p">)</span>
        
-       <span class="err">{</span><span class="nv">cpt-mt</span> <span class="err">←</span> <span class="mi">0</span><span class="err">}</span>
+       <span class="p">{</span><span class="nv">cpt-mt</span> <span class="p">←</span> <span class="mi">0</span><span class="p">}</span>
        
        <span class="p">(</span><span class="nf">for</span> <span class="p">(</span><span class="nf">y</span> <span class="mi">1</span> <span class="nv">lgt-pi</span><span class="p">)</span>
 
-	    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nf">compare-minterm-and-implicant</span> <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y</span><span class="p">]</span><span class="err">}</span>
-					       <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="mi">0</span><span class="p">]</span><span class="err">}</span><span class="p">)</span>
+	    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nf">compare-minterm-and-implicant</span> <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y</span><span class="p">]</span><span class="p">}</span>
+					       <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="mi">0</span><span class="p">]</span><span class="p">}</span><span class="p">)</span>
 		<span class="c1">;; then</span>
 		<span class="p">(</span><span class="nf">$</span>
 		  <span class="p">(</span><span class="nf">incf</span> <span class="nv">cpt-mt</span><span class="p">)</span>
 		  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="nv">cpt-mt</span><span class="p">)</span>
-			<span class="err">{</span><span class="nv">y-pos-epi</span> <span class="err">←</span> <span class="nv">y</span><span class="err">}</span><span class="p">)</span> <span class="c1">;; position of essential prime implicant</span>
-		  <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span> <span class="err">←</span> <span class="s">" * "</span><span class="err">}</span><span class="p">)</span>
+			<span class="p">{</span><span class="nv">y-pos-epi</span> <span class="p">←</span> <span class="nv">y</span><span class="p">}</span><span class="p">)</span> <span class="c1">;; position of essential prime implicant</span>
+		  <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span> <span class="p">←</span> <span class="s">" * "</span><span class="p">}</span><span class="p">)</span>
 		
 		<span class="c1">;; else</span>
-		<span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span> <span class="err">←</span> <span class="s">"   "</span><span class="err">}</span><span class="p">))</span> <span class="c1">;; end for y</span>
+		<span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span> <span class="p">←</span> <span class="s">"   "</span><span class="p">}</span><span class="p">))</span> <span class="c1">;; end for y</span>
        
        <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="nv">cpt-mt</span><span class="p">)</span> <span class="c1">;; essential prime implicant</span>
-	     <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y-pos-epi</span><span class="p">]</span> <span class="err">←</span> <span class="s">"(*)"</span><span class="err">}</span>
+	     <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y-pos-epi</span><span class="p">]</span> <span class="p">←</span> <span class="s">"(*)"</span><span class="p">}</span>
 	     <span class="c1">;; add essential prime implicant to list</span>
-	     <span class="err">{</span><span class="nv">essential-prime-implicants-list</span> <span class="err">←</span> <span class="p">(</span><span class="nb">cons</span> <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y-pos-epi</span><span class="p">]</span><span class="err">}</span> <span class="nv">essential-prime-implicants-list</span><span class="p">)</span><span class="err">}</span><span class="p">)</span>
+	     <span class="p">{</span><span class="nv">essential-prime-implicants-list</span> <span class="p">←</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y-pos-epi</span><span class="p">]</span><span class="p">}</span> <span class="nv">essential-prime-implicants-list</span><span class="p">)</span><span class="p">}</span><span class="p">)</span>
 
      <span class="p">)</span> <span class="c1">;; end for x</span>
   
-  <span class="err">{</span><span class="nv">essential-prime-implicants-list</span> <span class="err">←</span> <span class="p">(</span><span class="nf">remove-duplicates</span> <span class="nv">essential-prime-implicants-list</span><span class="p">)</span><span class="err">}</span>
+  <span class="p">{</span><span class="nv">essential-prime-implicants-list</span> <span class="p">←</span> <span class="p">(</span><span class="nf">remove-duplicates</span> <span class="nv">essential-prime-implicants-list</span><span class="p">)</span><span class="p">}</span>
 
-  <span class="err">{</span><span class="nv">feepi</span> <span class="err">←</span> <span class="no">#t</span><span class="err">}</span>
+  <span class="p">{</span><span class="nv">feepi</span> <span class="p">←</span> <span class="no">#t</span><span class="p">}</span>
   
   <span class="c1">;; check if function is expressed by essential implicants</span>
   <span class="p">(</span><span class="nf">for/break</span> <span class="nv">break-x</span> <span class="p">(</span><span class="nf">x</span> <span class="mi">1</span> <span class="nv">lgt-mt</span><span class="p">)</span> <span class="c1">;; loop over minterms</span>
@@ -1622,32 +1622,33 @@ scheme@(guile-user)&gt; v
 	     <span class="p">(</span><span class="nf">for/break</span> <span class="nv">break-y</span> <span class="p">(</span><span class="nf">y</span> <span class="mi">1</span> <span class="nv">lgt-pi</span><span class="p">)</span> <span class="c1">;; loop over prime implicants</span>
 
 			<span class="c1">;; check wether prime implicant is an essential one?</span>
-			<span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">member</span> <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y</span><span class="p">]</span><span class="err">}</span> <span class="nv">essential-prime-implicants-list</span><span class="p">)</span>
+			<span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">member</span> <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y</span><span class="p">]</span><span class="p">}</span> <span class="nv">essential-prime-implicants-list</span><span class="p">)</span>
 			  			      <span class="c1">;; is the essential prime implicant expressing this minterms?</span>
-			      <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="k">or</span> <span class="p">(</span><span class="nb">string=?</span>  <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span><span class="err">}</span> <span class="s">"(*)"</span><span class="p">)</span>
-					<span class="p">(</span><span class="nb">string=?</span>  <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span><span class="err">}</span> <span class="s">" * "</span><span class="p">))</span>
+			      <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="k">or</span> <span class="p">(</span><span class="nb">string=?</span>  <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span><span class="p">}</span> <span class="s">"(*)"</span><span class="p">)</span>
+					<span class="p">(</span><span class="nb">string=?</span>  <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span><span class="p">}</span> <span class="s">" * "</span><span class="p">))</span>
 				    
 	
-				    <span class="err">{</span><span class="nv">star-in-column</span> <span class="err">←</span> <span class="no">#t</span><span class="err">}</span>
+				    <span class="p">{</span><span class="nv">star-in-column</span> <span class="p">←</span> <span class="no">#t</span><span class="p">}</span>
 				    
 				    <span class="p">(</span><span class="nf">break-y</span><span class="p">))))</span> <span class="c1">;; that's enought! we know the minterm is expressed.</span>
 
 	     <span class="c1">;; end for/break break-y</span>
 	     
 	     <span class="p">(</span><span class="nf">unless</span> <span class="nv">star-in-column</span>
-		     <span class="err">{</span><span class="nv">feepi</span> <span class="err">←</span> <span class="no">#f</span><span class="err">}</span> <span class="c1">;; function non expressed by prime implicants</span>
+		     <span class="p">{</span><span class="nv">feepi</span> <span class="p">←</span> <span class="no">#f</span><span class="p">}</span> <span class="c1">;; function non expressed by prime implicants</span>
 		     <span class="c1">;; add minterm to non expressed minterms list</span>
-		     <span class="err">{</span><span class="nv">non-expressed-minterms</span> <span class="err">←</span> <span class="p">(</span><span class="nf">insert</span> <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="mi">0</span><span class="p">]</span><span class="err">}</span> <span class="nv">non-expressed-minterms</span><span class="p">)</span><span class="err">}</span>
+		     <span class="p">{</span><span class="nv">non-expressed-minterms</span> <span class="p">←</span> <span class="p">(</span><span class="nf">insert</span> <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="mi">0</span><span class="p">]</span><span class="p">}</span> <span class="nv">non-expressed-minterms</span><span class="p">)</span><span class="p">}</span>
 		     <span class="c1">;;(break-x) ;; removed break-x as we have to check all the minterms now</span>
 		     <span class="p">)</span>
 	     
-	     <span class="err">{</span><span class="nv">star-in-column</span> <span class="err">←</span> <span class="no">#f</span><span class="err">}</span><span class="p">)</span>  <span class="c1">;; set it for the next loop</span>
+	     <span class="p">{</span><span class="nv">star-in-column</span> <span class="p">←</span> <span class="no">#f</span><span class="p">}</span><span class="p">)</span>  <span class="c1">;; set it for the next loop</span>
   <span class="c1">;; end for/break break-x</span>
 
   <span class="nv">essential-prime-implicants-list</span><span class="p">)</span>
 
 </code></pre></figure>
-
+<br />
+Scheme+ by Damien Mattei
     </div>
     </section>
   </body>
