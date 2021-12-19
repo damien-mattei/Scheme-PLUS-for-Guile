@@ -1797,6 +1797,17 @@ scheme@(guile-user)&gt; v
 
   <span style="color: #fb660a">essential-prime-implicants-list</span><span style="color: #ffffff">)</span>
 </pre></div>
+<code>
+iepi = 
+#(() (0 0 0 0) (0 0 0 1) (0 0 1 0) (1 0 0 0) (0 1 0 1) (0 1 1 0) (1 0 0 1) (1 0 1 0) (0 1 1 1) (1 1 1 0))
+#((0 x 0 1)      *           *                     )
+#((0 1 x 1)                  *               *     )
+#((0 1 1 x)                      *           *     )
+#((x x 1 0)          *           *       *      (*))
+#((x 0 0 x)  *   *       *          (*)            )
+#((x 0 x 0)  *       *   *               *         )
+
+</code>
     <p> </p>
   </body>
 </html>
