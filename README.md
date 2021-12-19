@@ -1567,6 +1567,27 @@ scheme@(guile-user)&gt; v
 ;; for now i do not know the array dimension
 (declare iepi lgt-pi lgt-mt)
 
+;; example part of output:
+
+;; {iepi[1 2]} = 0
+;; {iepi[1 2] ← 1} = 1
+;; #(() (0 0 0 0) (0 0 0 1) (0 0 1 0) (1 0 0 0) (0 1 0 1) (0 1 1 0) (1 0 0 1) (1 0 1 0) (0 1 1 1) (1 1 1 0))
+;; #(0 0 0 0 0 0 0 0 0 0 0)
+;; #(0 1 0 0 0 0 0 0 0 0 0)
+;; #(0 0 0 0 0 0 0 0 0 0 0)
+;; #(0 0 0 0 0 0 0 0 0 0 0)
+;; #(0 0 0 0 0 0 0 0 0 0 0)
+;; #(0 0 0 0 0 0 0 0 0 0 0)
+
+;; iepi = 
+;; #(() (0 0 0 0) (0 0 0 1) (0 0 1 0) (1 0 0 0) (0 1 0 1) (0 1 1 0) (1 0 0 1) (1 0 1 0) (0 1 1 1) (1 1 1 0))
+;; #((0 x 0 1)      *           *                     )
+;; #((0 1 x 1)                  *               *     )
+;; #((0 1 1 x)                      *           *     )
+;; #((x x 1 0)          *           *       *      (*))
+;; #((x 0 0 x)  *   *       *          (*)            )
+;; #((x 0 x 0)  *       *   *               *         )
+
 
 (define (identify-essential-prime-implicants  prime-implicants minterms)
   
@@ -1657,15 +1678,6 @@ scheme@(guile-user)&gt; v
 ```
 {% endhighlight %}
 
-<code>
-iepi = </code><br>
-<code>#(() (0 0 0 0) (0 0 0 1) (0 0 1 0) (1 0 0 0) (0 1 0 1) (0 1 1 0) (1 0 0 1) (1 0 1 0) (0 1 1 1) (1 1 1 0)) </code><br>
-<code>#((0 x 0 1)      *           *                     ) </code><br>
-<code>#((0 1 x 1)                  *               *     ) </code><br>
-<code>#((0 1 1 x)                      *           *     ) </code><br>
-<code>#((x x 1 0)          *           *       *      (*)) </code><br>
-<code>#((x 0 0 x)  *   *       *          (*)            ) </code><br>
-<code>#((x 0 x 0)  *       *   *               *         ) </code><br>
-<br>
+
 <br>
 Scheme+ by Damien Mattei

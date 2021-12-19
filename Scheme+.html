@@ -1710,11 +1710,28 @@ scheme@(guile-user)&gt; v
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; first row : prime-implicants</span>
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; for now i do not know the array dimension</span>
 <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">declare</span> <span style="color: #fb660a">iepi</span> <span style="color: #fb660a">lgt-pi</span> <span style="color: #fb660a">lgt-mt</span><span style="color: #ffffff">)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; example part of output:</span>
 
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; {iepi[1 2]} = 0</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; {iepi[1 2] ← 1} = 1</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; #(() (0 0 0 0) (0 0 0 1) (0 0 1 0) (1 0 0 0) (0 1 0 1) (0 1 1 0) (1 0 0 1) (1 0 1 0) (0 1 1 1) (1 1 1 0))</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; #(0 0 0 0 0 0 0 0 0 0 0)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; #(0 1 0 0 0 0 0 0 0 0 0)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; #(0 0 0 0 0 0 0 0 0 0 0)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; #(0 0 0 0 0 0 0 0 0 0 0)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; #(0 0 0 0 0 0 0 0 0 0 0)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; #(0 0 0 0 0 0 0 0 0 0 0)</span>
 
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; iepi = </span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; #(() (0 0 0 0) (0 0 0 1) (0 0 1 0) (1 0 0 0) (0 1 0 1) (0 1 1 0) (1 0 0 1) (1 0 1 0) (0 1 1 1) (1 1 1 0))</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; #((0 x 0 1)      *           *                     )</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; #((0 1 x 1)                  *               *     )</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; #((0 1 1 x)                      *           *     )</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; #((x x 1 0)          *           *       *      (*))</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; #((x 0 0 x)  *   *       *          (*)            )</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; #((x 0 x 0)  *       *   *               *         )</span>
 <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">identify-essential-prime-implicants</span>  <span style="color: #fb660a">prime-implicants</span> <span style="color: #fb660a">minterms</span><span style="color: #ffffff">)</span>
-  
-  <span style="color: #ffffff">{</span><span style="color: #fb660a">vct-prime-implicants</span> <span style="color: #ffffff">⥆</span> <span style="color: #ffffff">(list-&gt;vector </span><span style="color: #fb660a">prime-implicants</span><span style="color: #ffffff">)}</span>
+    <span style="color: #ffffff">{</span><span style="color: #fb660a">vct-prime-implicants</span> <span style="color: #ffffff">⥆</span> <span style="color: #ffffff">(list-&gt;vector </span><span style="color: #fb660a">prime-implicants</span><span style="color: #ffffff">)}</span>
   <span style="color: #ffffff">{</span><span style="color: #fb660a">essential-prime-implicants-list</span> <span style="color: #ffffff">⥆</span> <span style="color: #ffffff">&#39;()}</span>
   <span style="color: #ffffff">{</span><span style="color: #fb660a">cpt-mt</span> <span style="color: #ffffff">⥆</span> <span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; counter of minterms</span>
   <span style="color: #ffffff">{</span><span style="color: #fb660a">y-pos-epi</span> <span style="color: #ffffff">⥆</span> <span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; position of essential prime implicant in colomn if there exists one</span>
@@ -1797,15 +1814,7 @@ scheme@(guile-user)&gt; v
 
   <span style="color: #fb660a">essential-prime-implicants-list</span><span style="color: #ffffff">)</span>
 </pre></div>
-<code>
-iepi = </code><br>
-<code>#(() (0 0 0 0) (0 0 0 1) (0 0 1 0) (1 0 0 0) (0 1 0 1) (0 1 1 0) (1 0 0 1) (1 0 1 0) (0 1 1 1) (1 1 1 0)) </code><br>
-<code>#((0 x 0 1)      *           *                     ) </code><br>
-<code>#((0 1 x 1)                  *               *     ) </code><br>
-<code>#((0 1 1 x)                      *           *     ) </code><br>
-<code>#((x x 1 0)          *           *       *      (*)) </code><br>
-<code>#((x 0 0 x)  *   *       *          (*)            ) </code><br>
-<code>#((x 0 x 0)  *       *   *               *         ) </code><br>
+
 <br>
 Scheme+ by Damien Mattei
     <p> </p>
