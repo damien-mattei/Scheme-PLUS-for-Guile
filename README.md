@@ -99,7 +99,7 @@ popover, </a>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <a
 href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-characters-without-using-the-mouse"
-moz-do-not-send="true">then type in u + unicode and hit Enter to
+moz-do-not-send="true">then type in u+unicode  (ex: u+2946) and hit Enter to
 get it</a>)<br>
 <br>
 </p>
