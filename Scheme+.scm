@@ -45,7 +45,7 @@
 (define-module (Scheme+)
   
   #:use-module (growable-vector)
-  #:use-module (srfi srfi-69)
+  #:use-module (srfi srfi-69) ;; Basic hash tables 
   #:export (def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ & condx <> ≠)
 	 
   ;; #:replace ((new-lambda . lambda)

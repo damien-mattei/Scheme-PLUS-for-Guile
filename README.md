@@ -122,7 +122,19 @@ get it</a>)<br>
     <div style="margin-left: 40px;"> </div>
     <p style="margin-left: 40px;"><b><b>{</b>T</b><b>[m n] &lt;- </b><b><b>T</b><b>[m {n + 1}]</b>}</b></p>
     <p style="margin-left: 40px;"><br>
-      <b><b>{</b>T</b><b>[m n] ← </b><b><b>T</b><b>[m {n + 1}]</b>}</b></p>
+      <b><b>{</b>T</b><b>[m n] ← </b><b><b>T</b><b>[m {n +
+  1}]</b>}</b></p>
+  <p style="margin-left: 40px;"><b>(declare fact)<br>
+{fact &lt;- (lambda (n) (if {n &lt;&gt; 0} {n * (fact {n - 1})}
+1))}<br>
+</b></p>
+<p style="margin-left: 40px;"><b>or just:<br>
+</b></p>
+<p style="margin-left: 40px;"><font size="+1"><b>{fact ⥆ (λ (n) (if
+{n &lt;&gt; 0} {n * (fact {n - 1})} 1))}</b></font></p>
+<p style="margin-left: 40px;"><b>{fact(8)}<br>
+40320<br>
+</b></p>
     <div style="margin-left: 40px;"> </div>
     <p style="margin-left: 40px;"> no more need of <strike>LET,LET*,LETREC,LET-VALUES</strike>,...
       </p>

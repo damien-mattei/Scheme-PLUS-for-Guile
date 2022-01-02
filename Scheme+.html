@@ -13,6 +13,7 @@
         title="by Damien MATTEI" alt="Scheme+" width="290" height="65"></div>
     <h2 style="text-align: center;"><span style="color: #00cccc;"><i>Enhancing
 
+
           Scheme (and Lisp-like) language. </i></span></h2>
     <h2 style=" text-align: center;">Damien Mattei<br>
     </h2>
@@ -38,7 +39,9 @@
           href="https://en.wikipedia.org/wiki/Scheme_%28programming_language%29"
           target="_blank">Scheme</a> language.</b></p>
     <p><b>Scheme+ makes it easy the assignment of Scheme objects </b><b>in
+
         infix </b><b>(works also in prefix) </b><b>notation </b><b>with
+
         a few new operators&nbsp;</b><b> </b><b><b><b>← (or&nbsp;</b></b>
         &lt;-), [ ],</b><b><font size="+2">⥆ </font>(or &lt;+) . </b><br>
     </p>
@@ -49,6 +52,7 @@
         enhanced.</b><br>
     </p>
     <p>The <b>idea</b> of <b>Scheme+</b> is came from this : <b><i>"Why
+
           is it so boring to define variables in Scheme with the
           traditionnal set of LET,LET*,LETREC,LET-VALUES special forms?"</i></b>
       and <b><i>"Is it possible to use a single mechanism for
@@ -93,8 +97,8 @@ href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-ch
         moz-do-not-send="true">CTRL+CMD+space to bring up the characters
         popover, </a> <a
 href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-characters-without-using-the-mouse"
-        moz-do-not-send="true">then type in u + unicode and hit Enter to
-        get it</a>)<br>
+        moz-do-not-send="true">then type in u+unicode (ex: u+2946) and
+        hit Enter to get it</a>)<br>
       <br>
     </p>
     <p style="margin-left: 40px;"><b>{T[k]} </b>return value of vector
@@ -104,8 +108,10 @@ href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-ch
       assignment of <b>T</b><b>[k] </b>with x.</p>
     <div style="margin-left: 40px;"> </div>
     <p style="margin-left: 40px;"><b>{T</b><b>[k] &lt;- </b><b><b>T</b><b>[{k
+
           + 1}]</b>} </b>in infix or the same with a little part of
       classic prefix Scheme:&nbsp; <b>{T</b><b>[k] &lt;- </b><b><b>T</b><b>[(+
+
           k 1)]</b>} <br>
       </b></p>
     <div style="margin-left: 40px;"> </div>
@@ -116,11 +122,25 @@ href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-ch
     <div style="margin-left: 40px;"> </div>
     <p style="margin-left: 40px;"><b><b>{</b>T</b><b>[m n] &lt;- </b><b><b>T</b><b>[m
 
+
           {n + 1}]</b>}</b></p>
     <p style="margin-left: 40px;"><br>
-      <b><b>{</b>T</b><b>[m n] ← </b><b><b>T</b><b>[m {n + 1}]</b>}</b></p>
+      <b><b>{</b>T</b><b>[m n] ← </b><b><b>T</b><b>[m {n + 1}]</b>}<br>
+      </b></p>
+    <p style="margin-left: 40px;"><b>(declare fact)<br>
+        {fact &lt;- (lambda (n) (if {n &lt;&gt; 0} {n * (fact {n - 1})}
+        1))}<br>
+      </b></p>
+    <p style="margin-left: 40px;"><b>or just:<br>
+      </b></p>
+    <p style="margin-left: 40px;"><font size="+1"><b>{fact ⥆ (λ (n) (if
+          {n &lt;&gt; 0} {n * (fact {n - 1})} 1))}</b></font></p>
+    <p style="margin-left: 40px;"><b>{fact(8)}<br>
+        40320<br>
+      </b></p>
     <div style="margin-left: 40px;"> </div>
     <p style="margin-left: 40px;"> no more need of <strike>LET,LET*,LETREC,LET-VALUES</strike>,...
+
 
 
 
@@ -244,6 +264,7 @@ href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-ch
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt;
 
+
         (use-modules (Scheme+))</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
@@ -253,6 +274,7 @@ href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-ch
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">;;; <span
           class="Apple-converted-space">&nbsp; &nbsp; &nbsp; </span>newer
+
         than compiled<span class="Apple-converted-space"> <br>
         </span></font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
@@ -267,10 +289,12 @@ href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-ch
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt;
 
+
         (declare L)</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt;
+
         {L &lt;- '(1 2 3 4)}</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
@@ -278,6 +302,7 @@ href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-ch
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt;
+
         L</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
@@ -285,6 +310,7 @@ href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-ch
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt;
+
         {L &lt;- (list 1 2 3 4 5)}</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
@@ -308,6 +334,7 @@ href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-ch
     <h2>2.<u>Download Scheme+:</u></h2>
     <p>The source code of the <b>Scheme+ module</b>, currently only for
       <a href="https://www.gnu.org/software/guile/" target="_blank">Guile
+
         implementation of Scheme</a> can be retrieved here: </p>
     <p> </p>
     <h3 style=" text-align: center;">&gt;&gt;&gt;&nbsp;&nbsp;<a
@@ -327,6 +354,7 @@ href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile/tarball/main"
     <h3 style=" text-align: center;">&gt;&gt;&gt;&nbsp;&nbsp; <a
         href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile"
         target="_blank">https://github.com/damien-mattei/Scheme-PLUS-for-Guile
+
 
         --&gt; Code --&gt; Download ZIP</a>&nbsp;&nbsp; &lt;&lt;&lt;<br>
     </h3>
@@ -409,8 +437,10 @@ href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile/tarball/main"
     <h2>4.<u>Author and license:</u></h2>
     <p><b>Damien Mattei </b>; <b>Scheme+</b> : Copyright 2021 <b>Damien
 
+
         Mattei </b>under <a
         href="https://www.gnu.org/licenses/gpl-3.0.txt" target="_blank">GNU
+
 
 
 
@@ -531,6 +561,7 @@ href="https://www.gnu.org/software/guile/manual/html_node/Installing-Site-Packag
     <p>This intuitive notation works also with Hash Tables.</p>
     <p>Scheme+ will remove the need for the classic LET set of special
       form, no more need of <strike>LET,LET*,LETREC,LET-VALUES</strike>,...
+
       and will use an unique infix (or not) assignment operator : &lt;-.
       (also LET are enhanced - the project historically by improving and
       simplifying LET, i simplified it so much that i remove it now! -
@@ -549,6 +580,7 @@ href="https://www.gnu.org/software/guile/manual/html_node/Installing-Site-Packag
       <li>Assignment operator : <b>&lt;-</b> (can be used in infix
         syntax and from left to right and right to left)</li>
       <li>Square Bracket operator<b> []</b> working with Scheme <b>Vectors,
+
 
           Arrays,Multidimentional Arrays</b>,Dynamic Arrays (my growable
         vector class),<b>Hash Tables</b>...</li>
@@ -676,6 +708,7 @@ href="https://www.gnu.org/software/guile/manual/html_node/Installing-Site-Packag
         versions of Scheme+</b>. (we will see another more complex
       example with multidimentional array later)</p>
     <p>So <b>{x &lt;- 7} </b>simply assign 7 to the variable x but <b>{m[3]
+
 
         &lt;- 7}</b> will store 7 in the array <b>m </b>at the
       position indexed by 3. Access an element of array is also simpler
@@ -836,9 +869,11 @@ href="https://en.wikipedia.org/wiki/Subset_sum_problem#Pseudo-polynomial_time_dy
       clauses,general syntax is:</p>
     <p style="text-align: left; margin-left: 40px;">(<b>condx </b>[<i>condition
 
+
         statements </i>...]</p>
     <div style="margin-left: 40px;"> </div>
     <p style="text-align: left; margin-left: 40px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 
 
 
@@ -886,9 +921,11 @@ href="https://en.wikipedia.org/wiki/Subset_sum_problem#Pseudo-polynomial_time_dy
 
 
 
+
       ...</p>
     <div style="margin-left: 40px;"> </div>
     <p style="text-align: left; margin-left: 40px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 
 
 
@@ -1138,6 +1175,7 @@ href="https://en.wikipedia.org/wiki/Subset_sum_problem#Pseudo-polynomial_time_dy
 
 
 
+
       [<b>exec</b><i> statements ... </i>]</p>
     <p style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -1162,8 +1200,10 @@ href="https://en.wikipedia.org/wiki/Subset_sum_problem#Pseudo-polynomial_time_dy
 
 
 
+
       ...</p>
     <p style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 
 
 
@@ -1217,6 +1257,7 @@ href="https://en.wikipedia.org/wiki/Subset_sum_problem#Pseudo-polynomial_time_dy
 
 
 
+
       of the classic define we can now use <b>return</b> to escape
       immediately returning the value v:</p>
     <p style="text-align: left;"><b>(return </b>v<b>) </b><b> </b></p>
@@ -1227,6 +1268,7 @@ href="https://en.wikipedia.org/wiki/Subset_sum_problem#Pseudo-polynomial_time_dy
       </b></p>
     <p style="text-align: left;">But <b>begin</b> is dual in Scheme, it
       expands differently in <i>expression </i>context and <i>definition
+
       </i>context. See this for more information:</p>
     <p style="text-align: left;"><a
         href="https://www.gnu.org/software/guile/manual/html_node/begin.html"
@@ -1257,6 +1299,7 @@ href="https://en.wikipedia.org/wiki/Subset_sum_problem#Pseudo-polynomial_time_dy
       expression context in: (define x 1)<br>
     </p>
     <p style="text-align: left;">for this reason i provide a <b>&amp; </b>macro
+
 
 
 
@@ -1312,6 +1355,7 @@ href="https://lists.gnu.org/archive/html/guile-devel/2021-09/msg00031.html"
     <p>Scheme+ will be implemented for other Scheme. Racket (former
       DrScheme) first,....</p>
     <p>Next version will integrate more features, concerning <b>multiple
+
         values</b> return for example.</p>
     <p><br>
     </p>
@@ -1478,6 +1522,7 @@ href="https://lists.gnu.org/archive/html/guile-devel/2021-09/msg00031.html"
     <p> <img
         src="https://upload.wikimedia.org/wikipedia/commons/9/9f/APL-keybd2.svg"
         alt="IBM 2741 keyboard layout" title="IBM 2741 keyboard layout">IBM
+
       2741 Terminal keyboard layout</p>
     <br>
     <p>The hexadécimal unicode can be entered under Linux with :
@@ -1660,11 +1705,15 @@ scheme@(guile-user)&gt; v
      <span style="color: #fb660a">essential-prime-implicants</span><span style="color: #ffffff">)</span>
 </pre>
     </div>
-<!-- HTML generated using hilite.me --><div style="background: #111111; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-style: italic; background-color: #0f140f">;; e element</span>
+    <!-- HTML generated using hilite.me -->
+    <div style="background: #111111;
+      overflow:auto;width:auto;border:solid gray;border-width:.1em .1em
+      .1em .8em;padding:.2em .6em;">
+      <pre style="margin: 0; line-height: 125%"><span style="color: #008800; font-style: italic; background-color: #0f140f">;; e element</span>
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; s set</span>
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; sos set of sets</span>
 <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">put-elements-of-set-of-sets-in-minterms-ht</span> <span style="color: #fb660a">sos</span><span style="color: #ffffff">)</span>
-  <span style="color: #ffffff">(map </span><span style="color: #008800; font-style: italic; background-color: #0f140f">;; deal with sets of the &#39;set of sets&#39;</span>
+  <span style="color: #ffffff">(map </span><span style="color: #008800; font-style: italic; background-color: #0f140f">;; deal with sets of the 'set of sets'</span>
    <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">lambda </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">s</span><span style="color: #ffffff">)</span> <span style="color: #ffffff">(map </span><span style="color: #008800; font-style: italic; background-color: #0f140f">;; deal with elements of a set</span>
 		<span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">lambda </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">e</span><span style="color: #ffffff">)</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">minterms-ht</span><span style="color: #ffffff">[</span><span style="color: #fb660a">e</span><span style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span style="color: #0086d2">#f</span><span style="color: #ffffff">})</span>
 		<span style="color: #fb660a">s</span><span style="color: #ffffff">))</span>
@@ -1672,7 +1721,7 @@ scheme@(guile-user)&gt; v
 
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; unify function for two minterms</span>
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;;</span>
-<span style="color: #008800; font-style: italic; background-color: #0f140f">;; (function-unify-two-minterms-and-tag &#39;(1 0 0 0) &#39;(1 0 1 0)) -&gt; &#39;(1 0 x 0)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; (function-unify-two-minterms-and-tag '(1 0 0 0) '(1 0 1 0)) -&gt; '(1 0 x 0)</span>
 <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">function-unify-two-minterms-and-tag</span> <span style="color: #fb660a">mt1</span> <span style="color: #fb660a">mt2</span><span style="color: #ffffff">)</span>
   <span style="color: #ffffff">{</span><span style="color: #fb660a">res</span> <span style="color: #ffffff">⥆</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">unify-two-minterms</span> <span style="color: #fb660a">mt1</span> <span style="color: #fb660a">mt2</span><span style="color: #ffffff">)}</span>
   <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span style="color: #fb660a">res</span>
@@ -1682,10 +1731,10 @@ scheme@(guile-user)&gt; v
 
 
 
-<span style="color: #008800; font-style: italic; background-color: #0f140f">;; (init-hash-table-with-set-and-value ht &#39;((1 0 0 0) (0 1 0 1) (1 0 1 0) (1 1 0 0) (0 1 1 1) (1 1 0 1) (1 1 1 0) (1 1 1 1)) #f)</span>
-<span style="color: #008800; font-style: italic; background-color: #0f140f">;; &#39;(#&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt;)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; (init-hash-table-with-set-and-value ht '((1 0 0 0) (0 1 0 1) (1 0 1 0) (1 1 0 0) (0 1 1 1) (1 1 0 1) (1 1 1 0) (1 1 1 1)) #f)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; '(#&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt; #&lt;void&gt;)</span>
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; &gt; ht</span>
-<span style="color: #008800; font-style: italic; background-color: #0f140f">;; &#39;#hash(((1 1 0 1) . #f)</span>
+<span style="color: #008800; font-style: italic; background-color: #0f140f">;; '#hash(((1 1 0 1) . #f)</span>
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;;        ((1 1 0 0) . #f)</span>
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;;        ((0 1 0 1) . #f)</span>
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;;        ((0 1 1 1) . #f)</span>
@@ -1696,14 +1745,14 @@ scheme@(guile-user)&gt; v
 
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; used by Quine - Mc Cluskey</span>
 <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">init-hash-table-with-set-and-value</span> <span style="color: #fb660a">ht</span> <span style="color: #fb660a">s</span> <span style="color: #fb660a">val</span><span style="color: #ffffff">)</span>
-  <span style="color: #ffffff">(display </span><span style="color: #0086d2">&quot;init-hash-table-with-set-and-value&quot;</span><span style="color: #ffffff">)</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">newline</span><span style="color: #ffffff">)</span>
+  <span style="color: #ffffff">(display </span><span style="color: #0086d2">"init-hash-table-with-set-and-value"</span><span style="color: #ffffff">)</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">newline</span><span style="color: #ffffff">)</span>
   <span style="color: #ffffff">{</span><span style="color: #fb660a">ht</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">make-hash-table</span><span style="color: #ffffff">)}</span>
   <span style="color: #ffffff">(map (</span><span style="color: #fb660a; font-weight: bold">lambda </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">e</span><span style="color: #ffffff">)</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">ht</span><span style="color: #ffffff">[</span><span style="color: #fb660a">e</span><span style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span style="color: #fb660a">val</span><span style="color: #ffffff">})</span> <span style="color: #fb660a">s</span><span style="color: #ffffff">)</span>
-  <span style="color: #ffffff">(display </span><span style="color: #0086d2">&quot;end of init-hash-table-with-set-and-value&quot;</span><span style="color: #ffffff">)</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">newline</span><span style="color: #ffffff">))</span>
+  <span style="color: #ffffff">(display </span><span style="color: #0086d2">"end of init-hash-table-with-set-and-value"</span><span style="color: #ffffff">)</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">newline</span><span style="color: #ffffff">))</span>
 
 
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; list of non expressed minterms</span>
-<span style="color: #ffffff">{</span><span style="color: #fb660a">non-expressed-minterms</span> <span style="color: #ffffff">⥆</span> <span style="color: #ffffff">&#39;()}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; could also be done with (declare non-expressed-minterms)</span>
+<span style="color: #ffffff">{</span><span style="color: #fb660a">non-expressed-minterms</span> <span style="color: #ffffff">⥆</span> <span style="color: #ffffff">'()}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; could also be done with (declare non-expressed-minterms)</span>
 
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; iepi : identifying essential prime implicant array</span>
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; first line : minterms</span>
@@ -1732,7 +1781,7 @@ scheme@(guile-user)&gt; v
 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; #((x 0 x 0)  *       *   *               *         )</span>
 <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">define </span><span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">identify-essential-prime-implicants</span>  <span style="color: #fb660a">prime-implicants</span> <span style="color: #fb660a">minterms</span><span style="color: #ffffff">)</span>
     <span style="color: #ffffff">{</span><span style="color: #fb660a">vct-prime-implicants</span> <span style="color: #ffffff">⥆</span> <span style="color: #ffffff">(list-&gt;vector </span><span style="color: #fb660a">prime-implicants</span><span style="color: #ffffff">)}</span>
-  <span style="color: #ffffff">{</span><span style="color: #fb660a">essential-prime-implicants-list</span> <span style="color: #ffffff">⥆</span> <span style="color: #ffffff">&#39;()}</span>
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">essential-prime-implicants-list</span> <span style="color: #ffffff">⥆</span> <span style="color: #ffffff">'()}</span>
   <span style="color: #ffffff">{</span><span style="color: #fb660a">cpt-mt</span> <span style="color: #ffffff">⥆</span> <span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; counter of minterms</span>
   <span style="color: #ffffff">{</span><span style="color: #fb660a">y-pos-epi</span> <span style="color: #ffffff">⥆</span> <span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; position of essential prime implicant in colomn if there exists one</span>
   <span style="color: #ffffff">{</span><span style="color: #fb660a">star-in-column</span> <span style="color: #ffffff">⥆</span> <span style="color: #0086d2">#f</span><span style="color: #ffffff">}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; at the beginning</span>
@@ -1745,7 +1794,7 @@ scheme@(guile-user)&gt; v
   <span style="color: #008800; font-style: italic; background-color: #0f140f">;; first row : prime-implicants</span>
   <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">make-array-2d</span> <span style="color: #ffffff">(+ </span><span style="color: #fb660a">lgt-mt</span> <span style="color: #0086f7; font-weight: bold">1</span><span style="color: #ffffff">)</span> <span style="color: #ffffff">(+ </span><span style="color: #fb660a">lgt-pi</span> <span style="color: #0086f7; font-weight: bold">1</span><span style="color: #ffffff">)</span> <span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">)}</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; two dimensions array</span>
  
-  <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">]</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">(list-&gt;vector (cons &#39;()</span> <span style="color: #fb660a">minterms</span><span style="color: #ffffff">))}</span>
+  <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">]</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">(list-&gt;vector (cons '()</span> <span style="color: #fb660a">minterms</span><span style="color: #ffffff">))}</span>
  
   <span style="color: #008800; font-style: italic; background-color: #0f140f">;; set the title line</span>
 
@@ -1768,13 +1817,13 @@ scheme@(guile-user)&gt; v
 		  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">incf</span> <span style="color: #fb660a">cpt-mt</span><span style="color: #ffffff">)</span>
 		  <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span style="color: #ffffff">(= </span><span style="color: #0086f7; font-weight: bold">1</span> <span style="color: #fb660a">cpt-mt</span><span style="color: #ffffff">)</span>
 			<span style="color: #ffffff">{</span><span style="color: #fb660a">y-pos-epi</span> <span style="color: #ffffff">←</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">})</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; position of essential prime implicant</span>
-		  <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]</span> <span style="color: #ffffff">←</span> <span style="color: #0086d2">&quot; * &quot;</span><span style="color: #ffffff">})</span>
+		  <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]</span> <span style="color: #ffffff">←</span> <span style="color: #0086d2">" * "</span><span style="color: #ffffff">})</span>
 		
 		<span style="color: #008800; font-style: italic; background-color: #0f140f">;; else</span>
-		<span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]</span> <span style="color: #ffffff">←</span> <span style="color: #0086d2">&quot;   &quot;</span><span style="color: #ffffff">}))</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; end for y</span>
+		<span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]</span> <span style="color: #ffffff">←</span> <span style="color: #0086d2">"   "</span><span style="color: #ffffff">}))</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; end for y</span>
        
        <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span style="color: #ffffff">(= </span><span style="color: #0086f7; font-weight: bold">1</span> <span style="color: #fb660a">cpt-mt</span><span style="color: #ffffff">)</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; essential prime implicant</span>
-	     <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y-pos-epi</span><span style="color: #ffffff">]</span> <span style="color: #ffffff">←</span> <span style="color: #0086d2">&quot;(*)&quot;</span><span style="color: #ffffff">}</span>
+	     <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y-pos-epi</span><span style="color: #ffffff">]</span> <span style="color: #ffffff">←</span> <span style="color: #0086d2">"(*)"</span><span style="color: #ffffff">}</span>
 	     <span style="color: #008800; font-style: italic; background-color: #0f140f">;; add essential prime implicant to list</span>
 	     <span style="color: #ffffff">{</span><span style="color: #fb660a">essential-prime-implicants-list</span> <span style="color: #ffffff">←</span> <span style="color: #ffffff">(cons {</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #0086f7; font-weight: bold">0</span> <span style="color: #fb660a">y-pos-epi</span><span style="color: #ffffff">]}</span> <span style="color: #fb660a">essential-prime-implicants-list</span><span style="color: #ffffff">)})</span>
 
@@ -1792,13 +1841,13 @@ scheme@(guile-user)&gt; v
 			<span style="color: #008800; font-style: italic; background-color: #0f140f">;; check wether prime implicant is an essential one?</span>
 			<span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span style="color: #ffffff">(member {</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #0086f7; font-weight: bold">0</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]}</span> <span style="color: #fb660a">essential-prime-implicants-list</span><span style="color: #ffffff">)</span>
 			  			      <span style="color: #008800; font-style: italic; background-color: #0f140f">;; is the essential prime implicant expressing this minterms?</span>
-			      <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">or </span><span style="color: #ffffff">(string=? </span> <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]}</span> <span style="color: #0086d2">&quot;(*)&quot;</span><span style="color: #ffffff">)</span>
-					<span style="color: #ffffff">(string=? </span> <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]}</span> <span style="color: #0086d2">&quot; * &quot;</span><span style="color: #ffffff">))</span>
+			      <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">when</span> <span style="color: #ffffff">(</span><span style="color: #fb660a; font-weight: bold">or </span><span style="color: #ffffff">(string=? </span> <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]}</span> <span style="color: #0086d2">"(*)"</span><span style="color: #ffffff">)</span>
+					<span style="color: #ffffff">(string=? </span> <span style="color: #ffffff">{</span><span style="color: #fb660a">iepi</span><span style="color: #ffffff">[</span><span style="color: #fb660a">x</span> <span style="color: #fb660a">y</span><span style="color: #ffffff">]}</span> <span style="color: #0086d2">" * "</span><span style="color: #ffffff">))</span>
 				    
 	
 				    <span style="color: #ffffff">{</span><span style="color: #fb660a">star-in-column</span> <span style="color: #ffffff">←</span> <span style="color: #0086d2">#t</span><span style="color: #ffffff">}</span>
 				    
-				    <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">break-y</span><span style="color: #ffffff">))))</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; that&#39;s enought! we know the minterm is expressed.</span>
+				    <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">break-y</span><span style="color: #ffffff">))))</span> <span style="color: #008800; font-style: italic; background-color: #0f140f">;; that's enought! we know the minterm is expressed.</span>
 
 	     <span style="color: #008800; font-style: italic; background-color: #0f140f">;; end for/break break-y</span>
 	     
@@ -1813,10 +1862,10 @@ scheme@(guile-user)&gt; v
   <span style="color: #008800; font-style: italic; background-color: #0f140f">;; end for/break break-x</span>
 
   <span style="color: #fb660a">essential-prime-implicants-list</span><span style="color: #ffffff">)</span>
-</pre></div>
-
-<br>
-Scheme+ by Damien Mattei
+</pre>
+    </div>
+    <br>
+    Scheme+ by Damien Mattei
     <p> </p>
   </body>
 </html>
