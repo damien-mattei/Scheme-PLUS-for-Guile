@@ -32,27 +32,13 @@
 ;; use :
 ;; (use-modules (Scheme+))
 
-;; or if in a guile subdirectory use it with (use-modules (guile Scheme+Guile.scm))
-;; note that the above syntax means Scheme+Guile.scm must be in a directory named guile
-;; and that you have launched Guile in the directory containing the guile subdirectory
-
-;; see Guile module documentation
-
-;;(define-module (guile Scheme+)
-
 
 
 (define-module (Scheme+)
   
   #:use-module (growable-vector)
   #:use-module (srfi srfi-69) ;; Basic hash tables 
-  #:export (def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ & condx <> ≠)
-	 
-  ;; #:replace ((new-lambda . lambda)
-  ;; (new-cond . cond)
-  ;;          )
-
-  )
+  #:export (def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ & condx <> ≠))
 
 
 
