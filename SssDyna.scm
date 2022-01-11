@@ -63,6 +63,8 @@
 
 {L-init <- '(1 3 4 16 17 24 45 64 197 256 275 323 540 723 889 915 1040 1041 1093 1099 1111 1284 1344 1520 2027 2500 2734 3000 3267 3610 4285 5027)}
 {t-init <- 35267}
+;;{t-init <- 21}
+
 {ls <- (length L-init)}
 {dyna <- (make-array 0 {ls + 1} {t-init + 1})}
 
@@ -154,11 +156,16 @@
   ;;(def dyn {dyna[ls t]})
 
   {ls <+ (length L)}
+
+  ;;(display "ls=") (display ls) (display " ") (display "t=") (display t) (newline)
+  
   {dyn <+ {dyna[ls t]}}
   
   (def c)
   (def R)
 
+  
+  
   ;; TODO: write this code simplier
   ;; dyna[ls t] means 0: unknown solution, 1: solution found, 2: no solution
   (one?
