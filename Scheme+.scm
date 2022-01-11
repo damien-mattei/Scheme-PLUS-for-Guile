@@ -38,7 +38,7 @@
   
   #:use-module (growable-vector)
   #:use-module (srfi srfi-69) ;; Basic hash tables 
-  #:export (def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ & condx <> ≠))
+  #:export (def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ & condx <> ≠ **))
 
 
 
@@ -50,4 +50,4 @@
 (include-from-path "condx.scm")
 (include-from-path "block.scm")
 (include-from-path "not-equal.scm")
-
+(include-from-path "exponential.scm")
