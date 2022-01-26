@@ -48,14 +48,24 @@
 
   (syntax-rules (<-)
 
+    ;; note: _ is %parse-letrec-bindings-and-evaluate-expressions
     ((_ (bindings ...) (var1 <- val1) expr ...)  (letrec* (bindings ... (var1 val1)) ;; last binding
-							  expr ...)) ;; we evaluate expressions
-    ((_ (bindings ...) (var1 <- val1 ;; multiple binding
-			var2 <- val2 ...) expr ...)
-     ;; store (var1 val1) binding in accumulator and continue parsing
-       (%parse-letrec-bindings-and-evaluate-expressions (bindings ... (var1 val1)) (var2 <- val2 ...) expr ...)))) 
+						   expr ...)) ;; we evaluate expressions
     
+    ((_ (bindings ...) (var1 <- val1 ;; multiple bindings
+			var2 <- val2
+			...)
+	
+        	        expr ...)
 
+     
+     ;; store (var1 val1) binding in accumulator and continue parsing
+     (%parse-letrec-bindings-and-evaluate-expressions (bindings ... (var1 val1))
+						      (var2 <- val2
+						       ...)
+						      
+						      expr ...)))) 
+    
 
 
 
