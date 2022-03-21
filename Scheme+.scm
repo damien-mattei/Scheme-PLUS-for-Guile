@@ -1,16 +1,14 @@
 ;; Scheme+.scm
 
-;; version 1.0
+;; version 2.0
 
 ;; author: Damien MATTEI
 
 ;; location: France
 
-;; date: 2021
-
 ;; Guile Scheme version
 
-;; Copyright 2021 Damien MATTEI
+;; Copyright 2021-2022 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -44,6 +42,7 @@
 
 (include-from-path "def.scm")
 (include-from-path "array.scm")
+(include-from-path "set-values-plus.scm")
 (include-from-path "apply-square-brackets.scm")
 (include-from-path "assignment.scm")
 (include-from-path "declare.scm")

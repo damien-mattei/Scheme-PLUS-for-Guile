@@ -1,7 +1,7 @@
 
 ;; This file is part of Scheme+
 
-;; Copyright 2021 Damien MATTEI
+;; Copyright 2021-2022 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -54,21 +54,100 @@
 
 ;; definition and assignment
 ;; { x <+ 7 } is equivalent to : (<- x 7) or (define x 7)
+
+;; > {(a b c) <+ (values 7 8 9)}
+;; 7
+;; 8
+;; 9
+;; > (list a b c)
+;; '(7 8 9)
+
+;; > { y <+ z <+ 7 } 
+;; > z
+;; 7
+;; > y
+;; 7
+;; > { x <+ y <+ z <+ 7 } 
+;; > (list x y z)
+;; '(7 7 7)
+
+;; > {(x y z) <+ (u v w) <+ (a b c)  <+ (values 2 4 5)}
+;; 2
+;; 4
+;; 5
+;; > (list x y z u v w a b c)
+;; '(2 4 5 2 4 5 2 4 5)
 (define-syntax <+
   (syntax-rules ()
-    ((_ var expr) (define var expr))))
+    
+    ((_ (var1 ...) expr) (begin
+			   (define-values (var1 ...) expr)
+			   (values var1 ...)))
+    ;; (begin
+    ;;   (define var1 '())
+    ;;   ...
+    ;;   ;;(display "<+ multiple") (newline)
+    ;;   (set!-values (var1 ...) expr)))
+
+    ;; > {(x y z) <+ (u v w) <+ (a b c)  <+ (values 2 4 5)}
+    ;; 2
+    ;; 4
+    ;; 5
+    ;; > (list x y z u v w a b c)
+    ;; '(2 4 5 2 4 5 2 4 5)
+    ((_ (var10 ...) (var11 ...) ... expr) (begin  ;; i do not do what the syntax says (assignation not in the good order) but it gives the same result 
+					    (define-values (var10 ...) expr)
+					    (define-values (var11 ...) (values var10 ...))
+					    ...
+					    (values var10 ...)))
+    
+    ((_ var expr) (begin
+		    (define var expr)
+		    var))
+    
+     ;; > { y <+ z <+ 7 }
+     ;; 7
+     ;; > z
+     ;; 7
+     ;; > y
+     ;; 7
+     ;; > { x <+ y <+ z <+ 7 }
+     ;; 7
+     ;; > (list x y z)
+     ;; '(7 7 7)
+     ((_ var var1 ... expr) (begin ;; i do not do what the syntax says (assignation not in the good order) but it gives the same result 
+			      (define var expr)
+			      (define var1 var)
+			      ...
+			      var))
+    
+     ))
+		 			
 
 (define-syntax ⥆
   (syntax-rules ()
-    ((_ var expr) (define var expr))))
+
+     ((_ var ...) (<+ var ...))))
 
 
+;; > {(values 2 4 5) +> (x y z) +> (u v w) +> (a b c)} 
+;; 2
+;; 4
+;; 5
 (define-syntax +>
   (syntax-rules ()
-    ((_ expr var) (define var expr))))
 
+    ((_ exp var ...) (<+ var ... exp)))) 
 
+    
+   
+;; > {(values 2 4 5) ⥅ (x y z) ⥅ (u v w) ⥅ (a b c)} 
+;; 2
+;; 4
+;; 5
+;; > (list x y z u v w a b c)
+;; '(2 4 5 2 4 5 2 4 5)
 (define-syntax ⥅
   (syntax-rules ()
-    ((_ expr var) (define var expr))))
 
+     ((_ expr ...) (+> expr ...))))

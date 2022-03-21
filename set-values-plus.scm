@@ -14,21 +14,25 @@
 ;;; License along with this program.  If not, see
 ;;; <http://www.gnu.org/licenses/>.
 
-(define-syntax set!-values
+;; modified by Damien Mattei
+
+;; this version can set values for arrays,hash tables,etc
+;; it uses the Scheme+ assignment operator: <-
+(define-syntax set!-values-plus
   (syntax-rules ()
     ((_ (var var* ...) exp)
      (call-with-values
        (lambda () exp)
        (lambda (value . rest)
-         (set! var value)
-         (set!-values (var* ...) (apply values rest)))))
+         (<- var value) ;; instead of set! i use the Scheme+ assignment operator
+         (set!-values-plus (var* ...) (apply values rest)))))
     ((_ () exp)
      (call-with-values
        (lambda () exp)
        (lambda () (values)))))) ; nothing to do!
 
-(define x)
-(define y)
-(define z)
-(set!-values (x y z) (values 0 1 2))
-(pk x y z)
+;; (define x)
+;; (define y)
+;; (define z)
+;; (set!-values (x y z) (values 0 1 2))
+;; (pk x y z)
