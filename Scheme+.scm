@@ -36,7 +36,7 @@
   
   #:use-module (growable-vector)
   #:use-module (srfi srfi-69) ;; Basic hash tables 
-  #:export (def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ & condx <> ≠ **))
+  #:export (def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ & condx <> ≠ ** <v v> ⇜ ⇝))
 
 
 
