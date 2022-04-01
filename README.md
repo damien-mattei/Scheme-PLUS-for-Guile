@@ -177,6 +177,42 @@ get it</a>)<br>
     <div style="margin-left: 40px;"> <b>(return </b>v<b>)</b></div>
     <p style="text-align: left;"><b> <br>
       </b></p>
+      <p style="margin-left: 40px;">The &lt;+ operator works also for
+      defining multiple values :<br>
+    </p>
+    <p style="margin-left: 40px;">{(a b c) &lt;+ (values 7 8 9)}<br>
+      7<br>
+      8<br>
+      9<br>
+      (list a b c)<br>
+      '(7 8 9)<br>
+    </p>
+    <p style="margin-left: 40px;">{(x y z) &lt;+ (u v w) &lt;+ (a b
+      c)&nbsp; &lt;+ (values 2 4 5)}<br>
+      2<br>
+      4<br>
+      5<br>
+      (list x y z u v w a b c)<br>
+      '(2 4 5 2 4 5 2 4 5)<br>
+    </p>
+    <p style="margin-left: 40px;">We can also assign multiple values on
+      the fly:<br>
+    </p>
+    <p style="margin-left: 40px;">(declare x y z)<br>
+      {(x y z) &lt;v (values 2 4 5)}<br>
+      2<br>
+      4<br>
+      5<br>
+      (list x y z)<br>
+      '(2 4 5)<br>
+      (declare u v w)<br>
+      {(x y z) &lt;v (u v w) &lt;v (values 2 4 5)}<br>
+      2<br>
+      4<br>
+      5<br>
+      (list x y z u v w)<br>
+      '(2 4 5 2 4 5)<br>
+    </p>
     <p>Here is an example of the previous features:  </p>
 
 {% highlight scheme %}
@@ -1188,8 +1224,6 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <h2>15.<u>Future:</u></h2>
     <p>Scheme+ will be implemented for other Scheme. Racket (former DrScheme)
       first,....</p>
-    <p>Next version will integrate more features, concerning <b>multiple values</b>
-      return for example.</p>
     <p><br>
     </p>
     <p><br>
