@@ -5,7 +5,7 @@
   <div align="center">
     <br>
   </div>
-  <div align="center"><img moz-do-not-send="true" src="Scheme+.png" title="by Damien MATTEI"
+  <div align="center"><img moz-do-not-send="true" src="Scheme+io_fichiers/Scheme+.png" title="by Damien MATTEI"
         alt="Scheme+" width="290" height="65"></div>
     <h2 style="text-align: center;"><span style="color: #00cccc;"><i>Enhancing
           Scheme (and Lisp-like) language. </i></span></h2>
@@ -19,7 +19,7 @@
     <p style="text-align: center;"><br>
     </p>
     <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span
-          style="color: #999999;"> <font size="+2">version 1.0 for Guile Scheme<br>
+          style="color: #999999;"> <font size="+2">version 2.0 for Guile Scheme<br>
           </font></span></b></h1>
     <p style="text-align: center;">
 	Display options for viewing this documentation:<br><br>
@@ -420,7 +420,7 @@ content="text/html; charset=utf-8">Basic hash tables
     <p>Scheme+ needs a Scheme interpreter and will be adapted and released for
       many Scheme (Guile,Racket,...), download Scheme Guile:<br>
     </p>
-    <a href="https://www.gnu.org/software/guile/"  target="_blank"><img moz-do-not-send="true" src="guile-logo.png"
+    <a href="https://www.gnu.org/software/guile/"  target="_blank"><img moz-do-not-send="true" src="Scheme+io_fichiers/guile-logo.png"
         title="Guile Scheme" alt="Guile Scheme web site" width="156" height="76"
         border="0"></a><br>
     <br>

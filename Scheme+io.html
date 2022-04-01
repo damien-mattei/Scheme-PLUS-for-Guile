@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="Scheme+io_style.css">
+    <link rel="stylesheet" href="Scheme+io_fichiers/style.css">
     <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
 
 <!-- Setup theme-color -->
@@ -25,7 +25,7 @@
 <!-- end custom head snippets -->
 
 
-<!-- Begin Jekyll SEO tag v2.7.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>[“Scheme+ programing language by Damien Mattei”] | [“Enhancing Scheme (and Lisp-like) languages.”]</title>
 <meta name="generator" content="Jekyll v3.9.0">
 <meta property="og:title" content="[“Scheme+ programing language by Damien Mattei”]">
@@ -35,10 +35,11 @@
 <link rel="canonical" href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/">
 <meta property="og:url" content="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/">
 <meta property="og:site_name" content="[“Scheme+ programing language by Damien Mattei”]">
+<meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
 <meta property="twitter:title" content="[“Scheme+ programing language by Damien Mattei”]">
 <script type="application/ld+json">
-{"headline":"[“Scheme+ programing language by Damien Mattei”]","description":"[“Enhancing Scheme (and Lisp-like) languages.”]","url":"https://damien-mattei.github.io/Scheme-PLUS-for-Guile/","@type":"WebSite","name":"[“Scheme+ programing language by Damien Mattei”]","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebSite","description":"[“Enhancing Scheme (and Lisp-like) languages.”]","headline":"[“Scheme+ programing language by Damien Mattei”]","name":"[“Scheme+ programing language by Damien Mattei”]","url":"https://damien-mattei.github.io/Scheme-PLUS-for-Guile/"}</script>
 <!-- End Jekyll SEO tag -->
 
   </head>
@@ -47,7 +48,7 @@
 
     <header>
       <div class="container">
-        <a id="a-title" href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+io.html">
+        <a id="a-title" href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/">
           <h1>Scheme+ programing language by Damien Mattei</h1>
         </a>
         <h2>Enhancing Scheme (and Lisp-like) languages.</h2>
@@ -71,7 +72,7 @@
   <div align="center">
     <br>
   </div>
-  <div align="center"><img moz-do-not-send="true" src="Scheme+.png" title="by Damien MATTEI" alt="Scheme+" width="290" height="65"></div>
+  <div align="center"><img moz-do-not-send="true" src="Scheme+io_fichiers/Scheme.png" title="by Damien MATTEI" alt="Scheme+" width="290" height="65"></div>
     <h2 style="text-align: center;"><span style="color: #00cccc;"><i>Enhancing
           Scheme (and Lisp-like) language. </i></span></h2>
     <h2 style=" text-align: center;">Damien Mattei<br>
@@ -84,9 +85,19 @@
     </p>
     <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span style="color: #999999;"> <font size="+2">version 1.0 for Guile Scheme<br>
           </font></span></b></h1>
-    <p style="text-align: center;"> </p>
-    <p style="text-align: center;"><br>
-    </p>
+    <p style="text-align: center;">
+	Display options for viewing this documentation:<br><br>
+    <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Guile/blob/main/README.md">Click here for a larger page view that improve code
+  display.</a>
+  <br>
+  <br>
+    <a href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html">Click here for the light HTML page version of this
+  page.</a>
+  <br>
+  <br>
+    <a href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+io.html">Click
+  here for the dark Hacker Theme version of this page.</a>
+   </p>
     <p><br>
     </p>
     <h2><u>1. Scheme+ at a glance:&nbsp;</u></h2>
@@ -95,8 +106,7 @@
     <p><b>Scheme+ makes it easy the assignment of Scheme objects </b><b>in
         infix </b><b>(works also in prefix) </b><b>notation </b><b>with a few
         new operators&nbsp;</b><b> </b><b><b><b>← (or&nbsp;</b></b>
-      &lt;-), [ ],</b><b><font
-          size="+2">⥆ </font>(or &lt;+) . </b><br>
+  &lt;-), [ ],</b><b><font size="+2">⥆ </font>(or &lt;+) . </b><br>
     </p>
 	<p><b>The idea of Scheme+ first come to my mind when comparing the
   assignation syntax used in Clojure with Scheme and Lisp, and later
@@ -143,8 +153,7 @@ new variable in the current environment ,example : <font size="+2">{v ⥆ 7}</fo
 <a href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-characters-without-using-the-mouse" moz-do-not-send="true">CTRL+CMD+space to bring up the characters
 popover, </a>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<a
-      href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-characters-without-using-the-mouse" moz-do-not-send="true">then type in u+unicode (ex: u+2946) and hit Enter to
+<a href="https://apple.stackexchange.com/questions/183045/how-can-i-type-unicode-characters-without-using-the-mouse" moz-do-not-send="true">then type in u+unicode  (ex: u+2946) and hit Enter to
 get it</a>)<br>
 <br>
 </p>
@@ -167,47 +176,48 @@ get it</a>)<br>
     <div style="margin-left: 40px;"> </div>
     <p style="margin-left: 40px;"><b><b>{</b>T</b><b>[m n] &lt;- </b><b><b>T</b><b>[m {n + 1}]</b>}</b></p>
     <p style="margin-left: 40px;"><br>
-      <b><b>{</b>T</b><b>[m n] ← </b><b><b>T</b><b>[m {n + 1}]</b>}</b></p>
-    <div style="margin-left: 40px;"> </div>
-    <p style="margin-left: 40px;"><b>(declare fact)<br />
+      <b><b>{</b>T</b><b>[m n] ← </b><b><b>T</b><b>[m {n +
+  1}]</b>}</b></p>
+  <p style="margin-left: 40px;"><b>(declare fact)<br>
 {fact &lt;- (lambda (n) (if {n &lt;&gt; 0} {n * (fact {n - 1})}
-1))}<br />
+1))}<br>
 </b></p>
-<p style="margin-left: 40px;"><b>or just:<br />
+<p style="margin-left: 40px;"><b>or just:<br>
 </b></p>
 <p style="margin-left: 40px;"><font size="+1"><b>{fact ⥆ (λ (n) (if
 {n &lt;&gt; 0} {n * (fact {n - 1})} 1))}</b></font></p>
-<p style="margin-left: 40px;"><b>{fact(8)}<br />
-40320<br />
+<p style="margin-left: 40px;"><b>{fact(8)}<br>
+40320<br>
 </b></p>
+    <div style="margin-left: 40px;"> </div>
     <p style="margin-left: 40px;"> no more need of <strike>LET,LET*,LETREC,LET-VALUES</strike>,...
       </p>
     <div style="margin-left: 40px;"> </div>
     <p style="margin-left: 40px;"><b>←</b><b> is an n-arity operator,
         example :</b></p>
-    <p style="margin-left: 40px;">(declare x y z t)<br />
-      {x ← y ← z ← t ← 7}<br />
-      &nbsp;7<br />
-      &nbsp;(list x y z t)<br />
+    <p style="margin-left: 40px;">(declare x y z t)<br>
+      {x ← y ← z ← t ← 7}<br>
+      &nbsp;7<br>
+      &nbsp;(list x y z t)<br>
       &nbsp;(7 7 7 7)</p>
     <p style="margin-left: 40px;">Another example which build an
       identity matrix:</p>
-    <p style="margin-left: 40px;">&nbsp;(declare I)<br />
-      &nbsp;{I ← (make-array 0 4 4)}<br />
-      &nbsp;#2((0 0 0 0)<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;(0 0 0 0)<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;(0 0 0 0)<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;(0 0 0 0))<br />
-      &nbsp;&nbsp;&nbsp; <br />
-      &nbsp;{I[0 0] ← I[1 1] ← I[2 2] ← I[3 3] ← 1}<br />
-      &nbsp;1<br />
-      &nbsp;&nbsp;&nbsp; <br />
-      &nbsp;I<br />
-      &nbsp;#2((1 0 0 0)<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;(0 1 0 0)<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;(0 0 1 0)<br />
-      &nbsp;&nbsp;&nbsp;&nbsp;(0 0 0 1))<br />
-      <br />
+    <p style="margin-left: 40px;">&nbsp;(declare I)<br>
+      &nbsp;{I ← (make-array 0 4 4)}<br>
+      &nbsp; #2((0 0 0 0)<br>
+      &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; (0 0 0 0)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (0 0 0 0)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (0 0 0 0))<br>
+      &nbsp;&nbsp;&nbsp; <br>
+      &nbsp; {I[0 0] ← I[1 1] ← I[2 2] ← I[3 3] ← 1}<br>
+      &nbsp; 1<br>
+      &nbsp;&nbsp;&nbsp; <br>
+      &nbsp;&nbsp; I<br>
+      &nbsp;&nbsp; #2((1 0 0 0)<br>
+      &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; (0 1 0 0)<br>
+      &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; (0 0 1 0)<br>
+      &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; (0 0 0 1))<br>
+      <br>
       </p>
     <p style="margin-left: 40px;"><br>
       defining new functions with <b>def </b>instead of the classic define we
@@ -221,61 +231,97 @@ get it</a>)<br>
     <div style="margin-left: 40px;"> <b>(return </b>v<b>)</b></div>
     <p style="text-align: left;"><b> <br>
       </b></p>
+      <p style="margin-left: 40px;">The &lt;+ operator works also for
+      defining multiple values :<br>
+    </p>
+    <p style="margin-left: 40px;">{(a b c) &lt;+ (values 7 8 9)}<br>
+      7<br>
+      8<br>
+      9<br>
+      (list a b c)<br>
+      '(7 8 9)<br>
+    </p>
+    <p style="margin-left: 40px;">{(x y z) &lt;+ (u v w) &lt;+ (a b
+      c)&nbsp; &lt;+ (values 2 4 5)}<br>
+      2<br>
+      4<br>
+      5<br>
+      (list x y z u v w a b c)<br>
+      '(2 4 5 2 4 5 2 4 5)<br>
+    </p>
+    <p style="margin-left: 40px;">We can also assign multiple values on
+      the fly:<br>
+    </p>
+    <p style="margin-left: 40px;">(declare x y z)<br>
+      {(x y z) &lt;v (values 2 4 5)}<br>
+      2<br>
+      4<br>
+      5<br>
+      (list x y z)<br>
+      '(2 4 5)<br>
+      (declare u v w)<br>
+      {(x y z) &lt;v (u v w) &lt;v (values 2 4 5)}<br>
+      2<br>
+      4<br>
+      5<br>
+      (list x y z u v w)<br>
+      '(2 4 5 2 4 5)<br>
+    </p>
     <p>Here is an example of the previous features:  </p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 <span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
 
 
 <span class="p">(</span><span class="nf">declare</span> <span class="nv">L-init</span> <span class="nv">t-init</span> <span class="nv">ls</span> <span class="nv">dyna</span> <span class="nv">cpt</span><span class="p">)</span>
 
-<span class="p">{</span><span class="nv">L-init</span> <span class="nv">&lt;-</span> <span class="o">'</span><span class="p">(</span><span class="nf">1</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">24</span> <span class="mi">45</span> <span class="mi">64</span> <span class="mi">197</span> <span class="mi">256</span> <span class="mi">275</span> <span class="mi">323</span> <span class="mi">540</span> <span class="mi">723</span> <span class="mi">889</span> <span class="mi">915</span> <span class="mi">1040</span> <span class="mi">1041</span> <span class="mi">1093</span> <span class="mi">1099</span> <span class="mi">1111</span> <span class="mi">1284</span> <span class="mi">1344</span> <span class="mi">1520</span> <span class="mi">2027</span> <span class="mi">2500</span> <span class="mi">2734</span> <span class="mi">3000</span> <span class="mi">3267</span> <span class="mi">3610</span> <span class="mi">4285</span> <span class="mi">5027</span><span class="p">)</span><span class="p">}</span>
-<span class="p">{</span><span class="nv">t-init</span> <span class="nv">&lt;-</span> <span class="mi">35267</span><span class="p">}</span>
-<span class="p">{</span><span class="nv">ls</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L-init</span><span class="p">)</span><span class="p">}</span>
-<span class="p">{</span><span class="nv">dyna</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">make-array</span> <span class="mi">0</span> <span class="p">{</span><span class="nv">ls</span> <span class="nv">+</span> <span class="mi">1</span><span class="p">}</span> <span class="p">{</span><span class="nv">t-init</span> <span class="nv">+</span> <span class="mi">1</span><span class="p">}</span><span class="p">)</span><span class="p">}</span>
+<span class="err">{</span><span class="nv">L-init</span> <span class="nv">&lt;-</span> <span class="o">'</span><span class="p">(</span><span class="nf">1</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">24</span> <span class="mi">45</span> <span class="mi">64</span> <span class="mi">197</span> <span class="mi">256</span> <span class="mi">275</span> <span class="mi">323</span> <span class="mi">540</span> <span class="mi">723</span> <span class="mi">889</span> <span class="mi">915</span> <span class="mi">1040</span> <span class="mi">1041</span> <span class="mi">1093</span> <span class="mi">1099</span> <span class="mi">1111</span> <span class="mi">1284</span> <span class="mi">1344</span> <span class="mi">1520</span> <span class="mi">2027</span> <span class="mi">2500</span> <span class="mi">2734</span> <span class="mi">3000</span> <span class="mi">3267</span> <span class="mi">3610</span> <span class="mi">4285</span> <span class="mi">5027</span><span class="p">)</span><span class="err">}</span>
+<span class="err">{</span><span class="nv">t-init</span> <span class="nv">&lt;-</span> <span class="mi">35267</span><span class="err">}</span>
+<span class="err">{</span><span class="nv">ls</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L-init</span><span class="p">)</span><span class="err">}</span>
+<span class="err">{</span><span class="nv">dyna</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">make-array</span> <span class="mi">0</span> <span class="err">{</span><span class="nv">ls</span> <span class="nv">+</span> <span class="mi">1</span><span class="err">}</span> <span class="err">{</span><span class="nv">t-init</span> <span class="nv">+</span> <span class="mi">1</span><span class="err">}</span><span class="p">)</span><span class="err">}</span>
 
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">b</span><span class="p">)</span>
   <span class="p">(</span><span class="k">if</span> <span class="nv">b</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">))</span>
 
-<span class="p">{</span><span class="nv">cpt</span> <span class="nv">&lt;-</span> <span class="mi">0</span><span class="p">}</span>
+<span class="err">{</span><span class="nv">cpt</span> <span class="nv">&lt;-</span> <span class="mi">0</span><span class="err">}</span>
 
 
 <span class="p">(</span><span class="nf">def</span> <span class="p">(</span><span class="nf">subset-sum-dynamic</span> <span class="nv">L</span> <span class="nv">t</span><span class="p">)</span>
 
   <span class="p">(</span><span class="nf">declare</span> <span class="nv">ls</span> <span class="nv">dyn</span> <span class="nv">c</span> <span class="nv">R</span> <span class="nv">s</span><span class="p">)</span> <span class="c1">;; declare multiple variables</span>
 
-  <span class="p">{</span><span class="nv">ls</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L</span><span class="p">)</span><span class="p">}</span>
-  <span class="p">{</span><span class="nv">dyn</span> <span class="nv">&lt;-</span> <span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span><span class="p">}</span> <span class="c1">;; dyna is a toplevel defined array</span>
+  <span class="err">{</span><span class="nv">ls</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L</span><span class="p">)</span><span class="err">}</span>
+  <span class="err">{</span><span class="nv">dyn</span> <span class="nv">&lt;-</span> <span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span><span class="err">}</span> <span class="c1">;; dyna is a toplevel defined array</span>
 
   <span class="c1">;; dyna[ls t] means : 0: unknown solution, 1: solution found, 2: no solution</span>
 
-  <span class="p">(</span><span class="k">if</span> <span class="p">{</span><span class="nv">dyn</span> <span class="nv">&lt;&gt;</span> <span class="mi">0</span><span class="p">}</span> <span class="c1">;; IF or WHEN : it is the same thing here (only one statement)</span>
+  <span class="p">(</span><span class="k">if</span> <span class="err">{</span><span class="nv">dyn</span> <span class="nv">&lt;&gt;</span> <span class="mi">0</span><span class="err">}</span> <span class="c1">;; IF or WHEN : it is the same thing here (only one statement)</span>
       <span class="p">(</span><span class="nf">return</span> <span class="p">(</span><span class="nf">one?</span> <span class="nv">dyn</span><span class="p">)))</span>
 
   <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">null?</span> <span class="nv">L</span><span class="p">)</span>
-    <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">2</span><span class="p">}</span>
+    <span class="err">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">2</span><span class="err">}</span>
     <span class="p">(</span><span class="nf">return</span> <span class="no">#f</span><span class="p">))</span>
 
-  <span class="p">{</span><span class="nv">c</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">first</span> <span class="nv">L</span><span class="p">)</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">c</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">first</span> <span class="nv">L</span><span class="p">)</span><span class="err">}</span>
 
-  <span class="p">(</span><span class="nf">when</span> <span class="p">{</span><span class="nv">c</span> <span class="nv">=</span> <span class="nv">t</span><span class="p">}</span>  <span class="c1">;; c is the solution</span>
-    <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">1</span><span class="p">}</span>
+  <span class="p">(</span><span class="nf">when</span> <span class="err">{</span><span class="nv">c</span> <span class="nv">=</span> <span class="nv">t</span><span class="err">}</span>  <span class="c1">;; c is the solution</span>
+    <span class="err">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">1</span><span class="err">}</span>
     <span class="p">(</span><span class="nf">return</span> <span class="no">#t</span><span class="p">))</span>
 
-  <span class="p">{</span><span class="nv">R</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">rest</span> <span class="nv">L</span><span class="p">)</span><span class="p">}</span> <span class="c1">;; continue searching a solution in the rest</span>
+  <span class="err">{</span><span class="nv">R</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">rest</span> <span class="nv">L</span><span class="p">)</span><span class="err">}</span> <span class="c1">;; continue searching a solution in the rest</span>
 
-  <span class="p">(</span><span class="k">if</span> <span class="p">{</span><span class="nv">c</span> <span class="nv">&gt;</span> <span class="nv">t</span><span class="p">}</span>  <span class="c1">;; c is to big to be a solution</span>
-    <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">subset-sum-dynamic</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}</span>
+  <span class="p">(</span><span class="k">if</span> <span class="err">{</span><span class="nv">c</span> <span class="nv">&gt;</span> <span class="nv">t</span><span class="err">}</span>  <span class="c1">;; c is to big to be a solution</span>
+    <span class="err">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">subset-sum-dynamic</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="err">}</span>
     <span class="c1">;; c is part of the solution or c is not part of solution</span>
-    <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p">{</span><span class="p">(</span><span class="nf">subset-sum-dynamic</span> <span class="nv">R</span> <span class="p">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="p">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">subset-sum-dynamic</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}}</span><span class="p">)</span>
+    <span class="err">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="err">{</span><span class="p">(</span><span class="nf">subset-sum-dynamic</span> <span class="nv">R</span> <span class="err">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="err">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">subset-sum-dynamic</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="err">}}</span><span class="p">)</span>
 
-  <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="err">}</span>
   <span class="nv">s</span><span class="p">)</span> <span class="c1">;; return boolean value</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 <pre>(subset-sum-dynamic  L-init t-init)
@@ -283,6 +329,28 @@ get it</a>)<br>
 <br>
 </pre>
 <br>
+<br>
+<p>
+  Warnings about code highlighting tag due to bugs in Github Markdown
+  system:<br>
+  <br>
+  -if you read this page on github.com the code examples display
+  encapsuled between tags 'highlight scheme' and 'endhighlight'
+  composed also with {} and % characters.<br>
+  <br>
+  -if you read this page on github.io the code examples display
+  starting with 3 backquotes char , the tag 'scheme' and ending again
+  with 3 backquotes char. The curly brackets {} display in a
+  rectangular with red background because the Github Jekill rouge
+  theme (unfortunately the ony one available) does not understand the
+  infix notation of Scheme.This is,of course, not what i expected but i
+  can not find any issue to this problem.<br>
+  <br>
+  Those weirds Markdown and tags should not be displayed and are not part of Scheme+ examples.
+  <a href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html" target="_blank">for a better view click here (or do not care of
+  highlighting tag and triple backquotes when code is displayed!)</a><br>
+    </p>
+
 <br>
 <br>
 
@@ -398,7 +466,7 @@ get it</a>)<br>
     <p>Scheme+ needs a Scheme interpreter and will be adapted and released for
       many Scheme (Guile,Racket,...), download Scheme Guile:<br>
     </p>
-    <a href="https://www.gnu.org/software/guile/" target="_blank"><img moz-do-not-send="true" src="guile-logo.png" title="Guile Scheme" alt="Guile Scheme web site" width="156" height="76" border="0"></a><br>
+    <a href="https://www.gnu.org/software/guile/" target="_blank"><img moz-do-not-send="true" src="Scheme+io_fichiers/guile-logo.png" title="Guile Scheme" alt="Guile Scheme web site" width="156" height="76" border="0"></a><br>
     <br>
     <p>This version needs Guile Scheme version 3. It has been developed with
       Guile 3.0.7 on <b>Mac</b><font color="#9999ff"><b> </b><b>OS</b></font>
@@ -550,7 +618,7 @@ get it</a>)<br>
         from left to right and right to left)</li>
       <li>Square Bracket operator<b> []</b> working with Scheme <b>Vectors,
           Arrays,Multidimentional Arrays</b>,Dynamic Arrays (my growable vector
-        class),Hash Tables...</li>
+        class),<b>Hash Tables</b>...</li>
       <li>combination of Assignment operator &lt;- with [] operator for
         Vectors,Arrays,....</li>
       <li>RETURN : <b>return</b> keyword used in any procedure to return from
@@ -575,7 +643,7 @@ get it</a>)<br>
       Scheme:</p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">fibonacci</span> <span class="nv">n</span><span class="p">)</span>
@@ -584,23 +652,23 @@ get it</a>)<br>
     <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nf">fibonacci</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">))</span> <span class="p">(</span><span class="nf">fibonacci</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">2</span><span class="p">)))))</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 <p style="margin-left: 40px;">And here is a definition using "Curly Infix"
       SRFI 105:</p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">fib</span> <span class="nv">n</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">if</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">&lt;</span> <span class="mi">2</span><span class="p">}</span>
+  <span class="p">(</span><span class="k">if</span> <span class="err">{</span><span class="nv">n</span> <span class="nv">&lt;</span> <span class="mi">2</span><span class="err">}</span>
       <span class="nv">n</span>
-      <span class="p">{</span><span class="p">(</span><span class="nf">fib</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">1</span><span class="p">}</span><span class="p">)</span> <span class="nv">+</span> <span class="p">(</span><span class="nf">fib</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">2</span><span class="p">}</span><span class="p">)</span><span class="p">}</span> <span class="p">))</span>
+      <span class="err">{</span><span class="p">(</span><span class="nf">fib</span> <span class="err">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">1</span><span class="err">}</span><span class="p">)</span> <span class="nv">+</span> <span class="p">(</span><span class="nf">fib</span> <span class="err">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">2</span><span class="err">}</span><span class="p">)</span><span class="err">}</span> <span class="p">))</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 <p> </p>
@@ -618,7 +686,7 @@ get it</a>)<br>
 
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="k">define</span> <span class="nv">size0</span> <span class="mi">10000</span><span class="p">)</span>
@@ -632,7 +700,7 @@ get it</a>)<br>
 		<span class="nv">fibn</span><span class="p">))))</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 
@@ -652,20 +720,21 @@ get it</a>)<br>
 <p>
 
 
-</p><figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+</p><figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
 
-<span class="p">{</span><span class="nv">size</span> <span class="nv">&lt;+</span> <span class="mi">10000</span><span class="p">}</span>
-<span class="p">{</span><span class="nv">memo</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nb">make-vector</span> <span class="nv">size</span> <span class="mi">0</span><span class="p">)</span><span class="p">}</span> 
+<span class="err">{</span><span class="nv">size</span> <span class="nv">&lt;+</span> <span class="mi">10000</span><span class="err">}</span>
+<span class="err">{</span><span class="nv">memo</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nb">make-vector</span> <span class="nv">size</span> <span class="mi">0</span><span class="p">)</span><span class="err">}</span> 
 
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">fibdyna</span> <span class="nv">n</span><span class="p">)</span>
-   <span class="p">(</span><span class="k">cond</span> <span class="p">(</span><span class="p">{</span><span class="nv">n</span> <span class="nv">&lt;</span> <span class="mi">2</span><span class="p">}</span> <span class="nv">n</span><span class="p">)</span>
-         <span class="p">(</span><span class="p">{</span><span class="nv">memo</span><span class="p">[</span><span class="nf">n</span><span class="p">]</span> <span class="nv">&lt;&gt;</span> <span class="mi">0</span><span class="p">}</span> <span class="p">{</span><span class="nv">memo</span><span class="p">[</span><span class="nf">n</span><span class="p">]</span><span class="p">}</span><span class="p">)</span><br>         <span class="p">(</span><span class="k">else</span> <span class="p">{</span><span class="nv">memo</span><span class="p">[</span><span class="nf">n</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">{</span><span class="p">(</span><span class="nf">fibdyna</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">1</span><span class="p">}</span><span class="p">)</span> <span class="nv">+</span> <span class="p">(</span><span class="nf">fibdyna</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">2</span><span class="p">}</span><span class="p">)</span><span class="p">}}</span><span class="p">)</span> <span class="p">))</span>
+   <span class="p">(</span><span class="k">cond</span> <span class="p">(</span><span class="err">{</span><span class="nv">n</span> <span class="nv">&lt;</span> <span class="mi">2</span><span class="err">}</span> <span class="nv">n</span><span class="p">)</span>
+         <span class="p">(</span><span class="err">{</span><span class="nv">memo</span><span class="p">[</span><span class="nf">n</span><span class="p">]</span> <span class="nv">&lt;&gt;</span> <span class="mi">0</span><span class="err">}</span> <span class="err">{</span><span class="nv">memo</span><span class="p">[</span><span class="nf">n</span><span class="p">]</span><span class="err">}</span><span class="p">)</span>
+         <span class="p">(</span><span class="k">else</span> <span class="err">{</span><span class="nv">memo</span><span class="p">[</span><span class="nf">n</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="err">{</span><span class="p">(</span><span class="nf">fibdyna</span> <span class="err">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">1</span><span class="err">}</span><span class="p">)</span> <span class="nv">+</span> <span class="p">(</span><span class="nf">fibdyna</span> <span class="err">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">2</span><span class="err">}</span><span class="p">)</span><span class="err">}}</span><span class="p">)</span> <span class="p">))</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 <p></p>
@@ -702,23 +771,23 @@ get it</a>)<br>
 
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
 
 <span class="p">(</span><span class="nf">declare</span> <span class="nv">size1</span> <span class="nv">memo1</span><span class="p">)</span>
 
-<span class="p">{</span><span class="nv">size1</span> <span class="nv">&lt;-</span> <span class="mi">10000</span><span class="p">}</span>
-<span class="p">{</span><span class="nv">memo1</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nb">make-vector</span> <span class="nv">size</span> <span class="mi">0</span><span class="p">)</span><span class="p">}</span> 
+<span class="err">{</span><span class="nv">size1</span> <span class="nv">&lt;-</span> <span class="mi">10000</span><span class="err">}</span>
+<span class="err">{</span><span class="nv">memo1</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nb">make-vector</span> <span class="nv">size</span> <span class="mi">0</span><span class="p">)</span><span class="err">}</span> 
   
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">fibdyna1</span> <span class="nv">n</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">cond</span> <span class="p">(</span><span class="p">{</span><span class="nv">n</span> <span class="nv">&lt;</span> <span class="mi">2</span><span class="p">}</span> <span class="nv">n</span><span class="p">)</span>
-	<span class="p">(</span><span class="p">{</span><span class="nv">memo1</span><span class="p">[</span><span class="nf">n</span><span class="p">]</span> <span class="nv">&lt;&gt;</span> <span class="mi">0</span><span class="p">}</span> <span class="p">{</span><span class="nv">memo1</span><span class="p">[</span><span class="nf">n</span><span class="p">]</span><span class="p">}</span><span class="p">)</span>
-	<span class="p">(</span><span class="k">else</span> <span class="p">{</span><span class="nv">memo1</span><span class="p">[</span><span class="nf">n</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">{</span><span class="p">(</span><span class="nf">fibdyna1</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">1</span><span class="p">}</span><span class="p">)</span> <span class="nv">+</span> <span class="p">(</span><span class="nf">fibdyna1</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">2</span><span class="p">}</span><span class="p">)</span><span class="p">}}</span><span class="p">)</span> <span class="p">))</span>
+  <span class="p">(</span><span class="k">cond</span> <span class="p">(</span><span class="err">{</span><span class="nv">n</span> <span class="nv">&lt;</span> <span class="mi">2</span><span class="err">}</span> <span class="nv">n</span><span class="p">)</span>
+	<span class="p">(</span><span class="err">{</span><span class="nv">memo1</span><span class="p">[</span><span class="nf">n</span><span class="p">]</span> <span class="nv">&lt;&gt;</span> <span class="mi">0</span><span class="err">}</span> <span class="err">{</span><span class="nv">memo1</span><span class="p">[</span><span class="nf">n</span><span class="p">]</span><span class="err">}</span><span class="p">)</span>
+	<span class="p">(</span><span class="k">else</span> <span class="err">{</span><span class="nv">memo1</span><span class="p">[</span><span class="nf">n</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="err">{</span><span class="p">(</span><span class="nf">fibdyna1</span> <span class="err">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">1</span><span class="err">}</span><span class="p">)</span> <span class="nv">+</span> <span class="p">(</span><span class="nf">fibdyna1</span> <span class="err">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">2</span><span class="err">}</span><span class="p">)</span><span class="err">}}</span><span class="p">)</span> <span class="p">))</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 <h2><br>
@@ -777,48 +846,48 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
       operator :-( ) :</p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
 
-<span class="p">{</span><span class="nv">L-init</span> <span class="nv">&lt;+</span> <span class="o">'</span><span class="p">(</span><span class="nf">1</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">24</span> <span class="mi">45</span> <span class="mi">64</span> <span class="mi">197</span> <span class="mi">256</span> <span class="mi">275</span> <span class="mi">323</span> <span class="mi">540</span> <span class="mi">723</span> <span class="mi">889</span> <span class="mi">915</span> <span class="mi">1040</span> <span class="mi">1041</span> <span class="mi">1093</span> <span class="mi">1099</span> <span class="mi">1111</span> <span class="mi">1284</span> <span class="mi">1344</span> <span class="mi">1520</span> <span class="mi">2027</span> <span class="mi">2500</span> <span class="mi">2734</span> <span class="mi">3000</span> <span class="mi">3267</span> <span class="mi">3610</span> <span class="mi">4285</span> <span class="mi">5027</span><span class="p">)</span><span class="p">}</span>
-<span class="p">{</span><span class="nv">t-init</span> <span class="nv">&lt;+</span> <span class="mi">35267</span><span class="p">}</span>
-<span class="p">{</span><span class="nv">ls</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L-init</span><span class="p">)</span><span class="p">}</span>
-<span class="p">{</span><span class="nv">dyna</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nf">make-array</span> <span class="mi">0</span> <span class="p">{</span><span class="nv">ls</span> <span class="nv">+</span> <span class="mi">1</span><span class="p">}</span> <span class="p">{</span><span class="nv">t-init</span> <span class="nv">+</span> <span class="mi">1</span><span class="p">}</span><span class="p">)</span><span class="p">}</span>
+<span class="err">{</span><span class="nv">L-init</span> <span class="nv">&lt;+</span> <span class="o">'</span><span class="p">(</span><span class="nf">1</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">24</span> <span class="mi">45</span> <span class="mi">64</span> <span class="mi">197</span> <span class="mi">256</span> <span class="mi">275</span> <span class="mi">323</span> <span class="mi">540</span> <span class="mi">723</span> <span class="mi">889</span> <span class="mi">915</span> <span class="mi">1040</span> <span class="mi">1041</span> <span class="mi">1093</span> <span class="mi">1099</span> <span class="mi">1111</span> <span class="mi">1284</span> <span class="mi">1344</span> <span class="mi">1520</span> <span class="mi">2027</span> <span class="mi">2500</span> <span class="mi">2734</span> <span class="mi">3000</span> <span class="mi">3267</span> <span class="mi">3610</span> <span class="mi">4285</span> <span class="mi">5027</span><span class="p">)</span><span class="err">}</span>
+<span class="err">{</span><span class="nv">t-init</span> <span class="nv">&lt;+</span> <span class="mi">35267</span><span class="err">}</span>
+<span class="err">{</span><span class="nv">ls</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L-init</span><span class="p">)</span><span class="err">}</span>
+<span class="err">{</span><span class="nv">dyna</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nf">make-array</span> <span class="mi">0</span> <span class="err">{</span><span class="nv">ls</span> <span class="nv">+</span> <span class="mi">1</span><span class="err">}</span> <span class="err">{</span><span class="nv">t-init</span> <span class="nv">+</span> <span class="mi">1</span><span class="err">}</span><span class="p">)</span><span class="err">}</span>
 
-<span class="p">{</span><span class="nv">cpt</span> <span class="nv">&lt;+</span> <span class="mi">0</span><span class="p">}</span> <span class="c1">;; define cpt to 0</span>
+<span class="err">{</span><span class="nv">cpt</span> <span class="nv">&lt;+</span> <span class="mi">0</span><span class="err">}</span> <span class="c1">;; define cpt to 0</span>
 
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">subset-sum-guile</span> <span class="nv">L</span> <span class="nv">t</span><span class="p">)</span>
 
-  <span class="p">{</span><span class="nv">ls</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L</span><span class="p">)</span><span class="p">}</span>
-  <span class="p">{</span><span class="nv">dyn</span> <span class="nv">&lt;+</span> <span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">ls</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L</span><span class="p">)</span><span class="err">}</span>
+  <span class="err">{</span><span class="nv">dyn</span> <span class="nv">&lt;+</span> <span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span><span class="err">}</span>
 
-  <span class="p">{</span><span class="nv">cpt</span> <span class="nv">&lt;-</span> <span class="p">{</span><span class="nv">cpt</span> <span class="nv">+</span> <span class="mi">1</span><span class="p">}}</span> <span class="c1">;; cpt has been already defined at toplevel</span>
+  <span class="err">{</span><span class="nv">cpt</span> <span class="nv">&lt;-</span> <span class="err">{</span><span class="nv">cpt</span> <span class="nv">+</span> <span class="mi">1</span><span class="err">}}</span> <span class="c1">;; cpt has been already defined at toplevel</span>
   
   <span class="c1">;; dyna[ls t] means 0: unknown solution, 1: solution found, 2: no solution</span>
   
-  <span class="p">(</span><span class="nf">condx</span> <span class="p">[</span><span class="p">{</span><span class="nv">dyn</span> <span class="nv">&lt;&gt;</span> <span class="mi">0</span><span class="p">}</span> <span class="p">(</span><span class="nf">one?</span> <span class="nv">dyn</span><span class="p">)]</span>
-	 <span class="p">[(</span><span class="nb">null?</span> <span class="nv">L</span><span class="p">)</span> <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">2</span><span class="p">}</span>  <span class="no">#f</span><span class="p">]</span> <span class="c1">;; return #f</span>
+  <span class="p">(</span><span class="nf">condx</span> <span class="p">[</span><span class="err">{</span><span class="nv">dyn</span> <span class="nv">&lt;&gt;</span> <span class="mi">0</span><span class="err">}</span> <span class="p">(</span><span class="nf">one?</span> <span class="nv">dyn</span><span class="p">)]</span>
+	 <span class="p">[(</span><span class="nb">null?</span> <span class="nv">L</span><span class="p">)</span> <span class="err">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">2</span><span class="err">}</span>  <span class="no">#f</span><span class="p">]</span> <span class="c1">;; return #f</span>
 	 
-	 <span class="p">[</span><span class="nf">exec</span> <span class="p">{</span><span class="nv">c</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nf">first</span> <span class="nv">L</span><span class="p">)</span><span class="p">}</span><span class="p">]</span>	 
+	 <span class="p">[</span><span class="nf">exec</span> <span class="err">{</span><span class="nv">c</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nf">first</span> <span class="nv">L</span><span class="p">)</span><span class="err">}</span><span class="p">]</span>	 
 	 <span class="c1">;; c is the solution</span>
-	 <span class="p">[</span><span class="p">{</span><span class="nv">c</span> <span class="nv">=</span> <span class="nv">t</span><span class="p">}</span> <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">1</span><span class="p">}</span>  <span class="no">#t</span><span class="p">]</span>  <span class="c1">;; return #t</span>
+	 <span class="p">[</span><span class="err">{</span><span class="nv">c</span> <span class="nv">=</span> <span class="nv">t</span><span class="err">}</span> <span class="err">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">1</span><span class="err">}</span>  <span class="no">#t</span><span class="p">]</span>  <span class="c1">;; return #t</span>
 	 
-	 <span class="p">[</span><span class="nf">exec</span> <span class="p">{</span><span class="nv">R</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nf">rest</span> <span class="nv">L</span><span class="p">)</span><span class="p">}</span><span class="p">]</span>	 
+	 <span class="p">[</span><span class="nf">exec</span> <span class="err">{</span><span class="nv">R</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nf">rest</span> <span class="nv">L</span><span class="p">)</span><span class="err">}</span><span class="p">]</span>	 
 	 <span class="c1">;; continue searching a solution in the rest</span>
-	 <span class="p">[</span><span class="p">{</span><span class="nv">c</span> <span class="nv">&gt;</span> <span class="nv">t</span><span class="p">}</span> <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nf">subset-sum-guile</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}</span>
-	          <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="p">}</span>
+	 <span class="p">[</span><span class="err">{</span><span class="nv">c</span> <span class="nv">&gt;</span> <span class="nv">t</span><span class="err">}</span> <span class="err">{</span><span class="nv">s</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nf">subset-sum-guile</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="err">}</span>
+	          <span class="err">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="err">}</span>
 		  <span class="nv">s</span><span class="p">]</span> <span class="c1">;; return boolean value</span>
 			
 	 <span class="c1">;; else : c &lt; t at this point</span>
 	 <span class="c1">;; c is part of a solution OR not part of a solution</span>
-	 <span class="p">[</span><span class="k">else</span> <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;+</span> <span class="p">{</span><span class="p">(</span><span class="nf">subset-sum-guile</span> <span class="nv">R</span> <span class="p">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="p">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">subset-sum-guile</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}}</span>
-	       <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="p">}</span>
+	 <span class="p">[</span><span class="k">else</span> <span class="err">{</span><span class="nv">s</span> <span class="nv">&lt;+</span> <span class="err">{</span><span class="p">(</span><span class="nf">subset-sum-guile</span> <span class="nv">R</span> <span class="err">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="err">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">subset-sum-guile</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="err">}}</span>
+	       <span class="err">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="err">}</span>
 	       <span class="nv">s</span><span class="p">]))</span> <span class="c1">;; return boolean value</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 <p> </p>
@@ -833,7 +902,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="nf">condx</span> <span class="p">[</span><span class="nf">condition</span> <span class="nv">statements</span> <span class="o">...</span><span class="p">]</span>
@@ -845,7 +914,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
             <span class="p">[</span><span class="k">else</span> <span class="nv">statements</span> <span class="o">...</span><span class="p">])</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 <div style="margin-left: 40px;"> </div>
@@ -855,14 +924,14 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
       which is longer than in Scheme+:</p>
 	  
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="k">define</span> <span class="nv">cpt</span> <span class="mi">0</span><span class="p">)</span>
 
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">ssigma-proto</span> <span class="nv">L</span> <span class="nv">t</span><span class="p">)</span>
 
-  <span class="p">(</span><span class="k">set!</span> <span class="nv">cpt</span> <span class="p">{</span><span class="nv">cpt</span> <span class="nv">+</span> <span class="mi">1</span><span class="p">}</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">set!</span> <span class="nv">cpt</span> <span class="err">{</span><span class="nv">cpt</span> <span class="nv">+</span> <span class="mi">1</span><span class="err">}</span><span class="p">)</span>
  
   <span class="p">(</span><span class="k">define</span> <span class="nv">ls</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L</span><span class="p">))</span>
   <span class="p">(</span><span class="k">define</span> <span class="nv">dyn</span> <span class="p">(</span><span class="nf">array-ref</span> <span class="nv">dyna</span> <span class="nv">ls</span> <span class="nv">t</span><span class="p">))</span>
@@ -874,7 +943,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 	
 	<span class="p">[</span><span class="k">else</span> <span class="p">(</span><span class="k">let</span> <span class="p">[(</span><span class="nf">c</span> <span class="p">(</span><span class="nf">first</span> <span class="nv">L</span><span class="p">))]</span>
 		
-		<span class="p">(</span><span class="k">if</span> <span class="p">{</span><span class="nv">c</span> <span class="nv">=</span> <span class="nv">t</span><span class="p">}</span> <span class="c1">;; c is the solution</span>
+		<span class="p">(</span><span class="k">if</span> <span class="err">{</span><span class="nv">c</span> <span class="nv">=</span> <span class="nv">t</span><span class="err">}</span> <span class="c1">;; c is the solution</span>
 		      
 		    <span class="p">(</span><span class="k">begin</span>
 		      <span class="p">(</span><span class="nf">array-set!</span> <span class="nv">dyna</span> <span class="mi">1</span> <span class="nv">ls</span> <span class="nv">t</span><span class="p">)</span>
@@ -883,7 +952,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 		    <span class="c1">;; else</span>
 		    <span class="p">(</span><span class="k">let</span> <span class="p">[(</span><span class="nf">R</span> <span class="p">(</span><span class="nf">rest</span> <span class="nv">L</span><span class="p">))]</span>
 		      
-		      <span class="p">(</span><span class="k">if</span> <span class="p">{</span><span class="nv">c</span> <span class="nv">&gt;</span> <span class="nv">t</span><span class="p">}</span>   <span class="c1">;; continue searching a solution in the rest</span>
+		      <span class="p">(</span><span class="k">if</span> <span class="err">{</span><span class="nv">c</span> <span class="nv">&gt;</span> <span class="nv">t</span><span class="err">}</span>   <span class="c1">;; continue searching a solution in the rest</span>
 			    
 			  <span class="p">(</span><span class="k">let</span> <span class="p">[(</span><span class="nf">s</span> <span class="p">(</span><span class="nf">ssigma-proto</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">))]</span>
 			    <span class="p">(</span><span class="nf">array-set!</span> <span class="nv">dyna</span>
@@ -896,14 +965,14 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 			  <span class="c1">;; c &lt; t at this point</span>
 			  <span class="c1">;; c is part of the solution or his approximation</span>
 			  <span class="c1">;; or c is not part of solution</span>
-			  <span class="p">(</span><span class="k">let</span> <span class="p">[(</span><span class="nf">s</span> <span class="p">{</span><span class="p">(</span><span class="nf">ssigma-proto</span> <span class="nv">R</span> <span class="p">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="p">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">ssigma-proto</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}</span><span class="p">)]</span>
+			  <span class="p">(</span><span class="k">let</span> <span class="p">[(</span><span class="nf">s</span> <span class="err">{</span><span class="p">(</span><span class="nf">ssigma-proto</span> <span class="nv">R</span> <span class="err">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="err">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">ssigma-proto</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="err">}</span><span class="p">)]</span>
 			    <span class="p">(</span><span class="nf">array-set!</span> <span class="nv">dyna</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span>
 					<span class="nv">ls</span> <span class="nv">t</span><span class="p">)</span>
 			    <span class="nv">s</span><span class="p">)))))</span>
 	      <span class="p">]</span> <span class="p">))</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 
@@ -918,55 +987,55 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <p> </p>
 	
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
 
 <span class="p">(</span><span class="nf">declare</span> <span class="nv">L-init</span> <span class="nv">t-init</span> <span class="nv">ls</span> <span class="nv">dyna</span> <span class="nv">cpt</span><span class="p">)</span>
 
-<span class="p">{</span><span class="nv">L-init</span> <span class="nv">&lt;-</span> <span class="o">'</span><span class="p">(</span><span class="nf">1</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">24</span> <span class="mi">45</span> <span class="mi">64</span> <span class="mi">197</span> <span class="mi">256</span> <span class="mi">275</span> <span class="mi">323</span> <span class="mi">540</span> <span class="mi">723</span> <span class="mi">889</span> <span class="mi">915</span> <span class="mi">1040</span> <span class="mi">1041</span> <span class="mi">1093</span> <span class="mi">1099</span> <span class="mi">1111</span> <span class="mi">1284</span> <span class="mi">1344</span> <span class="mi">1520</span> <span class="mi">2027</span> <span class="mi">2500</span> <span class="mi">2734</span> <span class="mi">3000</span> <span class="mi">3267</span> <span class="mi">3610</span> <span class="mi">4285</span> <span class="mi">5027</span><span class="p">)</span><span class="p">}</span>
-<span class="p">{</span><span class="nv">t-init</span> <span class="nv">&lt;-</span> <span class="mi">35267</span><span class="p">}</span>
-<span class="p">{</span><span class="nv">ls</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L-init</span><span class="p">)</span><span class="p">}</span>
-<span class="p">{</span><span class="nv">dyna</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">make-array</span> <span class="mi">0</span> <span class="p">{</span><span class="nv">ls</span> <span class="nv">+</span> <span class="mi">1</span><span class="p">}</span> <span class="p">{</span><span class="nv">t-init</span> <span class="nv">+</span> <span class="mi">1</span><span class="p">}</span><span class="p">)</span><span class="p">}</span>
+<span class="err">{</span><span class="nv">L-init</span> <span class="nv">&lt;-</span> <span class="o">'</span><span class="p">(</span><span class="nf">1</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">24</span> <span class="mi">45</span> <span class="mi">64</span> <span class="mi">197</span> <span class="mi">256</span> <span class="mi">275</span> <span class="mi">323</span> <span class="mi">540</span> <span class="mi">723</span> <span class="mi">889</span> <span class="mi">915</span> <span class="mi">1040</span> <span class="mi">1041</span> <span class="mi">1093</span> <span class="mi">1099</span> <span class="mi">1111</span> <span class="mi">1284</span> <span class="mi">1344</span> <span class="mi">1520</span> <span class="mi">2027</span> <span class="mi">2500</span> <span class="mi">2734</span> <span class="mi">3000</span> <span class="mi">3267</span> <span class="mi">3610</span> <span class="mi">4285</span> <span class="mi">5027</span><span class="p">)</span><span class="err">}</span>
+<span class="err">{</span><span class="nv">t-init</span> <span class="nv">&lt;-</span> <span class="mi">35267</span><span class="err">}</span>
+<span class="err">{</span><span class="nv">ls</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L-init</span><span class="p">)</span><span class="err">}</span>
+<span class="err">{</span><span class="nv">dyna</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">make-array</span> <span class="mi">0</span> <span class="err">{</span><span class="nv">ls</span> <span class="nv">+</span> <span class="mi">1</span><span class="err">}</span> <span class="err">{</span><span class="nv">t-init</span> <span class="nv">+</span> <span class="mi">1</span><span class="err">}</span><span class="p">)</span><span class="err">}</span>
 
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">b</span><span class="p">)</span>
   <span class="p">(</span><span class="k">if</span> <span class="nv">b</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">))</span>
 
-<span class="p">{</span><span class="nv">cpt</span> <span class="nv">&lt;-</span> <span class="mi">0</span><span class="p">}</span>
+<span class="err">{</span><span class="nv">cpt</span> <span class="nv">&lt;-</span> <span class="mi">0</span><span class="err">}</span>
 
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">subset-sum-guile-dec</span> <span class="nv">L</span> <span class="nv">t</span><span class="p">)</span>
 
   <span class="p">(</span><span class="nf">declare</span> <span class="nv">ls</span> <span class="nv">dyn</span> <span class="nv">c</span> <span class="nv">R</span> <span class="nv">s</span><span class="p">)</span>
   
-  <span class="p">{</span><span class="nv">ls</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L</span><span class="p">)</span><span class="p">}</span>
-  <span class="p">{</span><span class="nv">dyn</span> <span class="nv">&lt;-</span> <span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">ls</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L</span><span class="p">)</span><span class="err">}</span>
+  <span class="err">{</span><span class="nv">dyn</span> <span class="nv">&lt;-</span> <span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span><span class="err">}</span>
 
-  <span class="p">{</span><span class="nv">cpt</span> <span class="nv">&lt;-</span> <span class="p">{</span><span class="nv">cpt</span> <span class="nv">+</span> <span class="mi">1</span><span class="p">}}</span> <span class="c1">;; cpt has been already defined at toplevel</span>
+  <span class="err">{</span><span class="nv">cpt</span> <span class="nv">&lt;-</span> <span class="err">{</span><span class="nv">cpt</span> <span class="nv">+</span> <span class="mi">1</span><span class="err">}}</span> <span class="c1">;; cpt has been already defined at toplevel</span>
   
   <span class="c1">;; dyna[ls t] means 0: unknown solution, 1: solution found, 2: no solution</span>
   
-  <span class="p">(</span><span class="nf">condx</span> <span class="p">[</span><span class="p">{</span><span class="nv">dyn</span> <span class="nv">&lt;&gt;</span> <span class="mi">0</span><span class="p">}</span> <span class="p">(</span><span class="nf">one?</span> <span class="nv">dyn</span><span class="p">)]</span>
-	 <span class="p">[(</span><span class="nb">null?</span> <span class="nv">L</span><span class="p">)</span> <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">2</span><span class="p">}</span>  <span class="no">#f</span><span class="p">]</span> <span class="c1">;; return #f</span>
+  <span class="p">(</span><span class="nf">condx</span> <span class="p">[</span><span class="err">{</span><span class="nv">dyn</span> <span class="nv">&lt;&gt;</span> <span class="mi">0</span><span class="err">}</span> <span class="p">(</span><span class="nf">one?</span> <span class="nv">dyn</span><span class="p">)]</span>
+	 <span class="p">[(</span><span class="nb">null?</span> <span class="nv">L</span><span class="p">)</span> <span class="err">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">2</span><span class="err">}</span>  <span class="no">#f</span><span class="p">]</span> <span class="c1">;; return #f</span>
 	 
-	 <span class="p">[</span><span class="nf">exec</span> <span class="p">{</span><span class="nv">c</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">first</span> <span class="nv">L</span><span class="p">)</span><span class="p">}</span><span class="p">]</span>	 
+	 <span class="p">[</span><span class="nf">exec</span> <span class="err">{</span><span class="nv">c</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">first</span> <span class="nv">L</span><span class="p">)</span><span class="err">}</span><span class="p">]</span>	 
 	 <span class="c1">;; c is the solution</span>
-	 <span class="p">[</span><span class="p">{</span><span class="nv">c</span> <span class="nv">=</span> <span class="nv">t</span><span class="p">}</span> <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">1</span><span class="p">}</span>  <span class="no">#t</span><span class="p">]</span>  <span class="c1">;; return #t</span>
+	 <span class="p">[</span><span class="err">{</span><span class="nv">c</span> <span class="nv">=</span> <span class="nv">t</span><span class="err">}</span> <span class="err">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">1</span><span class="err">}</span>  <span class="no">#t</span><span class="p">]</span>  <span class="c1">;; return #t</span>
 	 
-	 <span class="p">[</span><span class="nf">exec</span> <span class="p">{</span><span class="nv">R</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">rest</span> <span class="nv">L</span><span class="p">)</span><span class="p">}</span><span class="p">]</span>	 
+	 <span class="p">[</span><span class="nf">exec</span> <span class="err">{</span><span class="nv">R</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">rest</span> <span class="nv">L</span><span class="p">)</span><span class="err">}</span><span class="p">]</span>	 
 	 <span class="c1">;; continue searching a solution in the rest</span>
-	 <span class="p">[</span><span class="p">{</span><span class="nv">c</span> <span class="nv">&gt;</span> <span class="nv">t</span><span class="p">}</span> <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">subset-sum-guile-dec</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}</span>
-	          <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="p">}</span>
+	 <span class="p">[</span><span class="err">{</span><span class="nv">c</span> <span class="nv">&gt;</span> <span class="nv">t</span><span class="err">}</span> <span class="err">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">subset-sum-guile-dec</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="err">}</span>
+	          <span class="err">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="err">}</span>
 		  <span class="nv">s</span><span class="p">]</span> <span class="c1">;; return boolean value</span>
 			
 	 <span class="c1">;; else : c &lt; t at this point</span>
 	 <span class="c1">;; c is part of a solution OR not part of a solution</span>
-	 <span class="p">[</span><span class="k">else</span> <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p">{</span><span class="p">(</span><span class="nf">subset-sum-guile-dec</span> <span class="nv">R</span> <span class="p">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="p">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">subset-sum-guile-dec</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}}</span>
-	       <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="p">}</span>
+	 <span class="p">[</span><span class="k">else</span> <span class="err">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="err">{</span><span class="p">(</span><span class="nf">subset-sum-guile-dec</span> <span class="nv">R</span> <span class="err">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="err">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">subset-sum-guile-dec</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="err">}}</span>
+	       <span class="err">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="err">}</span>
 	       <span class="nv">s</span><span class="p">]))</span> <span class="c1">;; return boolean value</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 
@@ -981,7 +1050,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 	
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
@@ -990,37 +1059,37 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
   <span class="p">(</span><span class="nf">declare</span> <span class="nv">ls</span> <span class="nv">dyn</span><span class="p">)</span> <span class="c1">;; declare multiple variables</span>
 
-  <span class="p">{</span><span class="nv">ls</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L</span><span class="p">)</span><span class="p">}</span>
-  <span class="p">{</span><span class="nv">dyn</span> <span class="nv">&lt;-</span> <span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">ls</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">L</span><span class="p">)</span><span class="err">}</span>
+  <span class="err">{</span><span class="nv">dyn</span> <span class="nv">&lt;-</span> <span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span><span class="err">}</span>
 
   <span class="c1">;; dyna[ls t] means : 0: unknown solution, 1: solution found, 2: no solution</span>
 
-  <span class="p">(</span><span class="k">if</span> <span class="p">{</span><span class="nv">dyn</span> <span class="nv">&lt;&gt;</span> <span class="mi">0</span><span class="p">}</span> <span class="c1">;; IF or WHEN : it is the same thing here (only one statement)</span>
+  <span class="p">(</span><span class="k">if</span> <span class="err">{</span><span class="nv">dyn</span> <span class="nv">&lt;&gt;</span> <span class="mi">0</span><span class="err">}</span> <span class="c1">;; IF or WHEN : it is the same thing here (only one statement)</span>
       <span class="p">(</span><span class="nf">return</span> <span class="p">(</span><span class="nf">one?</span> <span class="nv">dyn</span><span class="p">)))</span>
 
   <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">null?</span> <span class="nv">L</span><span class="p">)</span>
-    <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">2</span><span class="p">}</span>
+    <span class="err">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">2</span><span class="err">}</span>
     <span class="p">(</span><span class="nf">return</span> <span class="no">#f</span><span class="p">))</span>
 
-  <span class="p">{</span><span class="nv">c</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nf">first</span> <span class="nv">L</span><span class="p">)</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">c</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nf">first</span> <span class="nv">L</span><span class="p">)</span><span class="err">}</span>
 
-  <span class="p">(</span><span class="nf">when</span> <span class="p">{</span><span class="nv">c</span> <span class="nv">=</span> <span class="nv">t</span><span class="p">}</span>  <span class="c1">;; c is the solution</span>
-    <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">1</span><span class="p">}</span>
+  <span class="p">(</span><span class="nf">when</span> <span class="err">{</span><span class="nv">c</span> <span class="nv">=</span> <span class="nv">t</span><span class="err">}</span>  <span class="c1">;; c is the solution</span>
+    <span class="err">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="mi">1</span><span class="err">}</span>
     <span class="p">(</span><span class="nf">return</span> <span class="no">#t</span><span class="p">))</span>
 
-  <span class="p">{</span><span class="nv">R</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nf">rest</span> <span class="nv">L</span><span class="p">)</span><span class="p">}</span> <span class="c1">;; continue searching a solution in the rest</span>
+  <span class="err">{</span><span class="nv">R</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nf">rest</span> <span class="nv">L</span><span class="p">)</span><span class="err">}</span> <span class="c1">;; continue searching a solution in the rest</span>
 
   <span class="p">(</span><span class="nf">declare</span> <span class="nv">s</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">if</span> <span class="p">{</span><span class="nv">c</span> <span class="nv">&gt;</span> <span class="nv">t</span><span class="p">}</span>  <span class="c1">;; c is to big to be a solution</span>
-    <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">subset-sum-dyna</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}</span>
+  <span class="p">(</span><span class="k">if</span> <span class="err">{</span><span class="nv">c</span> <span class="nv">&gt;</span> <span class="nv">t</span><span class="err">}</span>  <span class="c1">;; c is to big to be a solution</span>
+    <span class="err">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">subset-sum-dyna</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="err">}</span>
     <span class="c1">;; c is part of the solution or c is not part of solution</span>
-    <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p">{</span><span class="p">(</span><span class="nf">subset-sum-dyna</span> <span class="nv">R</span> <span class="p">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="p">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">subset-sum-dyna</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}}</span><span class="p">)</span>
+    <span class="err">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="err">{</span><span class="p">(</span><span class="nf">subset-sum-dyna</span> <span class="nv">R</span> <span class="err">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="err">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">subset-sum-dyna</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="err">}}</span><span class="p">)</span>
 
-  <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="err">}</span>
   <span class="nv">s</span><span class="p">)</span> <span class="c1">;; return boolean value</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
     
@@ -1052,7 +1121,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
       conditionals clauses,syntax is :</p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="nf">condx</span> <span class="p">[</span><span class="nf">condition</span> <span class="nv">statements</span> <span class="o">...</span><span class="p">]</span>
@@ -1064,7 +1133,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
             <span class="p">[</span><span class="k">else</span> <span class="nv">statements</span> <span class="o">...</span><span class="p">])</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 <p style="text-align: left;"><b>condx</b> is not a major feature of <b>Scheme+</b>
@@ -1094,7 +1163,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     </p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="k">define</span> <span class="nv">foo</span> <span class="p">(</span><span class="k">begin</span> <span class="p">(</span><span class="k">define</span> <span class="nv">x</span> <span class="mi">1</span><span class="p">)</span>
@@ -1107,7 +1176,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
               <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">t</span><span class="p">)</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">t</span><span class="p">))))</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 <p style="text-align: left;">error: define: not allowed in an expression
@@ -1119,7 +1188,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <p style="text-align: left;"> </p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="k">define-syntax</span> <span class="nv">&amp;</span>
@@ -1128,7 +1197,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <span class="p">((</span><span class="nf">_</span> <span class="nv">ev</span> <span class="o">...</span><span class="p">)</span> <span class="p">(</span><span class="k">let</span> <span class="p">()</span> <span class="nv">ev</span> <span class="o">...</span><span class="p">))))</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
  
@@ -1138,19 +1207,19 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="nf">def</span> <span class="nv">bar</span> <span class="p">(</span><span class="nf">&amp;</span> <span class="p">(</span><span class="nf">declare</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span>
-            <span class="p">{</span><span class="nv">x</span> <span class="nv">&lt;-</span> <span class="mi">1</span><span class="p">}</span> 
-            <span class="p">{</span><span class="nv">y</span> <span class="nv">&lt;-</span> <span class="mi">2</span><span class="p">}</span>
+            <span class="err">{</span><span class="nv">x</span> <span class="nv">&lt;-</span> <span class="mi">1</span><span class="err">}</span> 
+            <span class="err">{</span><span class="nv">y</span> <span class="nv">&lt;-</span> <span class="mi">2</span><span class="err">}</span>
             <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">t</span><span class="p">)</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">t</span><span class="p">))))</span>
 
 <span class="p">(</span><span class="nf">bar</span> <span class="mi">7</span><span class="p">)</span>
 <span class="mi">10</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 
@@ -1177,8 +1246,6 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <h2>15.<u>Future:</u></h2>
     <p>Scheme+ will be implemented for other Scheme. Racket (former DrScheme)
       first,....</p>
-    <p>Next version will integrate more features, concerning <b>multiple values</b>
-      return for example.</p>
     <p><br>
     </p>
     <p><br>
@@ -1216,7 +1283,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <p><!-- HTML generated using hilite.me --></p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="nf">let&lt;-rec*</span> <span class="p">[</span><span class="nf">x</span> <span class="nv">&lt;-</span> <span class="mi">1</span>
@@ -1226,7 +1293,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 <span class="mi">4</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 <p> </p>
@@ -1236,7 +1303,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
 <span class="p">(</span><span class="k">define-syntax</span> <span class="nv">let&lt;-rec*</span>
@@ -1263,7 +1330,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
        <span class="p">(</span><span class="nf">%parse-letrec-bindings-and-evaluate-expressions</span> <span class="p">(</span><span class="nf">bindings</span> <span class="o">...</span> <span class="p">(</span><span class="nf">var1</span> <span class="nv">val1</span><span class="p">))</span> <span class="p">(</span><span class="nf">var2</span> <span class="nv">&lt;-</span> <span class="nv">val2</span> <span class="o">...</span><span class="p">)</span> <span class="nv">expr</span> <span class="o">...</span><span class="p">))))</span>
 
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 <p> </p>
@@ -1274,17 +1341,17 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <p><!-- HTML generated using hilite.me --></p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
-<span class="p">(</span><span class="nf">let-arrow*</span> <span class="p">(</span><span class="nf">x</span> <span class="p">←</span> <span class="mi">1</span>
- 	     <span class="nv">y</span> <span class="p">←</span> <span class="p">{</span><span class="nv">x</span> <span class="nv">+</span> <span class="mi">1</span><span class="p">}</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">let-arrow*</span> <span class="p">(</span><span class="nf">x</span> <span class="err">←</span> <span class="mi">1</span>
+ 	     <span class="nv">y</span> <span class="err">←</span> <span class="err">{</span><span class="nv">x</span> <span class="nv">+</span> <span class="mi">1</span><span class="err">}</span><span class="p">)</span>
            <span class="nv">y</span><span class="p">)</span>
 <span class="mi">2</span>
 
 
-<span class="p">(</span><span class="nf">let-arrow*</span> <span class="p">(</span><span class="p">{</span><span class="nv">x</span> <span class="p">←</span> <span class="mi">1</span><span class="p">}</span>
-             <span class="p">{</span><span class="nv">y</span> <span class="p">←</span> <span class="p">{</span><span class="nv">x</span> <span class="nv">+</span> <span class="mi">1</span><span class="p">}}</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">let-arrow*</span> <span class="p">(</span><span class="err">{</span><span class="nv">x</span> <span class="err">←</span> <span class="mi">1</span><span class="err">}</span>
+             <span class="err">{</span><span class="nv">y</span> <span class="err">←</span> <span class="err">{</span><span class="nv">x</span> <span class="nv">+</span> <span class="mi">1</span><span class="err">}}</span><span class="p">)</span>
            <span class="nv">x</span>
            <span class="nv">y</span><span class="p">)</span>
 
@@ -1298,7 +1365,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
 <span class="mi">2</span>
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 <p> </p>
@@ -1307,18 +1374,18 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <p>letrec-arrow* , the same as let-arrow* but for recursive functions:</p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 
-<span class="p">(</span><span class="nf">letrec-arrow*</span> <span class="p">[</span> <span class="nv">fact</span> <span class="p">←</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">n</span><span class="p">)</span>
- 			  <span class="p">(</span><span class="k">if</span>  <span class="p">{</span><span class="nv">n</span> <span class="nv">=</span> <span class="mi">1</span><span class="p">}</span>
+<span class="p">(</span><span class="nf">letrec-arrow*</span> <span class="p">[</span> <span class="nv">fact</span> <span class="err">←</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">n</span><span class="p">)</span>
+ 			  <span class="p">(</span><span class="k">if</span>  <span class="err">{</span><span class="nv">n</span> <span class="nv">=</span> <span class="mi">1</span><span class="err">}</span>
  			       <span class="mi">1</span>
-                               <span class="p">{</span><span class="nv">n</span> <span class="nv">*</span> <span class="p">(</span><span class="nf">fact</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">1</span><span class="p">}</span><span class="p">)</span><span class="p">}</span> <span class="p">))</span> <span class="p">]</span>
+                               <span class="err">{</span><span class="nv">n</span> <span class="nv">*</span> <span class="p">(</span><span class="nf">fact</span> <span class="err">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">1</span><span class="err">}</span><span class="p">)</span><span class="err">}</span> <span class="p">))</span> <span class="p">]</span>
  	       <span class="p">(</span><span class="nf">fact</span> <span class="mi">5</span><span class="p">))</span>
 
 <span class="mi">120</span>
 
-</code></pre></figure>
+<span class="o">```</span></code></pre></figure>
 
 
 <br>
@@ -1342,7 +1409,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <h2>19. <u>Special characters (for special people):</u></h2>
     <p>This is about the optional replacement symbols for some operators:</p>
     <br>
-    <p> <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/APL-keybd2.svg" alt="IBM 2741 keyboard layout" title="IBM 2741 keyboard layout">IBM 2741
+    <p> <img src="Scheme+io_fichiers/APL-keybd2.svg" alt="IBM 2741 keyboard layout" title="IBM 2741 keyboard layout">IBM 2741
       Terminal keyboard layout</p>
     <br>
     <p>The hexadécimal unicode can be entered under Linux with : Ctrl-Shift u
@@ -1363,20 +1430,19 @@ get it</a>.</p>
 scheme@(guile-user)&gt; v
 7
 </pre>
-<div style="text-align: center;"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/IBM2741.JPG" alt="IBM 2741" title="IBM 2741" width="450"></div>
+<div style="text-align: center;"><img src="Scheme+io_fichiers/IBM2741.JPG" alt="IBM 2741" title="IBM 2741" width="450"></div>
     <div style="text-align: center;">IBM 2741 Terminal </div>
     <p> </p>
-<p></p>  
-   
- <p><br>
- </p>
+<div style="text-align: left;"><br>
+    </div>
+    <div style="text-align: left;">
       <h2><u>20. Scheme+ in action:</u></h2>
       <p>Example based on the <a href="https://en.wikipedia.org/wiki/Petrick%27s_method" target="_blank">Petrick method</a> algorithm:</p>
-      <p><br />
+      <p><br>
       </p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 <span class="p">(</span><span class="nf">def</span> <span class="p">(</span><span class="nf">Petrick</span> <span class="nv">non-essential-prime-implicants</span> <span class="nv">var-list</span><span class="p">)</span>
 
@@ -1388,27 +1454,27 @@ scheme@(guile-user)&gt; v
   
   <span class="p">(</span><span class="nf">for</span> <span class="p">(</span><span class="nf">x</span> <span class="mi">1</span> <span class="nv">lgt-mt</span><span class="p">)</span> <span class="c1">;; loop over minterms</span>
        
-       <span class="p">{</span><span class="nv">mt</span> <span class="p">←</span> <span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="mi">0</span><span class="p">]</span><span class="p">}</span>
+       <span class="err">{</span><span class="nv">mt</span> <span class="err">←</span> <span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="mi">0</span><span class="p">]</span><span class="err">}</span>
        
        <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">member</span> <span class="nv">mt</span> <span class="nv">non-expressed-minterms</span><span class="p">)</span> <span class="c1">;; non expressed minterm</span>
 	 
-	 <span class="p">{</span><span class="nv">col</span> <span class="p">←</span> <span class="o">'</span><span class="p">()</span><span class="p">}</span>
+	 <span class="err">{</span><span class="nv">col</span> <span class="err">←</span> <span class="o">'</span><span class="p">()</span><span class="err">}</span>
 	 
 	 <span class="p">(</span><span class="nf">for</span> <span class="p">(</span><span class="nf">y</span> <span class="mi">1</span> <span class="nv">lgt-pi</span><span class="p">)</span> <span class="c1">;; loop over prime implicants</span>
 	      
-	      <span class="p">{</span><span class="nv">prim-imp</span> <span class="p">←</span> <span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y</span><span class="p">]</span><span class="p">}</span> <span class="c1">;; prime implicant</span>
+	      <span class="err">{</span><span class="nv">prim-imp</span> <span class="err">←</span> <span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y</span><span class="p">]</span><span class="err">}</span> <span class="c1">;; prime implicant</span>
 	      
 	      <span class="c1">;; check wether prime implicant is a non essential one?</span>
 	      <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">member</span> <span class="nv">prim-imp</span> <span class="nv">non-essential-prime-implicants</span><span class="p">)</span>
 		
 		<span class="c1">;; is the non essential prime implicant expressing this minterms?</span>
-		<span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">string=?</span> <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span><span class="p">}</span> <span class="s">" * "</span><span class="p">)</span>
+		<span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">string=?</span> <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span><span class="err">}</span> <span class="s">" * "</span><span class="p">)</span>
 		  <span class="p">(</span><span class="nf">insert-set!</span> <span class="p">(</span><span class="nf">minterm-&gt;var</span> <span class="nv">prim-imp</span><span class="p">)</span> <span class="nv">col</span><span class="p">))))</span>
 	 
 	 <span class="c1">;; end for y</span>
 	 
 	 <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nf">singleton-set?</span> <span class="nv">col</span><span class="p">)</span>
-	     <span class="p">{</span><span class="nv">col</span> <span class="p">←</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">col</span><span class="p">)</span><span class="p">}</span>  <span class="c1">;; ( V ) -&gt; V</span>
+	     <span class="err">{</span><span class="nv">col</span> <span class="err">←</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">col</span><span class="p">)</span><span class="err">}</span>  <span class="c1">;; ( V ) -&gt; V</span>
 	     <span class="p">(</span><span class="nf">insert-set!</span> <span class="ss">'or</span> <span class="nv">col</span><span class="p">))</span>  <span class="c1">;; (V1 V2 ...) -&gt; (or V1 V2 ...)</span>
 	 
 	 <span class="p">(</span><span class="nf">insert-set!</span> <span class="nv">col</span> <span class="nv">conj-expr</span><span class="p">)))</span>
@@ -1416,72 +1482,77 @@ scheme@(guile-user)&gt; v
   <span class="c1">;; end for x</span>
 
   <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nf">singleton-set?</span> <span class="nv">conj-expr</span><span class="p">)</span>
-      <span class="p">{</span><span class="nv">conj-expr</span> <span class="p">←</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">conj-expr</span><span class="p">)</span><span class="p">}</span>  <span class="c1">;; ( conj-expr ) -&gt; conj-expr</span>
+      <span class="err">{</span><span class="nv">conj-expr</span> <span class="err">←</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">conj-expr</span><span class="p">)</span><span class="err">}</span>  <span class="c1">;; ( conj-expr ) -&gt; conj-expr</span>
       <span class="p">(</span><span class="nf">insert-set!</span> <span class="ss">'and</span> <span class="nv">conj-expr</span><span class="p">))</span>  <span class="c1">;; (e1 e2 ...) -&gt; (and e1 e2 ...)</span>
 
 
   <span class="c1">;; find the disjunctive form</span>
-  <span class="p">{</span><span class="nv">disj-expr</span> <span class="p">←</span> <span class="p">(</span><span class="nf">dnf-n-arity-simp</span> <span class="nv">conj-expr</span><span class="p">)</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">disj-expr</span> <span class="err">←</span> <span class="p">(</span><span class="nf">dnf-n-arity-simp</span> <span class="nv">conj-expr</span><span class="p">)</span><span class="err">}</span>
   
   <span class="c1">;; sorting terms</span>
   <span class="c1">;; sort by x &lt; 1 &lt; 0</span>
-  <span class="p">{</span><span class="nv">disj-expr-sorted</span> <span class="p">←</span> <span class="p">(</span><span class="nf">sort-arguments-in-operation-most-little-literal-first</span> <span class="nv">disj-expr</span><span class="p">)</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">disj-expr-sorted</span> <span class="err">←</span> <span class="p">(</span><span class="nf">sort-arguments-in-operation-most-little-literal-first</span> <span class="nv">disj-expr</span><span class="p">)</span><span class="err">}</span>
  
   <span class="c1">;; get the shortest minterm</span>
   <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nf">isOR-AND?</span> <span class="nv">disj-expr-sorted</span><span class="p">)</span>
-      <span class="p">{</span><span class="nv">mt-var</span> <span class="p">←</span> <span class="p">(</span><span class="nf">first</span> <span class="p">(</span><span class="nf">args</span> <span class="nv">disj-expr-sorted</span><span class="p">))</span><span class="p">}</span>
-      <span class="p">{</span><span class="nv">mt-var</span> <span class="p">←</span> <span class="nv">disj-expr-sorted</span><span class="p">}</span><span class="p">)</span>
+      <span class="err">{</span><span class="nv">mt-var</span> <span class="err">←</span> <span class="p">(</span><span class="nf">first</span> <span class="p">(</span><span class="nf">args</span> <span class="nv">disj-expr-sorted</span><span class="p">))</span><span class="err">}</span>
+      <span class="err">{</span><span class="nv">mt-var</span> <span class="err">←</span> <span class="nv">disj-expr-sorted</span><span class="err">}</span><span class="p">)</span>
 
-  <span class="p">{</span><span class="nv">mt</span> <span class="p">←</span> <span class="p">(</span><span class="nf">var-&gt;minterm</span> <span class="nv">mt-var</span><span class="p">)</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">mt</span> <span class="err">←</span> <span class="p">(</span><span class="nf">var-&gt;minterm</span> <span class="nv">mt-var</span><span class="p">)</span><span class="err">}</span>
 
   <span class="c1">;; TODO: possible bug missing term could be an expression ? (multiple terms)</span>
-  <span class="p">{</span><span class="nv">missing-term</span> <span class="p">←</span> <span class="p">(</span><span class="nf">essential-prime-implicants-list-&gt;formula</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">mt</span><span class="p">)</span>
-							    <span class="nv">var-list</span><span class="p">)</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">missing-term</span> <span class="err">←</span> <span class="p">(</span><span class="nf">essential-prime-implicants-list-&gt;formula</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">mt</span><span class="p">)</span>
+							    <span class="nv">var-list</span><span class="p">)</span><span class="err">}</span>
 
   <span class="nv">missing-term</span>
       
 <span class="p">)</span>
-</code></pre></figure>
-<br />
-<br />
+
+<span class="o">```</span></code></pre></figure>
+
+<br>
+<br>
 <p>Example based on the <a href="https://en.wikipedia.org/wiki/Quine%E2%80%93McCluskey_algorithm" target="_blank">Quine–McCluskey</a> algorithm:</p>
-      <p><br />
+      <p><br>
       </p>
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme">
+
+
+
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
 
 <span class="p">(</span><span class="nf">def</span> <span class="p">(</span><span class="nf">Quine-Mc-Cluskey</span> <span class="nv">disj-norm-form</span> <span class="nv">var-list</span><span class="p">)</span>
      
      <span class="p">(</span><span class="nf">display-nl</span> <span class="s">"Entering Quine-Mc-Cluskey"</span><span class="p">)</span>
      
-     <span class="p">{</span><span class="nv">and-terms</span> <span class="p">⥆</span> <span class="p">(</span><span class="nf">args</span> <span class="nv">disj-norm-form</span><span class="p">)</span><span class="p">}</span> <span class="c1">;; conjunctives minterms</span>
+     <span class="err">{</span><span class="nv">and-terms</span> <span class="err">⥆</span> <span class="p">(</span><span class="nf">args</span> <span class="nv">disj-norm-form</span><span class="p">)</span><span class="err">}</span> <span class="c1">;; conjunctives minterms</span>
      <span class="c1">;; variable list of expanded minterms </span>
-     <span class="p">{</span><span class="nv">expanded-var-terms</span>  <span class="p">⥆</span> <span class="p">(</span><span class="nf">$</span> <span class="p">{</span><span class="nv">debug-mode-save</span> <span class="p">←</span> <span class="nv">debug-mode</span><span class="p">}</span>
-			        <span class="p">{</span><span class="nv">debug-mode</span>  <span class="p">←</span> <span class="no">#t</span><span class="p">}</span>
+     <span class="err">{</span><span class="nv">expanded-var-terms</span>  <span class="err">⥆</span> <span class="p">(</span><span class="nf">$</span> <span class="err">{</span><span class="nv">debug-mode-save</span> <span class="err">←</span> <span class="nv">debug-mode</span><span class="err">}</span>
+			        <span class="err">{</span><span class="nv">debug-mode</span>  <span class="err">←</span> <span class="no">#t</span><span class="err">}</span>
 				<span class="p">(</span><span class="nf">when</span> <span class="nv">debug-mode</span>
 				  <span class="p">(</span><span class="nf">dv</span> <span class="nv">and-terms</span><span class="p">))</span> <span class="c1">;; dv:display value</span>
-				<span class="p">{</span><span class="nv">debug-mode</span>  <span class="p">←</span> <span class="nv">debug-mode-save</span><span class="p">}</span>
+				<span class="err">{</span><span class="nv">debug-mode</span>  <span class="err">←</span> <span class="nv">debug-mode-save</span><span class="err">}</span>
 				<span class="p">(</span><span class="nb">apply</span> <span class="nv">append</span>
 				       <span class="p">(</span><span class="nb">map</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">min-term</span><span class="p">)</span>
 					      <span class="p">(</span><span class="nf">expand-minterm</span> <span class="nv">var-list</span> <span class="nv">min-term</span><span class="p">))</span>
-					    <span class="nv">and-terms</span><span class="p">)))</span><span class="p">}</span>
+					    <span class="nv">and-terms</span><span class="p">)))</span><span class="err">}</span>
 
-     <span class="p">{</span><span class="nv">sorted-expanded-var-terms</span>  <span class="p">⥆</span> <span class="p">(</span><span class="nb">map</span> <span class="nv">sort-arguments</span> <span class="nv">expanded-var-terms</span><span class="p">)</span><span class="p">}</span> <span class="c1">;; sorted variable list of expanded minterms</span>
-     <span class="p">{</span><span class="nv">binary-minterms</span> <span class="p">⥆</span> <span class="p">(</span><span class="nb">map</span> <span class="nv">var-&gt;binary</span> <span class="nv">sorted-expanded-var-terms</span><span class="p">)</span><span class="p">}</span> <span class="c1">;; minterms in binary form</span>
-     <span class="p">{</span><span class="nv">sorted-binary-minterms</span> <span class="p">⥆</span> <span class="p">(</span><span class="nf">sort</span> <span class="nv">binary-minterms</span> <span class="nv">minterm-binary-weight-number&lt;?</span><span class="p">)</span><span class="p">}</span> <span class="c1">;; sorted binary minterms</span>
-     <span class="p">{</span><span class="nv">uniq-sorted-binary-minterms</span> <span class="p">⥆</span> <span class="p">(</span><span class="nf">remove-duplicates-sorted</span> <span class="nv">sorted-binary-minterms</span><span class="p">)</span><span class="p">}</span>  <span class="c1">;; prevoir uniq pourquoi???? sais plus !</span>
-     <span class="p">{</span><span class="nv">minterms</span> <span class="p">⥆</span> <span class="nv">uniq-sorted-binary-minterms</span><span class="p">}</span>
-     <span class="p">{</span><span class="nv">set-of-sets-of-minterms</span> <span class="p">⥆</span> <span class="p">(</span><span class="nf">order-by-weight-minterms</span> <span class="nv">uniq-sorted-binary-minterms</span><span class="p">)</span><span class="p">}</span> <span class="c1">;; set of sets of minterms ordered by weight</span>
-     <span class="p">{</span><span class="nv">unified-minterms</span> <span class="p">⥆</span> <span class="p">(</span><span class="nf">$</span> <span class="p">{</span><span class="nv">debug-mode-save</span> <span class="p">←</span> <span class="nv">debug-mode</span><span class="p">}</span>
-			     <span class="p">{</span><span class="nv">debug-mode</span> <span class="p">←</span> <span class="no">#t</span><span class="p">}</span>
+     <span class="err">{</span><span class="nv">sorted-expanded-var-terms</span>  <span class="err">⥆</span> <span class="p">(</span><span class="nb">map</span> <span class="nv">sort-arguments</span> <span class="nv">expanded-var-terms</span><span class="p">)</span><span class="err">}</span> <span class="c1">;; sorted variable list of expanded minterms</span>
+     <span class="err">{</span><span class="nv">binary-minterms</span> <span class="err">⥆</span> <span class="p">(</span><span class="nb">map</span> <span class="nv">var-&gt;binary</span> <span class="nv">sorted-expanded-var-terms</span><span class="p">)</span><span class="err">}</span> <span class="c1">;; minterms in binary form</span>
+     <span class="err">{</span><span class="nv">sorted-binary-minterms</span> <span class="err">⥆</span> <span class="p">(</span><span class="nf">sort</span> <span class="nv">binary-minterms</span> <span class="nv">minterm-binary-weight-number&lt;?</span><span class="p">)</span><span class="err">}</span> <span class="c1">;; sorted binary minterms</span>
+     <span class="err">{</span><span class="nv">uniq-sorted-binary-minterms</span> <span class="err">⥆</span> <span class="p">(</span><span class="nf">remove-duplicates-sorted</span> <span class="nv">sorted-binary-minterms</span><span class="p">)</span><span class="err">}</span>  <span class="c1">;; prevoir uniq pourquoi???? sais plus !</span>
+     <span class="err">{</span><span class="nv">minterms</span> <span class="err">⥆</span> <span class="nv">uniq-sorted-binary-minterms</span><span class="err">}</span>
+     <span class="err">{</span><span class="nv">set-of-sets-of-minterms</span> <span class="err">⥆</span> <span class="p">(</span><span class="nf">order-by-weight-minterms</span> <span class="nv">uniq-sorted-binary-minterms</span><span class="p">)</span><span class="err">}</span> <span class="c1">;; set of sets of minterms ordered by weight</span>
+     <span class="err">{</span><span class="nv">unified-minterms</span> <span class="err">⥆</span> <span class="p">(</span><span class="nf">$</span> <span class="err">{</span><span class="nv">debug-mode-save</span> <span class="err">←</span> <span class="nv">debug-mode</span><span class="err">}</span>
+			     <span class="err">{</span><span class="nv">debug-mode</span> <span class="err">←</span> <span class="no">#t</span><span class="err">}</span>
 			     <span class="p">(</span><span class="nf">when</span> <span class="nv">debug-mode</span> <span class="p">(</span><span class="nf">display-nl</span> <span class="s">"Quine-Mc-Cluskey:"</span><span class="p">))</span>
 			     <span class="p">(</span><span class="nf">init-hash-table-with-set-and-value</span> <span class="nv">minterms-ht</span> <span class="nv">minterms</span> <span class="no">#f</span><span class="p">)</span>
 			     <span class="p">(</span><span class="nf">dv</span> <span class="nv">minterms-ht</span><span class="p">)</span>
-			     <span class="p">{</span><span class="nv">debug-mode</span> <span class="p">←</span> <span class="nv">debug-mode-save</span><span class="p">}</span>
-			     <span class="p">(</span><span class="nf">recursive-unify-minterms-set-of-sets</span>  <span class="nv">set-of-sets-of-minterms</span><span class="p">))</span><span class="p">}</span>
+			     <span class="err">{</span><span class="nv">debug-mode</span> <span class="err">←</span> <span class="nv">debug-mode-save</span><span class="err">}</span>
+			     <span class="p">(</span><span class="nf">recursive-unify-minterms-set-of-sets</span>  <span class="nv">set-of-sets-of-minterms</span><span class="p">))</span><span class="err">}</span>
 	 
-     <span class="p">{</span><span class="nv">essential-prime-implicants</span> <span class="p">⥆</span> <span class="p">(</span><span class="nf">$</span> <span class="p">{</span><span class="nv">prime-implicants-lst</span> <span class="p">←</span> <span class="p">(</span><span class="nf">$</span> <span class="p">{</span><span class="nv">debug-mode</span> <span class="p">←</span> <span class="nv">debug-mode-save</span><span class="p">}</span>
-								  <span class="p">(</span><span class="nf">prime-implicants</span> <span class="nv">minterms-ht</span><span class="p">))</span><span class="p">}</span>
-				       <span class="p">(</span><span class="nf">identify-essential-prime-implicants</span> <span class="nv">prime-implicants-lst</span> <span class="nv">minterms</span><span class="p">))</span><span class="p">}</span>
+     <span class="err">{</span><span class="nv">essential-prime-implicants</span> <span class="err">⥆</span> <span class="p">(</span><span class="nf">$</span> <span class="err">{</span><span class="nv">prime-implicants-lst</span> <span class="err">←</span> <span class="p">(</span><span class="nf">$</span> <span class="err">{</span><span class="nv">debug-mode</span> <span class="err">←</span> <span class="nv">debug-mode-save</span><span class="err">}</span>
+								  <span class="p">(</span><span class="nf">prime-implicants</span> <span class="nv">minterms-ht</span><span class="p">))</span><span class="err">}</span>
+				       <span class="p">(</span><span class="nf">identify-essential-prime-implicants</span> <span class="nv">prime-implicants-lst</span> <span class="nv">minterms</span><span class="p">))</span><span class="err">}</span>
        
      <span class="c1">;; dv : display value</span>
      <span class="p">(</span><span class="nf">dv</span> <span class="nv">disj-norm-form</span><span class="p">)</span>
@@ -1501,13 +1572,14 @@ scheme@(guile-user)&gt; v
      <span class="p">(</span><span class="nf">dv</span> <span class="nv">feepi</span><span class="p">)</span>
      <span class="nv">essential-prime-implicants</span><span class="p">)</span>
 
+
 <span class="c1">;; e element</span>
 <span class="c1">;; s set</span>
 <span class="c1">;; sos set of sets</span>
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">put-elements-of-set-of-sets-in-minterms-ht</span> <span class="nv">sos</span><span class="p">)</span>
   <span class="p">(</span><span class="nb">map</span> <span class="c1">;; deal with sets of the 'set of sets'</span>
    <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">s</span><span class="p">)</span> <span class="p">(</span><span class="nb">map</span> <span class="c1">;; deal with elements of a set</span>
-		<span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">e</span><span class="p">)</span> <span class="p">{</span><span class="nv">minterms-ht</span><span class="p">[</span><span class="nf">e</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="no">#f</span><span class="p">}</span><span class="p">)</span>
+		<span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">e</span><span class="p">)</span> <span class="err">{</span><span class="nv">minterms-ht</span><span class="p">[</span><span class="nf">e</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="no">#f</span><span class="err">}</span><span class="p">)</span>
 		<span class="nv">s</span><span class="p">))</span>
    <span class="nv">sos</span><span class="p">))</span>
 
@@ -1515,10 +1587,10 @@ scheme@(guile-user)&gt; v
 <span class="c1">;;</span>
 <span class="c1">;; (function-unify-two-minterms-and-tag '(1 0 0 0) '(1 0 1 0)) -&gt; '(1 0 x 0)</span>
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">function-unify-two-minterms-and-tag</span> <span class="nv">mt1</span> <span class="nv">mt2</span><span class="p">)</span>
-  <span class="p">{</span><span class="nv">res</span> <span class="p">⥆</span> <span class="p">(</span><span class="nf">unify-two-minterms</span> <span class="nv">mt1</span> <span class="nv">mt2</span><span class="p">)</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">res</span> <span class="err">⥆</span> <span class="p">(</span><span class="nf">unify-two-minterms</span> <span class="nv">mt1</span> <span class="nv">mt2</span><span class="p">)</span><span class="err">}</span>
   <span class="p">(</span><span class="nf">when</span> <span class="nv">res</span>
-    <span class="p">{</span><span class="nv">minterms-ht</span><span class="p">[</span><span class="nf">mt1</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="no">#t</span><span class="p">}</span>
-    <span class="p">{</span><span class="nv">minterms-ht</span><span class="p">[</span><span class="nf">mt2</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="no">#t</span><span class="p">}</span><span class="p">)</span>
+    <span class="err">{</span><span class="nv">minterms-ht</span><span class="p">[</span><span class="nf">mt1</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="no">#t</span><span class="err">}</span>
+    <span class="err">{</span><span class="nv">minterms-ht</span><span class="p">[</span><span class="nf">mt2</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="no">#t</span><span class="err">}</span><span class="p">)</span>
   <span class="nv">res</span><span class="p">)</span>
 
 
@@ -1538,13 +1610,13 @@ scheme@(guile-user)&gt; v
 <span class="c1">;; used by Quine - Mc Cluskey</span>
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">init-hash-table-with-set-and-value</span> <span class="nv">ht</span> <span class="nv">s</span> <span class="nv">val</span><span class="p">)</span>
   <span class="p">(</span><span class="nb">display</span> <span class="s">"init-hash-table-with-set-and-value"</span><span class="p">)</span> <span class="p">(</span><span class="nb">newline</span><span class="p">)</span>
-  <span class="p">{</span><span class="nv">ht</span> <span class="p">←</span> <span class="p">(</span><span class="nf">make-hash-table</span><span class="p">)</span><span class="p">}</span>
-  <span class="p">(</span><span class="nb">map</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">e</span><span class="p">)</span> <span class="p">{</span><span class="nv">ht</span><span class="p">[</span><span class="nf">e</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="nv">val</span><span class="p">}</span><span class="p">)</span> <span class="nv">s</span><span class="p">)</span>
+  <span class="err">{</span><span class="nv">ht</span> <span class="err">←</span> <span class="p">(</span><span class="nf">make-hash-table</span><span class="p">)</span><span class="err">}</span>
+  <span class="p">(</span><span class="nb">map</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">e</span><span class="p">)</span> <span class="err">{</span><span class="nv">ht</span><span class="p">[</span><span class="nf">e</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="nv">val</span><span class="err">}</span><span class="p">)</span> <span class="nv">s</span><span class="p">)</span>
   <span class="p">(</span><span class="nb">display</span> <span class="s">"end of init-hash-table-with-set-and-value"</span><span class="p">)</span> <span class="p">(</span><span class="nb">newline</span><span class="p">))</span>
 
 
 <span class="c1">;; list of non expressed minterms</span>
-<span class="p">{</span><span class="nv">non-expressed-minterms</span> <span class="p">⥆</span> <span class="o">'</span><span class="p">()</span><span class="p">}</span> <span class="c1">;; could also be done with (declare non-expressed-minterms)</span>
+<span class="err">{</span><span class="nv">non-expressed-minterms</span> <span class="err">⥆</span> <span class="o">'</span><span class="p">()</span><span class="err">}</span> <span class="c1">;; could also be done with (declare non-expressed-minterms)</span>
 
 <span class="c1">;; iepi : identifying essential prime implicant array</span>
 <span class="c1">;; first line : minterms</span>
@@ -1576,58 +1648,58 @@ scheme@(guile-user)&gt; v
 
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">identify-essential-prime-implicants</span>  <span class="nv">prime-implicants</span> <span class="nv">minterms</span><span class="p">)</span>
   
-  <span class="p">{</span><span class="nv">vct-prime-implicants</span> <span class="p">⥆</span> <span class="p">(</span><span class="nb">list-&gt;vector</span> <span class="nv">prime-implicants</span><span class="p">)</span><span class="p">}</span>
-  <span class="p">{</span><span class="nv">essential-prime-implicants-list</span> <span class="p">⥆</span> <span class="o">'</span><span class="p">()</span><span class="p">}</span>
-  <span class="p">{</span><span class="nv">cpt-mt</span> <span class="p">⥆</span> <span class="mi">0</span><span class="p">}</span> <span class="c1">;; counter of minterms</span>
-  <span class="p">{</span><span class="nv">y-pos-epi</span> <span class="p">⥆</span> <span class="mi">0</span><span class="p">}</span> <span class="c1">;; position of essential prime implicant in colomn if there exists one</span>
-  <span class="p">{</span><span class="nv">star-in-column</span> <span class="p">⥆</span> <span class="no">#f</span><span class="p">}</span> <span class="c1">;; at the beginning</span>
+  <span class="err">{</span><span class="nv">vct-prime-implicants</span> <span class="err">⥆</span> <span class="p">(</span><span class="nb">list-&gt;vector</span> <span class="nv">prime-implicants</span><span class="p">)</span><span class="err">}</span>
+  <span class="err">{</span><span class="nv">essential-prime-implicants-list</span> <span class="err">⥆</span> <span class="o">'</span><span class="p">()</span><span class="err">}</span>
+  <span class="err">{</span><span class="nv">cpt-mt</span> <span class="err">⥆</span> <span class="mi">0</span><span class="err">}</span> <span class="c1">;; counter of minterms</span>
+  <span class="err">{</span><span class="nv">y-pos-epi</span> <span class="err">⥆</span> <span class="mi">0</span><span class="err">}</span> <span class="c1">;; position of essential prime implicant in colomn if there exists one</span>
+  <span class="err">{</span><span class="nv">star-in-column</span> <span class="err">⥆</span> <span class="no">#f</span><span class="err">}</span> <span class="c1">;; at the beginning</span>
   
-  <span class="p">{</span><span class="nv">lgt-pi</span> <span class="p">←</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">prime-implicants</span><span class="p">)</span><span class="p">}</span>
-  <span class="p">{</span><span class="nv">lgt-mt</span> <span class="p">←</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">minterms</span><span class="p">)</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">lgt-pi</span> <span class="err">←</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">prime-implicants</span><span class="p">)</span><span class="err">}</span>
+  <span class="err">{</span><span class="nv">lgt-mt</span> <span class="err">←</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">minterms</span><span class="p">)</span><span class="err">}</span>
   
   <span class="c1">;; identifying essential prime implicant array</span>
   <span class="c1">;; first line : minterms</span>
   <span class="c1">;; first row : prime-implicants</span>
-  <span class="p">{</span><span class="nv">iepi</span> <span class="p">←</span> <span class="p">(</span><span class="nf">make-array-2d</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">lgt-mt</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">lgt-pi</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span><span class="p">}</span> <span class="c1">;; two dimensions array</span>
+  <span class="err">{</span><span class="nv">iepi</span> <span class="err">←</span> <span class="p">(</span><span class="nf">make-array-2d</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">lgt-mt</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">lgt-pi</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span><span class="err">}</span> <span class="c1">;; two dimensions array</span>
  
-  <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span><span class="p">]</span> <span class="p">←</span> <span class="p">(</span><span class="nb">list-&gt;vector</span> <span class="p">(</span><span class="nb">cons</span> <span class="o">'</span><span class="p">()</span> <span class="nv">minterms</span><span class="p">))</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span><span class="p">]</span> <span class="err">←</span> <span class="p">(</span><span class="nb">list-&gt;vector</span> <span class="p">(</span><span class="nb">cons</span> <span class="o">'</span><span class="p">()</span> <span class="nv">minterms</span><span class="p">))</span><span class="err">}</span>
  
   <span class="c1">;; set the title line</span>
 
   <span class="c1">;; construction of the array</span>
   <span class="c1">;; set the left column containing prime implicants </span>
   <span class="p">(</span><span class="nf">for</span> <span class="p">(</span><span class="nf">y</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">lgt-pi</span> <span class="mi">1</span><span class="p">))</span>
-         <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">y</span> <span class="mi">1</span><span class="p">)]</span> <span class="p">←</span> <span class="p">{</span><span class="nv">vct-prime-implicants</span><span class="p">[</span><span class="nf">y</span><span class="p">]</span><span class="p">}}</span><span class="p">)</span>
+         <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">y</span> <span class="mi">1</span><span class="p">)]</span> <span class="err">←</span> <span class="err">{</span><span class="nv">vct-prime-implicants</span><span class="p">[</span><span class="nf">y</span><span class="p">]</span><span class="err">}}</span><span class="p">)</span>
  
   <span class="c1">;; identify prime implicants</span>
   <span class="p">(</span><span class="nf">for</span> <span class="p">(</span><span class="nf">x</span> <span class="mi">1</span> <span class="nv">lgt-mt</span><span class="p">)</span>
        
-       <span class="p">{</span><span class="nv">cpt-mt</span> <span class="p">←</span> <span class="mi">0</span><span class="p">}</span>
+       <span class="err">{</span><span class="nv">cpt-mt</span> <span class="err">←</span> <span class="mi">0</span><span class="err">}</span>
        
        <span class="p">(</span><span class="nf">for</span> <span class="p">(</span><span class="nf">y</span> <span class="mi">1</span> <span class="nv">lgt-pi</span><span class="p">)</span>
 
-	    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nf">compare-minterm-and-implicant</span> <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y</span><span class="p">]</span><span class="p">}</span>
-					       <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="mi">0</span><span class="p">]</span><span class="p">}</span><span class="p">)</span>
+	    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nf">compare-minterm-and-implicant</span> <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y</span><span class="p">]</span><span class="err">}</span>
+					       <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="mi">0</span><span class="p">]</span><span class="err">}</span><span class="p">)</span>
 		<span class="c1">;; then</span>
 		<span class="p">(</span><span class="nf">$</span>
 		  <span class="p">(</span><span class="nf">incf</span> <span class="nv">cpt-mt</span><span class="p">)</span>
 		  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="nv">cpt-mt</span><span class="p">)</span>
-			<span class="p">{</span><span class="nv">y-pos-epi</span> <span class="p">←</span> <span class="nv">y</span><span class="p">}</span><span class="p">)</span> <span class="c1">;; position of essential prime implicant</span>
-		  <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span> <span class="p">←</span> <span class="s">" * "</span><span class="p">}</span><span class="p">)</span>
+			<span class="err">{</span><span class="nv">y-pos-epi</span> <span class="err">←</span> <span class="nv">y</span><span class="err">}</span><span class="p">)</span> <span class="c1">;; position of essential prime implicant</span>
+		  <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span> <span class="err">←</span> <span class="s">" * "</span><span class="err">}</span><span class="p">)</span>
 		
 		<span class="c1">;; else</span>
-		<span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span> <span class="p">←</span> <span class="s">"   "</span><span class="p">}</span><span class="p">))</span> <span class="c1">;; end for y</span>
+		<span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span> <span class="err">←</span> <span class="s">"   "</span><span class="err">}</span><span class="p">))</span> <span class="c1">;; end for y</span>
        
        <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="nv">cpt-mt</span><span class="p">)</span> <span class="c1">;; essential prime implicant</span>
-	     <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y-pos-epi</span><span class="p">]</span> <span class="p">←</span> <span class="s">"(*)"</span><span class="p">}</span>
+	     <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y-pos-epi</span><span class="p">]</span> <span class="err">←</span> <span class="s">"(*)"</span><span class="err">}</span>
 	     <span class="c1">;; add essential prime implicant to list</span>
-	     <span class="p">{</span><span class="nv">essential-prime-implicants-list</span> <span class="p">←</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y-pos-epi</span><span class="p">]</span><span class="p">}</span> <span class="nv">essential-prime-implicants-list</span><span class="p">)</span><span class="p">}</span><span class="p">)</span>
+	     <span class="err">{</span><span class="nv">essential-prime-implicants-list</span> <span class="err">←</span> <span class="p">(</span><span class="nb">cons</span> <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y-pos-epi</span><span class="p">]</span><span class="err">}</span> <span class="nv">essential-prime-implicants-list</span><span class="p">)</span><span class="err">}</span><span class="p">)</span>
 
      <span class="p">)</span> <span class="c1">;; end for x</span>
   
-  <span class="p">{</span><span class="nv">essential-prime-implicants-list</span> <span class="p">←</span> <span class="p">(</span><span class="nf">remove-duplicates</span> <span class="nv">essential-prime-implicants-list</span><span class="p">)</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">essential-prime-implicants-list</span> <span class="err">←</span> <span class="p">(</span><span class="nf">remove-duplicates</span> <span class="nv">essential-prime-implicants-list</span><span class="p">)</span><span class="err">}</span>
 
-  <span class="p">{</span><span class="nv">feepi</span> <span class="p">←</span> <span class="no">#t</span><span class="p">}</span>
+  <span class="err">{</span><span class="nv">feepi</span> <span class="err">←</span> <span class="no">#t</span><span class="err">}</span>
   
   <span class="c1">;; check if function is expressed by essential implicants</span>
   <span class="p">(</span><span class="nf">for/break</span> <span class="nv">break-x</span> <span class="p">(</span><span class="nf">x</span> <span class="mi">1</span> <span class="nv">lgt-mt</span><span class="p">)</span> <span class="c1">;; loop over minterms</span>
@@ -1635,34 +1707,41 @@ scheme@(guile-user)&gt; v
 	     <span class="p">(</span><span class="nf">for/break</span> <span class="nv">break-y</span> <span class="p">(</span><span class="nf">y</span> <span class="mi">1</span> <span class="nv">lgt-pi</span><span class="p">)</span> <span class="c1">;; loop over prime implicants</span>
 
 			<span class="c1">;; check wether prime implicant is an essential one?</span>
-			<span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">member</span> <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y</span><span class="p">]</span><span class="p">}</span> <span class="nv">essential-prime-implicants-list</span><span class="p">)</span>
+			<span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nb">member</span> <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">0</span> <span class="nv">y</span><span class="p">]</span><span class="err">}</span> <span class="nv">essential-prime-implicants-list</span><span class="p">)</span>
 			  			      <span class="c1">;; is the essential prime implicant expressing this minterms?</span>
-			      <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="k">or</span> <span class="p">(</span><span class="nb">string=?</span>  <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span><span class="p">}</span> <span class="s">"(*)"</span><span class="p">)</span>
-					<span class="p">(</span><span class="nb">string=?</span>  <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span><span class="p">}</span> <span class="s">" * "</span><span class="p">))</span>
+			      <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="k">or</span> <span class="p">(</span><span class="nb">string=?</span>  <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span><span class="err">}</span> <span class="s">"(*)"</span><span class="p">)</span>
+					<span class="p">(</span><span class="nb">string=?</span>  <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="nv">y</span><span class="p">]</span><span class="err">}</span> <span class="s">" * "</span><span class="p">))</span>
 				    
 	
-				    <span class="p">{</span><span class="nv">star-in-column</span> <span class="p">←</span> <span class="no">#t</span><span class="p">}</span>
+				    <span class="err">{</span><span class="nv">star-in-column</span> <span class="err">←</span> <span class="no">#t</span><span class="err">}</span>
 				    
 				    <span class="p">(</span><span class="nf">break-y</span><span class="p">))))</span> <span class="c1">;; that's enought! we know the minterm is expressed.</span>
 
 	     <span class="c1">;; end for/break break-y</span>
 	     
 	     <span class="p">(</span><span class="nf">unless</span> <span class="nv">star-in-column</span>
-		     <span class="p">{</span><span class="nv">feepi</span> <span class="p">←</span> <span class="no">#f</span><span class="p">}</span> <span class="c1">;; function non expressed by prime implicants</span>
+		     <span class="err">{</span><span class="nv">feepi</span> <span class="err">←</span> <span class="no">#f</span><span class="err">}</span> <span class="c1">;; function non expressed by prime implicants</span>
 		     <span class="c1">;; add minterm to non expressed minterms list</span>
-		     <span class="p">{</span><span class="nv">non-expressed-minterms</span> <span class="p">←</span> <span class="p">(</span><span class="nf">insert</span> <span class="p">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="mi">0</span><span class="p">]</span><span class="p">}</span> <span class="nv">non-expressed-minterms</span><span class="p">)</span><span class="p">}</span>
+		     <span class="err">{</span><span class="nv">non-expressed-minterms</span> <span class="err">←</span> <span class="p">(</span><span class="nf">insert</span> <span class="err">{</span><span class="nv">iepi</span><span class="p">[</span><span class="nf">x</span> <span class="mi">0</span><span class="p">]</span><span class="err">}</span> <span class="nv">non-expressed-minterms</span><span class="p">)</span><span class="err">}</span>
 		     <span class="c1">;;(break-x) ;; removed break-x as we have to check all the minterms now</span>
 		     <span class="p">)</span>
 	     
-	     <span class="p">{</span><span class="nv">star-in-column</span> <span class="p">←</span> <span class="no">#f</span><span class="p">}</span><span class="p">)</span>  <span class="c1">;; set it for the next loop</span>
+	     <span class="err">{</span><span class="nv">star-in-column</span> <span class="err">←</span> <span class="no">#f</span><span class="err">}</span><span class="p">)</span>  <span class="c1">;; set it for the next loop</span>
   <span class="c1">;; end for/break break-x</span>
 
   <span class="nv">essential-prime-implicants-list</span><span class="p">)</span>
 
-</code></pre></figure>
-<br />
+
+<span class="o">```</span></code></pre></figure>
+
+
+
+<br>
 Scheme+ by Damien Mattei
+</div><p></p>
+
+      </section>
     </div>
-    </section>
-  </body>
-</html>
+  
+
+</body></html>
