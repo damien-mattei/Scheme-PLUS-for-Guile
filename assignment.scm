@@ -56,7 +56,6 @@
 ;; $bracket-apply$
 ;; $5 = 4
 
-;; TODO : make this works:
 ;; scheme@(guile-user)> '{x <- y <- 7}
 ;; $1 = (<- x y 7)
 (define-syntax <-
@@ -76,6 +75,7 @@
        ;;(display "<- : vector or array set! or hash-table set!") (newline)
        (cond ({(vector? container) or (growable-vector? container)} (vector-set! container index value))
 	     ((hash-table? container) (hash-table-set! container index value))
+	     ((string? container) (string-set! container index value))
 	     (else (array-set! container value index)));)
        
        value))

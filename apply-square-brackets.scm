@@ -44,6 +44,9 @@
 ;; scheme@(guile-user)> {b[2]}
 ;; $15 = ho
 
+;; scheme@(guile-user)> '{b[2]}
+;; ($bracket-apply$ b 2)
+
 ;; scheme@(guile-user)> {a[2 4] <- 7}
 ;; scheme@(guile-user)> {a[2 4]}
 ;; $19 = 7
@@ -52,6 +55,11 @@
 ;; scheme@(guile-user)> {a[1 3]}
 ;; $20 = 7
 
+;; scheme@(guile-user)> '{a[1 3] <- a[2 4]}
+;; (<- ($bracket-apply$ a 1 3) ($bracket-apply$ a 2 4))
+
+
+
 (define-syntax $bracket-apply$
   (syntax-rules ()
     
@@ -59,6 +67,7 @@
      ;(begin ;;(display "$bracket-apply$") (newline)
      (cond ({(vector? container) or (growable-vector? container)} (vector-ref container index))
 	   ((hash-table? container) (hash-table-ref container index))
+	   ((string? container) (string-ref container index))
 	   (else (array-ref container index))));)
     
     ((_ array index1 index2 ...)

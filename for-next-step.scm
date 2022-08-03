@@ -63,14 +63,6 @@
 
 (define-syntax for
   (syntax-rules ()
-
-    ((_ ((i to)) b1 ...) ;; for DrRacket compatibility
-     
-    
-     (let loop ((i 0))
-       (when (< i to)
-	     b1 ...
-	     (loop (incf i)))))
     
     ((_ (i to) b1 ...)
      
