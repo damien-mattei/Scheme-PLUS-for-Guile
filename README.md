@@ -124,6 +124,26 @@ get it</a>)<br>
     <p style="margin-left: 40px;"><br>
       <b><b>{</b>T</b><b>[m n] ← </b><b><b>T</b><b>[m {n +
   1}]</b>}</b></p>
+  <p style="margin-left: 40px;"><b>compatible with strings:</b></p>
+    <p style="margin-left: 40px;"><b>{str &lt;+ (string-copy "hello")}<br>
+      </b></p>
+    <p style="margin-left: 40px;"><b>"hello"<br>
+      </b></p>
+    <p style="margin-left: 40px;"><b>{str[4]}<br>
+      </b></p>
+    <p style="margin-left: 40px;"><b>#\o<br>
+      </b></p>
+    <p style="margin-left: 40px;"><b>{str[4] &lt;- #\a}<br>
+      </b></p>
+    <p style="margin-left: 40px;"><b>#\a<br>
+      </b></p>
+    <p style="margin-left: 40px;"><b>str<br>
+      </b></p>
+    <p style="margin-left: 40px;"><b>"hella"</b></p>
+    <p style="margin-left: 40px;"><b><br>
+      </b></p>
+    <p style="margin-left: 40px;"><b>with function definition:<br>
+      </b></p>
   <p style="margin-left: 40px;"><b>(declare fact)<br>
 {fact &lt;- (lambda (n) (if {n &lt;&gt; 0} {n * (fact {n - 1})}
 1))}<br>
