@@ -595,7 +595,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p>Scheme+ will remove the need for the classic LET set of special form, no
       more need of <strike>LET,LET*,LETREC,LET-VALUES</strike>,... and will use
       an unique infix (or not) assignment operator : &lt;-. (also LET are
-      enhanced - the project historically by improving and simplifying LET, i
+      enhanced - the project starts historically by improving and simplifying LET, i
       simplified it so much that i remove it now! - in other versions such as
       let&lt;-arrow requiring less brackets, even if their use is useless and no
       more promoted, see extra features part)</p>
@@ -612,7 +612,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
         from left to right and right to left)</li>
       <li>Square Bracket operator<b> []</b> working with Scheme <b>Vectors,
           Arrays,Multidimentional Arrays</b>,Dynamic Arrays (my growable vector
-        class),<b>Hash Tables</b>...</li>
+        class),<b>Hash Tables,Strings</b>...</li>
       <li>combination of Assignment operator &lt;- with [] operator for
         Vectors,Arrays,....</li>
       <li>RETURN : <b>return</b> keyword used in any procedure to return from
