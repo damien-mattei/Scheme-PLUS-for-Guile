@@ -290,8 +290,7 @@ get it</a>)<br>
     <p>Here is an example of the previous features:  </p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 <span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
 
 
@@ -341,7 +340,7 @@ get it</a>)<br>
   <span class="nv">s</span><span class="p">)</span> <span class="c1">;; return boolean value</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 <pre>(subset-sum-dynamic  L-init t-init)
@@ -663,8 +662,7 @@ get it</a>)<br>
       Scheme:</p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">fibonacci</span> <span class="nv">n</span><span class="p">)</span>
   <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">n</span> <span class="mi">2</span><span class="p">)</span>
@@ -672,15 +670,14 @@ get it</a>)<br>
     <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nf">fibonacci</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">))</span> <span class="p">(</span><span class="nf">fibonacci</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">2</span><span class="p">)))))</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 <p style="margin-left: 40px;">And here is a definition using "Curly Infix"
       SRFI 105:</p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">fib</span> <span class="nv">n</span><span class="p">)</span>
   <span class="p">(</span><span class="k">if</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">&lt;</span> <span class="mi">2</span><span class="p">}</span>
@@ -688,7 +685,7 @@ get it</a>)<br>
       <span class="p">{</span><span class="p">(</span><span class="nf">fib</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">1</span><span class="p">}</span><span class="p">)</span> <span class="nv">+</span> <span class="p">(</span><span class="nf">fib</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">2</span><span class="p">}</span><span class="p">)</span><span class="p">}</span> <span class="p">))</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 <p> </p>
@@ -706,8 +703,7 @@ get it</a>)<br>
 
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="k">define</span> <span class="nv">size0</span> <span class="mi">10000</span><span class="p">)</span>
 <span class="p">(</span><span class="k">define</span> <span class="nv">memo0</span> <span class="p">(</span><span class="nb">make-vector</span> <span class="nv">size0</span> <span class="mi">0</span><span class="p">))</span><span class="nv">return</span>
@@ -720,7 +716,7 @@ get it</a>)<br>
 		<span class="nv">fibn</span><span class="p">))))</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 
@@ -740,8 +736,7 @@ get it</a>)<br>
 <p>
 
 
-</p><figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+</p><figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
 
@@ -754,7 +749,7 @@ get it</a>)<br>
          <span class="p">(</span><span class="k">else</span> <span class="p">{</span><span class="nv">memo</span><span class="p">[</span><span class="nf">n</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">{</span><span class="p">(</span><span class="nf">fibdyna</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">1</span><span class="p">}</span><span class="p">)</span> <span class="nv">+</span> <span class="p">(</span><span class="nf">fibdyna</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">2</span><span class="p">}</span><span class="p">)</span><span class="p">}}</span><span class="p">)</span> <span class="p">))</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 <p></p>
@@ -791,8 +786,7 @@ get it</a>)<br>
 
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
 
@@ -807,7 +801,7 @@ get it</a>)<br>
 	<span class="p">(</span><span class="k">else</span> <span class="p">{</span><span class="nv">memo1</span><span class="p">[</span><span class="nf">n</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">{</span><span class="p">(</span><span class="nf">fibdyna1</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">1</span><span class="p">}</span><span class="p">)</span> <span class="nv">+</span> <span class="p">(</span><span class="nf">fibdyna1</span> <span class="p">{</span><span class="nv">n</span> <span class="nv">-</span> <span class="mi">2</span><span class="p">}</span><span class="p">)</span><span class="p">}}</span><span class="p">)</span> <span class="p">))</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 <h2><br>
@@ -866,8 +860,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
       operator :-( ) :</p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
 
@@ -907,7 +900,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 	       <span class="nv">s</span><span class="p">]))</span> <span class="c1">;; return boolean value</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 <p> </p>
@@ -922,8 +915,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="nf">condx</span> <span class="p">[</span><span class="nf">condition</span> <span class="nv">statements</span> <span class="o">...</span><span class="p">]</span>
 
@@ -934,7 +926,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
             <span class="p">[</span><span class="k">else</span> <span class="nv">statements</span> <span class="o">...</span><span class="p">])</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 <div style="margin-left: 40px;"> </div>
@@ -944,8 +936,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
       which is longer than in Scheme+:</p>
 	  
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="k">define</span> <span class="nv">cpt</span> <span class="mi">0</span><span class="p">)</span>
 
@@ -992,7 +983,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 	      <span class="p">]</span> <span class="p">))</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 
@@ -1007,8 +998,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <p> </p>
 	
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
 
@@ -1055,7 +1045,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 	       <span class="nv">s</span><span class="p">]))</span> <span class="c1">;; return boolean value</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 
@@ -1070,8 +1060,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 	
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
 
@@ -1109,7 +1098,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
   <span class="nv">s</span><span class="p">)</span> <span class="c1">;; return boolean value</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
     
@@ -1141,8 +1130,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
       conditionals clauses,syntax is :</p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="nf">condx</span> <span class="p">[</span><span class="nf">condition</span> <span class="nv">statements</span> <span class="o">...</span><span class="p">]</span>
 
@@ -1153,7 +1141,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
             <span class="p">[</span><span class="k">else</span> <span class="nv">statements</span> <span class="o">...</span><span class="p">])</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 <p style="text-align: left;"><b>condx</b> is not a major feature of <b>Scheme+</b>
@@ -1183,8 +1171,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     </p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="k">define</span> <span class="nv">foo</span> <span class="p">(</span><span class="k">begin</span> <span class="p">(</span><span class="k">define</span> <span class="nv">x</span> <span class="mi">1</span><span class="p">)</span>
                    <span class="p">(</span><span class="k">define</span> <span class="nv">y</span> <span class="mi">2</span><span class="p">)</span>
@@ -1196,7 +1183,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
               <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">t</span><span class="p">)</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">t</span><span class="p">))))</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 <p style="text-align: left;">error: define: not allowed in an expression
@@ -1208,8 +1195,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <p style="text-align: left;"> </p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="k">define-syntax</span> <span class="nv">&amp;</span>
   <span class="p">(</span><span class="k">syntax-rules</span> <span class="p">()</span>
@@ -1217,7 +1203,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <span class="p">((</span><span class="nf">_</span> <span class="nv">ev</span> <span class="o">...</span><span class="p">)</span> <span class="p">(</span><span class="k">let</span> <span class="p">()</span> <span class="nv">ev</span> <span class="o">...</span><span class="p">))))</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
  
@@ -1227,8 +1213,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="nf">def</span> <span class="nv">bar</span> <span class="p">(</span><span class="nf">&amp;</span> <span class="p">(</span><span class="nf">declare</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span>
             <span class="p">{</span><span class="nv">x</span> <span class="nv">&lt;-</span> <span class="mi">1</span><span class="p">}</span> 
@@ -1239,7 +1224,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 <span class="mi">10</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 
@@ -1303,8 +1288,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <p><!-- HTML generated using hilite.me --></p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="nf">let&lt;-rec*</span> <span class="p">[</span><span class="nf">x</span> <span class="nv">&lt;-</span> <span class="mi">1</span>
             <span class="nv">y</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="mi">1</span><span class="p">)</span>
@@ -1313,7 +1297,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 <span class="mi">4</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 <p> </p>
@@ -1323,8 +1307,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="k">define-syntax</span> <span class="nv">let&lt;-rec*</span>
 
@@ -1350,7 +1333,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
        <span class="p">(</span><span class="nf">%parse-letrec-bindings-and-evaluate-expressions</span> <span class="p">(</span><span class="nf">bindings</span> <span class="o">...</span> <span class="p">(</span><span class="nf">var1</span> <span class="nv">val1</span><span class="p">))</span> <span class="p">(</span><span class="nf">var2</span> <span class="nv">&lt;-</span> <span class="nv">val2</span> <span class="o">...</span><span class="p">)</span> <span class="nv">expr</span> <span class="o">...</span><span class="p">))))</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 <p> </p>
@@ -1361,8 +1344,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <p><!-- HTML generated using hilite.me --></p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="nf">let-arrow*</span> <span class="p">(</span><span class="nf">x</span> <span class="p">←</span> <span class="mi">1</span>
  	     <span class="nv">y</span> <span class="p">←</span> <span class="p">{</span><span class="nv">x</span> <span class="nv">+</span> <span class="mi">1</span><span class="p">}</span><span class="p">)</span>
@@ -1385,7 +1367,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
 <span class="mi">2</span>
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 <p> </p>
@@ -1394,8 +1376,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <p>letrec-arrow* , the same as let-arrow* but for recursive functions:</p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p">(</span><span class="nf">letrec-arrow*</span> <span class="p">[</span> <span class="nv">fact</span> <span class="p">←</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">n</span><span class="p">)</span>
  			  <span class="p">(</span><span class="k">if</span>  <span class="p">{</span><span class="nv">n</span> <span class="nv">=</span> <span class="mi">1</span><span class="p">}</span>
@@ -1405,7 +1386,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
 <span class="mi">120</span>
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 
 <br>
@@ -1462,8 +1443,7 @@ scheme@(guile-user)&gt; v
       </p>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 <span class="p">(</span><span class="nf">def</span> <span class="p">(</span><span class="nf">Petrick</span> <span class="nv">non-essential-prime-implicants</span> <span class="nv">var-list</span><span class="p">)</span>
 
   <span class="c1">;; create the conjunction of disjunction expression</span>
@@ -1528,7 +1508,7 @@ scheme@(guile-user)&gt; v
       
 <span class="p">)</span>
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 <br>
 <br>
@@ -1538,8 +1518,7 @@ scheme@(guile-user)&gt; v
 
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o">```</span><span class="nv">scheme</span>
-
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 <span class="p">(</span><span class="nf">def</span> <span class="p">(</span><span class="nf">Quine-Mc-Cluskey</span> <span class="nv">disj-norm-form</span> <span class="nv">var-list</span><span class="p">)</span>
      
      <span class="p">(</span><span class="nf">display-nl</span> <span class="s">"Entering Quine-Mc-Cluskey"</span><span class="p">)</span>
@@ -1752,7 +1731,7 @@ scheme@(guile-user)&gt; v
   <span class="nv">essential-prime-implicants-list</span><span class="p">)</span>
 
 
-<span class="o">```</span></code></pre></figure>
+<span class="o"></span></code></pre></figure>
 
 <br>
 <br>
