@@ -19,7 +19,7 @@
     <p style="text-align: center;"><br>
     </p>
     <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span
-          style="color: #999999;"> <font size="+2">version 3.0 for Guile Scheme<br>
+          style="color: #999999;"> <font size="+2">version 4.0 for Guile Scheme<br>
           </font></span></b></h1>
     <p style="text-align: center;">
 	Display options for viewing this documentation:<br><br>
@@ -187,7 +187,7 @@ get it</a>)<br>
       </p>
     <p style="margin-left: 40px;"><br>
       defining new functions with <b>def </b>instead of the classic define we
-      can now use <b>return</b> to escape immediately :<br>
+      can now use <b>return</b> to escape immediately from the current level of recursive call and <b>return-rec</b> to escape from the full stack of recursive calls:<br>
     </p>
     <div style="margin-left: 40px;"> </div>
     <p style="margin-left: 40px;"><b>(return)</b><br>

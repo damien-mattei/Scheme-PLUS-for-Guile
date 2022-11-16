@@ -36,8 +36,7 @@
 
 (define-syntax condx
   (syntax-rules (exec else)
-    ((_)
-     (error 'condx "No else clause"))
+    ((_) '()) ;; allow no else clause
     ((_ (else e ...))
      (let () e ...))
     ((_ (exec s ...) d1 ...)
@@ -47,11 +46,23 @@
          (let () e ...)
          (condx tail ...)))))
 
+;; (define-syntax condx
+;;  (syntax-rules (exec else)
+;;    ((_)
+ ;;     (error 'condx "No else clause"))
+;;    ((_ (else e ...))
+;;     (let () e ...))
+;;    ((_ (exec s ...) d1 ...)
+;;     (let () s ... (condx d1 ...)))
+;;    ((_ (t e ...) tail ...)
+;;     (if t
+;;         (let () e ...)
+;;         (condx tail ...)))))
+
 ;; warning this ones behaves differently (can not remember the problem)
 (define-syntax condx-begin
   (syntax-rules (exec else)
-    ((_)
-     (error 'condx-begin "No else clause"))
+    ((_) '()) ;; allow no else clause
     ((_ (else e ...))
      (begin e ...))
     ((_ (exec s ...) d1 ...)
@@ -60,6 +71,21 @@
      (if t
          (begin e ...)
          (condx-begin tail ...)))))
+
+
+;; (define-syntax condx-begin
+;;   (syntax-rules (exec else)
+;;     ((_)
+;;      (error 'condx-begin "No else clause"))
+;;     ((_ (else e ...))
+;;      (begin e ...))
+;;     ((_ (exec s ...) d1 ...)
+;;      (begin s ... (condx-begin d1 ...)))
+;;     ((_ (t e ...) tail ...)
+;;      (if t
+;;          (begin e ...)
+;;          (condx-begin tail ...)))))
+
 
 ;; (define x 1)
 ;; (condx ((= x 7) 'never)

@@ -64,36 +64,59 @@
     ;;  special form like : (<- ($bracket-apply$ T 3) ($bracket-apply$ T 4))
     
     ;; one dimension array, example: {a[4] <- 7}
-    ;; $bracket-apply$ of SRFI 105
-    ((_ ($bracket-apply$ container index) expr)
-     (let ((value expr)) ;; to avoid compute it twice
+    ;; $bracket-apply$ is from SRFI 105  bracket-apply is an argument of the macro
+    ((_ (bracket-apply container index) expr)
+     
+     (begin
 
-       ;; normal case
-       ;; {T[2] <- 4}
-       ;; {T[3] <- T[2]}
-       ;;(begin
-       ;;(display "<- : vector or array set! or hash-table set!") (newline)
-       (cond ({(vector? container) or (growable-vector? container)} (vector-set! container index value))
-	     ((hash-table? container) (hash-table-set! container index value))
-	     ((string? container) (string-set! container index value))
-	     (else (array-set! container value index)));)
+       ;; add a checking
+       ;; scheme@(guile-user)> (<- (aye x 3) 7)
+       ;; While compiling expression:
+       ;; Syntax error:
+       ;; unknown location: Bad <- form: the LHS of expression must be an identifier or of the form ($bracket-apply$ container index) , first argument  (quote bracket-apply) " is not $bracket-apply$."
+       (unless (equal? (quote $bracket-apply$) (quote bracket-apply)) 
+	 (syntax-error "Bad <- form: the LHS of expression must be an identifier or of the form ($bracket-apply$ container index) , first argument "
+		       bracket-apply
+		       " is not $bracket-apply$."))
+		       
        
-       value))
+       (let ((value expr)) ;; to avoid compute it twice
+	 
+	 ;; normal case
+	 ;; {T[2] <- 4}
+	 ;; {T[3] <- T[2]}
+	 ;;(begin
+	 ;;(display "<- : vector or array set! or hash-table set!") (newline)
+	 (cond ({(vector? container) or (growable-vector? container)} (vector-set! container index value))
+	       ((hash-table? container) (hash-table-set! container index value))
+	       ((string? container) (string-set! container index value))
+	       (else (array-set! container value index)));)
+	 
+	 value)))
 
 
     ;; multi dimensions array :  {a[2 4] <- 7}
-    ;; $bracket-apply$ of SRFI 105
-    ((_ ($bracket-apply$ array index1 index2 ...) expr)
-     (let ((value expr)) ;; to avoid compute it twice
-  						 
-       ;; normal case
-       ;;(begin
-       ;;(display "<- : multidimensional vector or array set!") (newline)
-       (if (vector? array)
-	   (array-n-dim-set! array value index1 index2 ...)
-	   (array-set! array value index1 index2 ...));)
-						     
-       value))
+    ;; $bracket-apply$ is from SRFI 105  bracket-apply is an argument of the macro
+    ((_ (bracket-apply array index1 index2 ...) expr)
+     
+     (begin
+
+       ;; add a checking
+       (unless (equal? (quote $bracket-apply$) (quote bracket-apply)) 
+	 (syntax-error "Bad <- form: the LHS of expression must be an identifier or of the form ($bracket-apply$ array index1 index2 ...) , first argument "
+		       bracket-apply
+		       " is not $bracket-apply$."))
+       
+       (let ((value expr)) ;; to avoid compute it twice
+	 
+	 ;; normal case
+	 ;;(begin
+	 ;;(display "<- : multidimensional vector or array set!") (newline)
+	 (if (vector? array)
+	     (array-n-dim-set! array value index1 index2 ...)
+	     (array-set! array value index1 index2 ...));) ;; Warning syntax is not the same as SRFI 25 (Racket)
+	 
+	 value)))
 
     ;; compact form but will display a warning: possibly wrong number of arguments to `vector-set!'
     ;; and if i remove ellipsis it is a severe error
@@ -106,16 +129,30 @@
     ;; 							 (array-set! array value index ...))
 						     
     ;; 						     ;; rare case (to prevent any error)
-    ;; 						     (set! var value))
+    ;; 						     (set! var value)) ;; Wrong! this will only set the local 'var of (let (...
 					     
     ;; 						 value))
 
+
+    ;; possibly better version (TODO: test it) :
+    ;; ((_ (funct-or-macro array index ...) expr) (let ((value expr)) ;; to avoid compute it twice
+    ;; 				   
+    ;; 						 (if (equal? (quote $bracket-apply$) (quote funct-or-macro)) ;; test funct-or-macro equal $bracket-apply$
+    ;; 						     ;; normal case
+    ;; 						     (if {(vector? array) or (growable-vector? array)}
+    ;; 							 (vector-set! array index ... value)
+    ;; 							 (array-set! array value index ...))
+						     
+    ;; 						     ;; rare case (to prevent any error)
+    ;; 						     (set! (funct-or-macro array index ...) value)) ;; Wrong! set! only accept an identifier
+					     
+    ;; 						 value))
 
     ;; not sure this case will be usefull
     ;; ((_ (funct-or-macro arg ...) expr)
     ;;  (let ((var (funct-or-macro arg ...))
     ;; 	   (value expr)) ;; to avoid compute it twice
-    ;;    (set! var value)
+    ;;    (set! var value) ;; Wrong! this will only set the local 'var of (let (...
     ;;    var))
 
     

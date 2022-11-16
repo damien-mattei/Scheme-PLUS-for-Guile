@@ -27,7 +27,7 @@
 ;; $2 = 10
 (define-syntax &
   (syntax-rules ()
-    ((_ ev)  ev)
+    ((_ ev)  (let () ev)) ;;  there can be a <+ in it expanding with a 'define not allowed in expression context
     ((_ ev ...) (let () ev ...))))
 
 

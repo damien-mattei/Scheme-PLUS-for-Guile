@@ -1,6 +1,6 @@
 ;; Scheme+.scm
 
-;; version 2.0
+;; version 4.0
 
 ;; author: Damien MATTEI
 
@@ -35,7 +35,8 @@
 (define-module (Scheme+)
   
   #:use-module (growable-vector)
-  #:use-module (srfi srfi-69) ;; Basic hash tables 
+  #:use-module (srfi srfi-69) ;; Basic hash tables
+  #:use-module (srfi srfi-31) ;; rec
   #:export (def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ & condx <> ≠ ** <v v> ⇜ ⇝))
 
 

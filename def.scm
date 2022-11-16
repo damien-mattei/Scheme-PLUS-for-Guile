@@ -23,6 +23,28 @@
 
 ;; (def x)
 
+
+
+;; (def (foo n)
+;;      (cond ((= n 0) 'end0)
+;; 	   ((= n 7) (return 'end7))
+;; 	   (else (cons n (foo {n - 1})))))
+
+
+;; scheme@(guile-user)> (foo 5)
+;; (5 4 3 2 1 . end0)
+;; scheme@(guile-user)> (foo 10)
+;; (10 9 8 . end7)
+
+;; (def (bar n)
+;;      (cond ((= n 0) 'end0)
+;; 	   ((= n 7) (return-rec 'end7))
+;; 	   (else (cons n (bar {n - 1})))))
+
+;; scheme@(guile-user)> (bar 5)
+;; $4 = (5 4 3 2 1 . end0)
+;; scheme@(guile-user)> (bar 10)
+;; $5 = end7
 (define-syntax def
   
   (lambda (stx)
@@ -34,11 +56,27 @@
 	((_ (var1 ...)) #`(begin (define var1 '()) ...))
 	
 	;;  (def (foo) (when #t (return "hello") "bye"))
-        ((_ (<name> <arg> ...) <body> <body>* ...)
-         (let ((ret-id (datum->syntax stx 'return)))
-           #`(define (<name> <arg> ...)
-               (call/cc (lambda (#,ret-id) <body> <body>* ...)))))
+        ;; ((_ (<name> <arg> ...) <body> <body>* ...)
+        ;;  (let ((ret-id (datum->syntax stx 'return)))
+        ;;    #`(define (<name> <arg> ...)
+	;;        (call/cc (lambda (#,ret-id) <body> <body>* ...)))))
 
+	
+	((_ (<name> <arg> ...) <body> <body>* ...)
+	 
+         (let ((ret-id (datum->syntax stx 'return))
+	       (ret-rec-id (datum->syntax stx 'return-rec)))
+
+	   #`(define (<name> <arg> ...)
+
+	       (call/cc (lambda (#,ret-rec-id)
+			  
+			 (apply (rec <name> (lambda (<arg> ...)
+					      (call/cc (lambda (#,ret-id) <body> <body>* ...)))) (list <arg> ...)))))))
+
+	      
+
+	
 	;; single definition without a value assigned
 	;; (def x)
 	((_ var) #`(define var '()))
