@@ -70,14 +70,20 @@
      (begin
 
        ;; add a checking
-       ;; scheme@(guile-user)> (<- (aye x 3) 7)
-       ;; While compiling expression:
-       ;; Syntax error:
-       ;; unknown location: Bad <- form: the LHS of expression must be an identifier or of the form ($bracket-apply$ container index) , first argument  (quote bracket-apply) " is not $bracket-apply$."
-       (unless (equal? (quote $bracket-apply$) (quote bracket-apply)) 
-	 (syntax-error "Bad <- form: the LHS of expression must be an identifier or of the form ($bracket-apply$ container index) , first argument "
-		       bracket-apply
-		       " is not $bracket-apply$."))
+
+       ;; scheme@(guile-user)> (use-modules (Scheme+))
+       ;; scheme@(guile-user)> {a <+ (make-vector 10)}
+       ;; #(#<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified> #<unspecified>)
+       ;; scheme@(guile-user)> {a[5] <- 7}
+       ;; 7
+       ;; scheme@(guile-user)> '{a[5] <- 7}
+       ;; (<- ($bracket-apply$ a 5) 7)
+       ;; scheme@(guile-user)> (<- (gaga a 5) 7)
+       ;; (Guile version) Bad <- form: the LHS of expression must be an identifier or of the form ($bracket-apply$ container index) , first argument : gaga is not $bracket-apply
+       (unless (equal? (quote $bracket-apply$) (quote bracket-apply))
+	       (error "Bad <- form: the LHS of expression must be an identifier or of the form ($bracket-apply$ container index) , first argument "
+		(quote bracket-apply)
+		" is not $bracket-apply$."))
 		       
        
        (let ((value expr)) ;; to avoid compute it twice
@@ -103,9 +109,9 @@
 
        ;; add a checking
        (unless (equal? (quote $bracket-apply$) (quote bracket-apply)) 
-	 (syntax-error "Bad <- form: the LHS of expression must be an identifier or of the form ($bracket-apply$ array index1 index2 ...) , first argument "
-		       bracket-apply
-		       " is not $bracket-apply$."))
+	       (error "Bad <- form: the LHS of expression must be an identifier or of the form ($bracket-apply$ array index1 index2 ...) , first argument "
+		      (quote bracket-apply)
+		      " is not $bracket-apply$."))
        
        (let ((value expr)) ;; to avoid compute it twice
 	 

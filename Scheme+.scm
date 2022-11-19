@@ -37,7 +37,8 @@
   #:use-module (growable-vector)
   #:use-module (srfi srfi-69) ;; Basic hash tables
   #:use-module (srfi srfi-31) ;; rec
-  #:export (def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ & condx <> ≠ ** <v v> ⇜ ⇝))
+  #:export (def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ & condx <> ≠ ** <v v> ⇜ ⇝ repeat)
+  #:replace (do when unless))
 
 
 
@@ -51,3 +52,5 @@
 (include-from-path "block.scm")
 (include-from-path "not-equal.scm")
 (include-from-path "exponential.scm")
+(include-from-path "while-do-when-unless.scm")
+(include-from-path "repeat-until.scm")
