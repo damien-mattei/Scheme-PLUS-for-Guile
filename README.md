@@ -1408,9 +1408,6 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <h2>19. <u>Special characters (for special people):</u></h2>
     <p>This is about the optional replacement symbols for some operators:</p>
     <br>
-    <p> <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/APL-keybd2.svg"
-        alt="IBM 2741 keyboard layout" title="IBM 2741 keyboard layout">IBM 2741
-      Terminal keyboard layout</p>
     <br>
     <p>The hexadécimal unicode can be entered under Linux with : Ctrl-Shift u
       following with the hexadecimal unicode and Enter or Space bar,<meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -1437,10 +1434,6 @@ get it</a>.</p>
 scheme@(guile-user)&gt; v
 7
 </pre>
-<div style="text-align: center;"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/IBM2741.JPG"
-        alt="IBM 2741" title="IBM 2741" width="450"></div>
-    <div style="text-align: center;">IBM 2741 Terminal </div>
-    <p> </p>
 <div style="text-align: left;"><br>
     </div>
     <div style="text-align: left;">
