@@ -145,10 +145,10 @@
 (define (!** terms stack operators odd?)
 
 
-  (display "!** : terms = ") (display terms) (newline)
-  (display "!** : operators = ") (display operators) (newline)
-  (display "!** : stack = ") (display stack) (newline)
-  (display "!** : odd? = ") (display odd?) (newline)
+  ;; (display "!** : terms = ") (display terms) (newline)
+  ;; (display "!** : operators = ") (display operators) (newline)
+  ;; (display "!** : stack = ") (display stack) (newline)
+  ;; (display "!** : odd? = ") (display odd?) (newline)
 
 					; why `odd?`? because scheme's list-iteration is forwards-only and
 					; list-construction is prepend-only, every other group of operators is
@@ -169,10 +169,10 @@
 
   
   (define (calc op a b) ;; keep in mind that now the op-erator and args are quoted !
-    (display "calc : op = ") (display op) (newline)
-    (display "calc : a = ") (display a) (newline)
-    (display "calc : b = ") (display b) (newline)
-    (display "calc : odd? = ") (display odd?) (newline)
+    ;; (display "calc : op = ") (display op) (newline)
+    ;; (display "calc : a = ") (display a) (newline)
+    ;; (display "calc : b = ") (display b) (newline)
+    ;; (display "calc : odd? = ") (display odd?) (newline)
     
     ;; special forms cases else procedure
     (cond ((eq? op 'and) (andy2 a b))
@@ -184,19 +184,19 @@
   
   (cond ((null? terms) stack) ; base case
 	;; operator we can evaluate -- pop operator and operand, then recurse
-	((and (> (length stack) 1) (begin
-				     (display "operators=") (display operators) (newline)
-				     (let* ((op (car stack))
-				   	    (mres (memq op operators)))
-				       (display "op=") (display op) (newline)
-				       (display "mres=") (display mres) (newline) (newline)
-				       mres)))
-	      ;;(memq (car stack) operators))
+	((and (> (length stack) 1) ;; (begin
+				   ;;   (display "operators=") (display operators) (newline)
+				   ;;   (let* ((op (car stack))
+				   ;; 	    (mres (memq op operators)))
+				   ;;     (display "op=") (display op) (newline)
+				   ;;     (display "mres=") (display mres) (newline) (newline)
+				   ;;     mres)))
+	      (memq (car stack) operators))
 	      
 	 (let ((op (car stack))
 	       (fst (car terms))
 	       (snd (cadr stack)))
-	   (display "op=") (display op) (newline)
+	   ;;(display "op=") (display op) (newline)
 	   (!** (cdr terms)
 		(cons (calc op fst snd) (cddr stack))
 		operators
@@ -212,8 +212,8 @@
 
 ;; evaluate a list of groups of operators in the list of terms
 (define (!* terms operator-groups odd?)
-  (display "!* : terms = ") (display terms) (newline)
-  (display "!* : operator-groups = ") (display operator-groups) (newline)
+  ;; (display "!* : terms = ") (display terms) (newline)
+  ;; (display "!* : operator-groups = ") (display operator-groups) (newline)
   (if (or (null? operator-groups) ; done evaluating all operators
 	  (null? (cdr terms)))    ; only one term left
       terms ; finished processing operator groups
