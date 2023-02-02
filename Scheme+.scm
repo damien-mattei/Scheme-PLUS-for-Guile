@@ -1,6 +1,6 @@
 ;; Scheme+.scm
 
-;; version 4.0
+;; version 5.0
 
 ;; author: Damien MATTEI
 
@@ -8,7 +8,7 @@
 
 ;; Guile Scheme version
 
-;; Copyright 2021-2022 Damien MATTEI
+;; Copyright 2021-2023 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@
   #:use-module (growable-vector)
   #:use-module (srfi srfi-69) ;; Basic hash tables
   #:use-module (srfi srfi-31) ;; rec
-  #:export (def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ & condx <> ≠ ** <v v> ⇜ ⇝ repeat)
+  #:export (def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ & condx <> ≠ ** <v v> ⇜ ⇝ repeat $nfx$)
   #:replace (do when unless))
 
 
@@ -54,3 +54,5 @@
 (include-from-path "exponential.scm")
 (include-from-path "while-do-when-unless.scm")
 (include-from-path "repeat-until.scm")
+(include-from-path "scheme-infix.scm")
+
