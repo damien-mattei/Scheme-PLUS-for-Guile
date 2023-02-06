@@ -32,7 +32,7 @@
 (define infix-operators
   (list
    ;;(list modulo quotient remainder gcd lcm)
-   (list '**)
+   (list 'expt '**)
    (list '* '/)
    (list '+ '-)
    
@@ -158,14 +158,14 @@
 
 
   ;; sometimes quoted args must be evaluated, depending of odd? args order must be swaped,sometimes both !
-  (define (calc-proc op a b) ;; keep in mind that now the op-erator and args are quoted !
+  ;; (define (calc-proc op a b) ;; keep in mind that now the op-erator and args are quoted !
  
-    (define proc (eval op (interaction-environment)))  ;; this only works with procedure, not special form !
-    ;;(display "before eval arg")
-    (define val-a (eval a (interaction-environment)))
-    (define val-b (eval b (interaction-environment)))
-    ;;(display "after eval arg")
-    (if odd? (proc val-a val-b) (proc val-b val-a)))
+  ;;   (define proc (eval op (interaction-environment)))  ;; this only works with procedure, not special form !
+  ;;   ;;(display "before eval arg")
+  ;;   (define val-a (eval a (interaction-environment)))
+  ;;   (define val-b (eval b (interaction-environment)))
+  ;;   ;;(display "after eval arg")
+  ;;   (if odd? (proc val-a val-b) (proc val-b val-a)))
 
   
   (define (calc op a b) ;; keep in mind that now the op-erator and args are quoted !
@@ -175,9 +175,12 @@
     ;; (display "calc : odd? = ") (display odd?) (newline)
     
     ;; special forms cases else procedure
-    (cond ((eq? op 'and) (andy2 a b))
-	  ((eq? op 'or) (ory2 a b))
-	  (else (calc-proc op a b)))) ;; procedure case
+    ;; (cond ((eq? op 'and) (andy2 a b))
+    ;; 	  ((eq? op 'or) (ory2 a b))
+    ;; 	  (else (calc-proc op a b)))) ;; procedure case
+    (if odd? 
+	(eval (list op a b) (interaction-environment))
+	(eval (list op b a) (interaction-environment))))
 
 
 
@@ -232,3 +235,14 @@
 
 ;; { #f and (begin (display "BAD") (newline) #t)}
 
+;; scheme@(guile-user)> (define c 300000)
+;; scheme@(guile-user)> (define v 299990)
+;; scheme@(guile-user)> (define t 30)
+;; scheme@(guile-user)> (define x 120)
+;; scheme@(guile-user)> (declare xp)
+;; scheme@(guile-user)> '{xp <- {x - v * t} / (sqrt {1 - v ** 2 / c ** 2})} 
+;; ($nfx$ xp <- ($nfx$ x - v * t) / (sqrt ($nfx$ 1 - v ** 2 / c ** 2)))
+;; scheme@(guile-user)> {xp <- {x - v * t} / (sqrt {1 - v ** 2 / c ** 2})} 
+;; -1102228130.2405226
+;; scheme@(guile-user)> xp
+;; -1102228130.2405226
