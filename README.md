@@ -1743,6 +1743,7 @@ scheme@(guile-user)&gt; v
 <br>
     <h2><u>21. Contributors:</u></h2>
     Maxime Devos<br>
+    Rebecca Turner<br>
 <br>
 <br>
 <br>

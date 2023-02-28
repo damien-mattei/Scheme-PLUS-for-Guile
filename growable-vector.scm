@@ -17,8 +17,9 @@
 
 
 ;; use:
-;; (use-modules (guile/growable-vector))
-;; use this --> (use-modules (guile growable-vector))
+;; (use-modules (growable-vector))
+;; (use-modules (guile/growable-vector))  
+;; use this --> (use-modules (guile growable-vector))  when defined with (guile growable-vector)
 ;; source at : https://github.com/damien-mattei/library-FunctProg
 ;; (include "array.scm")
 ;; (include "let.scm")

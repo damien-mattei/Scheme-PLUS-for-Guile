@@ -27,8 +27,9 @@
 ;; (define (|| a b) (or a b))
 
 
-; a list of lists of operators. lists are evaluated in order, so this also
-; determines operator precedence
+;; a list of lists of operators. lists are evaluated in order, so this also
+;; determines operator precedence
+;; TODO: add bitwise operator with the associated precedences
 (define infix-operators
   (list
    ;;(list modulo quotient remainder gcd lcm)
