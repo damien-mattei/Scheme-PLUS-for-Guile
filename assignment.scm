@@ -82,8 +82,8 @@
        ;; (Guile version) Bad <- form: the LHS of expression must be an identifier or of the form ($bracket-apply$ container index) , first argument : gaga is not $bracket-apply
        (unless (equal? (quote $bracket-apply$) (quote bracket-apply))
 	       (error "Bad <- form: the LHS of expression must be an identifier or of the form ($bracket-apply$ container index) , first argument "
-		(quote bracket-apply)
-		" is not $bracket-apply$."))
+		      (quote bracket-apply)
+		      " is not $bracket-apply$."))
 		       
        
        (let ((value expr)) ;; to avoid compute it twice
