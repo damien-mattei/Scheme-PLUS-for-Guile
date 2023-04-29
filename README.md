@@ -296,6 +296,20 @@ get it</a>)<br>
 #t
 <br>
 </pre>
+<p style="margin-left: 40px;">
+A possibility of defining overloaded functions or operators (just add
+'operator) is given with this syntax:<br>
+<br>
+(define (add-vect-vect v1 v2) (map + v1 v2))<br>
+(overload + add-vect-vect (list? list?) 'operator)<br>
+{'(1 2 3) + '(4 5 6) + '(7 8 9)}<br>
+(12 15 18)<br>
+<br>
+(define (mult-num-vect k v) (map (λ (x) (* k x)) v))<br>
+(overload * mult-num-vect (number? list?) 'operator)<br>
+{3 * '(1 2 3) + '(4 5 6) + '(7 8 9)}<br>
+(14 19 24)<br>
+</p>
 <br>
 <br>
 <p>
