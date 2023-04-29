@@ -296,7 +296,8 @@ get it</a>)<br>
 #t
 <br>
 </pre>
-<p style="margin-left: 40px;">
+<p style="margin-left: 40px;">Operator and function overloading:</p>
+<pre>
 A possibility of defining overloaded functions or operators (just add
 'operator) is given with this syntax:<br>
 <br>
@@ -312,7 +313,7 @@ A possibility of defining overloaded functions or operators (just add
 <br>
 Note that when a function that overload an operator has more than 2 args (f a1 a2 a3 ...) and only (f a1 a2) is defined
 we do: (f a1 (f a2 a3 ...)) for operators.<br>
-</p>
+</pre>
 <br>
 <br>
 <p>
