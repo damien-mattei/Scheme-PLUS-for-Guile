@@ -296,10 +296,12 @@ get it</a>)<br>
 #t
 <br>
 </pre>
-<p style="margin-left: 40px;">Operator and function overloading:</p>
-<pre>
+<p style="margin-left: 40px;">Operator and function overloading:<br>
 A possibility of defining overloaded functions or operators (just add
 'operator) is given with this syntax:<br>
+</p>
+<pre>
+
 <br>
 (define (add-vect-vect v1 v2) (map + v1 v2))<br>
 (overload + add-vect-vect (list? list?) 'operator)<br>
@@ -310,6 +312,9 @@ A possibility of defining overloaded functions or operators (just add
 (overload * mult-num-vect (number? list?) 'operator)<br>
 {3 * '(1 2 3) + '(4 5 6) + '(7 8 9)}<br>
 (14 19 24)<br>
+
+</pre>
+
 <br>
 Note that when a function that overload an operator has more than 2 args (f a1 a2 a3 ...) and only (f a1 a2) is defined
 we do: (f a1 (f a2 a3 ...)) for operators.<br>
@@ -318,7 +323,6 @@ overload-operator overload-function allow overloading of both
 functions and operators. Those macros call procedures written
 recursively because all predicate must be test to find the matching
 procedure as Scheme is not a typed language.<br> 
-</pre>
 <br>
 <br>
 <p>
