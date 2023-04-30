@@ -25,7 +25,7 @@
 ;;
 ;; scheme@(guile-user)> (bar 7)
 ;; $2 = 10
-(define-syntax &
+(define-syntax $>
   (syntax-rules ()
     ((_ ev)  (let () ev)) ;;  there can be a <+ in it expanding with a 'define not allowed in expression context
     ((_ ev ...) (let () ev ...))))

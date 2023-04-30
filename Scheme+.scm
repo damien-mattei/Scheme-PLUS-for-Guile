@@ -1,6 +1,6 @@
 ;; Scheme+.scm
 
-;; version 5.0
+;; version 7.0
 
 ;; author: Damien MATTEI
 
@@ -35,9 +35,16 @@
 (define-module (Scheme+)
   
   #:use-module (growable-vector)
+  #:use-module (ice-9 local-eval)
+  #:use-module (srfi srfi-1) ;; any,every
   #:use-module (srfi srfi-69) ;; Basic hash tables
   #:use-module (srfi srfi-31) ;; rec
-  #:export (def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ & condx <> ≠ ** <v v> ⇜ ⇝ repeat $nfx$)
+  ;; use with scheme-infix-define-macro.scm
+  #:export (infix-with-precedence2prefix ! quote-all overload overload-procedure overload-operator overload-function $nfx$ def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ $>  condx <> ≠ ** <v v> ⇜ ⇝ repeat % << >> & | )
+
+  ;; use with scheme-infix.scm
+  ;;#:export (overload overload-procedure overload-operator overload-function $nfx$ def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ $>  condx <> ≠ ** <v v> ⇜ ⇝ repeat % << >> & |)
+  #:re-export (local-eval the-environment)
   #:replace (do when unless))
 
 
@@ -54,5 +61,8 @@
 (include-from-path "exponential.scm")
 (include-from-path "while-do-when-unless.scm")
 (include-from-path "repeat-until.scm")
-(include-from-path "scheme-infix.scm")
+(include-from-path "scheme-infix-define-macro.scm")
+(include-from-path "overload.scm")
+(include-from-path "modulo.scm")
+(include-from-path "bitwise.scm")
 
