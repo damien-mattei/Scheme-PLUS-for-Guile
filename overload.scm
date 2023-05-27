@@ -73,10 +73,14 @@
 ;; scheme@(guile-user)> (+ '(1 2 3))
 ;; $7 = (1 2 3)
 
-;; scheme@(guile-user)> (define (add-pair p1 p2) (cons (+ (car p1) (car p2)) (+ (cdr p1) (cdr p2))))
-;; scheme@(guile-user)> (overload + add-pair pair? pair?)
+;; (define (add-pair p1 p2) (cons (+ (car p1) (car p2)) (+ (cdr p1) (cdr p2))))
+;; (overload + add-pair (pair? pair?) 'operator)
+;; (+ (cons 1 2) (cons 3 4))
+;; '(4 . 6)
+
+
 ;; overload
-;; scheme@(guile-user)> (+ (cons 1 2) (cons 3 4))
+
 (define-syntax overload-procedure
   
   (syntax-rules ()
