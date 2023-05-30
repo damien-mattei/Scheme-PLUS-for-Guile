@@ -119,7 +119,7 @@
 	 ;;(begin
 	 ;;(display "<- : multidimensional vector or array set!") (newline)
 	 (if (vector? array)
-	     (array-n-dim-set! array value index1 index2 ...)
+	     (function-array-n-dim-set! array value (reverse (list index1 index2 ...))) ;;(array-n-dim-set! array value index1 index2 ...)
 	     (array-set! array value index1 index2 ...));) ;; Warning syntax is not the same as SRFI 25 (Racket)
 	 
 	 value)))

@@ -73,7 +73,7 @@
     ((_ array index1 index2 ...)
      ;(begin ;;(display "$bracket-apply$") (newline)
      (if (vector? array)
-	 (array-n-dim-ref array index1 index2 ...)
+	 (function-array-n-dim-ref array (reverse (list index1 index2 ...))) ;;(array-n-dim-ref array index1 index2 ...)
 	 (array-ref array index1 index2 ...)))));) 
 
 

@@ -42,7 +42,7 @@
 			 (for (i 0 (- sy 1))
 			      (vector-set! (quote array) i (make-vector sx v)))))))
 
-
+;; TODO: order of indexes must be reversed to match Matrix and arrays conventions
 (define-syntax array-2d-ref
   (syntax-rules ()
     ((_ array x y) (vector-ref (vector-ref array y) x))))
@@ -59,18 +59,33 @@
 ;; scheme@(guile-user)> (array-n-dim-set! arr 7 4 3)
 ;; scheme@(guile-user)> (array-n-dim-ref arr 4 3)
 ;; 7
-(define-syntax array-n-dim-ref
-  (syntax-rules ()
-    ((_ array x) (vector-ref array x))
-    ((_ array x y ...) (vector-ref (array-n-dim-ref array y ...) x))))
+;; (define-syntax array-n-dim-ref
+;;   (syntax-rules ()
+;;     ((_ array x) (vector-ref array x))
+;;     ((_ array x y ...) (vector-ref (array-n-dim-ref array y ...) x))))
 
 
-(define-syntax array-n-dim-set!
-  (syntax-rules ()
-    ((_ array val x) (vector-set! array x val))
-    ((_ array val x y ...) (vector-set! (array-n-dim-ref array y ...) x val))))
+;; this one is used by array.scm
+(define (function-array-n-dim-ref array L-reversed-indexes)
+  ;;(display L-reversed-indexes) (newline)
+  (if (= 1 (length L-reversed-indexes))
+      (vector-ref array (car L-reversed-indexes))
+      (vector-ref (function-array-n-dim-ref array (cdr L-reversed-indexes))
+		  (car L-reversed-indexes))))
+  
 
-    
+;; (define-syntax array-n-dim-set!
+;;   (syntax-rules ()
+;;     ((_ array val x) (vector-set! array x val))
+;;     ((_ array val x y ...) (vector-set! (array-n-dim-ref array y ...) x val))))
+
+(define (function-array-n-dim-set! array val L-reversed-indexes)
+  (if (= 1 (length L-reversed-indexes))
+      (vector-set! array (car L-reversed-indexes) val)
+      (vector-set! (function-array-n-dim-ref array (cdr L-reversed-indexes))
+		   (car L-reversed-indexes)
+		   val)))
+
 
 (define-syntax display-array-2d
   (syntax-rules ()

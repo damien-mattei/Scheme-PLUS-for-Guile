@@ -43,7 +43,7 @@
   ;;#:export (infix-with-precedence2prefix ! quote-all overload overload-procedure overload-operator overload-function $nfx$ def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ $>  condx <> ≠ ** <v v> ⇜ ⇝ repeat % << >> & | )
 
   ;; use with scheme-infix.scm included from module (caveit with overloading)
-  ;; or with schem-infix.scm included in main not module (ok)
+  ;; or with scheme-infix.scm included in main not module (ok)
   #:export (overload overload-procedure overload-operator overload-function $nfx$ def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ $>  condx <> ≠ ** <v v> ⇜ ⇝ repeat % << >> & |)
 
  
