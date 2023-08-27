@@ -1,6 +1,6 @@
 ;; Growable Vectors (1 dimension)
 
-;; Copyright 2021 Damien MATTEI
+;; Copyright 2021-2023 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -48,12 +48,30 @@
 ;;  {gva[37]}
 ;;  = 4
 
+;; (define gvb (growable-vector-copy gva))
+;; (equal? gva gvb)
+;; #f
+
+;; scheme@(guile-user)> (growable-vector-v gva)
+;; $4 = #(1 2 3 4 5)
+;; scheme@(guile-user)> (growable-vector-v gvb)
+;; $5 = #(1 2 3 4 5)
+;; scheme@(guile-user)> (eq? (growable-vector-v gva) (growable-vector-v gvb))
+;; $6 = #f
+;; scheme@(guile-user)> (eqv? (growable-vector-v gva) (growable-vector-v gvb))
+;; $7 = #f
+;; scheme@(guile-user)> (equal? (growable-vector-v gva) (growable-vector-v gvb))
+;; $8 = #t
+
 (define-module (growable-vector) ;; (guile growable-vector) ;; (oop growable-vector)
   #:use-module (oop goops)
   #:use-module ((guile)
-		#:select (vector-length vector-ref vector-set! vector->list)
+		#:select (vector-length vector-ref vector-set! vector->list vector-copy)
 		#:prefix orig:)
-  #:use-module (srfi srfi-43) ;; vector
+  #:use-module ((srfi srfi-43) ;; vector
+		#:select (vector-copy!)
+		#:prefix srfi43:)
+  
   #:export (<growable-vector>
 	    growable-vector?
 	    ;;growable-vector-get-v
@@ -62,13 +80,20 @@
 	    growable-vector
 	    list->growable-vector
 	    growable-vector-resize)
-	    ;;growable-vector-set-v!)
-  #:replace (vector-length vector-ref vector-set! vector->list))
+	    
+  
+  #:replace (vector-length
+	     vector-ref
+	     vector-set!
+	     vector->list
+	     vector-copy
+             vector-copy!)
+
+  )
+
 
 ;; (use-modules (growable-vector))
-;; source at : https://github.com/damien-mattei/library-FunctProg
-;; (include "array.scm")
-;; (include "let.scm")
+;; source at : https://github.com/damien-mattei/Scheme-PLUS-for-Guile
 
 ;;; Constants
 
@@ -81,20 +106,65 @@
 (define-method (vector-length (v <vector>))
   (orig:vector-length v))
 
+
+
 (define-generic vector-set!)
 
 (define-method (vector-set! (v <vector>) (i <integer>) obj)
   (orig:vector-set! v i obj))
+
+
+
 
 (define-generic vector-ref)
 
 (define-method (vector-ref (v <vector>) (i <integer>))
   (orig:vector-ref v i))
 
+
+
+
+
 (define-generic vector->list)
 
 (define-method (vector->list (v <vector>))
   (orig:vector->list v))
+
+
+
+
+
+(define-generic vector-copy)
+
+(define-method (vector-copy (v <vector>))
+  (orig:vector-copy v))
+
+(define-method (vector-copy (v <vector>) (start <integer>))
+  (orig:vector-copy v start))
+
+(define-method (vector-copy (v <vector>) (start <integer>) (end <integer>))
+  (orig:vector-copy v start end))
+
+(define-method (vector-copy (v <vector>) (start <integer>) (end <integer>) (fill <integer>))
+  (orig:vector-copy v start end fill))
+
+
+
+
+
+
+(define-generic vector-copy!)
+
+(define-method (vector-copy! (dst <vector>) (at <integer>) (src <vector>))
+  (srfi43:vector-copy! dst at src))
+
+(define-method (vector-copy! (dst <vector>) (at <integer>) (src <vector>) (start <integer>))
+  (srfi43:vector-copy! dst at src start))
+
+(define-method (vector-copy! (dst <vector>) (at <integer>) (src <vector>) (start <integer>) (end <integer>))
+  (srfi43:vector-copy! dst at src start end))
+
+
 
 
 ;;; The <growable-vector> class
@@ -112,30 +182,10 @@
 ;; scheme@(guile-user)> (vector-length gva)
 ;; $1 = 5
 (define-method (vector-length (gv <growable-vector>))
-  (orig:vector-length (growable-vector-get-v gv)))
+  (orig:vector-length (growable-vector-get-v gv)))  ;; warning: size is of a growable vector (size of memory, not size used)
 
-;; (make <growable-vector> 7)
-;; (make <growable-vector> 3 7)
 
-;; (define-method (initialize (self <growable-vector>) listinitargs)
-;;   (display "growable-vector :: initialize") (newline)
-;;   (let-arrow* [ lg   ← (length listinitargs)
-;; 		   dim  ← (if {lg = 0}
-;; 			   (error "Wrong number of arguments:" lg)
-;; 			   (first listinitargs))
-;; 		   fill ← (if {lg > 1}
-;; 			   (second listinitargs)
-;; 			   '()) ]
-;; 	      (cond [ {lg = 1} (display "growable-vector :: initialize :: cond lg = 1") (newline)
-;; 		               (next-method self (list #:v (make-vector dim)))
-;; 		      ;;{(growable-vector-v self) ← (make-vector dim)}
-;; 		      ]
-;; 		    [ {lg = 2} (next-method self (list #:v (make-vector dim fill)))
-;; 		      ;;(growable-vector-set-v! self (make-vector dim fill))
-;; 		      ]
-;; 		    [ else (error "Wrong number of arguments:" lg) ])
-;; 	      (display "growable-vector :: initialize :: end") (newline))
-;;    )
+
 
 ;; (make-growable-vector 3)
 ;; $1 = #<<growable-vector> 104ecfd20>
@@ -229,3 +279,71 @@
   (define new-vector (vector-copy old-vector 0 new-size))
   ;;(display "growable-vector-resize : new-vector :") (display new-vector) (newline)
   (growable-vector-set-v! gv new-vector))
+
+
+
+
+
+(define-method (vector-copy (gv <growable-vector>))
+  (make <growable-vector> #:v (orig:vector-copy (growable-vector-v gv))))
+
+
+(define-method (vector-copy (gv <growable-vector>) (start <integer>))
+  (make <growable-vector>
+    #:v
+    (orig:vector-copy (growable-vector-v gv))
+    start))
+
+
+(define-method (vector-copy (gv <growable-vector>) (start <integer>) (end <integer>))
+  (make <growable-vector>
+    #:v
+    (orig:vector-copy (growable-vector-v gv))
+    start
+    end))
+
+
+
+
+
+(define-method (vector-copy! (dst <vector>) (at <integer>) (src <growable-vector>))
+  (srfi43:vector-copy! dst at (growable-vector-v src)))
+
+
+(define-method (vector-copy! (dst <vector>) (at <integer>) (src <growable-vector>) (start <integer>))
+  (srfi43:vector-copy! dst at (growable-vector-v src) start))
+
+
+(define-method (vector-copy! (dst <vector>) (at <integer>) (src <growable-vector>) (start <integer>) (end <integer>))
+  (srfi43:vector-copy! dst at (growable-vector-v src) start end))
+
+
+
+
+
+
+(define-method (vector-copy! (dst <growable-vector>) (at <integer>) (src <growable-vector>))
+  (srfi43:vector-copy! (growable-vector-v dst) at (growable-vector-v src)))
+
+
+(define-method (vector-copy! (dst <growable-vector>) (at <integer>) (src <growable-vector>) (start <integer>))
+  (srfi43:vector-copy! (growable-vector-v dst) at (growable-vector-v src) start))
+
+
+(define-method (vector-copy! (dst <growable-vector>) (at <integer>) (src <growable-vector>) (start <integer>) (end <integer>))
+  (srfi43:vector-copy! (growable-vector-v dst) at (growable-vector-v src) start end))
+
+
+
+
+
+(define-method (vector-copy! (dst <growable-vector>) (at <integer>) (src <vector>))
+  (srfi43:vector-copy! (growable-vector-v dst) at src))
+
+
+(define-method (vector-copy! (dst <growable-vector>) (at <integer>) (src <vector>) (start <integer>))
+  (srfi43:vector-copy! (growable-vector-v dst) at src start))
+
+
+(define-method (vector-copy! (dst <growable-vector>) (at <integer>) (src <vector>) (start <integer>) (end <integer>))
+  (srfi43:vector-copy! (growable-vector-v dst) at src start end))

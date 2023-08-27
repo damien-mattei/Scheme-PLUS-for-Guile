@@ -10,6 +10,43 @@
 ;;(require "../../Scheme-PLUS-for-Racket/main/Scheme-PLUS-for-Racket/Scheme+.rkt")
 
 
+
+;; this function teach the overloaded operators to scheme infix procedures
+;; (define-syntax update-operators
+
+;;   (syntax-rules ()
+
+;;     ((_)
+  
+;;      (set-infix-operators! (list
+   
+;; 			    (list expt **)
+;; 			    (list * / %)
+;; 			    (list + -)
+			    
+;; 			    (list << >>)
+			    
+;; 			    (list & | )
+			    
+;; 					; now this is interesting: because scheme is dynamically typed, we aren't
+;; 					; limited to any one type of function
+			    
+;; 			    (list < > = ≠ <= >=)  ;;  <>  is already defined in Guile
+			    
+;; 			    ;;(list 'dummy) ;; can keep the good order in case of non left-right assocciative operators.(odd? reverse them) 
+			    
+;; 			    )
+			   
+;; 			   )
+;;      )))
+
+
+
+;; (define (set-infix-operators! updated-infix-operators)
+;;   (set! infix-operators-lst updated-infix-operators))
+
+
+
 ;; > {5 * 3 + 2}
 ;; 17
 
@@ -50,7 +87,21 @@
 	       #f))))
 
 
-;;(define-syntax mac+ (syntax-rules () ((_) +)))
+;;; evaluates `terms` as a basic infix expression
+;;(define (!0 . terms)
+(define (!0 infix-operators . terms)
+  ;;(display "! : terms=") (display terms) (newline)
+  (if (null? terms) ;; i added this null case but with correct input this should not be necessary
+      terms
+      (car (!* terms
+	       infix-operators
+	       #f))))
+
+
+(define-syntax !prec ;; precursor of !0
+  (syntax-rules ()
+
+    ((_ term ...) (!0 infix-operators-lst term ...))))
 
 
 ;; > (define b #f)
@@ -61,62 +112,123 @@
 ;; #f
 ;;  { 4 + 3 * 2 - 19 < 0 - 4}
 ;; #t
-(define-syntax $nfx$
+
+
+(define-syntax $nfx$-test ;;  does not works,test local-eval the-environment
   (syntax-rules ()
 
+    ((_ term) term) ;; this infix case is not different than prefix or postfix , useless for infix with precedence
+
+    ((_ term1 op term2) (op term1 term2)) ;; no precedence used here , useless for infix with precedence
+
     ((_ ident opspecial term1 op term2) (cond ((or (equal? (quote opspecial) (quote <-)) (equal? (quote opspecial) (quote ←)))
-						   ;;(equal? (quote opspecial) (quote <+)) (equal? (quote opspecial) (quote ⥆)))
-					       ;;(begin
-						 ;;(display "$nfx$ case 1") (newline)
 						 (opspecial  ident (op term1 term2))) ;; {ident <- term1 op term2}
 					      
 					      ((or (equal? (quote op) (quote ->)) (equal? (quote op) (quote →)))
-					       (op term2 (opspecial ident term1))) ;; Warning: argument names of macro do not reprensent the values contained in this case
-					      
-					      ;;(else (! (quote ident) (quote opspecial) (quote term1) (quote op) (quote term2)))))
+					       (op term2 (opspecial ident term1))) ;; Warning: argument names of macro do not represent the values contained in this case
+					    
 					      (else
-					       (!
-						(list
-   
-						 (list expt **)
-						 (list * / %)
-						 (list + -)
-						 
-						 (list << >>)
-						 
-						 (list & | ) 
-						 
-						 (list < > = <> ≠ <= >=)
-						 
-						 )
+					       (!prec
+						;; here we need to eval quote the <- or -> to avoid a bad syntax error with those macros
+						ident (local-eval (quote opspecial) (the-environment)) term1 op term2))))
+    
+						   
+    ((_ ident opspecial term1 op term2 ...) (if (or (equal? (quote opspecial) (quote <-)) (equal? (quote opspecial) (quote ←)))
+				       						
+						;; there is no 'cond here because there is no way to deal with the 2nd case of 'cond above with multiple values unfortunately
+						(opspecial ident ($nfx$ term1 op term2 ...))
+						
+						(!prec ident (local-eval (quote opspecial) (the-environment))  term1 op term2 ...))))) ;; this is in fact a general case ($nfx$ term0 ops term1 op term2 ...)
+
+
+
+
+(define-syntax $nfx$
+  (syntax-rules ()
+
+    ((_ term) term) ;; this infix case is not different than prefix or postfix , useless for infix with precedence
+
+    ((_ term1 op term2) (op term1 term2)) ;; no precedence used here , useless for infix with precedence
+
+    ((_ ident opspecial term1 op term2) (cond ((or (equal? (quote opspecial) (quote <-)) (equal? (quote opspecial) (quote ←)))
+						 (opspecial  ident (op term1 term2))) ;; {ident <- term1 op term2}
+					      
+					      ((or (equal? (quote op) (quote ->)) (equal? (quote op) (quote →)))
+					       (op term2 (opspecial ident term1))) ;; Warning: argument names of macro do not represent the values contained in this case
+					    
+					      (else
+					       (!prec
+						;; here we need to eval quote the <- or -> to avoid a bad syntax error with those macros
 						ident (eval (quote opspecial) (interaction-environment)) term1 op term2))))
     
 						   
     ((_ ident opspecial term1 op term2 ...) (if (or (equal? (quote opspecial) (quote <-)) (equal? (quote opspecial) (quote ←)))
-						;;  (equal? (quote opspecial) (quote <+)) (equal? (quote opspecial) (quote ⥆)))
-						
+				       						
 						;; there is no 'cond here because there is no way to deal with the 2nd case of 'cond above with multiple values unfortunately
 						(opspecial ident ($nfx$ term1 op term2 ...))
 						
-						(!
-						 (list
+						(!prec ident (eval (quote opspecial) (interaction-environment))  term1 op term2 ...))))) ;; this is in fact a general case ($nfx$ term0 ops term1 op term2 ...)
+
+
+
+;; (define-syntax $nfx$
+;;   (syntax-rules ()
+
+;;     ((_ ident opspecial term1 op term2) (cond ((or (equal? (quote opspecial) (quote <-)) (equal? (quote opspecial) (quote ←)))
+						 
+;; 						 (opspecial  ident (op term1 term2))) ;; {ident <- term1 op term2}
+					      
+;; 					      ((or (equal? (quote op) (quote ->)) (equal? (quote op) (quote →)))
+;; 					       (op term2 (opspecial ident term1))) ;; Warning: argument names of macro do not reprensent the values contained in this case
+					      
+					     
+;; 					      (else
+;; 					       (!
+;; 						(list
    
-						  (list expt **)
-						  (list * / %)
-						  (list + -)
-						  
-						  (list << >>)
-						  
-						  (list & | )
-						  
-						  (list < > = <> ≠ <= >=)
-						  
-						  )
-						 ident (eval (quote opspecial) (interaction-environment))  term1 op term2 ...))))) ;; this is in fact a general case ($nfx$ term0 ops term1 op term2 ...)
+;; 						 (list expt **)
+;; 						 (list * / %)
+;; 						 (list + -)
+						 
+;; 						 (list << >>)
+						 
+;; 						 (list & | ) 
+						 
+;; 						 (list < > = ≠ <= >=) ;;  <>
+						 
+;; 						 )
 
-    ;; now quoting all the macros,function, symbols ... so we are no more annoyed with macro 'bad syntax' error and also this should (?) keep the 'and and 'or short-circuited functionalities.
+;; 						ident (eval (quote opspecial) (interaction-environment)) term1 op term2))))
+    
+						   
+;;     ((_ ident opspecial term1 op term2 ...) (if (or (equal? (quote opspecial) (quote <-)) (equal? (quote opspecial) (quote ←)))
+					       
+						
+;; 						;; there is no 'cond here because there is no way to deal with the 2nd case of 'cond above with multiple values unfortunately
+
+;; 						(opspecial ident ($nfx$ term1 op term2 ...))
+						
+;; 						(!
+;; 						 (list
+   
+;; 						  (list expt **)
+;; 						  (list * / %)
+;; 						  (list + -)
+						  
+;; 						  (list << >>)
+						  
+;; 						  (list & | )
+						  
+;; 						  (list < > = ≠ <= >=) ;;  <> reserved keyword for guile
+						  
+;; 						  )
+;; 						 ident (eval (quote opspecial) (interaction-environment))  term1 op term2 ...))))) ;; this is in fact a general case ($nfx$ term0 ops term1 op term2 ...)
 
 
+
+  
+ ;; DEPRECATED
+  ;; now quoting all the macros,function, symbols ... so we are no more annoyed with macro 'bad syntax' error and also this should (?) keep the 'and and 'or short-circuited functionalities.
 
 ;; DEPRECATED (4 procedures below)
 ;;  (andy (#t #t #t))
@@ -274,6 +386,16 @@
 
 
 
+
+
+(define-syntax !*prec ;; precursor of !*
+  
+  (syntax-rules ()
+
+    ((_ terms) (!* terms infix-operators-lst #f))))
+
+
+
 ;; can you believe they made && and || special forms??? yes :-) but with advantage of being short-circuited,but i admit it has been a headlock for an infix solution 
 ;; note: difference between bitwise and logic operator
 
@@ -281,26 +403,31 @@
 ;; a list of lists of operators. lists are evaluated in order, so this also
 ;; determines operator precedence
 ;;  added bitwise operator with the associated precedences and modulo too
-;; (define infix-operators
+
+
+;; a list of lists of operators. lists are evaluated in order, so this also
+;; determines operator precedence
+;;  added bitwise operator with the associated precedences and modulo too
+(define infix-operators-lst
   
-;;   (list
+  (list
    
-;;    (list expt **)
-;;    (list * / %)
-;;    (list + -)
+   (list expt **)
+   (list * / %)
+   (list + -)
    
-;;    (list << >>)
+   (list << >>)
 
-;;    (list & ∣ )
+   (list & | )
 
-;; 					; now this is interesting: because scheme is dynamically typed, we aren't
-;; 					; limited to any one type of function
+					; now this is interesting: because scheme is dynamically typed, we aren't
+					; limited to any one type of function
    
-;;    (list < > = <> ≠ <= >=)
-   
-   
-;;    ;;(list 'dummy) ;; can keep the good order in case of non left-right assocciative operators.(odd? reverse them) 
+   (list < > = ≠ <= >=) ;;  <>  is already defined in Guile
    
    
-;;    )
-;;   )
+   ;;(list 'dummy) ;; can keep the good order in case of non left-right assocciative operators.(odd? reverse them) 
+   
+   )
+
+  )

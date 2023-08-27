@@ -2,7 +2,9 @@
 ;; Dynamic solution
 ;; Guile compatible
 
-;; Copyright 2021 Damien MATTEI
+;; Copyright 2021-2023 Damien MATTEI
+
+;; e-mail: damien.mattei@gmail.com
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -177,7 +179,7 @@
 	{ dyna[ls t] <- (one-two
 			  (if (null? L)
 			      #f
-			      ($ ;;(display "assignment") (newline)
+			      ($> ;;(display "assignment") (newline)
 				{c <- (first L)}
 				{R <- (rest L)}
 				(cond [ {c = t} #t ] ;; c is the solution
@@ -218,7 +220,7 @@
 			(if (null? L)
 			    #f
 			    ;; TODO: rename $ which is already used by SRFI-9 record utiliser  § ou | (option shift L sur mac)
-			    ($ ;;(display "assignment") (newline)
+			    ($> ;;(display "assignment") (newline)
 			     {c <- (first L)}
 			     {R <- (rest L)}
 			     (cond [ {c = t} #t ] ;; c is the solution

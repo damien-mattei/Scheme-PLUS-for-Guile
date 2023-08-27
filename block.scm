@@ -1,6 +1,6 @@
 ; This file is part of Scheme+
 
-;; Copyright 2021 Damien MATTEI
+;; Copyright 2021-2023 Damien MATTEI
 
 ;; This program is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -11,21 +11,21 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-(define-syntax $ ;; Warning : used by SRFI 9 : Record too ?
+(define-syntax $>
   (syntax-rules ()
     ((_ ev)  ev)
     ((_ ev ...) (begin ev ...))))
 
-;; scheme@(guile-user)> (def bar (& (declare x y) {x <- 1} {y <- 2} (lambda (t) (+ x y t))))
+;; scheme@(guile-user)> (def bar ($+> (declare x y) {x <- 1} {y <- 2} (lambda (t) (+ x y t))))
 ;;
-;; (def bar (& (declare x y)
-;;             {x <- 1} 
-;;             {y <- 2}
-;;             (lambda (t) (+ x y t))))
+;; (def bar ($+> (declare x y)
+;;               {x <- 1} 
+;;               {y <- 2}
+;;               (lambda (t) (+ x y t))))
 ;;
 ;; scheme@(guile-user)> (bar 7)
 ;; $2 = 10
-(define-syntax $>
+(define-syntax $+>
   (syntax-rules ()
     ((_ ev)  (let () ev)) ;;  there can be a <+ in it expanding with a 'define not allowed in expression context
     ((_ ev ...) (let () ev ...))))

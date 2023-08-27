@@ -2,7 +2,7 @@
 
 ;; This file is part of Scheme+
 
-;; Copyright 2021 Damien MATTEI
+;; Copyright 2021-2023 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -30,16 +30,16 @@
 		      (vector-set! array i (make-vector sx)))
 		 array))
     ((_ sx sy v) (let* ((array (make-vector sy)))
-		   (for (i 0 (- sy 1))
+		   (for-basic (i 0 (- sy 1))
 			(vector-set! array i (make-vector sx v)))
 		   array))
     ((_ array sx sy) (begin
 		       (set! (quote array) (make-vector sy))
-		       (for (i 0 (- sy 1))
+		       (for-basic (i 0 (- sy 1))
 			    (vector-set! (quote array) i (make-vector sx)))))
     ((_ array sx sy v) (begin
 			 (set! (quote array) (make-vector sy))
-			 (for (i 0 (- sy 1))
+			 (for-basic (i 0 (- sy 1))
 			      (vector-set! (quote array) i (make-vector sx v)))))))
 
 ;; TODO: order of indexes must be reversed to match Matrix and arrays conventions
@@ -64,33 +64,58 @@
 ;;     ((_ array x) (vector-ref array x))
 ;;     ((_ array x y ...) (vector-ref (array-n-dim-ref array y ...) x))))
 
+;; return the negative index depending of length of vector
+;; (define-syntax negative-vector-index
+  
+;;   (syntax-rules ()
+    
+;;     ((_ index v)
+     
+;;      (if (< index 0)
+;; 	 (+ (vector-length v) index)
+;; 	 index))))
+
+(define (negative-vector-index index v)
+     
+  (if (< index 0)
+      (+ (vector-length v) index)
+      index))
 
 ;; this one is used by array.scm
 (define (function-array-n-dim-ref array L-reversed-indexes)
   ;;(display L-reversed-indexes) (newline)
   (if (= 1 (length L-reversed-indexes))
-      (vector-ref array (car L-reversed-indexes))
+      (vector-ref array (negative-vector-index (car L-reversed-indexes) ;; compatible with negative indexes
+					       array))
       (vector-ref (function-array-n-dim-ref array (cdr L-reversed-indexes))
-		  (car L-reversed-indexes))))
-  
+		  (negative-vector-index (car L-reversed-indexes)
+					 array))))
+
 
 ;; (define-syntax array-n-dim-set!
 ;;   (syntax-rules ()
 ;;     ((_ array val x) (vector-set! array x val))
 ;;     ((_ array val x y ...) (vector-set! (array-n-dim-ref array y ...) x val))))
 
+
+
 (define (function-array-n-dim-set! array val L-reversed-indexes)
   (if (= 1 (length L-reversed-indexes))
-      (vector-set! array (car L-reversed-indexes) val)
+      (vector-set! array
+		   (negative-vector-index (car L-reversed-indexes)
+					  array)
+		   val)
       (vector-set! (function-array-n-dim-ref array (cdr L-reversed-indexes))
-		   (car L-reversed-indexes)
+		   (negative-vector-index (car L-reversed-indexes)
+					  array)
 		   val)))
+
 
 
 (define-syntax display-array-2d
   (syntax-rules ()
     ((_ array)
-     (for (y 0 (- (vector-length array) 1))
+     (for-basic (y 0 (- (vector-length array) 1))
 	  (display-nl (vector-ref array y))))))
 
 
@@ -122,4 +147,9 @@
 			  (array-set! array v x y)
 			  v))))
 
+;; this use srfi 25 syntax to be compatible with the non srfi 25 syntax of guile's arrays
+;; obj argument not at the same place in srfi 25 and guile's arrays
+(define-syntax srfi25-array-set!
+  (syntax-rules ()
+    ((_ array index ... obj) (array-set! array obj index ...))))
 

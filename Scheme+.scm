@@ -1,6 +1,6 @@
 ;; Scheme+.scm
 
-;; version 7.0
+;; version 7.1
 
 ;; author: Damien MATTEI
 
@@ -9,6 +9,8 @@
 ;; Guile Scheme version
 
 ;; Copyright 2021-2023 Damien MATTEI
+
+;; e-mail: damien.mattei@gmail.com
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -30,44 +32,59 @@
 ;; use :
 ;; (use-modules (Scheme+))
 
+;; install linux:
+;; sudo cp *.scm /usr/share/guile/site/3.0
 
 
-(define-module (Scheme+)
-  
-  #:use-module (growable-vector)
-  #:use-module (ice-9 local-eval)
-  #:use-module (srfi srfi-1) ;; any,every
-  #:use-module (srfi srfi-69) ;; Basic hash tables
-  #:use-module (srfi srfi-31) ;; rec
-  ;; use with scheme-infix-define-macro.scm (ok)
-  ;;#:export (infix-with-precedence2prefix ! quote-all overload overload-procedure overload-operator overload-function $nfx$ def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ $>  condx <> ≠ ** <v v> ⇜ ⇝ repeat % << >> & | )
+(use-modules (growable-vector)
+	     (overload)
+  ;;#:use-module (ice-9 local-eval)
+	     (ice-9 match)
+	     (srfi srfi-1) ;; any,every
+	     (srfi srfi-69) ;; Basic hash tables
+	     (srfi srfi-31) ;; rec
+	     (srfi srfi-26) ;; cut
 
+  ;;#:use-module (srfi srfi-43) ;; WARNING: (Scheme+): `vector-copy' imported from both (growable-vector) and (srfi srfi-43)
+  )
   ;; use with scheme-infix.scm included from module (caveit with overloading)
   ;; or with scheme-infix.scm included in main not module (ok)
-  #:export (overload overload-procedure overload-operator overload-function $nfx$ def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ $>  condx <> ≠ ** <v v> ⇜ ⇝ repeat % << >> & |)
-
- 
-  ;; use only with scheme-infix-define-macro.scm enabled
-  ;;#:re-export (local-eval the-environment)
-  #:replace (do when unless))
+  
 
 
 
-(include-from-path "def.scm")
-(include-from-path "array.scm")
-(include-from-path "set-values-plus.scm")
-(include-from-path "apply-square-brackets.scm")
-(include-from-path "assignment.scm")
-(include-from-path "declare.scm")
-(include-from-path "condx.scm")
-(include-from-path "block.scm")
-(include-from-path "not-equal.scm")
-(include-from-path "exponential.scm")
-(include-from-path "while-do-when-unless.scm")
-(include-from-path "repeat-until.scm")
-;;(include-from-path "scheme-infix.scm")
-;;(include-from-path "scheme-infix-define-macro.scm")
-(include-from-path "overload.scm")
-(include-from-path "modulo.scm")
-(include-from-path "bitwise.scm")
+(include "def.scm")
+(include "array.scm")
+(include "set-values-plus.scm")
+
+(include "for_next_step.scm") ;; for apply-square-brackets.scm, assignment.scm
+;; if you want it at toplevel: (include "for_next_step.scm") or add some export in this file....
+
+
+(include "declare.scm")
+(include "condx.scm")
+(include "block.scm")
+(include "not-equal.scm")
+(include "exponential.scm")
+(include "while-do-when-unless.scm")
+(include "repeat-until.scm")
+(include "modulo.scm")
+(include "bitwise.scm")
+
+
+
+;; must be included from program file now ! (use "scheme-infix.scm" in included-files of scheme+ directory)
+
+
+
+;;(include "scheme-infix-define-macro.scm")
+
+
+
+
+(include "slice.scm")
+
+
+
+
 

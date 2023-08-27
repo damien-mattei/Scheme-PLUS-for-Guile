@@ -1,4 +1,6 @@
 
+
+
 ;; warning: 'do is already part of R6RS (reserved keyword) 'while is not in R5RS,R6RS, R7RS-small
 
 ;; but 'do in Scheme has a painful syntax
