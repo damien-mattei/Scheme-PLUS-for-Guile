@@ -40,6 +40,7 @@
 	     (overload)
   ;;#:use-module (ice-9 local-eval)
 	     (ice-9 match)
+	     (ice-9 arrays) ;; for array-copy
 	     (srfi srfi-1) ;; any,every
 	     (srfi srfi-69) ;; Basic hash tables
 	     (srfi srfi-31) ;; rec

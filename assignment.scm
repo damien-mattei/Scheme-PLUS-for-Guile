@@ -68,12 +68,20 @@
 (define-syntax <-
   
   (syntax-rules ()
+
+    ((_ (kar kdr) expr) ; expr must be a pair
+
+     (begin
+       (set! kar (car expr))
+       (set! kdr (cdr expr))))
+    
+    
     ;;  special form like : (<- ($bracket-apply$ T 3) ($bracket-apply$ T 4))
     ;; We will let the second $bracket-apply$ be executed and forbid the execution of first $bracket-apply$.
-    
+
     ;; one dimension array, example: {a[4] <- 7}
     ;; $bracket-apply$ is from SRFI 105  bracket-apply is an argument of the macro
-    ((_ (bracket-apply container index ...) expr)
+    ((_ (bracket-apply container index index1 ...) expr)
 
      (begin
 
@@ -85,7 +93,8 @@
 	       (error "Bad <- form: the LHS of expression must be an identifier or of the form ($bracket-apply$ container index ...) , first argument is not $bracket-apply$:"
 		      (quote bracket-apply)))
 
-       (parse-square-brackets-arguments-and-assignment container expr index ...)))
+       (parse-square-brackets-arguments-and-assignment container expr index index1 ...)))
+
     
     
     ;;(<- x 5)
@@ -120,7 +129,6 @@
      (<- var (<- var1 ... expr))) 
      
     ))
-
 
 
 
@@ -491,17 +499,21 @@
 	     (string-set! container-eval index-eval expr-eval)
 	     expr-eval)
 	    
-	    (else (srfi25-array-set! container-eval index-eval expr-eval)
-		  expr-eval)))) ;; returning a value allow the chaining : {T[3] <- A[4] <- T[7 2 4]}
+	    ((array? container-eval)
+	     (srfi25-array-set! container-eval index-eval expr-eval)
+	     expr-eval) ;; returning a value allow the chaining : {T[3] <- A[4] <- T[7 2 4]}
+
+	    (else ;; overloaded
+	     (let ()
+	       (define args-lst (list container-eval index-eval))
+	       (define setter! (find-setter-for-overloaded-square-brackets args-lst))
+	       (setter! container-eval index-eval expr-eval))))))
 
 
 
+  
 
 (define (assignment-argument-2 container-eval index1-or-keyword-eval index2-or-keyword-eval expr-eval)
-
-  (when (not {(vector? container-eval) or (string? container-eval) or
-	      (array? container-eval) or (growable-vector? container-eval)})
-	(error "assignment : container type not compatible : " container-eval))
   
   {index1-or-keyword-eval-pos <+ index1-or-keyword-eval} ;; pos for positive
   {index2-or-keyword-eval-pos <+ index2-or-keyword-eval}
@@ -571,15 +583,23 @@
 	  container-eval
 
 	  )
-	 
-	 ((i1 i2)  (if (vector? container-eval)  ;; normal case
-		       (function-array-n-dim-set! container-eval expr-eval (reverse (list i1 i2))) 
-		       (srfi25-array-set! container-eval index1-or-keyword-eval index2-or-keyword-eval expr-eval))
 
 
+	 ((i1 i2)
+
+	  (cond ((vector? container-eval)  ;; normal case
+		 (function-array-n-dim-set! container-eval expr-eval (reverse (list i1 i2))))
+		((array? container-eval)
+		 (srfi25-array-set! container-eval index1-or-keyword-eval index2-or-keyword-eval expr-eval)) ;; no SRFI 25 in Guile
+		(else ;; overloaded
+		 (let ()
+		   (define args-lst (list container-eval i1 i2))
+		   (define setter! (find-setter-for-overloaded-square-brackets args-lst))
+		   (setter! container-eval i1 i2 expr-eval))))
+	  
 	  expr-eval ;; returning a value allow the chaining : {T[3 2] <- A[4] <- T[2 4]} 
 
-	  )
+	  ) ; end match case
 
 	 ) ;; end match
 
