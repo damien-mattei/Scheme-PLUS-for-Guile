@@ -229,9 +229,17 @@ v * t} / (sqrt {1 - v ** 2 / c ** 2})}</b></p>
       <!-- HTML generated using hilite.me --></p>
     <div style="background: #111111;
       overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">use-modules</span> <span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">Scheme+</span><span style="color: #ffffff">))</span>
+      <pre style="margin: 0; line-height: 125%"><span style="color:
+      #ffffff">
+      <pre>
+(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+      </pre>
+      </span>
 </pre> <br>
       <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
 style="color: #ff0086; font-weight: bold">declare</span> <span style="color: #fb660a">L-init</span> <span
@@ -416,7 +424,7 @@ procedure as Scheme is not a typed language.<br>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt;
-        (use-modules (Scheme+))</font></p>
+       </font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #fef48b"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">;;; note: source file
@@ -460,7 +468,7 @@ procedure as Scheme is not a typed language.<br>
     <p> </p>
     <br>
     <p>Hash Tables support :</p>
-    <pre>(use-modules (Scheme+))
+    <pre>
 (use-modules (srfi srfi-69))  ;; support for SRFI 69 Basic hash tables
 
 {my-hash-tbl &lt;+ (make-hash-table)} ;; add an object in the current environment, here a hash table
@@ -474,7 +482,7 @@ procedure as Scheme is not a typed language.<br>
     <p>for the rest read below and the documentation.</p>
     <br>
     <h2>2.<u>Download Scheme+:</u></h2>
-    <p>The source code of the <b>Scheme+ module</b>, currently only for <a href="https://www.gnu.org/software/guile/"
+    <p>The source code of <b>Scheme+ </b> for <a href="https://www.gnu.org/software/guile/"
         target="_blank">Guile implementation of Scheme</a> can be retrieved
       here: </p>
     <p> </p>
@@ -776,17 +784,31 @@ style="color: #fb660a">n</span> <span style="color: #fb660a">fibn</span><span st
       must have to access the result in array to return it...</p>
     <p>Scheme+ allow to write code more readable and simpler than normal Scheme.</p>
     <p>Prior to use <b>Scheme+</b> for the implementation of Scheme named
-      Guile, the <b>module </b>must be loaded,this is done by inserting the
-      statement <b>(use-modules (Scheme+))</b> at the beginning of the Scheme
+      Guile, the <b>code </b>must be loaded,this is done by inserting the
+statement <b>
+<pre>
+(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+</pre></b> at the beginning of the Scheme
       source file.</p>
     <p>Below is the version of the above code written in Scheme+ :</p>
     <p><!-- HTML generated using hilite.me --></p>
     <!-- HTML generated using hilite.me -->
     <div style="background: #111111;
       overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;"><span
-        style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">use-modules</span>
-      <span style="color: #ffffff">(</span><span style="color: #ff0086;
-        font-weight: bold">Scheme+</span><span style="color: #ffffff">))</span>
+      style="color: #ffffff">
+      <pre>
+(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+</pre></span>
     </div>
     <div style="background: #111111; overflow:auto;width:auto;border:
       gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;">
@@ -855,9 +877,17 @@ style="color: #ffffff">))</span>
         </strong> </p>
       <div style="background: #111111;
         overflow:auto;width:auto;border:solid gray;border-width:.1em        .1em .1em .8em;padding:.2em .6em;">
-        <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">use-modules</span> <span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">Scheme+</span><span style="color: #ffffff">))</span>
+        <pre style="margin: 0; line-height: 125%"><span style="color:
+	#ffffff">
+	<pre>
+(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+	</pre>
+	</span>
 <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">declare</span> <span
 style="color: #fb660a">size1</span> <span style="color: #fb660a">memo1</span><span
 style="color: #ffffff">)</span>
@@ -952,9 +982,16 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
     <!-- HTML generated using hilite.me -->
     <div style="background: #111111;
       overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;"><span
-        style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">use-modules</span>
-      <span style="color: #ffffff">(</span><span style="color: #ff0086;
-        font-weight: bold">Scheme+</span><span style="color: #ffffff">))</span>
+      style="color: #ffffff">
+      <pre>
+(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+      </pre>
+      </span>
     </div>
     <div style="background: #111111;
       overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
@@ -1283,9 +1320,17 @@ style="color: #ffffff">)</span>
     <p><!-- HTML generated using hilite.me --> </p>
     <div style="background: #111111;
       overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">use-modules</span> <span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">Scheme+</span><span style="color: #ffffff">))</span>
+      <pre style="margin: 0; line-height: 125%"><span style="color:
+      #ffffff">
+      <pre>
+(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+      </pre>
+      </span>
 </pre> </div>
     <div style="background: #111111;
       overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
@@ -1439,9 +1484,17 @@ style="color: #008800; font-style: italic; background-color: #0f140f">;; return 
     <!-- HTML generated using hilite.me -->
     <div style="background: #111111;
       overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">
-      <pre style="margin: 0; line-height: 125%"><span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">use-modules</span> <span style="color: #ffffff">(</span><span
-style="color: #ff0086; font-weight: bold">Scheme+</span><span style="color: #ffffff">))</span>
+      <pre style="margin: 0; line-height: 125%"><span style="color:
+      #ffffff">
+      <pre>
+(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+      </pre>
+      </span>
 </pre> </div>
     <div style="background: #111111;
       overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;">

@@ -287,7 +287,7 @@ get it</a>)<br>
 
 
 <figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
-<span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
+<span class="p"></span>
 
 
 <span class="p">(</span><span class="nf">declare</span> <span class="nv">L-init</span> <span class="nv">t-init</span> <span class="nv">ls</span> <span class="nv">dyna</span> <span class="nv">cpt</span><span class="p">)</span>
@@ -415,8 +415,9 @@ procedure as Scheme is not a typed language.<br>
         Software Foundation, Inc.</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #990033"><font style="font: 18.0px Menlo; font-variant-ligatures:
-        no-common-ligatures" size="5" face="Menlo">scheme@(guile-user)&gt;
-        (use-modules (Scheme+))</font></p>
+        no-common-ligatures" size="5"
+face="Menlo">scheme@(guile-user)&gt;
+</font></p>
     <p style="margin: 0.0px 0.0px 0.0px 0.0px; background-color:
       #990033"><font style="font: 18.0px Menlo; font-variant-ligatures:
         no-common-ligatures" size="5" face="Menlo">;;; note: source file
@@ -459,7 +460,7 @@ procedure as Scheme is not a typed language.<br>
         no-common-ligatures" size="5" face="Menlo">$3 = (1 2 3 4 5)</font></p>
     <br>
 <p>Hash Tables support :</p>
-    <pre>(use-modules (Scheme+))
+    <pre>
 (use-modules (srfi srfi-69))  ;; support for SRFI 69 <meta http-equiv="content-type" content="text/html; charset=UTF-8">Basic hash tables
 
 {my-hash-tbl &lt;+ (make-hash-table)} ;; add an object in the current environment, here a hash table
@@ -473,7 +474,7 @@ procedure as Scheme is not a typed language.<br>
     <p>for the rest read below and the documentation.</p>
     <br>
     <h2>2.<u>Download Scheme+:</u></h2>
-    <p>The source code of the <b>Scheme+ module</b>, currently only for <a href="https://www.gnu.org/software/guile/" target="_blank">Guile implementation of Scheme</a> can be retrieved
+    <p>The source code of <b>Scheme+ </b> for <a href="https://www.gnu.org/software/guile/" target="_blank">Guile implementation of Scheme</a> can be retrieved
       here: </p>
     <p><br>
     </p>
@@ -710,8 +711,17 @@ procedure as Scheme is not a typed language.<br>
       must have to access the result in array to return it...</p>
     <p>Scheme+ allow to write code more readable and simpler than normal Scheme.</p>
     <p>Prior to use <b>Scheme+</b> for the implementation of Scheme named
-      Guile, the <b>module </b>must be loaded,this is done by inserting the
-      statement <b>(use-modules (Scheme+))</b> at the beginning of the Scheme
+      Guile, the <b>code </b>must be loaded,this is done by inserting the
+      statement <b><pre>
+(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+</pre>
+
+</b> at the beginning of the Scheme
       source file.</p>
       <p>Below is the version of the above code written in Scheme+ :</p>
 <p>
@@ -719,7 +729,14 @@ procedure as Scheme is not a typed language.<br>
 
 </p><figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
-<span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
+<span class="p"><pre>
+(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+</pre></span>
 
 <span class="p">{</span><span class="nv">size</span> <span class="nv">&lt;+</span> <span class="mi">10000</span><span class="p">}</span>
 <span class="p">{</span><span class="nv">memo</span> <span class="nv">&lt;+</span> <span class="p">(</span><span class="nb">make-vector</span> <span class="nv">size</span> <span class="mi">0</span><span class="p">)</span><span class="p">}</span> 
@@ -769,7 +786,15 @@ procedure as Scheme is not a typed language.<br>
 
 <figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
-<span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
+<span class="p">(</span><span class="nf">use-modules</span> <span
+class="p"><pre>
+(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+</pre></span>
 
 <span class="p">(</span><span class="nf">declare</span> <span class="nv">size1</span> <span class="nv">memo1</span><span class="p">)</span>
 
@@ -843,7 +868,15 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
 <figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
-<span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
+<span class="p"><pre>
+(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+</pre>
+</span>
 
 <span class="p">{</span><span class="nv">L-init</span> <span class="nv">&lt;+</span> <span class="o">'</span><span class="p">(</span><span class="nf">1</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">24</span> <span class="mi">45</span> <span class="mi">64</span> <span class="mi">197</span> <span class="mi">256</span> <span class="mi">275</span> <span class="mi">323</span> <span class="mi">540</span> <span class="mi">723</span> <span class="mi">889</span> <span class="mi">915</span> <span class="mi">1040</span> <span class="mi">1041</span> <span class="mi">1093</span> <span class="mi">1099</span> <span class="mi">1111</span> <span class="mi">1284</span> <span class="mi">1344</span> <span class="mi">1520</span> <span class="mi">2027</span> <span class="mi">2500</span> <span class="mi">2734</span> <span class="mi">3000</span> <span class="mi">3267</span> <span class="mi">3610</span> <span class="mi">4285</span> <span class="mi">5027</span><span class="p">)</span><span class="p">}</span>
 <span class="p">{</span><span class="nv">t-init</span> <span class="nv">&lt;+</span> <span class="mi">35267</span><span class="p">}</span>
@@ -981,7 +1014,16 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
 <figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
-<span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
+<span class="p">
+<pre>
+(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+</pre>
+</span>
 
 <span class="p">(</span><span class="nf">declare</span> <span class="nv">L-init</span> <span class="nv">t-init</span> <span class="nv">ls</span> <span class="nv">dyna</span> <span class="nv">cpt</span><span class="p">)</span>
 
@@ -1043,7 +1085,16 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
 <figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
-<span class="p">(</span><span class="nf">use-modules</span> <span class="p">(</span><span class="nf">Scheme+</span><span class="p">))</span>
+<span class="p">
+<pre>
+(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+</pre>
+</span>
 
 <span class="p">(</span><span class="nf">def</span> <span class="p">(</span><span class="nf">subset-sum-dyna</span> <span class="nv">L</span> <span class="nv">t</span><span class="p">)</span>
 
