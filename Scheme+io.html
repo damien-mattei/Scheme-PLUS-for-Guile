@@ -1161,16 +1161,16 @@ Here is another overloading example:<br>
 <span class="p">(</span><span class="nf">define-overload-existing-operator</span> <span class="nv">*</span><span class="p">)</span>
 <span class="p">(</span><span class="nf">define-overload-procedure</span> <span class="nv">uniform</span><span class="p">)</span>
 
+<span class="c1">; second stage overloading</span>
+<span class="p">(</span><span class="nf">overload-existing-operator</span> <span class="nv">+</span> <span class="nv">vector-append</span> <span class="p">(</span><span class="nb">vector?</span> <span class="nv">vector?</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nf">overload-existing-operator</span> <span class="nv">*</span> <span class="nv">multiply-flomat-vector</span> <span class="p">(</span><span class="nf">flomat?</span> <span class="nv">vector?</span><span class="p">))</span>
+
 <span class="p">(</span><span class="nf">include</span> <span class="s">"../Scheme-PLUS-for-Guile/scheme-infix.scm"</span><span class="p">)</span>
 
 <span class="p">(</span><span class="nf">include</span> <span class="s">"../Scheme-PLUS-for-Guile/assignment.scm"</span><span class="p">)</span>
 <span class="p">(</span><span class="nf">include</span> <span class="s">"../Scheme-PLUS-for-Guile/apply-square-brackets.scm"</span><span class="p">)</span>
 
-
-<span class="c1">; second stage overloading</span>
-<span class="p">(</span><span class="nf">overload-existing-operator</span> <span class="nv">+</span> <span class="nv">vector-append</span> <span class="p">(</span><span class="nb">vector?</span> <span class="nv">vector?</span><span class="p">))</span>
-
-<span class="p">(</span><span class="nf">overload-existing-operator</span> <span class="nv">*</span> <span class="nv">multiply-flomat-vector</span> <span class="p">(</span><span class="nf">flomat?</span> <span class="nv">vector?</span><span class="p">))</span>
 
 <span class="c1">;; return a number in ]-1,1[</span>
 <span class="c1">;; the dummy parameter is needed by a flomat procedure</span>

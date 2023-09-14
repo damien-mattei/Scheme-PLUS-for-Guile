@@ -1151,16 +1151,19 @@ Here is another overloading example:
 (define-overload-existing-operator *)
 (define-overload-procedure uniform)
 
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
 
 
 ; second stage overloading
 (overload-existing-operator + vector-append (vector? vector?))
 
-(overload-existing-operator * multiply-flomat-vector (flomat? vector?))
+(overload-existing-operator * multiply-flomat-vector (flomat?
+vector?))
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+
 
 ;; return a number in ]-1,1[
 ;; the dummy parameter is needed by a flomat procedure
