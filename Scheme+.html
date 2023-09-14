@@ -398,10 +398,31 @@ A possibility of defining overloaded functions or operators (just add
 <br>
 Note that when a function that overload an operator has more than 2 args (f a1 a2 a3 ...) and only (f a1 a2) is defined
 we do: (f a1 (f a2 a3 ...)) for operators.<br>
-A complete set of new procedures and macros:  overload overload-procedure
-overload-operator overload-function allow overloading of both
+A complete set of new procedures and macros:
+<pre>
+define-overload-procedure
+overload-procedure
+
+ define-overload-existing-procedure
+overload-existing-procedure
+	 
+ define-overload-operator
+overload-operator
+	 
+ define-overload-existing-operator
+ overload-existing-operator
+	 
+ define-overload-n-arity-operator
+ overload-n-arity-operator
+	 
+ define-overload-existing-n-arity-operator
+ overload-existing-n-arity-operator
+	 
+ overload-square-brackets
+</pre> allow overloading of both
 functions and operators. Those macros call procedures written
-recursively because all predicate must be test to find the matching
+recursively  or imperatively with hast tables depending of scheme
+implementation because all predicate must be test to find the matching
 procedure as Scheme is not a typed language.<br> 
 
     <p>Another example with Guile Scheme in the REPL (Read Eval Print Loop):</p>
