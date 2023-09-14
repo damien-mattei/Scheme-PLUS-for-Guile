@@ -1153,42 +1153,43 @@ Here is another overloading example:<br>
 <h2><br>
 
 
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span><span class="nv">scheme</span>
+
+<span class="c1">; first stage overloading</span>
+<span class="p">(</span><span class="nf">define-overload-existing-operator</span> <span class="nv">+</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">define-overload-existing-operator</span> <span class="nv">*</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">define-overload-procedure</span> <span class="nv">uniform</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nf">include</span> <span class="s">"../Scheme-PLUS-for-Guile/scheme-infix.scm"</span><span class="p">)</span>
+
+<span class="p">(</span><span class="nf">include</span> <span class="s">"../Scheme-PLUS-for-Guile/assignment.scm"</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">include</span> <span class="s">"../Scheme-PLUS-for-Guile/apply-square-brackets.scm"</span><span class="p">)</span>
 
 
-<pre>
-; first stage overloading
-(define-overload-existing-operator +)
-(define-overload-existing-operator *)
-(define-overload-procedure uniform)
+<span class="c1">; second stage overloading</span>
+<span class="p">(</span><span class="nf">overload-existing-operator</span> <span class="nv">+</span> <span class="nv">vector-append</span> <span class="p">(</span><span class="nb">vector?</span> <span class="nv">vector?</span><span class="p">))</span>
 
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+<span class="p">(</span><span class="nf">overload-existing-operator</span> <span class="nv">*</span> <span class="nv">multiply-flomat-vector</span> <span class="p">(</span><span class="nf">flomat?</span> <span class="nv">vector?</span><span class="p">))</span>
 
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
-
-
-; second stage overloading
-(overload-existing-operator + vector-append (vector? vector?))
-
-(overload-existing-operator * multiply-flomat-vector (flomat? vector?))
-
-;; return a number in ]-1,1[
-;; the dummy parameter is needed by a flomat procedure
-(define (uniform-dummy dummy) {(random) * (if {(random 2) = 0}  1 -1)}); we randomly choose the sign of the random number
+<span class="c1">;; return a number in ]-1,1[</span>
+<span class="c1">;; the dummy parameter is needed by a flomat procedure</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">uniform-dummy</span> <span class="nv">dummy</span><span class="p">)</span> <span  >{</span><span class="p">(</span><span class="nf">random</span><span class="p">)</span> <span class="nv">*</span> <span class="p">(</span><span class="k">if</span> <span  >{</span><span class="p">(</span><span class="nf">random</span> <span class="mi">2</span><span class="p">)</span> <span class="nv">=</span> <span class="mi">0</span><span  >}</span>  <span class="mi">1</span> <span class="mi">-1</span><span class="p">)</span><span  >}</span><span class="p">)</span><span class="c1">; we randomly choose the sign of the random number</span>
 		         	
 
-; return a random number between [inf, sup]
-(define (uniform-interval inf sup)
-  {gap <+ {sup - inf}}
-  {inf + gap * (random)})
+<span class="c1">; return a random number between [inf, sup]</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">uniform-interval</span> <span class="nv">inf</span> <span class="nv">sup</span><span class="p">)</span>
+  <span  >{</span><span class="nv">gap</span> <span class="nv">&lt;+</span> <span  >{</span><span class="nv">sup</span> <span class="nv">-</span> <span class="nv">inf</span><span  >}}</span>
+  <span  >{</span><span class="nv">inf</span> <span class="nv">+</span> <span class="nv">gap</span> <span class="nv">*</span> <span class="p">(</span><span class="nf">random</span><span class="p">)</span><span  >}</span><span class="p">)</span>
 
-(overload-procedure uniform uniform-dummy (number?))
+<span class="p">(</span><span class="nf">overload-procedure</span> <span class="nv">uniform</span> <span class="nv">uniform-dummy</span> <span class="p">(</span><span class="nb">number?</span><span class="p">))</span>
 
-(overload-procedure uniform uniform-interval (number? number?))
+<span class="p">(</span><span class="nf">overload-procedure</span> <span class="nv">uniform</span> <span class="nv">uniform-interval</span> <span class="p">(</span><span class="nb">number?</span> <span class="nv">number?</span><span class="p">))</span>
 
 
 
-</pre>
+<span class="o"></span></code></pre></figure>
+
+
     </h2>
 <h2><br>
     </h2>
