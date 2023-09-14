@@ -10,7 +10,7 @@
    #:use-module ((guile))
    ;;  #:use-module (srfi srfi-69 ) ;; Basic hash tables 
    #:use-module (srfi srfi-1) ;; any,every
-   #:export ( define-overload-procedure ;; todo: rename define declare ?
+   #:export ( define-overload-procedure
 	      overload-procedure
 	      
 	      define-overload-existing-procedure
