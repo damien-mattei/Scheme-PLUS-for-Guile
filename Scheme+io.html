@@ -1151,8 +1151,50 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
     
 <h2><br>
+
+
+Here is another overloading example:
+
+{% highlight scheme %}
+```scheme
+
+; first stage overloading
+(define-overload-existing-operator +)
+(define-overload-existing-operator *)
+(define-overload-procedure uniform)
+
+(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
+
+(include "../Scheme-PLUS-for-Guile/assignment.scm")
+(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+
+
+; second stage overloading
+(overload-existing-operator + vector-append (vector? vector?))
+
+(overload-existing-operator * multiply-flomat-vector (flomat? vector?))
+
+;; return a number in ]-1,1[
+;; the dummy parameter is needed by a flomat procedure
+(define (uniform-dummy dummy) {(random) * (if {(random 2) = 0}  1 -1)}); we randomly choose the sign of the random number
+		         	
+
+; return a random number between [inf, sup]
+(define (uniform-interval inf sup)
+  {gap <+ {sup - inf}}
+  {inf + gap * (random)})
+
+(overload-procedure uniform uniform-dummy (number?))
+
+(overload-procedure uniform uniform-interval (number? number?))
+
+
+
+```
+{% endhighlight %}
+
     </h2>
-    <h2><br>
+<h2><br>
     </h2>
     <h2>11<u>. History of project:</u></h2>
     <p>First i developped a new set of LET special forms with less bracket use
