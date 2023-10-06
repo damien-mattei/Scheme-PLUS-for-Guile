@@ -55,7 +55,7 @@
 
 
 (include "def.scm")
-(include "array.scm")
+;;(include "array.scm") ;; MUST be included after assignment .....
 (include "set-values-plus.scm")
 
 (include "for_next_step.scm") ;; for apply-square-brackets.scm, assignment.scm

@@ -56,6 +56,7 @@
 ;; create a vector of line and column with a function
 (define (create-vector-2d fct lin col)
   {v <+ (make-vector lin)}
+  ;;(display "ok") (newline)
   (for ({l <+ 0} {l < lin} {l <- l + 1})
        {v[l] <- (make-vector col)}
        (for ({c <+ 0} {c < col} {c <- c + 1})

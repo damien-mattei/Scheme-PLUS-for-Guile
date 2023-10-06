@@ -407,6 +407,7 @@
 ;; insert in header:
 ;; (require (for-syntax r6rs/private/base-for-syntax))
 
+
 (define-syntax for
    (lambda (stx)
      (syntax-case stx ()
@@ -418,14 +419,18 @@
 		       (lambda (escape)
 			 (let-syntax ((BREAK (identifier-syntax (escape))))
 			   init
-			   (let loop ()
-			     (when test
+			   (let loop ((res 0)) ;; now we will return a result at the end if no break but if we continue? what happens?
+			     (if test
+				 (begin
 				   (call/cc
 				    (lambda (next)
-				     (let-syntax ((CONTINUE (identifier-syntax (next))))
-				       body ...)))
+				      (set! res (let-syntax ((CONTINUE (identifier-syntax (next))))
+						  (let () ;; allow definitions
+						    body ...)))))
 				   incrmt
-				   (loop))))))
+				   (loop res))
+				 res)
+			     ))))
 		      ) ;; close syntax
 		     
 		     )))))

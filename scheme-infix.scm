@@ -89,7 +89,8 @@
 					    
 					      (else
 					       (!prec
-						;; here we need to eval quote the <- or -> to avoid a bad syntax error with those macros
+						;; here we need to eval quote the <- or -> to avoid a bad syntax error with those macros at expansion stage
+						;; but opspecial will never evaluate as a macro at evaluation because it will be a procedure
 						ident (eval (quote opspecial) (interaction-environment)) term1 op term2))))
     
 						   
@@ -101,7 +102,10 @@
 						(!prec ident (eval (quote opspecial) (interaction-environment))  term1 op term2 ...))))) ;; this is in fact a general case ($nfx$ term0 ops term1 op term2 ...)
 
 
-  
+
+
+
+
  ;; DEPRECATED
   ;; now quoting all the macros,function, symbols ... so we are no more annoyed with macro 'bad syntax' error and also this should (?) keep the 'and and 'or short-circuited functionalities.
 

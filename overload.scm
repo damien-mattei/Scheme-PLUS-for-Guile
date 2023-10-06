@@ -41,30 +41,10 @@
 	      ))
 
 
-
-
-;; scheme@(guile-user)> (use-modules (Scheme+))
-;; scheme@(guile-user)> (define (add-vect-vect v1 v2) (map + v1 v2))
-;; scheme@(guile-user)> (overload + add-vect-vect (list? list?) 'operator)
-;; create-overloaded-operator : pred-list = (#<procedure list? (_)> #<procedure list? (_)>)
-;; funct: #<procedure add-vect-vect (v1 v2)>
-;; orig-funct: #<procedure + (#:optional _ _ . _)>
-;; old-funct: #<procedure + (#:optional _ _ . _)>
-;; new-funct: #<procedure new-funct args>
-;; scheme@(guile-user)> (+ '(1 2 3) '(4 5 6) '(7 8 9))
-;; new-funct: new-funct = #<procedure new-funct args>
-;; new-funct : pred-list = (#<procedure list? (_)> #<procedure list? (_)>)
-;; new-funct : args = ((1 2 3) (4 5 6) (7 8 9))
-;; new-funct : nb-args = 3
-;; (12 15 18)
-
-
-;; TODO: try to write overload with define-method
+(define $ovrld-square-brackets-lst$ '()) ;; for square brackets
 
 
 
-
-;;(define $ovrld-meta$ (make-hash-table))
 
 
 
@@ -431,7 +411,7 @@
 	       (car (cdr  pred-proc-list))
 	       #f))
 	 
-	 (define proc-search-result (ormap test-proc $ovrld-square-brackets-lst$ )) ; search for a procedure matching arguments
+	 (define proc-search-result (any test-proc $ovrld-square-brackets-lst$ )) ; search for a procedure matching arguments
 	 
 	 (if proc-search-result
 	     proc-search-result
@@ -451,7 +431,7 @@
 	       (car (cdr  pred-proc-list))
 	       #f))
 	 
-	 (define proc-search-result (ormap test-proc $ovrld-square-brackets-lst$ )) ; search for a procedure matching arguments
+	 (define proc-search-result (any test-proc $ovrld-square-brackets-lst$ )) ; search for a procedure matching arguments
 	 
 	 (if proc-search-result
 	     (car proc-search-result)
@@ -468,7 +448,7 @@
 	       (car (cdr  pred-proc-list))
 	       #f))
 	 
-	 (define proc-search-result (ormap test-proc $ovrld-square-brackets-lst$ )) ; search for a procedure matching arguments
+	 (define proc-search-result (any test-proc $ovrld-square-brackets-lst$ )) ; search for a procedure matching arguments
 	 
 	 (if proc-search-result
 	     (cdr proc-search-result)
@@ -478,7 +458,6 @@
 
 
 ;; this macro do the two overload steps in one for an existing procedure, (see the potential problem with infix precedence?)
-;; (overload-function (+ (L1 list?) (L2 list?)) (map + L1 L2)) ;; bad example ,it is not a function but an operator!
 (define-syntax overload-function
   
   (syntax-rules ()
