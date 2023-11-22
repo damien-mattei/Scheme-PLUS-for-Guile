@@ -1,6 +1,3 @@
-;;#lang reader "SRFI-105.rkt"
-;;#lang r5rs
-
 ;; infix evaluator with operator precedence
 
 ;;(provide (all-defined-out)) ;; export all bindings
@@ -57,7 +54,7 @@
 	       #f))))
 
 (define (!prec . terms) ;; precursor of !0
-   (!0 infix-operators-lst terms))
+   (!0 (cdr infix-operators-lst) terms)) ;; cdr skip version number
 
 
  
@@ -267,44 +264,4 @@
 (define (!*prec terms)   ;; precursor of !*
   (if (null? terms) 
       terms
-      (!* terms infix-operators-lst #f)))
-
-
-
-
-
-;; can you believe they made && and || special forms??? yes :-) but with advantage of being short-circuited,but i admit it has been a headlock for an infix solution 
-;; note: difference between bitwise and logic operator
-
-
-;; a list of lists of operators. lists are evaluated in order, so this also
-;; determines operator precedence
-;;  added bitwise operator with the associated precedences and modulo too
-
-
-;; a list of lists of operators. lists are evaluated in order, so this also
-;; determines operator precedence
-;;  added bitwise operator with the associated precedences and modulo too
-(define infix-operators-lst
-  
-  (list
-   
-   (list expt **)
-   (list * / %)
-   (list + -)
-   
-   (list << >>)
-
-   (list & | )
-
-					; now this is interesting: because scheme is dynamically typed, we aren't
-					; limited to any one type of function
-   
-   (list < > = ≠ <= >=) ;;  <>  is already defined in Guile
-   
-   
-   ;;(list 'dummy) ;; can keep the good order in case of non left-right assocciative operators.(odd? reverse them) 
-   
-   )
-
-  )
+      (!* terms (cdr infix-operators-lst) #f))) ;; cdr skip version number

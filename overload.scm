@@ -1,4 +1,8 @@
 ;; overload
+
+
+;; guile version
+
 ;; use with Scheme+:
 ;;  sudo cp overload.scm /usr/local/share/guile/site/3.0
 
@@ -7,38 +11,39 @@
 ;;(use-modules (overload))
 
 (define-module (overload)
-   #:use-module ((guile))
-   ;;  #:use-module (srfi srfi-69 ) ;; Basic hash tables 
-   #:use-module (srfi srfi-1) ;; any,every
-   #:export ( define-overload-procedure
-	      overload-procedure
-	      
-	      define-overload-existing-procedure
-	      overload-existing-procedure
-	      
-	      define-overload-operator
-	      overload-operator
-	      
-	      define-overload-existing-operator
-	      overload-existing-operator
-	      
-	      define-overload-n-arity-operator
-	      overload-n-arity-operator
+  #:use-module ((guile))
+  #:use-module (infix-operators)
+  ;;  #:use-module (srfi srfi-69 ) ;; Basic hash tables 
+  #:use-module (srfi srfi-1) ;; any,every
+  #:export ( define-overload-procedure
+	     overload-procedure
+	     
+	     define-overload-existing-procedure
+	     overload-existing-procedure
+	     
+	     define-overload-operator
+	     overload-operator
+	     
+	     define-overload-existing-operator
+	     overload-existing-operator
+	     
+	     define-overload-n-arity-operator
+	     overload-n-arity-operator
 
-	      define-overload-existing-n-arity-operator
-	      overload-existing-n-arity-operator
-	      
-	      overload-function ;; see how to do the same for operator, see the possible problem with infix precedence?
+	     define-overload-existing-n-arity-operator
+	     overload-existing-n-arity-operator
+	     
+	     overload-function ;; see how to do the same for operator, see the possible problem with infix precedence?
 
 
-	      $ovrld-square-brackets-lst$
-	 
-	      overload-square-brackets
-	      ;;find-getter-and-setter-for-overloaded-square-brackets
-	      find-getter-for-overloaded-square-brackets
-	      find-setter-for-overloaded-square-brackets
-	 
-	      ))
+	     $ovrld-square-brackets-lst$
+	     
+	     overload-square-brackets
+	     ;;find-getter-and-setter-for-overloaded-square-brackets
+	     find-getter-for-overloaded-square-brackets
+	     find-setter-for-overloaded-square-brackets
+	     
+	     ))
 
 
 (define $ovrld-square-brackets-lst$ '()) ;; for square brackets
@@ -181,11 +186,7 @@
   (syntax-rules ()
 
     ((_ orig-funct funct (pred-arg1 ...))
-     ;(begin
-       (define orig-funct (create-overloaded-existing-operator orig-funct funct (list pred-arg1 ...)))
-       ;(display"Updating operators...") (newline)
-       ;(update-operators)))))
-       )))
+     (define orig-funct (create-overloaded-existing-operator orig-funct funct (list pred-arg1 ...))))))
 
 (define-syntax overload-operator
   
@@ -339,6 +340,8 @@
   (display "old-funct: ") (display old-funct) (newline)
   (display "new-funct: ") (display new-funct) (newline)
 
+  (replace-operator! orig-funct new-funct) ;; if problem with infix precedence use insert-operator! see Kawa code
+
   new-funct)
 
 
@@ -380,6 +383,8 @@
   (display "old-funct: ") (display old-funct) (newline)
   (display "new-funct: ") (display new-funct) (newline)
   (newline)
+
+  (replace-operator! orig-funct new-funct)
 
   new-funct)
 

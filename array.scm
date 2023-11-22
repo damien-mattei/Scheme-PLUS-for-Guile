@@ -1,5 +1,7 @@
 ;; arrays
 
+;; guile version
+
 ;; This file is part of Scheme+
 
 ;; Copyright 2021-2023 Damien MATTEI
@@ -21,6 +23,28 @@
 
 ;; TODO : make a version vector with resizable arrays using classes
 ;; cf: https://www.gnu.org/software/guile/manual/html_node/GOOPS.html
+
+(define-module (array)
+
+  #:use-module (for_next_step)
+
+  #:export (make-array-2d
+	    array-2d-ref
+	    array-2d-set!
+	    create-vector-2d
+	    negative-vector-index
+	    function-array-n-dim-ref
+	    function-array-n-dim-set!
+	    display-array-2d
+	    dv-2d
+	    funct-array-2d-set!
+	    funct-array-2d-ref
+	    array-ref-set!
+	    srfi25-array-set!))
+
+
+;;(include "./for_next_step.scm")
+
 
 ;; the value v should be put before in a let to avoid multiple evaluation after macro expand
 (define-syntax make-array-2d
@@ -54,16 +78,23 @@
     ((_ array lin col val) (vector-set! (vector-ref array lin) col val))))
 
 ;; create a vector of line and column with a function
+;; (define (create-vector-2d fct lin col)
+;;   {v <+ (make-vector lin)}
+;;   ;;(display "ok") (newline)
+;;   (for ({l <+ 0} {l < lin} {l <- l + 1})
+;;        {v[l] <- (make-vector col)}
+;;        (for ({c <+ 0} {c < col} {c <- c + 1})
+;; 	    {v[l][c] <- (fct l c)}))
+;;   v)
+
+;; create a vector (or array) of line and column with a function
 (define (create-vector-2d fct lin col)
-  {v <+ (make-vector lin)}
-  ;;(display "ok") (newline)
-  (for ({l <+ 0} {l < lin} {l <- l + 1})
-       {v[l] <- (make-vector col)}
-       (for ({c <+ 0} {c < col} {c <- c + 1})
-	    {v[l][c] <- (fct l c)}))
+  (define v (make-vector lin))
+  (for ((define l 0) (< l lin) (set! l (+ l 1)))
+       (vector-set! v l (make-vector col))
+       (for ((define c 0) (< c col) (set! c (+ c 1)))
+	    (array-2d-set! v l c (fct l c))))
   v)
-
-
 
 ;; scheme@(guile-user)> (define arr (make-array-2d 10 7 0))
 ;; scheme@(guile-user)> (array-n-dim-ref arr 4 3)
@@ -128,7 +159,8 @@
   (syntax-rules ()
     ((_ array)
      (for-basic (y 0 (- (vector-length array) 1))
-	  (display-nl (vector-ref array y))))))
+		(display (vector-ref array y))
+		(newline)))))
 
 
 ;; > (define _quai 34)
@@ -139,7 +171,7 @@
     ((_ var) (begin
 	       ;;(display (symbol->string (quote var)))
 	       (display (quote var))
-	       (display-nl " = ")
+	       (display " = ")(newline)
 	       (display-array-2d var)
 	       (newline)))))
 
