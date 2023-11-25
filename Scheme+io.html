@@ -83,7 +83,7 @@
         no room for doubts must have no room for thoughts either."</i> -<a href="https://www.ics.uci.edu/%7Epattis/" target="_blank">R. Patti</a></p>
     <p style="text-align: center;"><br>
     </p>
-    <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span style="color: #999999;"> <font size="+2">version 7.1 for Guile Scheme<br>
+    <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span style="color: #999999;"> <font size="+2">version 7.2 for Guile Scheme<br>
           </font></span></b></h1>
     <p style="text-align: center;">
 	Display options for viewing this documentation:<br><br>
@@ -734,12 +734,7 @@ face="Menlo">scheme@(guile-user)&gt;
     <p>Prior to use <b>Scheme+</b> for the implementation of Scheme named
       Guile, the <b>code </b>must be loaded,this is done by inserting the
       statement <b><pre>
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+(use-modules (Scheme+))
 </pre>
 
 </b> at the beginning of the Scheme
@@ -751,12 +746,7 @@ face="Menlo">scheme@(guile-user)&gt;
 </p><figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p"><pre>
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+(use-modules (Scheme+))
 </pre></span>
 
 <span class="p">{</span><span class="nv">size</span> <span class="nv">&lt;+</span> <span class="mi">10000</span><span class="p">}</span>
@@ -808,12 +798,7 @@ face="Menlo">scheme@(guile-user)&gt;
 <figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p"><pre>
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+(use-modules (Scheme+))
 </pre></span>
 
 <span class="p">(</span><span class="nf">declare</span> <span class="nv">size1</span> <span class="nv">memo1</span><span class="p">)</span>
@@ -889,12 +874,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 <figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
 <span class="p"><pre>
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+(use-modules (Scheme+))
 </pre>
 </span>
 
@@ -1036,12 +1016,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
 <span class="p">
 <pre>
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+(use-modules (Scheme+))
 </pre>
 </span>
 
@@ -1107,12 +1082,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 
 <span class="p">
 <pre>
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+(use-modules (Scheme+))
 </pre>
 </span>
 
@@ -1157,9 +1127,7 @@ Here is another overloading example:<br>
 <h2><br>
 
 
-<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span><span class="nv"></span>
-
-<span class="p">(</span><span class="nf">include</span> <span class="s">"../Scheme-PLUS-for-Guile/Scheme+.scm"</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span><span class="nv"></span>(use-modules (Scheme+))
 <span class="c1">; first stage overloading</span>
 <span class="p">(</span><span class="nf">define-overload-existing-operator</span> <span class="nv">+</span><span class="p">)</span>
 <span class="p">(</span><span class="nf">define-overload-existing-operator</span> <span class="nv">*</span><span class="p">)</span>
@@ -1169,13 +1137,7 @@ Here is another overloading example:<br>
 <span class="p">(</span><span class="nf">overload-existing-operator</span> <span class="nv">+</span> <span class="nv">vector-append</span> <span class="p">(</span><span class="nb">vector?</span> <span class="nv">vector?</span><span class="p">))</span>
 
 <span class="p">(</span><span class="nf">overload-existing-operator</span> <span class="nv">*</span> <span class="nv">multiply-flomat-vector</span> <span class="p">(</span><span class="nf">flomat?</span> <span class="nv">vector?</span><span class="p">))</span>
-
-<span class="p">(</span><span class="nf">include</span> <span class="s">"../Scheme-PLUS-for-Guile/scheme-infix.scm"</span><span class="p">)</span>
-
-<span class="p">(</span><span class="nf">include</span> <span class="s">"../Scheme-PLUS-for-Guile/assignment.scm"</span><span class="p">)</span>
-<span class="p">(</span><span class="nf">include</span> <span class="s">"../Scheme-PLUS-for-Guile/apply-square-brackets.scm"</span><span class="p">)</span>
-
-
+(use-modules (Scheme+))
 <span class="c1">;; return a number in ]-1,1[</span>
 <span class="c1">;; the dummy parameter is needed by a flomat procedure</span>
 <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">uniform-dummy</span> <span class="nv">dummy</span><span class="p">)</span> <span  >{</span><span class="p">(</span><span class="nf">random</span><span class="p">)</span> <span class="nv">*</span> <span class="p">(</span><span class="k">if</span> <span  >{</span><span class="p">(</span><span class="nf">random</span> <span class="mi">2</span><span class="p">)</span> <span class="nv">=</span> <span class="mi">0</span><span  >}</span>  <span class="mi">1</span> <span class="mi">-1</span><span class="p">)</span><span  >}</span><span class="p">)</span><span class="c1">; we randomly choose the sign of the random number</span>

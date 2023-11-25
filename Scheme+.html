@@ -23,7 +23,7 @@
     <p style="text-align: center;"><br>
     </p>
     <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span
-          style="color: #999999;"> <font size="+2">version 7.1 for Guile Scheme<br>
+          style="color: #999999;"> <font size="+2">version 7.2 for Guile Scheme<br>
           </font></span></b></h1>
     <p style="text-align: center;"> </p>
     <p style="text-align: center;"><br>
@@ -237,12 +237,7 @@ v * t} / (sqrt {1 - v ** 2 / c ** 2})}</b></p>
       <pre style="margin: 0; line-height: 125%"><span style="color:
       #ffffff">
       <pre>
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+(use-modules (Scheme+))
       </pre>
       </span>
 </pre> <br>
@@ -811,12 +806,7 @@ style="color: #fb660a">n</span> <span style="color: #fb660a">fibn</span><span st
       Guile, the <b>code </b>must be loaded,this is done by inserting the
 statement <b>
 <pre>
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+(use-modules (Scheme+))
 </pre></b> at the beginning of the Scheme
       source file.</p>
     <p>Below is the version of the above code written in Scheme+ :</p>
@@ -826,12 +816,7 @@ statement <b>
       overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;"><span
       style="color: #ffffff">
       <pre>
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+(use-modules (Scheme+))
 </pre></span>
     </div>
     <div style="background: #111111; overflow:auto;width:auto;border:
@@ -904,12 +889,7 @@ style="color: #ffffff">))</span>
         <pre style="margin: 0; line-height: 125%"><span style="color:
 	#ffffff">
 	<pre>
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+(use-modules (Scheme+))
 	</pre>
 	</span>
 <span style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">declare</span> <span
@@ -1008,12 +988,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
       overflow:auto;width:auto;border:solid gray;border-width:.1em .1em      .1em .8em;padding:.2em .6em;"><span
       style="color: #ffffff">
       <pre>
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+(use-modules (Scheme+))
       </pre>
       </span>
     </div>
@@ -1347,12 +1322,7 @@ style="color: #ffffff">)</span>
       <pre style="margin: 0; line-height: 125%"><span style="color:
       #ffffff">
       <pre>
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+(use-modules (Scheme+))
       </pre>
       </span>
 </pre> </div>
@@ -1511,12 +1481,7 @@ style="color: #008800; font-style: italic; background-color: #0f140f">;; return 
       <pre style="margin: 0; line-height: 125%"><span style="color:
       #ffffff">
       <pre>
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+(use-modules (Scheme+))
       </pre>
       </span>
 </pre> </div>
@@ -1619,10 +1584,6 @@ Here is another overloading example:<br>
 (overload-existing-operator * multiply-flomat-vector (flomat?
 vector?))
 
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
 
 ;; return a number in ]-1,1[
 ;; the dummy parameter is needed by a flomat procedure
