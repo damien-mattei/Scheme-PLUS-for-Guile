@@ -239,14 +239,7 @@ get it</a>)<br>
 {% highlight scheme %}
 ```scheme
 
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
-
-
+(use-modules (Scheme+))
 
 (declare L-init t-init ls dyna cpt)
 
@@ -736,12 +729,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
       Guile, the <b>code</b>must be loaded,this is done by inserting the
       statement <b>
 	  <pre>
-	  (include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
+	  (use-modules (Scheme+))
 </pre></b> at the beginning of the Scheme
       source file.</p>
       <p>Below is the version of the above code written in Scheme+ :</p>
@@ -750,14 +738,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
 {% highlight scheme %}
 ```scheme
 
-
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
-
+(use-modules (Scheme+))
 
 {size <+ 10000}
 {memo <+ (make-vector size 0)} 
@@ -883,13 +864,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 {% highlight scheme %}
 ```scheme
 
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
-
+(use-modules (Scheme+))
 
 {L-init <+ '(1 3 4 16 17 24 45 64 197 256 275 323 540 723 889 915 1040 1041 1093 1099 1111 1284 1344 1520 2027 2500 2734 3000 3267 3610 4285 5027)}
 {t-init <+ 35267}
@@ -1029,14 +1004,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 {% highlight scheme %}
 ```scheme
 
-
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
-
+(use-modules (Scheme+))
 
 (declare L-init t-init ls dyna cpt)
 
@@ -1098,14 +1066,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 {% highlight scheme %}
 ```scheme
 
-
-(include "../Scheme-PLUS-for-Guile/Scheme+.scm")
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
-
+(use-modules (Scheme+))
 
 (def (subset-sum-dyna L t)
 
@@ -1150,6 +1111,8 @@ Here is another overloading example:
 {% highlight scheme %}
 ```scheme
 
+(use-modules (Scheme+))
+
 ; first stage overloading
 (define-overload-existing-operator +)
 (define-overload-existing-operator *)
@@ -1162,11 +1125,6 @@ Here is another overloading example:
 
 (overload-existing-operator * multiply-flomat-vector (flomat?
 vector?))
-
-(include "../Scheme-PLUS-for-Guile/scheme-infix.scm")
-
-(include "../Scheme-PLUS-for-Guile/assignment.scm")
-(include "../Scheme-PLUS-for-Guile/apply-square-brackets.scm")
 
 
 ;; return a number in ]-1,1[
