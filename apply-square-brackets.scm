@@ -874,7 +874,7 @@
        ;;(display partial-result) (newline)
        (when (null? args)
 	     ;;(display "before !*prec") (newline)
-	     {result <- (append result (!*prec partial-result))} ;; !*prec is defined in scheme-infix.rkt
+	     {result <- (append result (!*prec partial-result))} ;; !*prec is defined in scheme-infix.scm
 	     ;;(display "after !*prec") (newline)
 	     ;;(display result) (newline)
 	     (return-rec result)) ;; return from all recursive calls
