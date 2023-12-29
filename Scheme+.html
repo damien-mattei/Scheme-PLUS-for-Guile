@@ -394,6 +394,8 @@ vn-lst))<br>
   {map-args <+ (cons + vn-lst)}
   (apply map map-args))
 
+(overload-existing-n-arity-operator + add-n-lists (list? list?))
+
 {'(1 2 3) + '(4 5 6) + '(7 8 9)}<br>
 (12 15 18)<br>
 <br>
