@@ -17,7 +17,7 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-(define debug-mode #t) ;; global debug-mode definition (you must set it in the function to debug to avoid a lot of information on display) 
+(define debug-mode #f) ;; global debug-mode definition (you must set it in the function to debug to avoid a lot of information on display) 
 
 (define debug-mode-save debug-mode)
 

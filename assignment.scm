@@ -830,59 +830,61 @@
 	 ;; '#(-1 2 -2 4 -3 6 7 8 9)
 	 (((? (cut equal? <> slice)) i2 (? (cut equal? <> slice)) step-not-used)
 
-	  {step <+ index4-or-step-eval}
+	  ($+>
+	   {step <+ index4-or-step-eval}
 	  
-	  (when {step = 0}
+	   (when {step = 0}
 		(error "assignment : slice step cannot be zero"))
-	  
-	  {i <+ 0}
-	  
-	  (if {step < 0} ;; with negative index we start at end of vector (like in Python)
-	      (for ({k <+ i2} {k >= 0} {k <- k + step})
-		   {container-eval[k] <- expr-eval[i]}
-		   {i <- i + 1})
-	      
-	      (for ({k <+ 0} {k < i2} {k <- k + step})
-		   {container-eval[k] <- expr-eval[i]}
-		   {i <- i + 1}))
+	   
+	   {i <+ 0}
+	   
+	   (if {step < 0} ;; with negative index we start at end of vector (like in Python)
+	       (for ({k <+ i2} {k >= 0} {k <- k + step})
+		    {container-eval[k] <- expr-eval[i]}
+		    {i <- i + 1})
+	       
+	       (for ({k <+ 0} {k < i2} {k <- k + step})
+		    {container-eval[k] <- expr-eval[i]}
+		    {i <- i + 1}))
 
-	  container-eval
-	  )
+	   container-eval
+	   ))
 	 
 	 
 	 ;; T[i1 $ $ s3]
 	 ((i1 (? (cut equal? <> slice)) (? (cut equal? <> slice)) step-not-used)
 
-	  {step <+ index4-or-step-eval}
+	  ($+>
+	   {step <+ index4-or-step-eval}
 
-	  ;; > {s <+ (string-append "abcdefgh")}
-	  ;; "abcdefgh"
-	  ;; {s[3 $ $ 2] <- "0000"}
-	  ;; > s
-	  ;; "abc0e0g0"
-	  
-	  (when (= 0 step)
-		(error "assignment : slice step cannot be zero"))
-	  
-	  (let* ((size-input (vector-length container-eval))
-		 (i 0))
-	    
-	    (if (< step 0) ;; with negative index we start at end of vector (like in Python)
-		(for ((define k (- size-input 1)) (>= k i1) (set! k (+ k step)))
-		     (vector-set! container-eval
-				  k
-				  (vector-ref expr-eval i))
-		     (set! i (+ 1 i)))
-		
-		(for ({k <+ i1} {k < size-input} {k <- k + step})
-		     (vector-set! container-eval
-				  k
-				  (vector-ref expr-eval i))
-		     {i <- 1 + i})))
+	   ;; > {s <+ (string-append "abcdefgh")}
+	   ;; "abcdefgh"
+	   ;; {s[3 $ $ 2] <- "0000"}
+	   ;; > s
+	   ;; "abc0e0g0"
+	   
+	   (when (= 0 step)
+		 (error "assignment : slice step cannot be zero"))
+	   
+	   (let* ((size-input (vector-length container-eval))
+		  (i 0))
+	     
+	     (if (< step 0) ;; with negative index we start at end of vector (like in Python)
+		 (for ((define k (- size-input 1)) (>= k i1) (set! k (+ k step)))
+		      (vector-set! container-eval
+				   k
+				   (vector-ref expr-eval i))
+		      (set! i (+ 1 i)))
+		 
+		 (for ({k <+ i1} {k < size-input} {k <- k + step})
+		      (vector-set! container-eval
+				   k
+				   (vector-ref expr-eval i))
+		      {i <- 1 + i})))
 
 
-	  container-eval
-	  )
+	   container-eval
+	   ))
 	 
 	 
 	 
@@ -930,7 +932,6 @@
   ;; transform the negative indexes in positive ones when not slices
   (when {(not (equal? index1-eval-pos slice)) and {index1-eval-pos < 0}}
 	{index1-eval-pos <- (container-length container-eval) + index1-eval-pos})
-  
   (when {(not (equal? index2-or-keyword-eval-pos slice)) and {index2-or-keyword-eval-pos < 0}}
 	{index2-or-keyword-eval-pos <- (container-length container-eval) + index2-or-keyword-eval-pos})
 
@@ -955,24 +956,26 @@
 	 ;; > s
 	 ;; "ab0d0f0h"
 	 ((i1 (? (cut equal? <> slice)) i2 (? (cut equal? <> slice)) step-not-used)
+
+	  ($+>
+	   {step <+ index5-or-step-eval}
+
+	   (copy-stepped-slice container-eval expr-eval i1 i2 step)
+
+	   container-eval))
 	  
-	  {step <+ index5-or-step-eval}
-
-	  (copy-stepped-slice container-eval expr-eval i1 i2 step)
-
-	  container-eval)
-	 
-	 
-	 ;; T[i1 i2 i3 i4 i5]
-	 ((list i1 i2 i3 i4 i5) 
 	  
-	  ;; normal case
-	  (if (vector? container-eval)
-	      (function-array-n-dim-set! container-eval expr-eval (reverse (list i1 i2 i3 i4 i5))) ;;(array-n-dim-set! array expr-eval i1 i2)
-	      (srfi25-array-set! container-eval index1-eval index2-or-keyword-eval index3-eval index4-or-keyword-eval index5-or-step-eval expr-eval))
+	  ;; T[i1 i2 i3 i4 i5]
+	  ;;((list i1 i2 i3 i4 i5)
+	  ((i1 i2 i3 i4 i5) 
+	   
+	   ;; normal case
+	   (if (vector? container-eval)
+	       (function-array-n-dim-set! container-eval expr-eval (reverse (list i1 i2 i3 i4 i5))) ;;(array-n-dim-set! array expr-eval i1 i2)
+	       (srfi25-array-set! container-eval index1-eval index2-or-keyword-eval index3-eval index4-or-keyword-eval index5-or-step-eval expr-eval))
 
-	  expr-eval  ;; returning a value allow the chaining : {T[3 5 6 2 1] <- A[4 2 3] <- T[2 2 4 6 7]}
-	  )
+	   expr-eval  ;; returning a value allow the chaining : {T[3 5 6 2 1] <- A[4 2 3] <- T[2 2 4 6 7]}
+	   )
 
 	 ) ;; match
 
