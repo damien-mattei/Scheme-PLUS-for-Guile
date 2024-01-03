@@ -5,5 +5,7 @@
   (ash x (- n)))
 
 (define & logand)
-(define | logior)
+(define ∣ logior)
+
+;;(define | logior)  ;; this pipe is weird
 

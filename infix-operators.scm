@@ -34,8 +34,9 @@
 	
 	(list << >>)
 
-	(list & | )
-
+	;;(list & | ) ;; this pipe is weird
+	
+	(list & ∣ )
   					; now this is interesting: because scheme is dynamically typed, we aren't
   					; limited to any one type of function
 	
