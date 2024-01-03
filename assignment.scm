@@ -74,6 +74,26 @@
      (begin
        (set! kar (car expr))
        (set! kdr (cdr expr))))
+
+
+    ;; optimised by parser form
+    ((_ (brket-applynext container (lst index index1 ...)) expr)
+
+     (begin
+
+       ;; add a checking
+       ;; (define x 3)
+       ;; > (<- (aye x 3) 7)
+       ;; . . ../Scheme-PLUS-for-Racket/main/Scheme-PLUS-for-Racket/required-files/assignment.rkt:1:6: Bad <- form: the LHS of expression must be an identifier or of the form (bracket-apply container index) , first argument  'aye " is not bracket-apply."
+       (unless (equal? (quote $bracket-apply$next) (quote brket-applynext)) 
+	       (error "Bad <- form: the LHS of expression must be an identifier or of the form (bracket-applynext container index ...) , first argument is not bracket-applynext:"
+		      (quote brket-applynext)))
+
+       ;;(display "<- : container name:") (display (quote container)) (newline)
+       ;;(display "<- : container:") (display container) (newline)
+       ;;(display "<- : expr:") (display expr) (newline)
+       (assignmentnext container expr (lst index index1 ...))))
+
     
     
     ;;  special form like : (<- ($bracket-apply$ T 3) ($bracket-apply$ T 4))
@@ -93,17 +113,17 @@
 	       (error "Bad <- form: the LHS of expression must be an identifier or of the form ($bracket-apply$ container index ...) , first argument is not $bracket-apply$:"
 		      (quote bracket-apply)))
 
-       (parse-square-brackets-arguments-and-assignment container expr index index1 ...)))
 
+    (assignmentnext container expr (parse-square-brackets-arguments (list index index1 ...)))))
     
     
     ;;(<- x 5)
     ((_ var expr)
      
-     (begin
+     ;;(begin
        ;;(display "<- : variable set!") (newline)
-       (set! var expr)
-       var))
+       (set! var expr))
+       ;;var))
 
     
     ;; (declare x y z t)
@@ -126,7 +146,12 @@
     
     ((_ var var1 ... expr)
      
-     (<- var (<- var1 ... expr))) 
+     ;;(<- var (<- var1 ... expr)))
+     (begin ;; i do not do what the syntax says (assignation not in the good order) but it gives the same result 
+	(<- var expr)
+	(<- var1 var)
+	...
+	))
      
     ))
 
@@ -262,14 +287,19 @@
   
   (syntax-rules ()
     
-    ((_ (var1 ...) expr) (begin
+    ((_ (var1 ...) expr) ;;(begin
 			   (set!-values-plus (var1 ...) expr)
-			   (values var1 ...)))
+			   ;; (values var1 ...)))
+			   )
 
     ((_ (var10 ...) (var11 ...) ... expr)
      
-     (<v (var10 ...) (<v (var11 ...) ... expr)))
-    
+     ;;(<v (var10 ...) (<v (var11 ...) ... expr)))
+    (begin ;; i do not do what the syntax says (assignation not in the good order) but it gives the same result 
+       (<v (var10 ...) expr)
+       (let ((return-values (lambda () (values var10 ...)))) ;; to skip recomputation of expr
+	 (<v (var11 ...) (return-values))
+	 ...)))
 
     ))
 
@@ -309,11 +339,10 @@
 
     ((_ expr ...) (v> expr ...))))
      
-   
 
-(define (parse-square-brackets-arguments-and-assignment container expr . args-brackets)
 
-  {args <+ (parse-square-brackets-arguments args-brackets)}
+
+(define (assignmentnext container expr args)
 
   (case (length args)
     ;; 1 argument in [ ]
@@ -387,31 +416,7 @@
 
 
        
-       
-;; TODO: this function should be used many times in many places above
-;; function bug in Guile but not in Racket
-;;; WARNING: compilation of /usr/local/share/guile/site/3.0/Scheme+.scm failed:
-;;; Syntax error:
-;;; assignment.scm:30:11: definition in expression context, where definitions are not allowed, in form (define container-eval container-eval2)
-;; While compiling expression:
-;; Syntax error:
-;; /usr/local/share/guile/site/3.0/assignment.scm:30:11: definition in expression context, where definitions are not allowed, in form (define container-eval vct)
-;; (define (copy-stepped-slice vct expr i1 i2 step)
-  
-;;   (when {step = 0}
-;; 	(error "assignment : slice step cannot be zero"))
-
-;;   {i <+ 0}
-
-;;   (if {step < 0} ;; with negative index we start at end of vector (like in Python)
-;;       (for ({k <+ i2} {k >= i1} {k <- {k + step}})
-;; 	   {vct[k] <- expr[i]}
-;; 	   {i <- {i + 1}})
-      
-;;       (for ({k <+ i1} {k < i2} {k <- {k + step}})
-;; 	   {vct[k] <- expr[i]}
-;; 	   {i <- {i + 1}})))
-
+   
 
 (define (copy-stepped-slice container-eval expr-eval i1 i2 step)
   
@@ -431,28 +436,7 @@
 
 
 
-;; useless
-;; (define (copy-stepped-slice2 vct expr i1 i2 step)
-  
-;;   (when {step = 0}
-;; 	(error "assignment : slice step cannot be zero"))
-
-;;   {i <+ 0}
-
-;;   (if {step < 0} ;; with negative index we start at end of vector (like in Python)
-;;       (for ({k <+ i2} {k >= i1} {k <- {k + step}})
-;; 	   (vector-set! vct
-;; 			k
-;; 			(vector-ref expr i))
-;; 	   {i <- {i + 1}})
-      
-;;       (for ({k <+ i1} {k < i2} {k <- {k + step}})
-;; 	   (vector-set! vct
-;; 			k
-;; 			(vector-ref expr i))
-;; 	   {i <- {i + 1}})))
-
-
+;; functions based on number of arguments in [ ]
 
 
 
@@ -465,13 +449,17 @@
 	     (vector-copy! container-eval
 			   0
 			   expr-eval)
-	     container-eval)
+	     ;;container-eval
+	     )
 	    
 	    ((hash-table? container-eval) (error "slicing not permitted with hash table"))
+
 	    ((string? container-eval) (string-copy! container-eval
 						    0
 						    expr-eval)
-	     container-eval)
+	     ;;container-eval
+	     )
+	    
 	    (else (error "slicing not permitted with arrays")))
 
       
@@ -484,12 +472,13 @@
 	     (when {index-eval < 0} ;; deal with negative index
 	       {index-eval <- (vector-length container-eval) + index-eval})
 	     (vector-set! container-eval index-eval expr-eval)
-	     expr-eval)
+	     ;;expr-eval
+	     )
 	    
 	    ((hash-table? container-eval)
 	     (hash-table-set! container-eval index-eval expr-eval)
 
-	     expr-eval
+	     ;;expr-eval
 
 	     )
 	    
@@ -497,11 +486,14 @@
 	     (when {index-eval < 0} ;; deal with negative index
 	       {index-eval <- (string-length container-eval) + index-eval})
 	     (string-set! container-eval index-eval expr-eval)
-	     expr-eval)
+	     ;;expr-eval
+	     )
 	    
 	    ((array? container-eval)
 	     (srfi25-array-set! container-eval index-eval expr-eval)
-	     expr-eval) ;; returning a value allow the chaining : {T[3] <- A[4] <- T[7 2 4]}
+	     ;;expr-eval
+
+	     )
 
 	    (else ;; overloaded
 	     (let ()
@@ -556,7 +548,7 @@
 										 0
 										 expr-eval)
 
-	  container-eval
+	  ;;container-eval
 
 	  )
 	 
@@ -569,7 +561,7 @@
 	 ((i1 (? (cut equal? <> slice))) (container-copy! container-eval
 							  i1
 							  expr-eval)
-	  container-eval
+	  ;;container-eval
 
 	  )
 	 
@@ -580,7 +572,7 @@
 							  i2)
 
 
-	  container-eval
+	  ;;container-eval
 
 	  )
 
@@ -597,7 +589,7 @@
 		   (define setter! (find-setter-for-overloaded-square-brackets args-lst))
 		   (setter! container-eval i1 i2 expr-eval))))
 	  
-	  expr-eval ;; returning a value allow the chaining : {T[3 2] <- A[4] <- T[2 4]} 
+	  ;;expr-eval ;; returning a value allow the chaining : {T[3 2] <- A[4] <- T[2 4]} 
 
 	  ) ; end match case
 
@@ -654,7 +646,7 @@
 			   0
 			   i2)
 
-	  container-eval
+	  ;;container-eval
 
 	  )
 
@@ -666,7 +658,7 @@
 			   i1
 			   expr-eval)
 
-	  container-eval
+	  ;;container-eval
 
 	  )
 	 
@@ -702,7 +694,7 @@
 					 (vector-ref expr-eval i))
 			    {i <- 1 + i})))
 
-		 container-eval
+		 ;;container-eval
 		 )
 
 		;; > {s <+ (string-append "abcdefgh")}
@@ -731,7 +723,7 @@
 					 (string-ref expr-eval i))
 			    (set! i (+ 1 i)))))
 
-		 container-eval
+		 ;;container-eval
 
 		 )
 
@@ -755,7 +747,7 @@
 							     0
 							     (- i3 i1))
 
-	  container-eval
+	  ;;container-eval
 
 	  )
 	 
@@ -768,7 +760,7 @@
 	      (function-array-n-dim-set! container-eval expr-eval (reverse (list i1 i2 i3))) ;;(array-n-dim-set! array value i1 i2)
 	      (srfi25-array-set! container-eval index1-or-keyword-eval index2-or-keyword-eval index3-or-keyword-or-step-eval expr-eval))
 
-	  expr-eval  ;; returning a value allow the chaining : {T[3 5 6] <- A[4 2 3] <- T[7 2 4]}
+	  ;;expr-eval  ;; returning a value allow the chaining : {T[3 5 6] <- A[4 2 3] <- T[7 2 4]}
 
 	  )
 	 
@@ -779,7 +771,7 @@
   )
 
 
-
+;; this portion of Scheme+ is written in... Scheme+ !!!
 
 (define (assignment-argument-4 container-eval index1-or-keyword-eval index2-or-keyword-eval index3-or-keyword-eval index4-or-step-eval expr-eval)
 
@@ -847,7 +839,7 @@
 		    {container-eval[k] <- expr-eval[i]}
 		    {i <- i + 1}))
 
-	   container-eval
+	   ;;container-eval
 	   ))
 	 
 	 
@@ -882,8 +874,7 @@
 				   (vector-ref expr-eval i))
 		      {i <- 1 + i})))
 
-
-	   container-eval
+	  ;; container-eval
 	   ))
 	 
 	 
@@ -896,7 +887,7 @@
 	      (function-array-n-dim-set! container-eval expr-eval (reverse (list i1 i2 i3 i4))) ;;(array-n-dim-set! array value i1 i2)
 	      (srfi25-array-set! container-eval index1-or-keyword-eval index2-or-keyword-eval index3-or-keyword-eval index4-or-step-eval expr-eval))
 
-	  expr-eval  ;; returning a value allow the chaining : {T[3 5 6 2] <- A[4 2 3] <- T[2 5]}
+	 ;; expr-eval  ;; returning a value allow the chaining : {T[3 5 6 2] <- A[4 2 3] <- T[2 5]}
 	  )
 	 
 	 ) ;; end match
@@ -974,7 +965,7 @@
 	       (function-array-n-dim-set! container-eval expr-eval (reverse (list i1 i2 i3 i4 i5))) ;;(array-n-dim-set! array expr-eval i1 i2)
 	       (srfi25-array-set! container-eval index1-eval index2-or-keyword-eval index3-eval index4-or-keyword-eval index5-or-step-eval expr-eval))
 
-	   expr-eval  ;; returning a value allow the chaining : {T[3 5 6 2 1] <- A[4 2 3] <- T[2 2 4 6 7]}
+	   ;;expr-eval  
 	   )
 
 	 ) ;; match
@@ -994,4 +985,6 @@
       (function-array-n-dim-set! container expr (reverse args)) ;; (array-n-dim-set! array value index1 index2 ...)
       (srfi25-array-set! container (list->vector args) expr))
   
-  expr)  ;; returning a value allow the chaining : {T[3 5 6 2 1] <- A[4 2 3] <- T[2 2 4 6 7]}
+  ;;expr
+
+  )  

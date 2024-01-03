@@ -1,7 +1,7 @@
 
 ;; This file is part of Scheme+
 
-;; Copyright 2021-2022 Damien MATTEI
+;; Copyright 2021-2024 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -118,9 +118,10 @@
 (define-syntax <+
   (syntax-rules ()
     
-    ((_ (var1 ...) expr) (begin
-			   (define-values (var1 ...) expr)
-			   (values var1 ...)))
+    ((_ (var1 ...) expr) ;;(begin
+     (define-values (var1 ...) expr)
+     )
+			   ;;(values var1 ...)))
     ;; (begin
     ;;   (define var1 '())
     ;;   ...
@@ -137,11 +138,13 @@
 					    (define-values (var10 ...) expr)
 					    (define-values (var11 ...) (values var10 ...))
 					    ...
-					    (values var10 ...)))
+					    ))
+					    ;;(values var10 ...)))
     
-    ((_ var expr) (begin
+    ((_ var expr) ;(begin
 		    (define var expr)
-		    var))
+		    )
+		   ;; var))
     
      ;; > { y <+ z <+ 7 }
      ;; 7
@@ -157,7 +160,8 @@
 			      (define var expr)
 			      (define var1 var)
 			      ...
-			      var))
+			      ;;var))
+			      ))
     
      ))
 		 			

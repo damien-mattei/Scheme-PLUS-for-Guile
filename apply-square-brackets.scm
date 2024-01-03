@@ -2,7 +2,7 @@
 
 ;; This file is part of Scheme+
 
-;; Copyright 2021-2023 Damien MATTEI
+;; Copyright 2021-2024 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -71,14 +71,14 @@
 
 ;; {#(1 2 3 4 5 6 7)[2 * 5 - 8 $ 3 * 5 - 10 $ 2 * 4 - 6]}
 ;; '#(3 5)
-(define ($bracket-apply$ container . args-brackets)
+(define ($bracket-apply$ container . args-brackets)  ;;  this implements a possible $bracket-apply$ as proposed in SRFI-105
 
   ;;(display args-brackets) (newline)
   ($bracket-apply$next container (parse-square-brackets-arguments args-brackets)))
 
 
 
-(define ($bracket-apply$next container args)   ;;  this implements a possible $bracket-apply$ as proposed in SRFI-105
+(define ($bracket-apply$next container args)   ;; optimized version
 
   ;;(display args) (newline)
   (case (length args)
@@ -870,11 +870,14 @@
 
   (declare result partial-result)
   
-  (def (psba args) ;; parse square brackets arguments   
+  (def (psba args) ;; parse square brackets arguments
+
+       
        ;;(display partial-result) (newline)
        (when (null? args)
 	     ;;(display "before !*prec") (newline)
 	     {result <- (append result (!*prec partial-result))} ;; !*prec is defined in scheme-infix.scm
+	     
 	     ;;(display "after !*prec") (newline)
 	     ;;(display result) (newline)
 	     (return-rec result)) ;; return from all recursive calls
