@@ -472,7 +472,7 @@ your_scheme_file_in_scheme+.scm > your_scheme_file_in_scheme.scm
 
 </pre>
 
-    <p>for the rest read the documentation below and the online examples.</p>
+<p>for the rest read the documentation below and the online examples.</p>
     <br>
     <h2>2.<u>Download Scheme+:</u></h2>
     <p>The source code of the <b>Scheme+</b>,  for <a href="https://www.gnu.org/software/guile/"
