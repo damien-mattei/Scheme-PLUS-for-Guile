@@ -1,6 +1,6 @@
 ;; Scheme+.scm
 
-;; version 7.2
+;; version 7.3
 
 ;; author: Damien MATTEI
 
@@ -8,7 +8,7 @@
 
 ;; Guile Scheme version
 
-;; Copyright 2021-2023 Damien MATTEI
+;; Copyright 2021-2024 Damien MATTEI
 
 ;; e-mail: damien.mattei@gmail.com
 
@@ -51,8 +51,7 @@
   #:use-module (srfi srfi-26) ;; cut
 
   ;;#:use-module (srfi srfi-43) ;; WARNING: (Scheme+): `vector-copy' imported from both (growable-vector) and (srfi srfi-43)
-  ;;#:use-module (apply-square-brackets)
-  
+ 
   ;; use with scheme-infix-define-macro.scm (ok)
   ;;#:export (infix-with-precedence2prefix ! quote-all overload overload-procedure overload-operator overload-function $nfx$ def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ $>  condx ≠ ** <v v> ⇜ ⇝ repeat % << >> & | ) ;; <>
 
@@ -108,7 +107,7 @@
   #:export ($nfx$
 	    !*prec
 
-	    def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $> $+> condx ≠ ** <v v> ⇜ ⇝ repeat % << >> & $ | ) ;; <> is already defined in Guile
+	    def $bracket-apply$ $bracket-apply$next <- ← -> → <+ ⥆ +> ⥅ declare $> $+> condx ≠ ** <v v> ⇜ ⇝ repeat % << >> & $ ∣ ) ;; <> is already defined in Guile
 
 ) ;; end module definitions
 

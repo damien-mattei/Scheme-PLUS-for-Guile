@@ -3,9 +3,9 @@
 
 (define-module (infix-operators)
 
-	#:export ( infix-operators-lst
-		   set-infix-operators-lst!
-		   replace-operator! )) ;; end module declaration
+  #:export ( infix-operators-lst
+	     set-infix-operators-lst!
+	     replace-operator! )) ;; end module declaration
 
 (include-from-path "exponential.scm")
 (include-from-path "modulo.scm")
@@ -26,7 +26,7 @@
 (define infix-operators-lst
   
   
-  (list 0
+  (list 0 ;; overload version number
 	
 	(list expt **)
 	(list * / %)

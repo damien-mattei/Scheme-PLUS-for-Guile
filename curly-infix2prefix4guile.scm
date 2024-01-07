@@ -1,3 +1,7 @@
+#!/usr/local/bin/guile -s
+!#
+
+
 ;; infix optimizer with precedence operator by Damien Mattei
 
 
@@ -11,24 +15,24 @@
 
 ;; modification for Guile by Damien Mattei
 
-;; use with: kawa curly-infix2prefix.scm file2parse.scm
+;; example of use with all infixes optimizations:
 
-;; example: kawa curly-infix2prefix.scm ../AI_Deep_Learning/kawa/matrix+.scm > ../AI_Deep_Learning/kawa/matrix.scm
+;./curly-infix2prefix4guile.scm    --infix-optimize --infix-optimize-slice ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile+.scm > ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile-optim-infix-slice.scm
 
-;; kawa curly-infix2prefix4kawa.scm ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4kawa+.scm | tr -d '|' > ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4kawa.scm
 
-;; example with all infixes optimizations:
-
-;; kawa curly-infix2prefix4kawa.scm --infix-optimize --infix-optimize-slice ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4kawa+.scm | tr -d '|' > ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4kawa-optim-infix-slice.scm
+;; options:
 
 ;; --infix-optimize : optimize the mathematics infix expressions
 
 ;; --infix-optimize-slice : optimize the sliced arrays mathematics infix expressions
 
+;;(use-modules (ice-9 textual-ports)) ;; allow put-back characters
+(use-modules (ice-9 pretty-print))
+(use-modules (srfi srfi-31)) ;; rec
+
 (include "first-and-rest.scm")
 (include "optimize-infix.scm")
 (include "assignment-light.scm")
-(include "rec.scm")
 (include "block.scm")
 (include "declare.scm")
 (include "slice.scm")
@@ -78,8 +82,10 @@
     
     (define result (curly-infix-read in))  ;; read an expression
 
-    (display (write result stderr) stderr) ;; without 'write' string delimiters disappears !
-    ;;(display result stderr) 
+    ;;(display (write result stderr) stderr) ;; without 'write' string delimiters disappears !
+    ;;(display result stderr)
+    ;;(write result stderr)
+    (pretty-print result stderr)
     (newline stderr)
     (newline stderr)
     
@@ -210,11 +216,11 @@
 	   (read-char port)
 	   (if slice-optim
 	       (neoteric-process-tail port
-				      (list 'bracket-applynext
+				      (list '$bracket-apply$next
 					    prefix
 					    (cons 'list (parse-square-brackets-arguments (my-read-delimited-list neoteric-read-real #\] port)))))
 	       (neoteric-process-tail port
-                  (cons 'bracket-apply
+                  (cons '$bracket-apply$
 	   		(cons prefix
 	   		      (my-read-delimited-list neoteric-read-real #\] port))))))
 	  
@@ -313,14 +319,14 @@
         ((or (char=? c #\+) (char=? c #\-))  ; Initial + or -
           (read-char port)
           (if (ismember? (peek-char port) digits)
-            (read-number port (list c))
-            (string->symbol (fold-case-maybe port
-              (list->string (cons c
-                (read-until-delim port neoteric-delimiters)))))))
+	      (read-number port (list c))
+	      (string->symbol (fold-case-maybe port
+					       (list->string (cons c
+								   (read-until-delim port neoteric-delimiters)))))))
         (#t ; Nothing else.  Must be a symbol start.
           (string->symbol (fold-case-maybe port
-            (list->string
-              (read-until-delim port neoteric-delimiters))))))))
+					   (list->string
+					    (read-until-delim port neoteric-delimiters))))))))
 
   (define (curly-infix-read-real port)
     (underlying-read curly-infix-read-real port))
@@ -500,10 +506,18 @@
             ; and consider "#!" followed by / or . as a comment until "!#".
             ((char=? c #\!) (my-read port) (my-read port))
 	    ((char=? c #\;) (read-error "SRFI-105 REPL : Unsupported #; extension"))
+	    
 	    ;; read #:blabla
-	    ((char=? c #\:) (list->string
-			     (append (list #\# #\:)
-				     (read-until-delim port neoteric-delimiters))))
+	    ((char=? c #\:) ;; added by D.MATTEI for Guile to read Key-words beginning by #: (not symbols)
+	     (symbol->keyword (list->symbol
+			       (read-until-delim port neoteric-delimiters))))
+	     
+	       ;; original code:
+	       ;; (list->string
+	       ;; 	  (append (list #\# #\:)
+	       ;; 		  (read-until-delim port neoteric-delimiters))))
+
+					    
 	    ;; read #'blabla ,deal with syntax objects
 	    ;;((char=? c #\') (list 'syntax (curly-infix-read port)))
 	    ((char=? c #\') (list 'syntax (my-read port)))
@@ -584,8 +598,8 @@
 ;;(display "options= ") (display options) (newline)
 
 (when (member "--help" options)
-      (display "curly-infix2prefix4kawa.scm documentation: (see comments in source file for more examples)") (newline) (newline) 
-      (display "kawa curly-infix2prefix4kawa.scm [options] file2parse.scm") (newline) (newline)
+      (display "curly-infix2prefix4guile.scm documentation: (see comments in source file for more examples)") (newline) (newline) 
+      (display "curly-infix2prefix4guile.scm [options] file2parse.scm") (newline) (newline)
       (display "options:") (newline)(newline)
       (display "  --infix-optimize : optimize the mathematics infix expressions") (newline) (newline)
       (display "  --infix-optimize-slice : optimize the sliced arrays mathematics infix expressions")  (newline)
@@ -612,7 +626,9 @@
 
 
 (define (dsp-expr expr)
-  (display (write expr)) ;; without 'write' string delimiters disappears !
+  ;;(display (write expr)) ;; without 'write' string delimiters disappears !
+  ;;(write expr)
+  (pretty-print expr)
   ;;(display expr)
   (newline)
   (newline))
