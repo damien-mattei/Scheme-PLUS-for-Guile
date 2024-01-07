@@ -11,9 +11,13 @@
 
     (& ∣)
 
-    (< > = ≠ <= >=) ;; <>)
+    (< > = ≠ <= >=) ;; <>) ;; <> not compatible with guile
+
+    (and)
+
+    (or)
 	
-	;;(list 'dummy) ;; can keep the good order in case of non left-right assocciative operators.(odd? reverse them) 
+    ;;(list 'dummy) ;; can keep the good order in case of non left-right assocciative operators.(odd? reverse them) 
 
     (<- ->  ← → <v v> ⇜ ⇝)
     (<+ +> ⥆ ⥅)
