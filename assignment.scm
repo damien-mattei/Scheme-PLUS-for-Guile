@@ -86,7 +86,7 @@
        ;; > (<- (aye x 3) 7)
        ;; . . ../Scheme-PLUS-for-Racket/main/Scheme-PLUS-for-Racket/required-files/assignment.rkt:1:6: Bad <- form: the LHS of expression must be an identifier or of the form (bracket-apply container index) , first argument  'aye " is not bracket-apply."
        (unless (equal? (quote $bracket-apply$next) (quote brket-applynext)) 
-	       (error "Bad <- form: the LHS of expression must be an identifier or of the form (bracket-applynext container index ...) , first argument is not bracket-applynext:"
+	       (error "Bad <- form: the LHS of expression must be an identifier or of the form ($bracket-apply$next container index ...) , first argument is not $bracket-apply$next:"
 		      (quote brket-applynext)))
 
        ;;(display "<- : container name:") (display (quote container)) (newline)

@@ -861,8 +861,8 @@
 
 
 
-;; TODO :this code is only here to use Scheme+ but it should be in other place (scheme-infix.rkt)
-;; split the expression using slice as separator
+
+;; split the expression between [ ] using slice as separator
 (def (parse-square-brackets-arguments args-brackets)
 
   (when (null? args-brackets)
@@ -875,11 +875,8 @@
        
        ;;(display partial-result) (newline)
        (when (null? args)
-	     ;;(display "before !*prec") (newline)
 	     {result <- (append result (!*prec partial-result))} ;; !*prec is defined in scheme-infix.scm
 	     
-	     ;;(display "after !*prec") (newline)
-	     ;;(display result) (newline)
 	     (return-rec result)) ;; return from all recursive calls
        
        {fst <+ (car args)}
