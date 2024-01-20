@@ -48,7 +48,7 @@
  
 
 ;; read all the expression of program
-;; DEPRECATED (replace by tail recursive version)
+;; DEPRECATED (replaced by tail recursive version)
 (define (process-input-code-rec in)
   (define result (curly-infix-read in))  ;; read an expression
   (if (eof-object? result)
@@ -505,7 +505,15 @@
             ; In a real reader, consider handling "#! whitespace" per SRFI-22,
             ; and consider "#!" followed by / or . as a comment until "!#".
             ((char=? c #\!) (my-read port) (my-read port))
-	    ((char=? c #\;) (read-error "SRFI-105 REPL : Unsupported #; extension"))
+
+	    ;; > (+ 1 #;2 3)
+	    ;; 4
+	    ;; > (+ 1 #;(+ 1 2) 3)
+	    ;; 4
+	    ;; > (+ 1 #;{1 + 2} 3)
+	    ;; 4
+	    ((char=? c #\;) ;(read-error "SRFI-105 REPL : Unsupported #; extension"))
+	     (my-read port) (my-read port))
 	    
 	    ;; read #:blabla
 	    ((char=? c #\:) ;; added by D.MATTEI for Guile to read Key-words beginning by #: (not symbols)
