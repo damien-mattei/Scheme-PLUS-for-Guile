@@ -1,6 +1,6 @@
 ;; Scheme+.scm
 
-;; version 7.3
+;; version 7.4
 
 ;; author: Damien MATTEI
 
@@ -34,6 +34,13 @@
 
 ;; install linux:
 ;; sudo cp *.scm /usr/share/guile/site/3.0
+
+
+;; example of use with all infixes optimizations:
+
+;./curly-infix2prefix4guile.scm    --infix-optimize --infix-optimize-slice ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile+.scm > ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile-optim-infix-slice.scm
+
+
 
 (define-module (Scheme+)
 
