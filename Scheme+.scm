@@ -1,6 +1,6 @@
 ;; Scheme+.scm
 
-;; version 7.4
+;; version 7.5
 
 ;; author: Damien MATTEI
 
@@ -55,7 +55,7 @@
   #:use-module (srfi srfi-1) ;; any,every
   #:use-module (srfi srfi-69) ;; Basic hash tables
   #:use-module (srfi srfi-31) ;; rec
-  #:use-module (srfi srfi-26) ;; cut
+  ;;#:use-module (srfi srfi-26) ;; cut <>
 
   ;;#:use-module (srfi srfi-43) ;; WARNING: (Scheme+): `vector-copy' imported from both (growable-vector) and (srfi srfi-43)
  
@@ -66,55 +66,74 @@
   ;; use only with scheme-infix-define-macro.scm enabled
   ;;#:re-export (local-eval the-environment)
 
-  #:re-export (for
-	       for-basic
-	       for-next
-	       for-basic/break
-	       for-basic/break-cont
-	       for/break-cont
-	       for-each-in
-	       in-range
-	       reversed
-	       
-	       define-overload-procedure
-	       overload-procedure
-	       
-	       define-overload-existing-procedure
-	       overload-existing-procedure
-	       
-	       define-overload-operator
-	       overload-operator
-	       
-	       define-overload-existing-operator
-	       overload-existing-operator
-	       
-	       define-overload-n-arity-operator
-	       overload-n-arity-operator
+  #:re-export ( for
+		for-basic
+		for-next
+		for-basic/break
+		for-basic/break-cont
+		for/break-cont
+		for-each-in
+		in-range
+		reversed
+		
+		define-overload-procedure
+		overload-procedure
+		
+		define-overload-existing-procedure
+		overload-existing-procedure
+		
+		define-overload-operator
+		overload-operator
+		
+		define-overload-existing-operator
+		overload-existing-operator
+		
+		define-overload-n-arity-operator
+		overload-n-arity-operator
 
-	       define-overload-existing-n-arity-operator
-	       overload-existing-n-arity-operator
-	       
-	       overload-function ;; see how to do the same for operator, see the possible problem with infix precedence?
+		define-overload-existing-n-arity-operator
+		overload-existing-n-arity-operator
+		
+		overload-function ;; see how to do the same for operator, see the possible problem with infix precedence?
 
 
-	       ;;$ovrld-square-brackets-lst$
-	       
-	       overload-square-brackets
-	       ;;find-getter-and-setter-for-overloaded-square-brackets
-	       find-getter-for-overloaded-square-brackets
-	       find-setter-for-overloaded-square-brackets
+		;;$ovrld-square-brackets-lst$
+		
+		overload-square-brackets
+		;;find-getter-and-setter-for-overloaded-square-brackets
+		find-getter-for-overloaded-square-brackets
+		find-setter-for-overloaded-square-brackets
 
-	       infix-operators-lst
-	       set-infix-operators-lst!
-	       replace-operator!
-	       ) 
+		infix-operators-lst
+		set-infix-operators-lst!
+		replace-operator! ) 
 
   #:replace (do when unless)
 
-  #:export ($nfx$
-	    !*prec
+  #:export ( $nfx$
+	     !*prec
 
-	    def $bracket-apply$ $bracket-apply$next <- ← -> → <+ ⥆ +> ⥅ declare $> $+> condx ≠ ** <v v> ⇜ ⇝ repeat % << >> & $ ∣ ) ;; <> is already defined in Guile
+	     def
+	     $bracket-apply$
+	     $bracket-apply$next
+	     <- ←
+	     -> →
+	     <+ ⥆
+	     +> ⥅
+	     declare
+	     $> $+>
+	     condx
+	     ≠
+	     <> ;; is also used as keyword in srfi 26, comment this line if SRFI 26 is used and use the ≠ symbol in your code
+	     **
+	     <v v>
+	     ⇜ ⇝
+	     repeat
+	     %
+	     << >>
+	     &
+	     : ;;$
+	     ∣ ) 
 
 ) ;; end module definitions
 

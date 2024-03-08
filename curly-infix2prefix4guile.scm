@@ -38,6 +38,8 @@
 (include "def.scm")
 (include "optimize-infix-slice.scm")
 
+(define stderr (current-error-port))
+
 (include "SRFI-105.scm")
 
 (define srfi-105 #f)
@@ -62,9 +64,8 @@
 ;; a tail recursive version
 (define (process-input-code-tail-rec in) ;; in: port
 
-  (define stderr (current-error-port))
 
-  (display "SRFI-105 Curly Infix parser with optimization by Damien MATTEI" stderr) (newline stderr)
+  (display "SRFI-105 Curly Infix parser with operator precedence by Damien MATTEI" stderr) (newline stderr)
   (display "(based on code from David A. Wheeler and Alan Manuel K. Gloria.)" stderr) (newline stderr) (newline stderr)
 
   (when srfi-105

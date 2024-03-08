@@ -468,8 +468,9 @@
 
 	    ;; read #:blabla
 	    ((char=? c #\:) ;; added by D.MATTEI for Guile to read Key-words beginning by #: (not symbols)
-	     (symbol->keyword (list->symbol
-			       (read-until-delim port neoteric-delimiters))))
+	     (symbol->keyword
+	      (list->symbol
+	       (read-until-delim port neoteric-delimiters))))
 	    
 	    ;; origingal code:
 	    ;; (list->string

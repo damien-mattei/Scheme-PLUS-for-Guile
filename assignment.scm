@@ -2,7 +2,7 @@
 
 ;; This file is part of Scheme+
 
-;; Copyright 2021-2023 Damien MATTEI
+;; Copyright 2021-2024 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -17,7 +17,12 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+;; note that slicing separator is now : , no more $ (see slice.scm)
 
+;; scheme@(guile-user)> {v <+ (vector 1 2 3 4 5 6 7 8 9)}
+;; scheme@(guile-user)>  {v[7 : 3 : -2] <- (vector -1 -2 -3)}
+;; scheme@(guile-user)> v
+;; $2 = #(1 2 3 4 5 -2 7 -1 9)
 
 ;; scheme@(guile-user)> {a[2 4] <- 7}
 ;; $1 = 7
@@ -628,10 +633,10 @@
 	 ;; ['a', 'b', 'c', 'd']
 
 	 ;; > {a <+ (make-vector 7 0)}
-	 ;; > {a[$ $] <- "abcd"}
+	 ;; > {a[: :] <- "abcd"}
 	 ;; > a
 	 ;; '#(#\a #\b #\c #\d 0 0 0)
-	 (((? (cut equal? <> slice)) (? (cut equal? <> slice))) ;;  make it work between vector and string
+	 (((? equal-slice?) (? equal-slice?)) ;;  make it work between vector and string
 	  (copy-slice-starting-at-zero-with-positive-step container-eval
 							  expr-eval
 							  (expr-length expr-eval)
@@ -650,7 +655,7 @@
 	 ;; > {a[3 $] <- "zob"}
 	 ;; > a
 	 ;; '#(0 0 0 #\z #\o #\b 0)
-	 ((i1 (? (cut equal? <> slice)))
+	 ((i1 (? equal-slice?))
 	  ;; make it work between vector and string
 	  (copy-slice-with-positive-step container-eval
 					 expr-eval
@@ -664,7 +669,7 @@
 	 ;; > {a[$ 3] <- (vector 1 2 3 4 5)}
 	 ;; > a
 	 ;; '#(1 2 3 0 0 0 0)
-	 (((? (cut equal? <> slice)) i2) ;; make it work between vector and string
+	 (((? equal-slice?) i2) ;; make it work between vector and string
 	  (copy-slice-starting-at-zero-with-positive-step container-eval
 							  expr-eval
 							  i2
@@ -736,7 +741,7 @@
 	 ;; > {a[$ 3 $] <- (vector 1 2 3 4 5)}
 	 ;; > a
 	 ;; '#(1 2 3 0 0 0 0)
-	 (( (? (cut equal? <> slice)) i2 (? (cut equal? <> slice)) )
+	 (( (? equal-slice?) i2 (? equal-slice?) )
 	  
 	  (copy-slice-starting-at-zero-with-positive-step container-eval
 							  expr-eval
@@ -750,7 +755,7 @@
 	 ;; > {a[3 $ $] <- "zob"}
 	 ;; > a
 	 ;; '#(0 0 0 #\z #\o #\b 0)
-	 ((i1 (? (cut equal? <> slice)) (? (cut equal? <> slice)))
+	 ((i1 (? equal-slice?) (? equal-slice?))
 
 	  (copy-slice-with-positive-step container-eval
 					 expr-eval
@@ -793,7 +798,7 @@
 	 ;; > {v[$ $ -2] <- "abcdefghijklmnop"[$ $ 2]}
 	 ;; > v
 	 ;; '#(#\i 2 #\g 4 #\e 6 #\c 8 #\a)
-	 (((? (cut equal? <> slice)) (? (cut equal? <> slice)) step-not-used)
+	 (((? equal-slice?) (? equal-slice?) step-not-used)
 	  
 	  (cond ((vector? container-eval)
 		 
@@ -851,7 +856,7 @@
 	 ;; $2 = #(1 #\c #\d 4)
 	 
 	 ;;  make it work between vector and string
-	 ((i1 (? (cut equal? <> slice)) i3) (copy-slice-with-positive-step container-eval
+	 ((i1 (? equal-slice?) i3) (copy-slice-with-positive-step container-eval
 								 expr-eval
 								 i1
 								 i3
@@ -902,7 +907,7 @@
   (match (list index1-or-keyword-eval-pos index2-or-keyword-eval-pos index3-or-keyword-eval-pos index4-or-step-eval-pos)
 
 	 ;; T[i1 $ i2 $]
-	 ((i1 (? (cut equal? <> slice)) i2 (? (cut equal? <> slice))) {container-eval[i1 slice i2] <- expr-eval})
+	 ((i1 (? equal-slice?) i2 (? equal-slice?)) {container-eval[i1 slice i2] <- expr-eval})
 	 
 	 ;; T[$ i2 $ s3]
 	 ;; > {v <+ (vector 1 2 3 4 5 6 7 8 9)}
@@ -915,7 +920,7 @@
 	 ;; > {v[$ 6 $ -2] <- (vector -1 -2 -3 -4 -5)}
 	 ;; > v
 	 ;; '#(1 2 3 4 5 6 7 8 -1)
-	 (((? (cut equal? <> slice)) i2 (? (cut equal? <> slice)) step-not-used)
+	 (((? equal-slice?) i2 (? equal-slice?) step-not-used)
 
 	  ($+>
 	   {step <+ index4-or-step-eval}
@@ -941,7 +946,7 @@
 	 
 	 
 	 ;; T[i1 $ $ s3]
-	 ((i1 (? (cut equal? <> slice)) (? (cut equal? <> slice)) step-not-used)
+	 ((i1 (? equal-slice?) (? equal-slice?) step-not-used)
 
 	  ($+>
 	   {step <+ index4-or-step-eval}
@@ -1064,7 +1069,9 @@
 	 ;; > {v[7 $ 3 $ -2] <- (vector -1 -2 -3)}
 	 ;; > v
 	 ;; '#(1 2 3 4 5 -2 7 -1 9)
-	 ((i1 (? (cut equal? <> slice)) i2 (? (cut equal? <> slice)) step-not-used)
+
+	 ;; {v[7 : 3 : -2] <- (vector -1 -2 -3)}
+	 ((i1 (? equal-slice?) i2 (? equal-slice?) step-not-used)
 
 	  ($+>
 	   {step <+ index5-or-step-eval}
