@@ -23,7 +23,7 @@
     <p style="text-align: center;"><br>
     </p>
     <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span
-          style="color: #999999;"> <font size="+2">version 7.4 for Guile Scheme<br>
+          style="color: #999999;"> <font size="+2">version 7.5 for Guile Scheme<br>
           </font></span></b></h1>
     <p style="text-align: center;"> </p>
     <p style="text-align: center;"><br>
@@ -507,8 +507,7 @@ schemes, for parsing do:
 
 <pre>
 
-curly-infix2prefix4guile.scm --infix-optimize --infix-optimize-slice
-your_scheme_file_in_scheme+.scm > your_scheme_file_in_scheme.scm
+curly-infix2prefix4guile.scm your_scheme_file_in_scheme+.scm > your_scheme_file_in_scheme.scm
 
 </pre>
 
@@ -1116,12 +1115,12 @@ style="color: #008800; font-style: italic; background-color: #0f140f">;; return 
 	 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; c is part of a solution OR not part of a solution</span>
 	 <span style="color: #ffffff">[</span><span style="color: #fb660a; font-weight: bold">else </span><span
 style="color: #ffffff">{</span><span style="color: #fb660a">s</span> <span style="color: #fb660a">&lt;+</span> <span
-style="color: #ffffff">{(</span><span style="color: #ff0086; font-weight: bold">subset-sum-guile</span> <span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">subset-sum-guile</span> <span
 style="color: #fb660a">R</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">t</span> <span
 style="color: #fb660a">-</span> <span style="color: #fb660a">c</span><span style="color: #ffffff">})</span> <span
 style="color: #fb660a; font-weight: bold">or </span><span style="color: #ffffff">(</span><span
 style="color: #ff0086; font-weight: bold">subset-sum-guile</span> <span style="color: #fb660a">R</span> <span
-style="color: #fb660a">t</span><span style="color: #ffffff">)}}</span>
+style="color: #fb660a">t</span><span style="color: #ffffff">)}</span>
 	       <span style="color: #ffffff">{</span><span style="color: #fb660a">dyna</span><span
 style="color: #ffffff">[</span><span style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span
 style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span
@@ -1468,12 +1467,12 @@ style="color: #008800; font-style: italic; background-color: #0f140f">;; return 
 	 <span style="color: #008800; font-style: italic; background-color: #0f140f">;; c is part of a solution OR not part of a solution</span>
 	 <span style="color: #ffffff">[</span><span style="color: #fb660a; font-weight: bold">else </span><span
 style="color: #ffffff">{</span><span style="color: #fb660a">s</span> <span style="color: #fb660a">&lt;-</span> <span
-style="color: #ffffff">{(</span><span style="color: #ff0086; font-weight: bold">subset-sum-guile-dec</span> <span
+style="color: #ffffff">(</span><span style="color: #ff0086; font-weight: bold">subset-sum-guile-dec</span> <span
 style="color: #fb660a">R</span> <span style="color: #ffffff">{</span><span style="color: #fb660a">t</span> <span
 style="color: #fb660a">-</span> <span style="color: #fb660a">c</span><span style="color: #ffffff">})</span> <span
 style="color: #fb660a; font-weight: bold">or </span><span style="color: #ffffff">(</span><span
 style="color: #ff0086; font-weight: bold">subset-sum-guile-dec</span> <span style="color: #fb660a">R</span> <span
-style="color: #fb660a">t</span><span style="color: #ffffff">)}}</span>
+style="color: #fb660a">t</span><span style="color: #ffffff">)}</span>
 	       <span style="color: #ffffff">{</span><span style="color: #fb660a">dyna</span><span
 style="color: #ffffff">[</span><span style="color: #fb660a">ls</span> <span style="color: #fb660a">t</span><span
 style="color: #ffffff">]</span> <span style="color: #fb660a">&lt;-</span> <span

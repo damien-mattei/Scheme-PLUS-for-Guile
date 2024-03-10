@@ -83,7 +83,7 @@
         no room for doubts must have no room for thoughts either."</i> -<a href="https://www.ics.uci.edu/%7Epattis/" target="_blank">R. Patti</a></p>
     <p style="text-align: center;"><br>
     </p>
-    <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span style="color: #999999;"> <font size="+2">version 7.4 for Guile Scheme<br>
+    <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span style="color: #999999;"> <font size="+2">version 7.5 for Guile Scheme<br>
           </font></span></b></h1>
     <p style="text-align: center;">
 	Display options for viewing this documentation:<br><br>
@@ -334,7 +334,7 @@ get it</a>)<br>
   <span class="p">(</span><span class="k">if</span> <span class="p">{</span><span class="nv">c</span> <span class="nv">&gt;</span> <span class="nv">t</span><span class="p">}</span>  <span class="c1">;; c is to big to be a solution</span>
     <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">subset-sum-dynamic</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}</span>
     <span class="c1">;; c is part of the solution or c is not part of solution</span>
-    <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p">{</span><span class="p">(</span><span class="nf">subset-sum-dynamic</span> <span class="nv">R</span> <span class="p">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="p">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">subset-sum-dynamic</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}}</span><span class="p">)</span>
+    <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p"></span><span class="p">(</span><span class="nf">subset-sum-dynamic</span> <span class="nv">R</span> <span class="p">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="p">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">subset-sum-dynamic</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}</span><span class="p">)</span>
 
   <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="p">}</span>
   <span class="nv">s</span><span class="p">)</span> <span class="c1">;; return boolean value</span>
@@ -501,8 +501,7 @@ schemes, for parsing do:
 
 <pre>
 
-curly-infix2prefix4guile.scm --infix-optimize --infix-optimize-slice
-your_scheme_file_in_scheme+.scm > your_scheme_file_in_scheme.scm
+curly-infix2prefix4guile.scm your_scheme_file_in_scheme+.scm > your_scheme_file_in_scheme.scm
 
 </pre>
 
@@ -1073,7 +1072,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 			
 	 <span class="c1">;; else : c &lt; t at this point</span>
 	 <span class="c1">;; c is part of a solution OR not part of a solution</span>
-	 <span class="p">[</span><span class="k">else</span> <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p">{</span><span class="p">(</span><span class="nf">subset-sum-guile-dec</span> <span class="nv">R</span> <span class="p">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="p">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">subset-sum-guile-dec</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}}</span>
+	 <span class="p">[</span><span class="k">else</span> <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p"></span><span class="p">(</span><span class="nf">subset-sum-guile-dec</span> <span class="nv">R</span> <span class="p">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="p">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">subset-sum-guile-dec</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}</span>
 	       <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="p">}</span>
 	       <span class="nv">s</span><span class="p">]))</span> <span class="c1">;; return boolean value</span>
 
@@ -1129,7 +1128,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
   <span class="p">(</span><span class="k">if</span> <span class="p">{</span><span class="nv">c</span> <span class="nv">&gt;</span> <span class="nv">t</span><span class="p">}</span>  <span class="c1">;; c is to big to be a solution</span>
     <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">subset-sum-dyna</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}</span>
     <span class="c1">;; c is part of the solution or c is not part of solution</span>
-    <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p">{</span><span class="p">(</span><span class="nf">subset-sum-dyna</span> <span class="nv">R</span> <span class="p">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="p">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">subset-sum-dyna</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}}</span><span class="p">)</span>
+    <span class="p">{</span><span class="nv">s</span> <span class="nv">&lt;-</span> <span class="p"></span><span class="p">(</span><span class="nf">subset-sum-dyna</span> <span class="nv">R</span> <span class="p">{</span><span class="nv">t</span> <span class="nv">-</span> <span class="nv">c</span><span class="p">}</span><span class="p">)</span> <span class="nv">or</span> <span class="p">(</span><span class="nf">subset-sum-dyna</span> <span class="nv">R</span> <span class="nv">t</span><span class="p">)</span><span class="p">}</span><span class="p">)</span>
 
   <span class="p">{</span><span class="nv">dyna</span><span class="p">[</span><span class="nf">ls</span> <span class="nv">t</span><span class="p">]</span> <span class="nv">&lt;-</span> <span class="p">(</span><span class="nf">one-two</span> <span class="nv">s</span><span class="p">)</span><span class="p">}</span>
   <span class="nv">s</span><span class="p">)</span> <span class="c1">;; return boolean value</span>

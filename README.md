@@ -19,7 +19,7 @@
     <p style="text-align: center;"><br>
     </p>
     <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span
-          style="color: #999999;"> <font size="+2">version 7.4 for Guile Scheme<br>
+          style="color: #999999;"> <font size="+2">version 7.5 for Guile Scheme<br>
           </font></span></b></h1>
     <p style="text-align: center;">
 	Display options for viewing this documentation:<br>
@@ -282,7 +282,7 @@ get it</a>)<br>
   (if {c > t}  ;; c is to big to be a solution
     {s <- (subset-sum-dynamic R t)}
     ;; c is part of the solution or c is not part of solution
-    {s <- {(subset-sum-dynamic R {t - c}) or (subset-sum-dynamic R t)}})
+    {s <- (subset-sum-dynamic R {t - c}) or (subset-sum-dynamic R t)})
 
   {dyna[ls t] <- (one-two s)}
   s) ;; return boolean value
@@ -467,8 +467,7 @@ schemes, for parsing do:
 
 <pre>
 
-curly-infix2prefix4guile.scm --infix-optimize --infix-optimize-slice
-your_scheme_file_in_scheme+.scm > your_scheme_file_in_scheme.scm
+curly-infix2prefix4guile.scm your_scheme_file_in_scheme+.scm > your_scheme_file_in_scheme.scm
 
 </pre>
 
@@ -912,7 +911,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 			
 	 ;; else : c < t at this point
 	 ;; c is part of a solution OR not part of a solution
-	 [else {s <+ {(subset-sum-guile R {t - c}) or (subset-sum-guile R t)}}
+	 [else {s <+ (subset-sum-guile R {t - c}) or (subset-sum-guile R t)}
 	       {dyna[ls t] <- (one-two s)}
 	       s])) ;; return boolean value
 
@@ -1059,7 +1058,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
 			
 	 ;; else : c < t at this point
 	 ;; c is part of a solution OR not part of a solution
-	 [else {s <- {(subset-sum-guile-dec R {t - c}) or (subset-sum-guile-dec R t)}}
+	 [else {s <- (subset-sum-guile-dec R {t - c}) or (subset-sum-guile-dec R t)}
 	       {dyna[ls t] <- (one-two s)}
 	       s])) ;; return boolean value
 
@@ -1111,7 +1110,7 @@ disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and 
   (if {c > t}  ;; c is to big to be a solution
     {s <- (subset-sum-dyna R t)}
     ;; c is part of the solution or c is not part of solution
-    {s <- {(subset-sum-dyna R {t - c}) or (subset-sum-dyna R t)}})
+    {s <- (subset-sum-dyna R {t - c}) or (subset-sum-dyna R t)})
 
   {dyna[ls t] <- (one-two s)}
   s) ;; return boolean value
