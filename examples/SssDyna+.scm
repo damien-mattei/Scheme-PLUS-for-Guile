@@ -28,7 +28,7 @@
 
 ;; touch file.scm works if you change included files but not source file.scm
 
-;; ./curly-infix2prefix4guile.scm   SssDyna+.scm > SssDyna.scm
+;; ../curly-infix2prefix4guile.scm   SssDyna+.scm > SssDyna.scm
 
 ;; (load "SssDyna.scm")
 
@@ -36,7 +36,7 @@
 ;; files below can be retrieved here: https://github.com/damien-mattei/library-FunctProg
 
 
-(include "rest.scm")
+(include "../rest.scm")
 
 (use-modules (srfi srfi-1)) ;; for 'first' procedure
 
@@ -480,7 +480,7 @@
   {ls <- (length L)}
   {dyn <- dyna[ls t]}
 
-  {cpt <- {cpt + 1}} ;; cpt has been already defined at toplevel
+  {cpt <- cpt + 1} ;; cpt has been already defined at toplevel
   
   ;; dyna[ls t] means 0: unknown solution, 1: solution found, 2: no solution
   
@@ -504,3 +504,45 @@
 	       s])) ;; return boolean value
 
 
+;; > (subset-sum-value L-init t-init)
+;; '(1 3 4 16 17 24 45 64 197 256 275 323 540 889 915 1040 1041 1093 1099 1111 1344 1520 2027 2500 2734 3267 3610 4285 5027)
+;; > t-init
+;; 35267
+;; > (+ 1 3 4 16 17 24 45 64 197 256 275 323 540 889 915 1040 1041 1093 1099 1111 1344 1520 2027 2500 2734 3267 3610 4285 5027)
+;; 35267
+
+;; > (subset-sum-value  '(17 24 45 64 197 256 323 540 723 889 915 1040 1041 1093 1111 1284 1344 1520 2027 2500 2734 3000 3267 4285 5027) t-init)
+;; #f
+(define (subset-sum-value L t)
+
+  ;; declaration on top
+  (declare ls dyn c R s) ; c: current/first number of list, R: rest of list,s: solution if found
+  
+  {ls <- (length L)}
+  {dyn <- dyna[ls t]}
+
+  {cpt <- cpt + 1} ;; cpt has been already defined at toplevel
+  
+  ;; dyna[ls t] means 0: unknown solution, true (example: list): solution found, false: #f: no solution
+  
+  (condx [(not (equal? dyn 0)) dyn] ; the solution if found (already computed)
+	 [(null? L) {dyna[ls t] <- #f}  #f] ;; return #f
+	 
+	 [exec {c <- (first L)}]	 
+	 ;; c is the solution
+	 [{c = t} {s <- dyna[ls t] <- (list c)} s]  ;; return a true value ( the list containing the solution)
+	 
+	 [exec {R <- (rest L)}]	 
+	 ;; continue searching a solution in the rest
+	 [{c > t} {s <- (subset-sum-value R t)}
+	          {dyna[ls t] <- s}
+		  s] ;; return boolean value which is the solution when true/found.
+			
+	 ;; else : c < t at this point
+	 ;; c is part of a solution OR not part of a solution
+	 
+	 [exec {s <- (subset-sum-value R {t - c})}]
+	 [s {s <- dyna[ls t] <- (cons c s)} s] ; case c is part of a solution
+	       
+	 [exec {s <- (subset-sum-value R t)}] ; at this point c is not part of a solution
+	 [else {dyna[ls t] <- s} s])) ;; return boolean value which is the solution when true/found.
