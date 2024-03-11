@@ -39,6 +39,10 @@
     <p><b>Scheme+ is an extension of the syntax of the <a href="https://en.wikipedia.org/wiki/Scheme_%28programming_language%29"
           target="_blank">Scheme</a> language.</b><br>
     </p>
+	<p><b>Scheme+ is to Scheme what a concept-car is to
+	automobile.Scheme+ is a concept-language.It is ideally what
+	should be a modern Scheme.</b>
+	</p>
     <p><b>Scheme+ makes it easy the assignment of Scheme objects </b><b>in
         infix </b><b>(works also in prefix) </b><b>notation </b><b>with a few
         new operators&nbsp;</b><b> </b><b><b><b>← (or&nbsp;</b></b>

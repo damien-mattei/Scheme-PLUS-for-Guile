@@ -2,7 +2,7 @@
 ;; Dynamic solution
 ;; Guile compatible
 
-;; Copyright 2021-2023 Damien MATTEI
+;; Copyright 2021-2024 Damien MATTEI
 
 ;; e-mail: damien.mattei@gmail.com
 
@@ -28,17 +28,13 @@
 
 ;; touch file.scm works if you change included files but not source file.scm
 
+;; ./curly-infix2prefix4guile.scm   SssDyna+.scm > SssDyna.scm
 
 ;; (load "SssDyna.scm")
 
 
-;;(use-modules (guile growable-vector))
-
 ;; files below can be retrieved here: https://github.com/damien-mattei/library-FunctProg
 
-;;(include "pair.scm") ;; useless,but definitions reused in some not used functions in number.scm 
-(include "number.scm")
-;;(include "first-and-rest.scm")
 
 (include "rest.scm")
 
@@ -46,14 +42,12 @@
 
 (use-modules (Scheme+))
 
+(define (one? n)
+  (= n 1))
 
 ;;(define L-init '(1 3 4 16 17 64 256 275 723 889 1040 1041 1093 1111 1284 1344 1520 2027 2734 3000 4285 5027))
 ;;(define t-init 19836)
 
-;; (define L-init '(1 3 4 16 17 24 45 64 197 256 275 323 540 723 889 915 1040 1041 1093 1099 1111 1284 1344 1520 2027 2500 2734 3000 3267 3610 4285 5027))
-;; (define t-init 35267)
-;; (define ls (length L-init))
-;; (define dyna (make-array 0 {ls + 1} {t-init + 1}))
 
 ;; {L-init <+ '(1 3 4 16 17 24 45 64 197 256 275 323 540 723 889 915 1040 1041 1093 1099 1111 1284 1344 1520 2027 2500 2734 3000 3267 3610 4285 5027)}
 ;; {t-init <+ 35267}
@@ -70,7 +64,7 @@
 {ls <- (length L-init)}
 {dyna <- (make-array 0 {ls + 1} {t-init + 1})}
 
-(define (one-two b)
+(define (tf->12 b)
   (if b 1 2))
 
 {cpt <- 0}
@@ -97,7 +91,7 @@
 ;; 	dyn
 	
 ;; 	(array-ref-set! dyna ;; set the array but return the variable
-;; 			(one-two
+;; 			(tf->12
 ;; 			 (if (null? L)
 ;; 			     #f
 ;; 			     (let [ (c (first L))
@@ -132,7 +126,7 @@
 ;; 	dyn
 
 ;; 	;; set the array but return the variable
-;; 	{ dyna[ls t] ← (one-two
+;; 	{ dyna[ls t] ← (tf->12
 ;; 			  (if (null? L)
 ;; 			      #f
 ;; 			      (local [ c (first L)
@@ -150,7 +144,7 @@
 ;; $2 = 147801
 (define (ssigma-dyna-define-anywhere L t)
   
-  {cpt <- {cpt + 1}} ;; cpt is defined at toplevel
+  {cpt <- cpt + 1} ;; cpt is defined at toplevel
   
   ;;(display L) (display " ") (display t) (newline)
 
@@ -161,7 +155,7 @@
 
   ;;(display "ls=") (display ls) (display " ") (display "t=") (display t) (newline)
   
-  {dyn <+ {dyna[ls t]}}
+  {dyn <+ dyna[ls t]}
   
   (def c)
   (def R)
@@ -176,7 +170,8 @@
 	dyn
 	
 	;; set the array but return the variable
-	{ dyna[ls t] <- (one-two
+	($>
+	 { dyna[ls t] <- (tf->12
 			  (if (null? L)
 			      #f
 			      ($> ;;(display "assignment") (newline)
@@ -187,7 +182,9 @@
 				      ;; c < t at this point
 				      ;; c is part of the solution or his approximation
 				      ;; or c is not part of solution or his approximation
-				      [ else {(ssigma-dyna-define-anywhere R {t - c}) or (ssigma-dyna-define-anywhere R t)} ] )))) } )))
+				      [ else {(ssigma-dyna-define-anywhere R {t - c}) or (ssigma-dyna-define-anywhere R t)} ] )))) }
+	 { dyna[ls t] })
+	 )))
 
 
 
@@ -196,13 +193,18 @@
 ;; scheme@(guile-user)> cpt
 ;; $2 = 147801
 (define (ssigma-dyna-def L t)
+
+  (display L) (newline)
+  (display t) (newline)
+  (newline)
+ 
   
-  {cpt <- {cpt + 1}} ;; cpt is defined at toplevel
+  {cpt <- cpt + 1} ;; cpt is defined at toplevel
   
   (def (ls dyn)) ;; declare multiple variables 
   
   {ls <- (length L)}
-  {dyn <- {dyna[ls t]}}
+  {dyn <- dyna[ls t]}
 
   ;; declare one variable at a time
   (def c)
@@ -210,14 +212,16 @@
 
   ;; TODO: write this code simplier
   ;; dyna[ls t] means 0: unknown solution, 1: solution found, 2: no solution
-  (one?
-   (if (not (zero? dyn))
+  (one? ; 1: solution found ?
+   (if (not (zero? dyn)) ; we already know the solution
        
-       dyn
-       
+       dyn ; 1: solution found, 2: no solution
+
+       ;; 0: unknown solution
        ;; set the array but return the variable
-       { dyna[ls t] <- (one-two
-			(if (null? L)
+       ($>
+	{ dyna[ls t] <- (tf->12
+			 (if (null? L)
 			    #f
 			    ;; TODO: rename $ which is already used by SRFI-9 record utiliser  § ou | (option shift L sur mac)
 			    ($> ;;(display "assignment") (newline)
@@ -228,7 +232,8 @@
 				   ;; c < t at this point
 				   ;; c is part of the solution or his approximation
 				   ;; or c is not part of solution or his approximation
-				   [ else {(ssigma-dyna-def R {t - c}) or (ssigma-dyna-def R t)} ] )))) } )))
+				   [ else {(ssigma-dyna-def R {t - c}) or (ssigma-dyna-def R t)} ] )))) }
+	{ dyna[ls t] }))))
 
 
 
@@ -267,7 +272,7 @@
 			    
 			  (let [(s (ssigma-proto R t))]
 			    (array-set! dyna
-					(one-two s)
+					(tf->12 s)
 					ls t)
 			      
 			    s) ;; return s
@@ -277,12 +282,14 @@
 			  ;; c is part of the solution or his approximation
 			  ;; or c is not part of solution
 			  (let [(s {(ssigma-proto R {t - c}) or (ssigma-proto R t)})]
-			    (array-set! dyna (one-two s)
+			    (array-set! dyna (tf->12 s)
 					ls t)
 			    s)))))
 	      ] ))
 
-
+;; (ssigma-proto-condx  L-init t-init)
+;; ... 
+;;  = #t
 (define (ssigma-proto-condx L t)
 
   (set! cpt {cpt + 1})
@@ -310,7 +317,7 @@
 	 ;; continue searching a solution in the rest
 	 [{c > t} (define s (ssigma-proto-condx R t))
 	  (array-set! dyna
-		      (one-two s)
+		      (tf->12 s)
 		      ls t)
 	  s] ;; return s
 			
@@ -319,7 +326,7 @@
 	 ;; c is part of the solution or his approximation
 	 ;; or c is not part of solution
 	 [else (define s {(ssigma-proto-condx R {t - c}) or (ssigma-proto-condx R t)})
-	       (array-set! dyna (one-two s)
+	       (array-set! dyna (tf->12 s)
 			   ls t)
 	       s]))
 
@@ -358,9 +365,9 @@
   (if {c > t}  ;; c is to big to be a solution
     {s <- (subset-sum-dyna R t)}
     ;; c is part of the solution or c is not part of solution
-    {s <- {(subset-sum-dyna R {t - c}) or (subset-sum-dyna R t)}})
+    {s <- (subset-sum-dyna R {t - c}) or (subset-sum-dyna R t)})
 
-  {dyna[ls t] <- (one-two s)}
+  {dyna[ls t] <- (tf->12 s)}
   s) ;; return boolean value
 
 
@@ -393,12 +400,14 @@
   (if {c > t}  ;; c is to big to be a solution
     {s <- (subset-sum-dynamic R t)}
     ;; c is part of the solution or c is not part of solution
-    {s <- {(subset-sum-dynamic R {t - c}) or (subset-sum-dynamic R t)}})
+    {s <- (subset-sum-dynamic R {t - c}) or (subset-sum-dynamic R t)})
 
-  {dyna[ls t] <- (one-two s)}
+  {dyna[ls t] <- (tf->12 s)}
   s) ;; return boolean value
   
 
+;;(subset-sum-condx L-init t-init)
+;;$1 = #t
 
 (define (subset-sum-condx L t)
 
@@ -419,23 +428,25 @@
 	 [exec {R <+ (rest L)}]	 
 	 ;; continue searching a solution in the rest
 	 [{c > t} {s <+ (subset-sum-condx R t)}
-	          {dyna[ls t] <- (one-two s)}
+	          {dyna[ls t] <- (tf->12 s)}
 		  s] ;; return boolean value
 			
 	 ;; else : c < t at this point
 	 ;; c is part of a solution OR not part of a solution
-	 [else {s <+ {(subset-sum-condx R {t - c}) or (subset-sum-condx R t)}}
-	       {dyna[ls t] <- (one-two s)}
+	 [else {s <+ (subset-sum-condx R {t - c}) or (subset-sum-condx R t)}
+	       {dyna[ls t] <- (tf->12 s)}
 	       s])) ;; return boolean value
 
 
+;;  (subset-sum L-init t-init)
+;;$1 = #t
 
-(define (subset-sum-guile L t)
+(define (subset-sum L t)
 
   {ls <+ (length L)}
   {dyn <+ dyna[ls t]}
 
-  {cpt <- {cpt + 1}} ;; cpt has been already defined at toplevel
+  {cpt <- cpt + 1} ;; cpt has been already defined at toplevel
   
   ;; dyna[ls t] means 0: unknown solution, 1: solution found, 2: no solution
   
@@ -448,18 +459,21 @@
 	 
 	 [exec {R <+ (rest L)}]	 
 	 ;; continue searching a solution in the rest
-	 [{c > t} {s <+ (subset-sum-guile R t)}
-	          {dyna[ls t] <- (one-two s)}
+	 [{c > t} {s <+ (subset-sum R t)}
+	          {dyna[ls t] <- (tf->12 s)}
 		  s] ;; return boolean value
 			
 	 ;; else : c < t at this point
 	 ;; c is part of a solution OR not part of a solution
-	 [else {s <+ {(subset-sum-guile R {t - c}) or (subset-sum-guile R t)}}
-	       {dyna[ls t] <- (one-two s)}
+	 [else {s <+ (subset-sum R {t - c}) or (subset-sum R t)}
+	       {dyna[ls t] <- (tf->12 s)}
 	       s])) ;; return boolean value
 
 
-(define (subset-sum-guile-dec L t)
+
+;; scheme@(guile-user)> (subset-sum-dec L-init t-init)
+;;$1 = #t
+(define (subset-sum-dec L t) ; declaration on top
 
   (declare ls dyn c R s)
   
@@ -479,14 +493,14 @@
 	 
 	 [exec {R <- (rest L)}]	 
 	 ;; continue searching a solution in the rest
-	 [{c > t} {s <- (subset-sum-guile-dec R t)}
-	          {dyna[ls t] <- (one-two s)}
+	 [{c > t} {s <- (subset-sum-dec R t)}
+	          {dyna[ls t] <- (tf->12 s)}
 		  s] ;; return boolean value
 			
 	 ;; else : c < t at this point
 	 ;; c is part of a solution OR not part of a solution
-	 [else {s <- {(subset-sum-guile-dec R {t - c}) or (subset-sum-guile-dec R t)}}
-	       {dyna[ls t] <- (one-two s)}
+	 [else {s <- (subset-sum-dec R {t - c}) or (subset-sum-dec R t)}
+	       {dyna[ls t] <- (tf->12 s)}
 	       s])) ;; return boolean value
 
 
