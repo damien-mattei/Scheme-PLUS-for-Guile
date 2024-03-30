@@ -1,6 +1,6 @@
 ;; Scheme+.scm
 
-;; version 7.5
+;; version 7.9
 
 ;; author: Damien MATTEI
 
@@ -43,7 +43,9 @@
 
 
 (define-module (Scheme+)
-
+  #:use-module (guile)
+  #:use-module ((guile) #:select ((do . do-scheme)
+				  (while . while-guile)))
   #:use-module (for_next_step)
   #:use-module (growable-vector)
   ;;#:use-module (ice-9 local-eval)
@@ -108,7 +110,7 @@
 		set-infix-operators-lst!
 		replace-operator! ) 
 
-  #:replace (do when unless)
+  #:replace (do when unless while)
 
   #:export ( $nfx$
 	     !*prec
@@ -151,7 +153,8 @@
 (include-from-path "block.scm")
 (include-from-path "not-equal.scm")
 (include-from-path "exponential.scm")
-(include-from-path "while-do-when-unless.scm")
+(include-from-path "when-unless.scm")
+(include-from-path "while-do.scm")
 (include-from-path "repeat-until.scm")
 (include-from-path "modulo.scm")
 (include-from-path "bitwise.scm")
