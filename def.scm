@@ -172,6 +172,22 @@
      ((_ var ...) (<+ var ...))))
 
 
+
+;; scheme@(guile-user)> {x :+ 7}
+;; scheme@(guile-user)> x
+;; $1 = 7
+;; scheme@(guile-user)> {x := "hello"}
+;; scheme@(guile-user)> x
+;; $2 = "hello"
+
+(define-syntax :+
+  (syntax-rules ()
+
+    ((_ var ...) (<+ var ...))))
+
+
+
+
 ;; > {(values 2 4 5) +> (x y z) +> (u v w) +> (a b c)} 
 ;; 2
 ;; 4

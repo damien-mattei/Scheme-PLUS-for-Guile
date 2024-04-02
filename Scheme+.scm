@@ -118,9 +118,9 @@
 	     def
 	     $bracket-apply$
 	     $bracket-apply$next
-	     <- ←
+	     <- ← :=
 	     -> →
-	     <+ ⥆
+	     <+ ⥆ :+
 	     +> ⥅
 	     declare
 	     $> $+>
