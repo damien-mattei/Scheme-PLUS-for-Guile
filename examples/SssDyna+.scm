@@ -406,6 +406,43 @@
   s) ;; return boolean value
   
 
+
+;; scheme@(guile-user)> (subset-sum-dynamic-new-syntax L-init t-init)
+;; $1 = #t
+(def (subset-sum-dynamic-new-syntax L t)
+
+  (declare ls dyn c R s) ;; declare multiple variables
+
+  {ls <- (length L)}
+  {dyn <- dyna[ls t]} ;; dyna is a toplevel defined array
+
+  ;; dyna[ls t] means : 0: unknown solution, 1: solution found, 2: no solution
+
+  (if {dyn <> 0} ;; IF or WHEN : it is the same thing here (only one statement)
+      (return (one? dyn)))
+
+  (if (null? L) then
+      {dyna[ls t] <- 2}
+      (return #f))
+
+  {c <- (first L)}
+
+  (if {c = t} then ;; c is the solution
+      {dyna[ls t] <- 1}
+      (return #t))
+
+  {R <- (rest L)} ;; continue searching a solution in the rest
+
+  (if {c > t}  then ;; c is to big to be a solution
+      {s <- (subset-sum-dynamic-new-syntax R t)}
+   else
+      ;; c is part of the solution or c is not part of solution
+      {s <- (subset-sum-dynamic-new-syntax R {t - c}) or (subset-sum-dynamic-new-syntax R t)})
+
+  {dyna[ls t] <- (tf->12 s)}
+  s) ;; return boolean value
+
+
 ;;(subset-sum-condx L-init t-init)
 ;;$1 = #t
 

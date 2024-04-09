@@ -25,10 +25,11 @@
 
 
 ;;(use-modules (ice-9 textual-ports)) ;; allow put-back characters
-(use-modules (ice-9 pretty-print))
-(use-modules (srfi srfi-31)) ;; rec
+(use-modules (ice-9 pretty-print)
+	     (srfi srfi-31) ; rec
+	     (srfi srfi-1)) ; first ,third 
 
-(include "first-and-rest.scm")
+(include "rest.scm")
 (include "operation-redux.scm")
 (include "optimize-infix.scm")
 (include "assignment-light.scm")
@@ -38,7 +39,12 @@
 (include "def.scm")
 (include "optimize-infix-slice.scm")
 
+(include "when-unless.scm")
+(include "while-do.scm")
+
 (define stderr (current-error-port))
+
+(include "condx.scm")
 
 (include "SRFI-105.scm")
 

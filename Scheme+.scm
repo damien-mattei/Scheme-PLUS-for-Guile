@@ -1,6 +1,6 @@
 ;; Scheme+.scm
 
-;; version 7.9
+;; version 8.1
 
 ;; author: Damien MATTEI
 
