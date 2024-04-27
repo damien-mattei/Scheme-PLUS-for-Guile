@@ -50,6 +50,8 @@
 
 (define srfi-105 #f)
 
+(define verbose #f)
+
 (define (literal-read-syntax src)
 
   (define in (open-input-file src))
@@ -71,16 +73,17 @@
 (define (process-input-code-tail-rec in) ;; in: port
 
 
-  (display "SRFI-105 Curly Infix parser with operator precedence by Damien MATTEI" stderr) (newline stderr)
-  (display "(based on code from David A. Wheeler and Alan Manuel K. Gloria.)" stderr) (newline stderr) (newline stderr)
+  (when verbose
+	  (display "SRFI-105 Curly Infix parser with operator precedence by Damien MATTEI" stderr) (newline stderr)
+	  (display "(based on code from David A. Wheeler and Alan Manuel K. Gloria.)" stderr) (newline stderr) (newline stderr)
 
-  (when srfi-105
-      (display "SRFI-105 strict compatibility mode is ON." stderr))
-  (newline stderr)
+	  (when srfi-105
+		(display "SRFI-105 strict compatibility mode is ON." stderr))
+	  (newline stderr)
 
-  (newline stderr) 
+	  (newline stderr) 
   
-  (display "Parsed curly infix code result = " stderr) (newline stderr) (newline stderr)
+	  (display "Parsed curly infix code result = " stderr) (newline stderr) (newline stderr))
   
   (define (process-input acc)
     
@@ -89,9 +92,11 @@
     ;;(display (write result stderr) stderr) ;; without 'write' string delimiters disappears !
     ;;(display result stderr)
     ;;(write result stderr)
-    (pretty-print result stderr)
-    (newline stderr)
-    (newline stderr)
+
+    (when verbose
+	    (pretty-print result stderr)
+	    (newline stderr)
+	    (newline stderr))
     
     (if (eof-object? result)
 	(reverse acc)
@@ -99,7 +104,7 @@
   
   (process-input '()))
 
-
+  
   
 ; parse the input file from command line
 (define cmd-ln (command-line))
@@ -124,6 +129,8 @@
       (set! nfx-optim #f)
       (set! slice-optim #f))
 
+(when (member "--verbose" options)
+      (set! verbose #t))
 
 (define file-name (car (reverse cmd-ln)))
 

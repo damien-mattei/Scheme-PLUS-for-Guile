@@ -12,6 +12,8 @@
 
 ;./curly-infix2prefix4guile.scm    ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile+.scm > ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile.scm
 
+; or: make -f Makefile.Guile
+
 ; use: (load "exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile.scm")
 
 ; in case of problem: rm -rf .cache/guile/
@@ -287,7 +289,9 @@ but will it works with all Scheme+ parser?
 		 
 		 ;{err <+ 0.0} ; l'erreur totale pour cet exemple
 
-		 {(x y) <- Lexemples[ip]}         ; un nouvel exemple à apprendre
+		 {x <- (car Lexemples[ip])}         ; un nouvel exemple à apprendre
+		 {y <- (cdr Lexemples[ip])} 
+
 
 		 ;; PROPAGATION VERS L'AVANT
 		 (accepte_et_propage x nbp)       ; sorties obtenues sur l'exemple courant, self.z_k et z_j sont mis à jour
@@ -358,7 +362,8 @@ but will it works with all Scheme+ parser?
 	  (declare entree sortie_attendue ᐁ)
 	  (for-each-in (entree-sortie_attendue (vector->list Lexemples))
 		       
-		{(entree sortie_attendue) <- entree-sortie_attendue} ; use pairs in Scheme instead of tuples and vectors in Python
+		{entree <- (car entree-sortie_attendue)} 
+		{sortie_attendue <- (cdr entree-sortie_attendue)} 
 		(accepte_et_propage entree nbp)
 
 		(format #t ; current output port

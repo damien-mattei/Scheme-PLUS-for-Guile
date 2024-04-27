@@ -263,14 +263,12 @@
 		
 	       datum2))))))))
 
-
-
+  
 
 (define (parser-$bracket-apply$next-arguments port prefix)
-	 ;; create ($bracket-apply$next container (list args1 args2 ...))
-	 (list '$bracket-apply$next
-	       prefix ;; = container
-	       (cons 'list (optimizer-parse-square-brackets-arguments (my-read-delimited-list neoteric-read-real #\] port)))))
+  ;; create ($bracket-apply$next container args1 args2 ...)
+  `($bracket-apply$next ,prefix ;; = container (vector,array,hash table ....)
+			,@(optimizer-parse-square-brackets-arguments (my-read-delimited-list neoteric-read-real #\] port))))
 
 
 

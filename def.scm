@@ -17,6 +17,56 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
+;; scheme@(guile-user)> (defined-symbol? x)
+;;$1 = #f
+;; (define-syntax defined-symbol?              
+;;   (syntax-rules ()
+    
+;;     ((_ x) (defined? (quote x)))))
+
+;; Warning: does not works in all context ! (limitation/bug in Guile) :
+;; scheme@(guile-user)> (let () (define x 3) (defined? 'x))
+;; $1 = #f ;; !!!!!!
+
+
+;; scheme@(guile-user)> (defined-symbol? d)
+;; ;;; <stdin>:20:17: warning: possibly unbound variable `d'
+;; $3 = #f
+;; (define-syntax defined-symbol?
+;;   (syntax-rules ()
+;;     ((_ x) (call-with-current-continuation 
+;; 	    (lambda (exit)
+;; 	      (with-exception-handler
+;; 	       (lambda (e)
+;; 		 (display "defined-symbol? : undefined") (newline)
+;; 		 (exit #f)) ; eval failed => not defined
+;; 	       (lambda ()
+;; 		 (eval x (interaction-environment))
+;; 		 #t))))))) ; eval suceeded => defined
+
+
+;; scheme@(guile-user)> (define r 2)
+;; scheme@(guile-user)> (if-defined r 'defined (define r 7))
+;; if-defined : where=#t
+;; $16 = defined
+;; scheme@(guile-user)> (if-defined t3 'defined (define t3 7))
+;; if-defined : where=#f
+;; scheme@(guile-user)> t3
+;; $17 = 7
+;; scheme@(guile-user)> (if-defined z (list z) 'not-defined)
+;; if-defined : where=#f
+;; $18 = not-defined
+;; (define-syntax if-defined
+;;   (lambda (stx)
+;;     (syntax-case stx ()
+;;       ((_ id iftrue iffalse)
+;;        (let ((where (defined-symbol? #'id))) ;;(quote id))))
+;; 	 (display "if-defined : where=") (display where) (newline)
+;; 	 (display "id=") (display #'id) (newline)
+;; 	 (if where #'iftrue #'iffalse))))))
+
+
+
 ;; scheme@(guile-user)> (def (foo) (when #t (return "hello") "bye"))
 ;; scheme@(guile-user)> (foo)
 ;;  "hello"

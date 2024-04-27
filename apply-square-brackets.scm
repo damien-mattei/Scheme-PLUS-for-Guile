@@ -74,13 +74,12 @@
 (define ($bracket-apply$ container . args-brackets)  ;;  this implements a possible $bracket-apply$ as proposed in SRFI-105
 
   ;;(display args-brackets) (newline)
-  ($bracket-apply$next container (parse-square-brackets-arguments args-brackets)))
+  ($bracket-apply$next4list-args container (parse-square-brackets-arguments args-brackets)))
 
 
+(define ($bracket-apply$next4list-args container args) 
 
-(define ($bracket-apply$next container args)   ;; optimized version
-
-  ;;(display args) (newline)
+;;(display args) (newline)
   (case (length args)
 
     ((0) (apply-square-brackets-argument-0 container))
@@ -125,10 +124,14 @@
     ;; more than 5 arguments in [ ]
     ;; T[i1 i2 i3 i4 i5 i6 ...]
     (else 
-     (if (vector? container)
-	 (function-array-n-dim-ref container (reverse args)) 
-	 (array-ref container (list->vector args))))))   ;; array SRFI 25
+     (apply-square-brackets-argument-6-and-more container args))))
 
+
+
+
+(define ($bracket-apply$next container . args)   ;; optimized version
+
+  ($bracket-apply$next4list-args container args))
 
 
 
@@ -170,6 +173,11 @@
   ;; '#(1 7 3)
   ;; > T2
   ;; '#(1 0 3)
+
+  ;; (display "apply-square-brackets-argument-1 container-eval =") (display container-eval) (newline)
+  ;; (display "apply-square-brackets-argument-1 index-eval =") (display index-eval) (newline)
+  ;; (newline)
+  
   (cond ((or (vector? container-eval)  (growable-vector? container-eval))
 
 	 (if (equal? slice index-eval) ;; T[$] . T[1 $ 5] 
@@ -859,11 +867,18 @@
   ;; note : i do not use negative indexes or slices for array because they could be not starting at zero
 
 
+(define (apply-square-brackets-argument-6-and-more container args)
+
+  (if (vector? container)
+      (function-array-n-dim-ref container (reverse args)) 
+      (array-ref container (list->vector args))))   ;; array SRFI 25
 
 
 
 ;; split the expression between [ ] using slice as separator
 (def (parse-square-brackets-arguments args-brackets)
+     
+  ;;(display "apply-square-brackets.* : parse-square-brackets-arguments : args-brackets=") (display args-brackets) (newline)
 
   (when (null? args-brackets)
 	(return args-brackets))

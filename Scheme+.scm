@@ -1,6 +1,6 @@
 ;; Scheme+.scm
 
-;; version 8.1
+;; version 8.7
 
 ;; author: Damien MATTEI
 
@@ -118,6 +118,9 @@
 	     def
 	     $bracket-apply$
 	     $bracket-apply$next
+
+	     parse-square-brackets-arguments ; exported for debug
+	     
 	     <- ← :=
 	     -> →
 	     <+ ⥆ :+
