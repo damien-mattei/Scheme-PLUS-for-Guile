@@ -50,6 +50,7 @@
 
 (define srfi-105 #f)
 
+;; quiet mode that do not display on standart error the code
 (define verbose #f)
 
 (define (literal-read-syntax src)
@@ -121,6 +122,7 @@
       (display "curly-infix2prefix4guile.scm [options] file2parse.scm") (newline) (newline)
       (display "options:") (newline)(newline)
       (display "  --srfi-105 : set strict compatibility mode with SRFI-105 ") (newline) (newline)
+      (display "  --verbose : display code on stderr too ") (newline) (newline)
       (exit))
 
 
