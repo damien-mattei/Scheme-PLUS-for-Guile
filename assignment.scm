@@ -92,119 +92,180 @@
     
 
       ;; example: {a[4] <- 7}
-      ;; $bracket-apply$ is from SRFI 105  bracket-apply is an argument of the macro
+      ;; $bracket-apply$ is from SRFI 105  $bracket-apply$ is an argument of the macro <- here
       
       ((_ (brket-applynext container index ...) expr)  ; possible to have NO index :
 					; minimal form is (_ (brket-applynext container) expr)
 
        ;; We will let the second $bracket-apply$ be executed and forbid the execution of first $bracket-apply$.
-       (cond ((equal? (quote $bracket-apply$next) (syntax->datum #'brket-applynext))  ;; already parsed and optimised by parser
+       (cond ((equal? (quote $bracket-apply$next) (syntax->datum #'brket-applynext))  ;;  $bracket-apply$next , already parsed and optimised by parser
+
 	      #'(assignmentnext container expr index  ...)) ; possible to have NO index
-	     
-	     ((equal? (quote $bracket-apply$) (syntax->datum #'brket-applynext)) ;; integrated curly-infix of guile (no parsing) at REPL
-	      ;; we parse arguments at posteriori
-	      (case (length (syntax->datum #'(index ...)))
 
-		;; 0 argument in []
-		;; T[]
-		;; {v[] <- #(1 2 3)}
-		;; > v
-		;;'#(1 2 3)
-		((0) 
-		 #'(assignment-argument-0 container index ... expr))  ; possible to have NO index
 
-		;; 1 argument in [ ]
-		;; T[index]
-		((1)
-		 #'(assignment-argument-1 container index ... expr))
 
-		;; 2 arguments in [ ]
-		;; ex: T[i1 :] , T[: i2], T[i1 i2] , T[: :]   
-		;; {#(1 2 3 4 5)[inexact->exact(floor(2.7)) :]}
-		;; '#(3 4 5)
-		((2)
-		 #'(assignment-argument-2 container index ... expr))
+	     ;; $bracket-apply$
+	     ;; integrated curly-infix of guile (no parsing) at REPL
+	     ;; (define T (make-vector 7))
+	     ;; {T[2 + 1] <- -7}
+	     ((equal? (quote $bracket-apply$) (syntax->datum #'brket-applynext))
 
-		;; 3 arguments in [ ]
-		;; T[i1 : i2] , T[i1 i2 i3] , T[: : s]
-		((3)
-		 #'(assignment-argument-3 container index ... expr))
+	      (display "<- : #'(index ...) = ") (display #'(index ...)) (newline)
+	      ;;(display "<- : (syntax->datum #'(index ...)) = ") (display (syntax->datum #'(index ...))) (newline)
+	      
+	      ;;(display "<- : (number? (car (syntax->datum #'(index ...)))) = ") (display (number? (car (syntax->datum #'(index ...))))) (newline)
+	      
+	      ;; parse arguments at posteriori here:
+	      ;; (with-syntax ((parsed-args (datum->syntax stx ; #f
+	      ;; 						(cons #'list 
+	      ;; 						      (optimizer-parse-square-brackets-arguments-lister
+	      ;; 						       (syntax->datum #'(index ...)))))))
 
-		;; 4 arguments in [ ]
-		;; T[: i2 : s] , T[i1 : : s] , T[i1 : i3 :] , T[i1 i2 i3 i4]
-		((4)
-		 #'(assignment-argument-4 container index ... expr))
+	      (with-syntax ((parsed-args
+			     
+	      		     ;;(cons #'list ;; otherwise:Wrong type to apply: 0 ,list will be interpreted as code !
+			     ;;(optimizer-parse-square-brackets-arguments-lister-syntax #'(index ...)));)
+			     
+			     #`(list #,@(optimizer-parse-square-brackets-arguments-lister-syntax #'(index ...))))
 
-		;; 5 arguments in [ ]
-		;; T[i1 : i3 : s] , T[i1 i2 i3 i4 i5]
-		((5)
-		 #'(assignment-argument-5 container index ... expr))
+			    ) ; end definitions
+			   
+			   (display "<- : #'parsed-args=") (display #'parsed-args) (newline)
+			   ;;(display "<- :  (syntax->datum #'parsed-args)=") (display (syntax->datum #'parsed-args)) (newline)
+			   
+			   ;;(case (length (cdr (syntax->datum #'parsed-args)))
+			   (case (length (cdr #'parsed-args)) ; putting code here optimise run-time
+			   ;;(case (length #'parsed-args)
+			       
+			     ;; 0 argument in []
+			     ;; T[]
+			     ;; {v[] <- #(1 2 3)}
+			     ;; > v
+			     ;;'#(1 2 3)
+			     ((0) 
+			      ;; #'(begin
+			      ;; 	  (display "<- case 0 : parsed-args=") (display parsed-args) (newline)
+				  #'(assignment-argument-0 container expr));)  ; possible to have NO index
 
-		;; more than 5 arguments in [ ]
-		;; T[i1 i2 i3 i4 i5 i6 ...]
-		(else
-		 #'(assignment-argument-6-and-more container (list index ...) expr))))
+			     ;; 1 argument in [ ]
+			     ;; T[index]
+			     ((1)
+			      ;; #'(begin
+			      ;; 	  (display "<- case 1 : parsed-args=") (display parsed-args) (newline)
+				  #'(assignment-argument-1 container
+						       (first parsed-args)
+						       expr));)
 
-	     (else
+			     ;; 2 arguments in [ ]
+			     ;; ex: T[i1 :] , T[: i2], T[i1 i2] , T[: :]   
+			     ;; {#(1 2 3 4 5)[inexact->exact(floor(2.7)) :]}
+			     ;; '#(3 4 5)
+			     ((2)
+			      ;; #'(begin
+			      ;; 	  (display "<- case 2 : parsed-args=") (display parsed-args) (newline)
+				  #'(assignment-argument-2 container
+							 (first parsed-args)
+							 (second parsed-args)
+							 expr));)
+
+			     ;; 3 arguments in [ ]
+			     ;; T[i1 : i2] , T[i1 i2 i3] , T[: : s]
+			     ((3)
+			      ;; #'(begin
+			      ;; 	  (display  "<- case 3 : 'parsed-args=") (display 'parsed-args) (newline)
+				  #'parsed-args);)
+				  ;; (assignment-argument-3 container					  
+				  ;; 			 (first parsed-args)
+				  ;; 			 (second parsed-args)
+				  ;; 			 (third parsed-args)
+				  ;; 			 expr)))
+			     
+			     ;; 4 arguments in [ ]
+			     ;; T[: i2 : s] , T[i1 : : s] , T[i1 : i3 :] , T[i1 i2 i3 i4]
+			     ((4)
+			      #'(assignment-argument-4 container
+						       (first parsed-args)
+						       (second parsed-args)
+						       (third parsed-args)
+						       (fourth parsed-args)
+						       expr))
+
+			     ;; 5 arguments in [ ]
+			     ;; T[i1 : i3 : s] , T[i1 i2 i3 i4 i5]
+			     ((5)
+			      #'(assignment-argument-5 container
+						       (first parsed-args)
+						       (second parsed-args)
+						       (third parsed-args)
+						       (fourth parsed-args)
+						       (fifth parsed-args)
+						       expr))
+
+			     ;; more than 5 arguments in [ ]
+			     ;; T[i1 i2 i3 i4 i5 i6 ...]
+			     (else ; case
+			      #'(assignment-argument-6-and-more container parsed-args expr)))))
+
+	     (else ; cond
 	      #'(set!-values-plus (brket-applynext container index ...) expr)))) ; warning: the argument's names does not match the use
-    
       
-    
-    ;;(<- x 5)
-    ((_ var expr)
-     
-     #'(set! var expr))
-    
-    
-    ;; (declare x y z t)
-    ;; {x <- y <- z <- t <- 7}
-    ;; 7
-    ;; (list x y z t)
-    ;; (7 7 7 7)
+      
+      
+      ;;(<- x 5)
+      ((_ var expr)
+       
+       #'(set! var expr))
+      
+      
+      ;; (declare x y z t)
+      ;; {x <- y <- z <- t <- 7}
+      ;; 7
+      ;; (list x y z t)
+      ;; (7 7 7 7)
 
-    ;; > (require srfi/25)
-    ;; > {I <- (make-array (shape 0 4 0 4))}
-    ;; #<array:srfi-9-record-type-descriptor>
-    ;; > {I[0 0] <- I[1 1] <- I[2 2] <- I[3 3] <- 1}
-    ;; 1
-    ;; > {I[0 0]}
-    ;; 1
-    ;; > {I[0 1]}
-    ;; 0
-    ;; > I
-    ;; #<array:srfi-9-record-type-descriptor>
-    
-    ;; > (declare a b c d)
-    ;; > {(a b) <- (c d) <- (values 5 7)}
-    ;; > a
-    ;; 5
-    ;; > b
-    ;; 7
-    ;; > c
-    ;; 5
-    ;; > d
-    ;; 7
-
-    ;; without declare:
-    ;; > {(a b) <- (c d) <- (values 5 7)}
-    ;; > (list a b c d)
-    ;; '(5 7 5 7)
-    ((_ var var1 ... expr)
+      ;; > (require srfi/25)
+      ;; > {I <- (make-array (shape 0 4 0 4))}
+      ;; #<array:srfi-9-record-type-descriptor>
+      ;; > {I[0 0] <- I[1 1] <- I[2 2] <- I[3 3] <- 1}
+      ;; 1
+      ;; > {I[0 0]}
+      ;; 1
+      ;; > {I[0 1]}
+      ;; 0
+      ;; > I
+      ;; #<array:srfi-9-record-type-descriptor>
+      
+      ;; > (declare a b c d)
+      ;; > {(a b) <- (c d) <- (values 5 7)}
+      ;; > a
+      ;; 5
+      ;; > b
+      ;; 7
+      ;; > c
+      ;; 5
+      ;; > d
+      ;; 7
+      
+      ;; without declare:
+      ;; > {(a b) <- (c d) <- (values 5 7)}
+      ;; > (list a b c d)
+      ;; '(5 7 5 7)
+      ((_ var var1 ... expr)
+       
+       
+       #'(begin ;; i do not do what the syntax says (assignation not in the good order) but it gives the same result
+	   ;;(display "<- : case (_ var var1 ... expr)") (newline)
+	   
+	   (define return-values-of-expr (create-return-values expr))
+	   (<- var (return-values-of-expr))
+	   ;;(display "<- : case : passed (<- var expr)") (newline)
+	   ;;(display "<- : case : var=") (display var) (newline) 
+	   
+	   (<- var1 (return-values-of-expr))
+	   ...))
+      
      
-    
-     #'(begin ;; i do not do what the syntax says (assignation not in the good order) but it gives the same result
-	 ;;(display "<- : case (_ var var1 ... expr)") (newline)
-	 
-	 (define return-values-of-expr (create-return-values expr))
-	 (<- var (return-values-of-expr))
-	 ;;(display "<- : case : passed (<- var expr)") (newline)
-	 ;;(display "<- : case : var=") (display var) (newline) 
-	
-	 (<- var1 (return-values-of-expr))
-	 ...))
-
-     
-    )))
+      )))
 
 
 
@@ -275,12 +336,233 @@
 ;; #2((1 0)
 ;;    (0 1))
 
-(define-syntax ← ;; under Linux this symbol can be typed with the
-  ;; combination of keys: Ctrl-Shift-u 2190 where 2190 is the unicode of left arrow
+;; (define-syntax ← ;; under Linux this symbol can be typed with the
+;;   ;; combination of keys: Ctrl-Shift-u 2190 where 2190 is the unicode of left arrow
 
+;;   (syntax-rules ()
+
+;;     ((_ var ...) (<- var ...))))
+
+
+
+;; (define-syntax ← ;; under Linux this symbol can be typed with the
+;;   ;; combination of keys: Ctrl-Shift-u 2190 where 2190 is the unicode of left arrow
+
+;;   (lambda (stx)
+    
+;;     (syntax-case stx ()
+
+;;       ((_ var ...) #'(<- var ...)))))
+
+
+
+;; (define-syntax ← ;; under Linux this symbol can be typed with the
+;;   ;; combination of keys: Ctrl-Shift-u 2190 where 2190 is the unicode of left arrow
+
+;;   (syntax-rules ()
+
+;;     ((_ ( ) expr) (<- ( ) expr))
+
+;;     ((_ (var) expr) (<- (var) expr))
+
+;;     ((_ (brket-applynext container index ...) expr) (<- (brket-applynext container index ...) expr))
+
+;;     ((_ var expr) (<- var expr))
+
+;;     ((_ var var1 ... expr) (<- var var1 ... expr))))
+
+
+;;(define-syntax-rule (← . args) (<- . args))
+
+
+(define-syntax ←
+  
   (syntax-rules ()
+    ((← . args)
+     (<- . args))))
 
-    ((_ var ...) (<- var ...))))
+
+;; (define-syntax ←
+  
+;;   (lambda (stx)
+    
+;;     (syntax-case stx ()
+
+
+;;       ;; silly case
+;;       ((_ ( ) expr)
+;;        #'(void)) ;; void is not portable ;'())
+
+;;       ;; one value in values !
+;;       ;; > {(x) ← (values 7)}
+;;       ;; > x
+;;       ;; 7
+;;       ((_ (var) expr)
+
+;;        #'(set!-values-plus (var) expr))
+      
+    
+
+;;       ;; example: {a[4] ← 7}
+;;       ;; $bracket-apply$ is from SRFI 105  bracket-apply is an argument of the macro
+      
+;;       ((_ (brket-applynext container index ...) expr)  ; possible to have NO index :
+;; 					; minimal form is (_ (brket-applynext container) expr)
+
+;;        ;; We will let the second $bracket-apply$ be executed and forbid the execution of first $bracket-apply$.
+;;        (cond ((equal? (quote $bracket-apply$next) (syntax->datum #'brket-applynext))  ;; already parsed and optimised by parser
+
+;; 	      #'(assignmentnext container expr index  ...)) ; possible to have NO index
+
+
+;; 	     ;; integrated curly-infix of guile (no parsing) at REPL
+;; 	     ((equal? (quote $bracket-apply$) (syntax->datum #'brket-applynext))
+
+;; 	      (display "← : #'(index ...) = ") (display #'(index ...)) (newline)
+;; 	      (display "← : (syntax->datum #'(index ...)) = ") (display (syntax->datum #'(index ...))) (newline)
+	      
+;; 	      ;;(display "← : (number? (car (syntax->datum #'(index ...)))) = ") (display (number? (car (syntax->datum #'(index ...))))) (newline)
+	      
+;; 	      ;; parse arguments at posteriori here:
+;; 	      (with-syntax ((parsed-args (datum->syntax stx ; #f
+;; 	      						(cons #'list 
+;; 	      						      (optimizer-parse-square-brackets-arguments-lister
+;; 							       (syntax->datum #'(index ...)))))))
+
+;; 	      ;; (with-syntax ((parsed-args 
+;; 	      ;; 		     (cons #'list ;; otherwise:Wrong type to apply: 0 ,list will be interpreted as code !
+;; 	      ;; 			   (optimizer-parse-square-brackets-arguments-lister #'(index ...)))))
+			   
+;; 			   (display "← : #'parsed-args=") (display #'parsed-args) (newline)
+;; 			   (display "← :  (syntax->datum #'parsed-args)=") (display (syntax->datum #'parsed-args)) (newline)
+			   
+;; 			   (case (length (cdr (syntax->datum #'parsed-args)))
+;; 			   ;;(case (length (cdr #'parsed-args))
+;; 			   ;;(case (length #'parsed-args)
+			       
+;; 			     ;; 0 argument in []
+;; 			     ;; T[]
+;; 			     ;; {v[] ← #(1 2 3)}
+;; 			     ;; > v
+;; 			     ;;'#(1 2 3)
+;; 			     ((0) 
+;; 			      #'(assignment-argument-0 container expr))  ; possible to have NO index
+
+;; 			     ;; 1 argument in [ ]
+;; 			     ;; T[index]
+;; 			     ((1)
+;; 			      #'(assignment-argument-1 container
+;; 						       (first parsed-args)
+;; 						       expr))
+
+;; 			     ;; 2 arguments in [ ]
+;; 			     ;; ex: T[i1 :] , T[: i2], T[i1 i2] , T[: :]   
+;; 			     ;; {#(1 2 3 4 5)[inexact->exact(floor(2.7)) :]}
+;; 			     ;; '#(3 4 5)
+;; 			     ((2)
+;; 			      #'(assignment-argument-2 container
+;; 						       (first parsed-args)
+;; 						       (second parsed-args)
+;; 						       expr))
+
+;; 			     ;; 3 arguments in [ ]
+;; 			     ;; T[i1 : i2] , T[i1 i2 i3] , T[: : s]
+;; 			     ((3)
+;; 			      #'(assignment-argument-3 container					  
+;; 						       (first parsed-args)
+;; 						       (second parsed-args)
+;; 						       (third parsed-args)
+;; 						       expr))
+			     
+;; 			     ;; 4 arguments in [ ]
+;; 			     ;; T[: i2 : s] , T[i1 : : s] , T[i1 : i3 :] , T[i1 i2 i3 i4]
+;; 			     ((4)
+;; 			      #'(assignment-argument-4 container
+;; 						       (first parsed-args)
+;; 						       (second parsed-args)
+;; 						       (third parsed-args)
+;; 						       (fourth parsed-args)
+;; 						       expr))
+
+;; 			     ;; 5 arguments in [ ]
+;; 			     ;; T[i1 : i3 : s] , T[i1 i2 i3 i4 i5]
+;; 			     ((5)
+;; 			      #'(assignment-argument-5 container
+;; 						       (first parsed-args)
+;; 						       (second parsed-args)
+;; 						       (third parsed-args)
+;; 						       (fourth parsed-args)
+;; 						       (fifth parsed-args)
+;; 						       expr))
+
+;; 			     ;; more than 5 arguments in [ ]
+;; 			     ;; T[i1 i2 i3 i4 i5 i6 ...]
+;; 			     (else ; case
+;; 			      #'(assignment-argument-6-and-more container parsed-args expr)))))
+
+;; 	     (else ; cond
+;; 	      #'(set!-values-plus (brket-applynext container index ...) expr)))) ; warning: the argument's names does not match the use
+      
+      
+      
+;;       ;;(← x 5)
+;;       ((_ var expr)
+       
+;;        #'(set! var expr))
+      
+      
+;;       ;; (declare x y z t)
+;;       ;; {x ← y ← z ← t ← 7}
+;;       ;; 7
+;;       ;; (list x y z t)
+;;       ;; (7 7 7 7)
+
+;;       ;; > (require srfi/25)
+;;       ;; > {I ← (make-array (shape 0 4 0 4))}
+;;       ;; #<array:srfi-9-record-type-descriptor>
+;;       ;; > {I[0 0] ← I[1 1] ← I[2 2] ← I[3 3] ← 1}
+;;       ;; 1
+;;       ;; > {I[0 0]}
+;;       ;; 1
+;;       ;; > {I[0 1]}
+;;       ;; 0
+;;       ;; > I
+;;       ;; #<array:srfi-9-record-type-descriptor>
+      
+;;       ;; > (declare a b c d)
+;;       ;; > {(a b) ← (c d) ← (values 5 7)}
+;;       ;; > a
+;;       ;; 5
+;;       ;; > b
+;;       ;; 7
+;;       ;; > c
+;;       ;; 5
+;;       ;; > d
+;;       ;; 7
+      
+;;       ;; without declare:
+;;       ;; > {(a b) ← (c d) ← (values 5 7)}
+;;       ;; > (list a b c d)
+;;       ;; '(5 7 5 7)
+;;       ((_ var var1 ... expr)
+       
+       
+;;        #'(begin ;; i do not do what the syntax says (assignation not in the good order) but it gives the same result
+;; 	   ;;(display "← : case (_ var var1 ... expr)") (newline)
+	   
+;; 	   (define return-values-of-expr (create-return-values expr))
+;; 	   (← var (return-values-of-expr))
+;; 	   ;;(display "← : case : passed (← var expr)") (newline)
+;; 	   ;;(display "← : case : var=") (display var) (newline) 
+	   
+;; 	   (← var1 (return-values-of-expr))
+;; 	   ...))
+      
+     
+;;       )))
+
+
+
 
 
 ;; scheme@(guile-user)> {x :+ 7}
@@ -976,6 +1258,8 @@
 	 ;; scheme@(guile-user)> {v[1 $ 3] <- "abcdef"[2 $ 4]}
 	 ;; scheme@(guile-user)> v
 	 ;; $2 = #(1 #\c #\d 4)
+
+	 ;; {v[1 : 3] <- #(-1 -2 -3 -4 -5 -6 -7)[2 : 4]}
 	 
 	 ;;  make it work between vector and string
 	 ((i1 (? equal-slice?) i3) (copy-slice-with-positive-step container-eval

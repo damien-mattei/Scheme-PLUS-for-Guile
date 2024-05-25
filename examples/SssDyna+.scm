@@ -23,8 +23,7 @@
 ;;  for curly infix notation  put in your .guile:
 ;; (read-enable 'curly-infix)
 
-;; ne marche pas:
-;; export GUILE_AUTO_COMPILE=0
+;; (load "SssDyna+.scm")
 
 ;; touch file.scm works if you change included files but not source file.scm
 

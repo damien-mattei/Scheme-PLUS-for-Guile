@@ -466,7 +466,7 @@ content="text/html; charset=utf-8">Basic hash tables
 
 </pre>
 <br>
-<br>Programs now needs to be parsed due to the use of optimization
+<br><del>Programs now needs to be parsed due to the use of optimization
 schemes, for parsing do:
 
 <pre>
@@ -474,7 +474,7 @@ schemes, for parsing do:
 curly-infix2prefix4guile.scm your_scheme_file_in_scheme+.scm > your_scheme_file_in_scheme.scm
 
 </pre>
-
+<del>
 <p>for the rest read the documentation below and the online examples.</p>
     <br>
     <h2>2.<u>Download Scheme+:</u></h2>

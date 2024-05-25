@@ -444,9 +444,10 @@
 				   (loop res))
 				 res)
 			     ))))
-		      ) ;; close syntax
+		      ) ; close syntax
 		     
-		     )))))
+		     ) ; close with-syntax
+	))))
 
 
 ;; (for/bc ({k <+ 0} {k < 3} {k <- {k + 1}})

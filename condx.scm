@@ -19,6 +19,13 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
+
+(define-module (condx)
+
+  #:export ( condx )) ;; end module declaration
+
+
+
 ; example:
 ;(define x 1)
 ;(condx ((= x 7) 'never)
@@ -42,9 +49,8 @@
     ((_ (exec s ...) d1 ...)
      (let () s ... (condx d1 ...)))
     ((_ (t e ...) tail ...)
-     (if t
-         (let () e ...)
-         (condx tail ...)))))
+     (cond (t (let () e ...))
+	   (else (condx tail ...))))))
 
 ;; (define-syntax condx
 ;;  (syntax-rules (exec else)

@@ -66,15 +66,59 @@
 ;; (<- ($bracket-apply$ a 1 3) ($bracket-apply$ a 2 4))
 
 
-;; {#(1 2 3 4 5 6 7)[2 * 5 - 8 $ 3 * 5 - 10]}
+;; {#(1 2 3 4 5 6 7)[2 * 5 - 8 : 3 * 5 - 10]}
 ;; '#(3 4 5)
 
-;; {#(1 2 3 4 5 6 7)[2 * 5 - 8 $ 3 * 5 - 10 $ 2 * 4 - 6]}
+;; {#(1 2 3 4 5 6 7)[2 * 5 - 8 : 3 * 5 - 10 : 2 * 4 - 6]}
 ;; '#(3 5)
-(define ($bracket-apply$ container . args-brackets)  ;;  this implements a possible $bracket-apply$ as proposed in SRFI-105
+;; scheme@(guile-user)> {#(1 2 3 4 5 6 7 8 9)[6 - 4 : 5 + 2]}
+;; $bracket-apply$ : args-brackets=(6 #<procedure - (#:optional _ _ . _)> 4 : 5 #<procedure + (#:optional _ _ . _)> 2)
+;; $1 = #(3 4 5 6 7)
+;; scheme@(guile-user)> {#(1 2 3 4 5 6 7 8 9)[2 * 3 - 4 : 2 * 5 - 3]}
+;; $bracket-apply$ : args-brackets=(2 #<procedure * (#:optional _ _ . _)> 3 #<procedure - (#:optional _ _ . _)> 4 : 2 #<procedure * (#:optional _ _ . _)> 5 #<procedure - (#:optional _ _ . _)> 3)
+;; $2 = #(3 4 5 6 7)
+;; (define ($bracket-apply$ container . args-brackets)  ;;  this implements a possible $bracket-apply$ as proposed in SRFI-105
 
-  ;;(display args-brackets) (newline)
-  ($bracket-apply$next4list-args container (parse-square-brackets-arguments args-brackets)))
+;;   ;;(display "$bracket-apply$ : args-brackets=") (display args-brackets) (newline)
+;;   ;;(display "$bracket-apply$ : infix-operators-lst=") (display infix-operators-lst) (newline)
+;;   ($bracket-apply$next4list-args container
+;;   				 (optimizer-parse-square-brackets-arguments-evaluator args-brackets)))
+
+
+(define-syntax $bracket-apply$
+  
+  (lambda (stx)
+    
+    (syntax-case stx ()
+
+
+      ;; a version that pre-compil the infix expression, should be faster
+      ;; scheme@(guile-user)> {#(1 2 3 4 5 6 7 8 9)[6 - 4 : 5 + 2]}
+      ;; optimizer-parse-square-brackets-arguments-lister-syntax : args-brackets=(#<syntax:unknown file:2:22 6> #<syntax:unknown file:2:24 -> #<syntax:unknown file:2:26 4> #<syntax:unknown file:2:28 :> #<syntax:unknown file:2:30 5> #<syntax:unknown file:2:32 +> #<syntax:unknown file:2:34 2>)
+      ;; $bracket-apply$ : #'parsed-args=(#<syntax:apply-square-brackets.scm:106:37 list> (#<syntax:unknown file:2:24 -> #<syntax:unknown file:2:22 6> #<syntax:unknown file:2:26 4>) #<syntax:unknown file:2:28 :> (#<syntax:unknown file:2:32 +> #<syntax:unknown file:2:30 5> #<syntax:unknown file:2:34 2>))
+      ;; $1 = #(3 4 5 6 7)
+      
+      ;; scheme@(guile-user)> (define i 5)
+      ;; scheme@(guile-user)> {#(1 2 3 4 5 6 7 8 9)[6 - 4 : i + 2]}
+      ;; optimizer-parse-square-brackets-arguments-lister-syntax : args-brackets=(#<syntax:unknown file:4:22 6> #<syntax:unknown file:4:24 -> #<syntax:unknown file:4:26 4> #<syntax:unknown file:4:28 :> #<syntax:unknown file:4:30 i> #<syntax:unknown file:4:32 +> #<syntax:unknown file:4:34 2>)
+      ;; $bracket-apply$ : #'parsed-args=(#<syntax:apply-square-brackets.scm:106:37 list> (#<syntax:unknown file:4:24 -> #<syntax:unknown file:4:22 6> #<syntax:unknown file:4:26 4>) #<syntax:unknown file:4:28 :> (#<syntax:unknown file:4:32 +> #<syntax:unknown file:4:30 i> #<syntax:unknown file:4:34 2>))
+      ;; $2 = #(3 4 5 6 7)
+      (($bracket-apply$ container arg-bracket ...) ;  . args-brackets
+
+      
+       (with-syntax ((parsed-args ;;#`(list #,@(optimizer-parse-square-brackets-arguments-lister-syntax #`(#,@#'args-brackets)))))
+
+		      (cons #'list 
+		      	    (optimizer-parse-square-brackets-arguments-lister-syntax #'(arg-bracket ...))))) ; #`(#,@#'args-brackets)))))
+		      
+		    (display "$bracket-apply$ : #'parsed-args=") (display #'parsed-args) (newline)
+		    
+		    #'($bracket-apply$next4list-args container parsed-args))))))
+
+
+
+;; ($bracket-apply$next4list-args container
+;; 				 (parse-square-brackets-arguments args-brackets)))
 
 
 (define ($bracket-apply$next4list-args container args) 
@@ -875,37 +919,37 @@
 
 
 
-;; split the expression between [ ] using slice as separator
-(def (parse-square-brackets-arguments args-brackets)
+;; ;; split the expression between [ ] using slice as separator
+;; (def (parse-square-brackets-arguments args-brackets)
      
-  ;;(display "apply-square-brackets.* : parse-square-brackets-arguments : args-brackets=") (display args-brackets) (newline)
+;;   ;;(display "apply-square-brackets.* : parse-square-brackets-arguments : args-brackets=") (display args-brackets) (newline)
 
-  (when (null? args-brackets)
-	(return args-brackets))
+;;   (when (null? args-brackets)
+;; 	(return args-brackets))
 
-  (declare result partial-result)
+;;   (declare result partial-result)
   
-  (def (psba args) ;; parse square brackets arguments
+;;   (def (psba args) ;; parse square brackets arguments
 
        
-       ;;(display partial-result) (newline)
-       (when (null? args)
-	     {result <- (append result (!*prec partial-result))} ;; !*prec is defined in scheme-infix.scm
+;;        ;;(display partial-result) (newline)
+;;        (when (null? args)
+;; 	     {result <- (append result (!*prec partial-result))} ;; !*prec is defined in scheme-infix.scm
 	     
-	     (return-rec result)) ;; return from all recursive calls
+;; 	     (return-rec result)) ;; return from all recursive calls
        
-       {fst <+ (car args)}
+;;        {fst <+ (car args)}
        
-       (if (equal? slice fst)
+;;        (if (equal? slice fst)
 	   
-	   ($>
-	    (when (not (null? partial-result))
-		  {result <- (append result (!*prec partial-result))} ;; evaluate and store the expression
-		  {partial-result <- '()}) ;; empty for the next possible portion between slice operator
-	    {result <- (append result (list fst))}) ;; append the slice operator
+;; 	   ($>
+;; 	    (when (not (null? partial-result))
+;; 		  {result <- (append result (!*prec partial-result))} ;; evaluate and store the expression
+;; 		  {partial-result <- '()}) ;; empty for the next possible portion between slice operator
+;; 	    {result <- (append result (list fst))}) ;; append the slice operator
 	   
-	   {partial-result <- (append partial-result (list fst))}) ;; not a slice operator but append it
+;; 	   {partial-result <- (append partial-result (list fst))}) ;; not a slice operator but append it
        
-       (psba (cdr args))) ;; end def, recurse
+;;        (psba (cdr args))) ;; end def, recurse
 
-  (psba args-brackets)) ;; initial call
+;;   (psba args-brackets)) ;; initial call

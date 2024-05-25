@@ -1,49 +1,151 @@
+;; (define definition-operator '(<+ +>
+;; 			      ⥆ ⥅
+;; 			      :+ +:))
+
+;; (define assignment-operator '(<- ->
+;; 			      ← →
+;; 			      :=  =:
+;; 			      <v v>
+;; 			      ⇜ ⇝))
+
+
+(define definition-operator (list '<+ '+>
+				  '⥆ '⥅
+				  ':+ '+:))
+
+(define assignment-operator (list '<- '->
+				  '← '→
+				  ':=  '=:
+				  '<v 'v>
+				  '⇜ '⇝))
+
+
 (define infix-operators-lst-for-parser
 
-  '(
-    (expt **)
-    (* / %)
-    (+ -)
+  ;; `(
+  ;;   (expt **)
+  ;;   (* / %)
+  ;;   (+ -)
 	
-    (<< >>)
+  ;;   (<< >>)
 
-    (& ∣)
+  ;;   (& ∣)
 
-    (< > = ≠ <= >= <>)
+  ;;   (< > = ≠ <= >= <>)
 
-    (and)
+  ;;   (and)
 
-    (or)
+  ;;   (or)
 	
-	;;(list 'dummy) ;; can keep the good order in case of non left-right assocciative operators.(odd? reverse them) 
+  ;; 	;;(list 'dummy) ;; can keep the good order in case of non left-right assocciative operators.(odd? reverse them) 
 
-    (<- -> ← → := <v v> ⇜ ⇝)
-    (<+ +> ⥆ ⥅ :+)
+  ;;   ,assignment-operator ;(<- -> ← → := <v v> ⇜ ⇝)
+  ;;   ,definition-operator  ; (<+ +> ⥆ ⥅ :+)
+  ;;   )
+
+  (list
+    
+   (list 'expt '**)
+   (list '* '/ '%)
+ 
+   (list '+ '-)
+   
+   (list '<< '>>)
+   
+   (list '&)
+   (list '^)
+   (list '∣)
+   
+   (list '< '> '= '≠ '<= '>= '<>)
+
+   (list 'and)
+   
+   (list 'or)
+    
+   (append assignment-operator 
+	   definition-operator)
+     
+   )
+  
+  )
+
+
+(define definition-operator-syntax (list #'<+ #'+>
+					 #'⥆ #'⥅
+					 #':+ #'+:))
+
+(define assignment-operator-syntax (list #'<- #'->
+					 #'← #'→
+					 #':=  #'=:
+					 #'<v #'v>
+					 #'⇜ #'⇝))
+
+
+
+(define infix-operators-lst-for-parser-syntax
+
+  (list
+    (list #'expt #'**)
+    (list #'* #'/ #'%)
+    (list #'+ #'-)
+	
+    (list #'<< #'>>)
+
+    (list #'& #'∣)
+
+    (list #'< #'> #'= #'≠ #'<= #'>= #'<>)
+
+    (list #'and)
+
+    (list #'or)
+
+    assignment-operator-syntax
+    definition-operator-syntax 
     )
 
   )
 
+
+
+;; liste à plate des operateurs
 (define operators-lst
-  (apply append infix-operators-lst-for-parser))
+   (apply append infix-operators-lst-for-parser))
 
 
-(define (operator? x)
-  (member x operators-lst))
+;; (define (operator? x oper-lst)
+;;   (member x oper-lst))
 
 
 ;; check that expression is infix
-(define (infix? expr)
-  
-  (define (infix-rec? expr)
-    (cond ((null? expr) #t)
-	  ((not (zero? (modulo (length expr) 2))) #f)
-	  (else (and (operator? (car expr)) ;; check (op1 e1 ...) 
-		     (not (operator? (cadr expr)))
-		     (infix-rec? (cddr expr))))))
-  
-  (or (null? expr) (and (not (operator? (car expr)))
-			(infix-rec? (cdr expr)))))
 
+;; modified for syntax too
+(define (infix? expr oper-lst)
+
+  ;;(display "infix? : expr=") (display expr) (newline)
+  ;;(display "infix? : oper-lst=") (display oper-lst) (newline)
+  
+  (define (infix-rec? expr) ; (op1 e1 op2 e2 ...)
+    ;;(display "infix-rec? : expr=") (display expr) (newline)
+    (if (null? expr)
+	#t
+    	(and (member-syntax (car expr) oper-lst) ;; check (op1 e1 ...) 
+	     (not (member-syntax (cadr expr) oper-lst)) ; check not (op1 op2 ...)
+	     (infix-rec? (cddr expr))))) ; continue with (op2 e2 ...) 
+
+
+  (define rv
+    (cond ((not (list? expr)) (not (member-syntax expr oper-lst))) ; not an operator ! 
+	  ((null? expr) #t) ; definition
+	  ((null? (cdr expr)) #f) ; (a) not allowed as infix
+	  (else
+	   (and (not (member-syntax (car expr) oper-lst)) ; not start with an operator !
+		(infix-rec? (cdr expr)))))) ; sublist : (op arg ...) match infix-rec
+  
+  ;;(display "infix? : rv=") (display rv) (newline)
+
+  rv
+  
+  )
 
 ;; return the operator of an operation
 (define (operator expr)
@@ -82,26 +184,45 @@
        (null? (rest (rest (rest expr))))))
 
 
+
+
+
+
+
+
+;; operators test
+
 ;; test if an operator is AND
 (define (AND-op? oper)
-  ;;(or (equal? oper 'and) (equal? oper 'AND)))
-  (or (eqv? oper 'and) (eqv? oper 'AND) (eqv? oper '·)))
+  (datum=? oper 'and))
+  ;;(or (eqv? oper 'and) (check-syntax=? oper #'and)))
+  ;;(or (eqv? oper 'and) (eqv? oper 'AND) (eqv? oper '·)))
 
 ;; test if an operator is OR
 (define (OR-op? oper)
-  ;;(or (equal? oper 'or) (equal? oper 'OR)))
-  (or (eqv? oper 'or) (eqv? oper 'OR)  (eqv? oper '➕))) ;; middle dot
+  (datum=? oper 'or))
+  ;;(or (eqv? oper 'or) (check-syntax=? oper #'or)))
+  ;;(or (eqv? oper 'or) (eqv? oper 'OR)  (eqv? oper '➕))) ;; middle dot
 
-(define (XOR-op? oper)
-  (or (eqv? oper 'xor) (eqv? oper 'XOR)  (eqv? oper '⊕))) ;; ⨁
+(define (XOR-op? oper) ;; note: logxor in Guile, xor in Racket
+  (or (datum=? oper 'logxor)
+      (datum=? oper 'xor)
+      (datum=? oper '^)))
+
+  ;;(or (eqv? oper 'xor) (check-syntax=? oper #'xor)))
+  ;;(or (eqv? oper 'xor) (eqv? oper 'XOR)  (eqv? oper '⊕))) ;; ⨁
 
 
 ;; test if an operator is NOT
 (define (NOT-op? oper)
-  (or (eqv? oper 'not) (eqv? oper 'NOT)))
+  (datum=? oper 'not))
+  ;;(or (eqv? oper 'not) (check-syntax=? oper #'not))) ; not sure it is usefull in syntax 
+  ;;(or (eqv? oper 'not) (eqv? oper 'NOT)))
 
 (define (ADD-op? oper)
-  (or (eqv? oper +) (eqv? oper '+)))
+  (or (eqv? oper +)
+      (datum=? oper '+)))
+  ;;(or (eqv? oper +) (eqv? oper '+) (check-syntax=? oper #'+)))
 
 (define (IMPLIC-op? oper)
   (or (eqv? oper '⟹) (eqv? oper '=>)))
@@ -110,12 +231,55 @@
   (or (eqv? oper '⟺) (eqv? oper '<=>)))
 
 
+(define (DEFINE-op? oper)
+  ;; (or (eqv? oper '<+) (eqv? oper '+>)
+  ;;     (eqv? oper '←) (eqv? oper '+>)
+  ;;     (eqv? oper '<-) (eqv? oper '->)
+  ;;     (eqv? oper '←) (eqv? oper '+>)))
+
+  (or (memv oper definition-operator)
+      (member-syntax oper definition-operator-syntax)))
+
+
+  
+(define (ASSIGNMENT-op? oper)
+  ;;(or (eqv? oper '<-) (eqv? oper '->)))
+  (or (memv oper assignment-operator)
+      (member-syntax oper assignment-operator-syntax)))
+
+
+
+
+
+(define (is-associative-operator? op)
+  (or (AND-op? op)
+      (OR-op? op)
+      (XOR-op? op)
+      (EQUIV-op? op)
+      (ADD-op? op)
+      (MULTIPLY-op? op)
+      (DEFINE-op? op)
+      (ASSIGNMENT-op? op)))
+
+
+
+
+
+
+
+
+
+
+;; expression tests
 
 (define (isADD? expr)
   (and (pair? expr) (ADD-op? (car expr))))
 
 (define (MULTIPLY-op? oper)
-  (or (eqv? oper *) (eqv? oper '*)))
+  (or (eqv? oper *)
+      (datum=? oper '*)))
+
+  ;;(or (eqv? oper *) (eqv? oper '*) (check-syntax=? oper #'*)))
 
 (define (isMULTIPLY? expr)
   (and (pair? expr) (MULTIPLY-op? (car expr))))
@@ -147,30 +311,25 @@
 (define (isXOR? expr)
   (and (pair? expr) (XOR-op?  (operator expr))))
 
+(define (isDEFINE? expr)
+  (and (pair? expr) (DEFINE-op?  (operator expr))))
 
-
-
-(define (DEFINE-op? oper)
-  (or (eqv? oper '<+) (eqv? oper '+>)))
-
-(define (ASSIGNMENT-op? oper)
-  (or (eqv? oper '<-) (eqv? oper '->)))
-
-(define (is-associative-operator? op)
-  (or (AND-op? op)
-      (OR-op? op)
-      (XOR-op? op)
-      (EQUIV-op? op)
-      (ADD-op? op)
-      (MULTIPLY-op? op)
-      (DEFINE-op? op)
-      (ASSIGNMENT-op? op)))
+(define (isASSIGNMENT? expr)
+  (and (pair? expr) (ASSIGNMENT-op?  (operator expr))))
 
 
 (define (isASSOCIATIVE? expr)
   (is-associative-operator? (first expr)))
 
 
+
+
+
+
+
+
+;; initially written for logical expression of OR / AND
+;; should works for every associative operator
 
 ;; n-arity function, this version will not show AND & OR case but collect them in one single line code
 ;; n-arity single function replacing n-arity-or and n-arity-and and that use the collect-leaves function 
@@ -257,41 +416,54 @@
 ;; '(<- x a b (- b c))
 
 ;; warning: usualy give a false result if operator is not associative
+;; could not work with exponentiation, expt , ** : is evaluation is from right to left (opposite normal evaluation and not associative! and not commutative!)
 (define (n-arity expr)
 
   ;;(display "n-arity : expr =")(display expr) (newline)
-  
-  (cond
-   ((not (list? expr)) expr) ;; symbol,number,boolean,vector,hash table....
-   ((null? expr) expr)
-   ((function-without-parameters? expr) expr)
-   ((unary-operation? expr)
-    (cons
-     (operator expr)
-     (list (n-arity (arg expr)))))
-   ((isASSOCIATIVE? expr)
-    (let ((opera (operator expr)))
-      (cons opera
-	    (apply
-	     append
-	     (map (make-collect-leaves-operator opera) (args expr))))))
-   
-   (else ;; safe else, will not touch non associative operators
-    (let ((opera (operator expr)))
-      (cons opera
-	    (map n-arity (args expr)))))))
+
+  (define rv
+    (cond
+     ((not (list? expr)) expr) ;; symbol,number,boolean,vector,hash table....
+     ((null? expr) expr)
+     ((function-without-parameters? expr) expr)
+     ((unary-operation? expr)
+      (cons
+       (operator expr)
+       (list (n-arity (arg expr)))))
+     ((isASSOCIATIVE? expr)
+      (let ((opera (operator expr)))
+	(cons opera
+	      (apply
+	       append
+	       (map (make-collect-leaves-operator opera) (args expr))))))
+     
+     (else ;; safe else, will not touch non associative operators
+      (let ((opera (operator expr)))
+	(cons opera
+	      (map n-arity (args expr)))))))
+
+  ;;(display "n-arity : rv =") (display rv) (newline)
+  ;;(newline)
+
+  rv
+
+  )
 
 
 ;; return a closure of collect-leaves function associated with an operator (AND or OR)
 (define (make-collect-leaves-operator oper)
 
   (let ((ourOperation?
+	 
 	 (cond
+	  
 	  ((AND-op? oper) isAND?)
 	  ((OR-op? oper) isOR?)
 	  ((ADD-op? oper) isADD?)
-	  ((MULTIPLY-op? oper) isMULTIPLY?)
-	  (else ; fonction genrique pour tous les operateurs
+	  ((DEFINE-op? oper) isDEFINE?)
+	  ((ASSIGNMENT-op? oper) isASSIGNMENT?)
+
+	  (else ; fonction generique pour tous les operateurs ( non syntaxiques )
 	   (lambda (expr) (and (pair? expr) (equal? (car expr) oper)))))))
 
     

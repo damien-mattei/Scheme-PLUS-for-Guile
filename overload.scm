@@ -181,6 +181,25 @@
      (overload-existing-procedure orig-funct funct (pred-arg1 ...)))))
 
 
+;; note: expt is right to left evaluated by convention, is not associative
+;; (overload-existing-operator expt expt (number? number?))
+
+;; scheme@(guile-user)> (expt 2 3)
+;; $1 = 8
+;; scheme@(guile-user)> (expt 2 3 4)
+;; $2 = 2417851639229258349412352
+
+
+;; (overload-existing-operator ** ** (number? number?))
+;; scheme@(guile-user)> (** 2 3)
+;; $4 = 8
+;; scheme@(guile-user)> (** 2 3 4)
+;; $5 = 2417851639229258349412352
+
+;; scheme@(guile-user)> {2 ** 3}
+;; $6 = 8
+;; scheme@(guile-user)> {2 ** 3 ** 4}
+;; $7 = 2417851639229258349412352
 (define-syntax overload-existing-operator
   
   (syntax-rules ()

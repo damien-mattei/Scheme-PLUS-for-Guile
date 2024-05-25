@@ -10,6 +10,8 @@
 (define : ':)
 (define slice :)
 
+;;(define slice-syntax #':)
+
 (define (equal-slice? x)
   (equal? x slice))
 

@@ -10,11 +10,18 @@
 ; use MacVim to show ALL the characters of this file (not Emacs, not Aquamacs)
 ; jeu de couleurs: Torte ou Koehler
 
+; fastest way: (load "exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile+.scm")
+
+
+; or build:
+
 ;./curly-infix2prefix4guile.scm    ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile+.scm > ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile.scm
 
 ; or: make -f Makefile.Guile
 
 ; use: (load "exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile.scm")
+
+; or use : (load "exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile+.scm")
 
 ; in case of problem: rm -rf .cache/guile/
 
@@ -23,6 +30,7 @@
 	  - parsed and loaded
 |#
 
+; modify file to force re-compilation with Guile    
 
 (use-modules (Scheme+)
 	     (matrix+)
@@ -34,7 +42,7 @@
                                   sym)))
 		;#:select ((: . s42-:))) ; rename only one
 	     ;;((srfi srfi-42) ; Eager Comprehensions
-	;;	#:prefix s42-)
+	     ;;	  #:prefix s42-)
 	     (oop goops)
 	     (srfi srfi-43)) ; vectors
 
@@ -61,7 +69,7 @@
 
 ; return a random number between [inf, sup]
 (define (uniform-interval inf sup)
-  {gap <+ {sup - inf}}
+  {gap <+ sup - inf}
   {inf + (random {gap * 1.0})})
 
 ; sigmoïde
@@ -90,7 +98,7 @@ but will it works with all Scheme+ parser?
 	  ; the length of output and input layer with coeff. used for bias update
 	  {(len_layer_output len_layer_input_plus1forBias) <+ (dim-matrix M_i_o)} ; use values and define-values to create bindings
         
-	  {len_layer_input <+ {len_layer_input_plus1forBias - 1}}
+	  {len_layer_input <+ len_layer_input_plus1forBias - 1}
 
 	  (for-each-in (j (in-range len_layer_output)) ; line
 		(for-each-in (i (in-range len_layer_input)) ; column , parcours les colonnes de la ligne sauf le bias
@@ -191,7 +199,7 @@ but will it works with all Scheme+ parser?
   ;; propagation des entrées vers la sortie
 
   {n <+ vector-length(z)}
-  ;;(display "n=") (display n) (newline)
+  ;(display "n=") (display n) (newline)
 
   ;; hidden layers
   (declare z_1)
@@ -223,9 +231,9 @@ but will it works with all Scheme+ parser?
        ;(display "z_1 = ") (display z_1) (newline)
 
        ;(display "M=") (display M) (newline)
-
+	
        {z̃[i + 1] <- M[i] * z_1} ; z̃ = matrix * vector , return a vector
-
+       
        ;(display "z̃[i + 1] = ") (display {z̃[i + 1]}) (newline)
 
        #| calcul des réponses des neurones cachés
@@ -242,7 +250,7 @@ but will it works with all Scheme+ parser?
        
        {z[i + 1] <- vector-map(activation_function_hidden_layer_indexed z̃[i + 1])}
 
-       ;;(display "z[i + 1] = ") (display {z[i + 1]}) (newline)
+       ;(display "in for : z[i + 1] = ") (display {z[i + 1]}) (newline)
 
        ) ; end for
 
@@ -257,7 +265,7 @@ but will it works with all Scheme+ parser?
 
   ;; calcul des réponses des neurones de la couche de sortie
   {z[i + 1] <- vector-map(activation_function_output_layer_indexed z̃[i + 1])}
-  ;;(display "z[i + 1] = ") (display {z[i + 1]}) (newline)
+  ;(display "z[i + 1] = ") (display {z[i + 1]}) (newline)
 
   ; update the data
   (nbp-set-z! nbp z)
@@ -391,7 +399,8 @@ but will it works with all Scheme+ parser?
 	     #:activation_function_hidden_layer_derivative der_σ
 	     #:activation_function_output_layer_derivative der_σ)}
 
-{Lexemples1 <+ #((#(1) . #(0)) (#(0) . #(1)))}  ; use pairs in Scheme instead of vectors in Python
+{Lexemples1 <+ #((#(1) . #(0))
+		 (#(0) . #(1)))}  ; use pairs in Scheme instead of vectors in Python
 
 (*init* #(1 2 1) r1)
 
@@ -416,9 +425,12 @@ but will it works with all Scheme+ parser?
 	     #:activation_function_output_layer_derivative der_σ)}
 
 
-{Lexemples2 <+ #( (#(1 0) . #(1))  (#(0 0) . #(0))  (#(0 1) . #(1))  (#(1 1) . #(0)))}  ; use pairs in Scheme instead of vectors in Python
+{Lexemples2 <+ #( (#(1 0) . #(1))
+		  (#(0 0) . #(0))
+		  (#(0 1) . #(1))
+		  (#(1 1) . #(0)) )}  ; use pairs in Scheme instead of vectors in Python
 
-(*init* #(2 8 1) r2) ; 1' 40" - 2' 25"
+(*init* #(2 8 1) r2) ; 1' 40" / 2' 25" / 4' 13"
 
 (apprentissage Lexemples2 r2)
 

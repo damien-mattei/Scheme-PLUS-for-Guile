@@ -1,6 +1,6 @@
 ;; Scheme+.scm
 
-;; version 8.7
+;; version 9.0
 
 ;; author: Damien MATTEI
 
@@ -27,7 +27,7 @@
 
 
 ;;  for curly infix notation put in your .guile:
-;; (read-enable 'curly-infix)
+;; (read-enable 'curly-infix)  
 
 ;; use :
 ;; (use-modules (Scheme+))
@@ -35,6 +35,7 @@
 ;; install linux:
 ;; sudo cp *.scm /usr/share/guile/site/3.0
 
+; in case of problem: rm -rf .cache/guile/
 
 ;; example of use with all infixes optimizations:
 
@@ -45,7 +46,9 @@
 (define-module (Scheme+)
   #:use-module (guile)
   #:use-module ((guile) #:select ((do . do-scheme)
-				  (while . while-guile)))
+  				  (while . while-guile)))
+				  ;;(if . if-scheme)))
+  #:use-module (if-then-else)
   #:use-module (for_next_step)
   #:use-module (growable-vector)
   ;;#:use-module (ice-9 local-eval)
@@ -57,6 +60,10 @@
   #:use-module (srfi srfi-1) ;; any,every
   #:use-module (srfi srfi-69) ;; Basic hash tables
   #:use-module (srfi srfi-31) ;; rec
+  ;;#:use-module (system syntax) ; for syntax?
+  #:use-module (syntax)
+  #:use-module (condx)
+  ;;#:use-module (insert)
   ;;#:use-module (srfi srfi-26) ;; cut <>
 
   ;;#:use-module (srfi srfi-43) ;; WARNING: (Scheme+): `vector-copy' imported from both (growable-vector) and (srfi srfi-43)
@@ -68,7 +75,10 @@
   ;; use only with scheme-infix-define-macro.scm enabled
   ;;#:re-export (local-eval the-environment)
 
-  #:re-export ( for
+
+  ;; re-export because they are from modules
+  #:re-export ( 
+		for
 		for-basic
 		for-next
 		for-basic/break
@@ -107,9 +117,18 @@
 		find-setter-for-overloaded-square-brackets
 
 		infix-operators-lst
+		get-infix-operators
 		set-infix-operators-lst!
-		replace-operator! ) 
+		replace-operator!
 
+		condx
+		;;if
+
+		) 
+
+  #:re-export-and-replace (if)
+  
+  ;;#:replace (if do when unless while)
   #:replace (do when unless while)
 
   #:export ( $nfx$
@@ -119,7 +138,9 @@
 	     $bracket-apply$
 	     $bracket-apply$next
 
-	     parse-square-brackets-arguments ; exported for debug
+	     ;;infix? n-arity !*prec-generic !*-generic ;; parse-square-brackets-arguments ; exported for debug
+	     ;;infix-operators-lst-for-parser-syntax infix-operators-lst-for-parser ;; for debug
+	     ;;check-syntax=? ;; for debug
 	     
 	     <- ← :=
 	     -> →
@@ -127,7 +148,7 @@
 	     +> ⥅
 	     declare
 	     $> $+>
-	     condx
+	     ;;condx
 	     ≠
 	     <> ;; is also used as keyword in srfi 26, comment this line if SRFI 26 is used and use the ≠ symbol in your code
 	     **
@@ -143,7 +164,10 @@
 ) ;; end module definitions
 
 
+;;(include-from-path "if.scm")
+;;(include-from-path "if-then-else.scm")
 
+(include-from-path "rest.scm")
 (include-from-path "def.scm")
 
 ;; must know 'for' before use unless that scheme will suppose a procedural call instead of a macro expansion
@@ -152,21 +176,27 @@
 (include-from-path "set-values-plus.scm")
 
 (include-from-path "declare.scm")
-(include-from-path "condx.scm")
 (include-from-path "block.scm")
 (include-from-path "not-equal.scm")
 (include-from-path "exponential.scm")
+
 (include-from-path "when-unless.scm")
 (include-from-path "while-do.scm")
 (include-from-path "repeat-until.scm")
 (include-from-path "modulo.scm")
 (include-from-path "bitwise.scm")
 
+
+
 (include-from-path "scheme-infix.scm")
 
 ;;(include-from-path "scheme-infix-define-macro.scm")
 
 (include-from-path "slice.scm")
+;;(include-from-path "syntax.scm")
+(include-from-path "operation-redux.scm")
+(include-from-path "optimize-infix.scm")
+(include-from-path "optimize-infix-slice.scm")
 
 (include-from-path "assignment.scm")
 (include-from-path "apply-square-brackets.scm")

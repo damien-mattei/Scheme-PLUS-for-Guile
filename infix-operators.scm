@@ -4,6 +4,8 @@
 (define-module (infix-operators)
 
   #:export ( infix-operators-lst
+	     get-infix-operators
+	     get-operator-precedence
 	     set-infix-operators-lst!
 	     replace-operator! )) ;; end module declaration
 
@@ -19,12 +21,15 @@
 ;; can you believe they made && and || special forms??? yes :-) but with advantage of being short-circuited,but i admit it has been a headlock for an infix solution 
 ;; note: difference between bitwise and logic operator
 
+;; TODO: remove !
 
 ;; a list of lists of operators. lists are evaluated in order, so this also
 ;; determines operator precedence
 ;;  added bitwise operator with the associated precedences and modulo too
 (define infix-operators-lst
   
+
+  ;; TODO: no more use ? (syntax, pre parsing)
   
   (list 0 ;; overload version number
 	
@@ -48,6 +53,12 @@
 
   )
 
+
+(define (get-infix-operators)
+  (apply append (cdr infix-operators-lst)))
+
+(define (get-operator-precedence)
+  (cdr infix-operators-lst))
 
 (define (set-infix-operators-lst! lst)
   (set! infix-operators-lst lst))

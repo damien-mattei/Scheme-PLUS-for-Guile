@@ -1,7 +1,7 @@
 
 ;; guile version
 
-;; sudo cp matrix+.scm /usr/local/share/guile/site/3.0
+;; sudo cp matrix.scm /usr/local/share/guile/site/3.0/matrix+.scm
 
 ; ./curly-infix2prefix4guile.scm   ../AI_Deep_Learning/guile/matrix+.scm > ../AI_Deep_Learning/guile/matrix.scm
 
@@ -21,7 +21,7 @@
 
   #:use-module ((guile)
 		#:select (*)
-		#:prefix orig:)
+		#:prefix orig:) ; not used !!!
 
   #:use-module ((srfi srfi-43)) ;; vector : vector-map  , warning vector-map has index as extra parameter...
 

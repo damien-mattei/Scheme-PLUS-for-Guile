@@ -6,6 +6,7 @@
 
 (define & logand)
 (define ∣ logior)
+(define ^ logxor)
 
 ;;(define | logior)  ;; this pipe is weird
 

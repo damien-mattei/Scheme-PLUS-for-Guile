@@ -23,13 +23,22 @@
 
 ;; --srfi-105 : set strict compatibility mode with SRFI-105
 
+;;   --verbose : display code on stderr too
+
+;; modify file to recompile with guile : ok ...     
+
 
 ;;(use-modules (ice-9 textual-ports)) ;; allow put-back characters
 (use-modules (ice-9 pretty-print)
 	     (srfi srfi-31) ; rec
-	     (srfi srfi-1)) ; first ,third 
+	     (srfi srfi-1) ; first ,third
+	     ;;(system syntax) ; for syntax?
+	     (syntax)
+	     (parse-if)
+	     )
 
 (include "rest.scm")
+;;(include "syntax.scm")
 (include "operation-redux.scm")
 (include "optimize-infix.scm")
 (include "assignment-light.scm")
@@ -44,11 +53,17 @@
 
 (define stderr (current-error-port))
 
-(include "condx.scm")
 
-(include "SRFI-105.scm")
+
+(define nfx-optim #f)
+
+(define slice-optim #f)
+
+(define option-parse-if #f)
 
 (define srfi-105 #f)
+
+(include "SRFI-105.scm")
 
 ;; quiet mode that do not display on standart error the code
 (define verbose #f)
@@ -90,14 +105,15 @@
     
     (define result (curly-infix-read in))  ;; read an expression
 
-    ;;(display (write result stderr) stderr) ;; without 'write' string delimiters disappears !
-    ;;(display result stderr)
-    ;;(write result stderr)
 
     (when verbose
-	    (pretty-print result stderr)
-	    (newline stderr)
-	    (newline stderr))
+	  ;;(display (write result stderr) stderr) ;; without 'write' string delimiters disappears !
+	  ;;(display result stderr)
+	  ;;(write result stderr)
+	  	  
+	  (pretty-print result stderr)
+	  (newline stderr)
+	  (newline stderr))
     
     (if (eof-object? result)
 	(reverse acc)
@@ -121,18 +137,32 @@
       (display "curly-infix2prefix4guile.scm documentation: (see comments in source file for more examples)") (newline) (newline) 
       (display "curly-infix2prefix4guile.scm [options] file2parse.scm") (newline) (newline)
       (display "options:") (newline)(newline)
-      (display "  --srfi-105 : set strict compatibility mode with SRFI-105 ") (newline) (newline)
-      (display "  --verbose : display code on stderr too ") (newline) (newline)
+      (display "  --strict-srfi-105-on : set strict compatibility mode with SRFI-105 ") (newline)
+      (display "  --strict-srfi-105-off : disable strict compatibility mode with SRFI-105 ") (newline)
+      (display "  --verbose : display code on stderr too ") (newline)
+      (display "  --parse-if-off : do not parse 'if' ") (newline)
+      (display "  --parse-if-on : parse 'if' ") (newline)
+      (newline)
       (exit))
 
 
 ;; SRFI-105 strict compatibility option
-(when (member "--srfi-105" options)
+(when (member "--strict-srfi-105-on" options)
       (set! nfx-optim #f)
       (set! slice-optim #f))
 
+(when (member "--strict-srfi-105-off" options)
+      (set! nfx-optim #t)
+      (set! slice-optim #t))
+
 (when (member "--verbose" options)
       (set! verbose #t))
+
+(when (member "--parse-if-off" options)
+      (set! option-parse-if #f))
+
+(when (member "--parse-if-on" options)
+      (set! option-parse-if #t))
 
 (define file-name (car (reverse cmd-ln)))
 
