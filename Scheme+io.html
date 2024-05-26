@@ -1262,7 +1262,7 @@ Here is another overloading example:<br>
 <p style="text-align: left;">error: define: not allowed in an expression
       context in: (define x 1)<br>
     </p>
-    <p style="text-align: left;">for this reason i provide a <b>&amp; </b>macro
+    <p style="text-align: left;">for this reason i provide a <b>$+> </b>macro
       that is defined with a <b>let </b>as this:<br>
     </p>
     <p style="text-align: left;"> </p>
@@ -1270,7 +1270,7 @@ Here is another overloading example:<br>
 
 <figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
-<span class="p">(</span><span class="k">define-syntax</span> <span class="nv">&amp;</span>
+<span class="p">(</span><span class="k">define-syntax</span> <span class="nv">$+></span>
   <span class="p">(</span><span class="k">syntax-rules</span> <span class="p">()</span>
     <span class="p">((</span><span class="nf">_</span> <span class="nv">ev</span><span class="p">)</span>  <span class="nv">ev</span><span class="p">)</span>
     <span class="p">((</span><span class="nf">_</span> <span class="nv">ev</span> <span class="o">...</span><span class="p">)</span> <span class="p">(</span><span class="k">let</span> <span class="p">()</span> <span class="nv">ev</span> <span class="o">...</span><span class="p">))))</span>
@@ -1288,7 +1288,7 @@ Here is another overloading example:<br>
 
 <figure class="highlight"><pre><code class="language-scheme" data-lang="scheme"><span class="o"></span>
 
-<span class="p">(</span><span class="nf">def</span> <span class="nv">bar</span> <span class="p">(</span><span class="nf">&amp;</span> <span class="p">(</span><span class="nf">declare</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span>
+<span class="p">(</span><span class="nf">def</span> <span class="nv">bar</span> <span class="p">(</span><span class="nf">$+></span> <span class="p">(</span><span class="nf">declare</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span>
             <span class="p">{</span><span class="nv">x</span> <span class="nv">&lt;-</span> <span class="mi">1</span><span class="p">}</span> 
             <span class="p">{</span><span class="nv">y</span> <span class="nv">&lt;-</span> <span class="mi">2</span><span class="p">}</span>
             <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nf">t</span><span class="p">)</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">t</span><span class="p">))))</span>
