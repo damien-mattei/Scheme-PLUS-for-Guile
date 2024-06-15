@@ -64,7 +64,7 @@
        		      ;;(cons #'list
 		      
        		      ;;#`(list #,@
-		      ;; TODO : make n-arity for <- and <+ only (coud be false with ** , but not implemented in n-arity for now)
+		      ;; TODO : make n-arity for <- and <+ only (because could be false with ** , but not implemented in n-arity for now)
 		      (n-arity ;; this avoid : '{x <- y <- z <- t <- u <- 3 * 4 + 1}
 		       ;; SRFI-105.scm : !0 result = (<- (<- (<- (<- (<- x y) z) t) u) (+ (* 3 4) 1)) ;; fail set! ...
 		       ;; transform in : '(<- x y z t u (+ (* 3 4) 1))

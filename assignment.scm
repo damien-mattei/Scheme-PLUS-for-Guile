@@ -143,18 +143,18 @@
 			     ;; > v
 			     ;;'#(1 2 3)
 			     ((0) 
-			      ;; #'(begin
+			      ;;#'(begin
 			      ;; 	  (display "<- case 0 : parsed-args=") (display parsed-args) (newline)
 				  #'(assignment-argument-0 container expr));)  ; possible to have NO index
 
 			     ;; 1 argument in [ ]
 			     ;; T[index]
 			     ((1)
-			      ;; #'(begin
-			      ;; 	  (display "<- case 1 : parsed-args=") (display parsed-args) (newline)
+			      ;;#'(begin
+			       	;;  (display "<- case 1 : parsed-args=") (display parsed-args) (newline)
 				  #'(assignment-argument-1 container
-						       (first parsed-args)
-						       expr));)
+							   (first parsed-args)
+							   expr));)
 
 			     ;; 2 arguments in [ ]
 			     ;; ex: T[i1 :] , T[: i2], T[i1 i2] , T[: :]   
@@ -164,21 +164,21 @@
 			      ;; #'(begin
 			      ;; 	  (display "<- case 2 : parsed-args=") (display parsed-args) (newline)
 				  #'(assignment-argument-2 container
-							 (first parsed-args)
-							 (second parsed-args)
-							 expr));)
+							   (first parsed-args)
+							   (second parsed-args)
+							   expr));)
 
 			     ;; 3 arguments in [ ]
 			     ;; T[i1 : i2] , T[i1 i2 i3] , T[: : s]
 			     ((3)
 			      ;; #'(begin
 			      ;; 	  (display  "<- case 3 : 'parsed-args=") (display 'parsed-args) (newline)
-				  #'parsed-args);)
-				  ;; (assignment-argument-3 container					  
-				  ;; 			 (first parsed-args)
-				  ;; 			 (second parsed-args)
-				  ;; 			 (third parsed-args)
-				  ;; 			 expr)))
+				  ;;#'parsed-args);)
+				  #'(assignment-argument-3 container					  
+				  			 (first parsed-args)
+				  			 (second parsed-args)
+				  			 (third parsed-args)
+				  			 expr));)
 			     
 			     ;; 4 arguments in [ ]
 			     ;; T[: i2 : s] , T[i1 : : s] , T[i1 : i3 :] , T[i1 i2 i3 i4]
@@ -781,53 +781,125 @@
 
 
 
-(define-syntax assignmentnext
+;; (define-syntax assignmentnext
   
-  (lambda (stx)
+;;   (lambda (stx)
 
-    (syntax-case stx ()
+;;     (syntax-case stx ()
 
-      ;; 0 argument in []
-      ;; T[]
-      ;; {v[] <- #(1 2 3)}
-      ;; > v
-      ;;'#(1 2 3)
-      ((_ container expr)
-       #'(assignment-argument-0 container expr))
+;;       ;; 0 argument in []
+;;       ;; T[]
+;;       ;; {v[] <- #(1 2 3)}
+;;       ;; > v
+;;       ;;'#(1 2 3)
+;;       ((_ container expr)
+;;        #'(assignment-argument-0 container expr))
     
-      ;; 1 argument in [ ]
-      ;; T[index]
-      ((_ container expr arg1)
-       #'(assignment-argument-1 container arg1 expr))
+;;       ;; 1 argument in [ ]
+;;       ;; T[index]
+;;       ((_ container expr arg1)
+;;        #'(assignment-argument-1 container arg1 expr))
       
-      ;; 2 arguments in [ ]
-      ;; ex: T[i1 :] , T[: i2], T[i1 i2] , T[: :]   
-      ;; {#(1 2 3 4 5)[inexact->exact(floor(2.7)) :]}
-      ;; '#(3 4 5)
-      ((_ container expr arg1 arg2)
-       #'(assignment-argument-2 container arg1 arg2 expr))
+;;       ;; 2 arguments in [ ]
+;;       ;; ex: T[i1 :] , T[: i2], T[i1 i2] , T[: :]   
+;;       ;; {#(1 2 3 4 5)[inexact->exact(floor(2.7)) :]}
+;;       ;; '#(3 4 5)
+;;       ((_ container expr arg1 arg2)
+;;        #'(assignment-argument-2 container arg1 arg2 expr))
 
-      ;; 3 arguments in [ ]
-      ;; T[i1 : i2] , T[i1 i2 i3] , T[: : s]
-      ((_ container expr arg1 arg2 arg3)
-       #'(assignment-argument-3 container arg1 arg2 arg3 expr))
+;;       ;; 3 arguments in [ ]
+;;       ;; T[i1 : i2] , T[i1 i2 i3] , T[: : s]
+;;       ((_ container expr arg1 arg2 arg3)
+;;        #'(assignment-argument-3 container arg1 arg2 arg3 expr))
 
-      ;; 4 arguments in [ ]
-      ;; T[: i2 : s] , T[i1 : : s] , T[i1 : i3 :] , T[i1 i2 i3 i4]
-      ((_ container expr arg1 arg2 arg3 arg4)
-       #'(assignment-argument-4 container arg1 arg2 arg3 arg4 expr))
+;;       ;; 4 arguments in [ ]
+;;       ;; T[: i2 : s] , T[i1 : : s] , T[i1 : i3 :] , T[i1 i2 i3 i4]
+;;       ((_ container expr arg1 arg2 arg3 arg4)
+;;        #'(assignment-argument-4 container arg1 arg2 arg3 arg4 expr))
 
-      ;; 5 arguments in [ ]
-      ;; T[i1 : i3 : s] , T[i1 i2 i3 i4 i5]
-      ((_ container expr arg1 arg2 arg3 arg4 arg5)
-       #'(assignment-argument-5 container arg1 arg2 arg3 arg4 arg5 expr))
+;;       ;; 5 arguments in [ ]
+;;       ;; T[i1 : i3 : s] , T[i1 i2 i3 i4 i5]
+;;       ((_ container expr arg1 arg2 arg3 arg4 arg5)
+;;        #'(assignment-argument-5 container arg1 arg2 arg3 arg4 arg5 expr))
 
-      ;; more than 5 arguments in [ ]
-      ;; T[i1 i2 i3 i4 i5 i6 ...]
-      ((_ container expr arg1 arg2 arg3 arg4 arg5 arg6 ...)
-       #'(assignment-argument-6-and-more container (list arg1 arg2 arg3 arg4 arg5 arg6 ...) expr))
+;;       ;; more than 5 arguments in [ ]
+;;       ;; T[i1 i2 i3 i4 i5 i6 ...]
+;;       ((_ container expr arg1 arg2 arg3 arg4 arg5 arg6 ...)
+;;        #'(assignment-argument-6-and-more container (list arg1 arg2 arg3 arg4 arg5 arg6 ...) expr))
       
-      )))
+;;       )))
+
+
+(define-syntax assignmentnext
+
+  (syntax-rules ()
+
+    ((_ container expr args)
+
+     ;; (begin
+
+     ;;   (display "assignmentnext") (newline) (newline)
+
+     (case (length args)
+
+       ;; 0 argument in []
+       ;; T[]
+       ((0)
+	;;(display "assignmentnext : container =") (display container) (newline)
+	(assignment-argument-0 container expr))
+       
+       ;; 1 argument in [ ]
+       ;; T[index]
+       ((1) (assignment-argument-1 container (first args) expr))
+       
+       ;; 2 arguments in [ ]
+       ;; ex: T[i1 $] , T[$ i2], T[i1 i2] , T[$ $]
+       
+       ;; {#(1 2 3 4 5)[inexact->exact(floor(2.7)) $]}
+       ;; '#(3 4 5)
+       ((2) (assignment-argument-2 container
+				   (first args)
+				   (second args)
+				   expr))
+
+       ;; 3 arguments in [ ]
+       ;; T[i1 $ i2] , T[i1 i2 i3] , T[$ $ s]
+       ((3) (assignment-argument-3 container
+				   (first args)
+				   (second args)
+				   (third args)
+				   expr))
+
+
+       ;; 4 arguments in [ ]
+       ;; T[$ i2 $ s] , T[i1 $ $ s] , T[i1 $ i3 $] , T[i1 i2 i3 i4]
+       ((4) (assignment-argument-4 container
+				   (first args)
+				   (second args)
+				   (third args)
+				   (fourth args)
+				   expr))
+
+       
+
+       ;; 5 arguments in [ ]
+       ;; T[i1 $ i3 $ s] , T[i1 i2 i3 i4 i5]
+       ((5) (assignment-argument-5 container
+				   (first args)
+				   (second args)
+				   (third args)
+				   (fourth args)
+				   (fifth args)
+				   expr))
+
+
+       ;; more than 5 arguments in [ ]
+       ;; T[i1 i2 i3 i4 i5 i6 ...]
+       (else
+	(assignment-argument-6-and-more container expr args))))));); one more parenthesis for begin
+
+
+  
 
 
 ;; > (declare x y z)
@@ -990,6 +1062,8 @@
   
 
 (define (assignment-argument-2 container-eval index1-or-keyword-eval index2-or-keyword-eval expr-eval)
+
+  ;;(display "assignment-argument-2 : expr-eval=") (display expr-eval) (newline)
   
   {index1-or-keyword-eval-pos <+ index1-or-keyword-eval} ;; pos for positive
   {index2-or-keyword-eval-pos <+ index2-or-keyword-eval}
@@ -1012,7 +1086,8 @@
   (negative->positive-index-when-not-slice index1-or-keyword-eval-pos container-length container-eval)
   (negative->positive-index-when-not-slice index2-or-keyword-eval-pos container-length container-eval)
   
-  
+  ;;(display "assignment-argument-2 : index1-or-keyword-eval-pos =") (display index1-or-keyword-eval-pos) (newline)
+  ;;(display "assignment-argument-2 : index2-or-keyword-eval-pos =") (display index2-or-keyword-eval-pos) (newline)
   
   ;; > (require srfi/25)
   ;; > (define a (make-array (shape 0 5 0 3) 0))
@@ -1091,6 +1166,7 @@
 		 ($+> ;; why let () here? because define forbidden in something up ?
 		   (define args-lst (list container-eval i1 i2))
 		   (define setter! (find-setter-for-overloaded-square-brackets args-lst))
+		   ;;(display "assignment-argument-2 : setter! =") (display setter!) (newline)
 		   (setter! container-eval i1 i2 expr-eval))))) ; end match case
 
 	 ) ;; end match

@@ -1,6 +1,8 @@
 #!/usr/local/bin/guile -s
 !#
 
+;; TODO: replace by /usr/bin/env guile -s (?)
+
 
 ;; infix optimizer with precedence operator by Damien Mattei
 

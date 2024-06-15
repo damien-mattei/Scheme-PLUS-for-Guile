@@ -1,5 +1,6 @@
 
 
-( infix )
+( infix ) Racket
 add more infix without { } in do while / repeat until / ... ?
-in $nfx$ see TODO 
+in $nfx$ see TODO
+syntax in def.scm
