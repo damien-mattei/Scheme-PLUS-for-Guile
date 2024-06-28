@@ -475,6 +475,9 @@ curly-infix2prefix4guile.scm your_scheme_file_in_scheme+.scm > your_scheme_file_
 
 </pre>
 </del>
+
+![Scheme+ schema](schema-scheme+.jpg "Scheme+ schema")
+
 <p>for the rest read the documentation below and the online examples.</p>
     <br>
     <h2>2.<u>Download Scheme+:</u></h2>
