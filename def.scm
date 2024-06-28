@@ -17,6 +17,20 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
+(define-module (def)
+
+  ;;#:use-module ((guile)) ;; pourquoi (( et ))
+
+  #:use-module (srfi srfi-31) ;; rec
+
+  #:export (def
+	    <+ +>
+	    ⥆ ⥅
+	    :+ +:))
+  
+
+
+
 ;; scheme@(guile-user)> (defined-symbol? x)
 ;;$1 = #f
 ;; (define-syntax defined-symbol?              
@@ -168,10 +182,10 @@
 (define-syntax <+
   (syntax-rules ()
     
-    ((_ (var1 ...) expr) ;;(begin
+    ((_ (var1 ...) expr) 
      (define-values (var1 ...) expr)
      )
-			   ;;(values var1 ...)))
+			 
     ;; (begin
     ;;   (define var1 '())
     ;;   ...
@@ -189,12 +203,10 @@
 					    (define-values (var11 ...) (values var10 ...))
 					    ...
 					    ))
-					    ;;(values var10 ...)))
+					   
     
-    ((_ var expr) ;(begin
-		    (define var expr)
-		    )
-		   ;; var))
+    ((_ var expr) (define var expr))
+		  
     
      ;; > { y <+ z <+ 7 }
      ;; 7
@@ -247,7 +259,13 @@
 
     ((_ exp var ...) (<+ var ... exp)))) 
 
-    
+
+(define-syntax +:
+  (syntax-rules ()
+
+    ((_ exp var ...) (<+ var ... exp))))
+
+
    
 ;; > {(values 2 4 5) ⥅ (x y z) ⥅ (u v w) ⥅ (a b c)} 
 ;; 2

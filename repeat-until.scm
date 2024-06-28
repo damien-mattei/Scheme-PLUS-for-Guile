@@ -1,6 +1,6 @@
 ; This file is part of Scheme+
 
-;; Copyright 2021-2022 Damien MATTEI
+;; Copyright 2021-2024 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -15,6 +15,11 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+
+
+(define-module (repeat-until)
+
+  #:export (repeat))
 
 ;; scheme@(guile-user)> (define i 5)
 ;; scheme@(guile-user)> (repeat (display i) (newline) (set! i (- i 1)) until (< i 0))

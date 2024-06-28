@@ -1,6 +1,36 @@
-;; for optimisation routines in parsing
+;; infix with precedence to prefix
 
 ;; guile version
+
+;; This file is part of Scheme+
+
+;; Copyright 2024 Damien MATTEI
+
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;; use : (use-modules (infix-with-precedence-to-prefix))
+
+
+(define-module (infix-with-precedence-to-prefix)
+
+  ;;#:use-module (guile)
+
+  #:use-module (syntax)
+  
+  #:export (!*prec-generic  
+	    !0-generic ))
+
 
 
 ;;; evaluates `terms` symbolically or numerically as a basic infix expression
@@ -119,8 +149,8 @@
 
 ;; evaluate a list of groups of operators in the list of terms - forward in operator groups
 (define (!*-generic terms operator-groups #;odd? creator)
-  ;; (display "!* : terms = ") (display terms) (newline)
-  ;; (display "!* : operator-groups = ") (display operator-groups) (newline) (newline)
+  ;; (display "!*-generic : terms = ") (display terms) (newline)
+  ;; (display "!*-generic : operator-groups = ") (display operator-groups) (newline) (newline)
   (if (or (null? operator-groups) ; done evaluating all operators
 	  (null? (cdr terms)))    ; only one term left
       terms ; finished processing operator groups

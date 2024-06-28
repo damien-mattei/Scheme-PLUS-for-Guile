@@ -35,11 +35,12 @@
 ;; files below can be retrieved here: https://github.com/damien-mattei/library-FunctProg
 
 
-(include "../rest.scm")
+
 
 (use-modules (srfi srfi-1)) ;; for 'first' procedure
 
 (use-modules (Scheme+))
+
 
 (define (one? n)
   (= n 1))

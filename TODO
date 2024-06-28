@@ -1,6 +1,6 @@
 
-
+clean code
 ( infix ) Racket
 add more infix without { } in do while / repeat until / ... ?
 in $nfx$ see TODO
-syntax in def.scm
+syntax in def.scm and in overload

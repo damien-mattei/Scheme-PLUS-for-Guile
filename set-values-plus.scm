@@ -16,6 +16,14 @@
 
 ;; modified by Damien Mattei
 
+
+(define-module (set-values-plus)
+
+  #:export (set!-values-plus
+	    return-values
+	    create-return-values))
+
+
 ;; this version can set values for arrays,hash tables,etc
 ;; it uses the Scheme+ assignment operator: <-
 (define-syntax set!-values-plus

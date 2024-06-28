@@ -1,6 +1,6 @@
 ;; Scheme+.scm
 
-;; version 9.0
+;; version 9.1 "Module Edition"
 
 ;; author: Damien MATTEI
 
@@ -35,43 +35,58 @@
 ;; install linux:
 ;; sudo cp *.scm /usr/share/guile/site/3.0
 
+;; install Mac OS:
+;; sudo cp *.scm /usr/local/share/guile/site/3.0
+
 ; in case of problem: rm -rf .cache/guile/
-
-;; example of use with all infixes optimizations:
-
-;./curly-infix2prefix4guile.scm    --infix-optimize --infix-optimize-slice ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile+.scm > ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile-optim-infix-slice.scm
 
 
 
 (define-module (Scheme+)
-  #:use-module (guile)
-  #:use-module ((guile) #:select ((do . do-scheme)
-  				  (while . while-guile)))
-				  ;;(if . if-scheme)))
+
+  ;;#:use-module (guile)
+
+  ;; #:use-module ((guile) #:select ((do . do-scheme)
+  ;; 				  (while . while-guile)))
+                                  ;;(if . if-scheme)))
+
+  #:use-module (def)
+  #:use-module (declare)
+  #:use-module (block)
+  #:use-module (not-equal)
+  #:use-module (exponential)
+  #:use-module (modulo)
+  #:use-module (bitwise)
+  #:use-module (when-unless)
+  #:use-module (while-do)
+  #:use-module (repeat-until)
+  #:use-module (slice)
+  
   #:use-module (if-then-else)
   #:use-module (for_next_step)
+
+  #:use-module (range)
+  
   #:use-module (growable-vector)
+  
   ;;#:use-module (ice-9 local-eval)
-  #:use-module (infix-operators)
+  
   #:use-module (overload)
   #:use-module (array)
-  #:use-module (ice-9 match)
-  #:use-module (ice-9 arrays) ;; for array-copy
-  #:use-module (srfi srfi-1) ;; any,every
-  #:use-module (srfi srfi-69) ;; Basic hash tables
-  #:use-module (srfi srfi-31) ;; rec
-  ;;#:use-module (system syntax) ; for syntax?
-  #:use-module (syntax)
+  
   #:use-module (condx)
-  ;;#:use-module (insert)
-  ;;#:use-module (srfi srfi-26) ;; cut <>
+  
+  #:use-module (bracket-apply)
+  #:use-module (assignment)
+  #:use-module (nfx)
+  
+  ;;;;#:use-module (srfi srfi-26) ;; cut <>
 
-  ;;#:use-module (srfi srfi-43) ;; WARNING: (Scheme+): `vector-copy' imported from both (growable-vector) and (srfi srfi-43)
+  ;;;;#:use-module (srfi srfi-43) ;; WARNING: (Scheme+): `vector-copy' imported from both (growable-vector) and (srfi srfi-43)
  
   ;; use with scheme-infix-define-macro.scm (ok)
-  ;;#:export (infix-with-precedence2prefix ! quote-all overload overload-procedure overload-operator overload-function $nfx$ def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ $>  condx ≠ ** <v v> ⇜ ⇝ repeat % << >> & | ) ;; <>
-
- 
+  ;;;;#:export (infix-with-precedence2prefix ! quote-all overload overload-procedure overload-operator overload-function $nfx$ def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ $>  condx ≠ ** <v v> ⇜ ⇝ repeat % << >> & | ) ;; <>
+  
   ;; use only with scheme-infix-define-macro.scm enabled
   ;;#:re-export (local-eval the-environment)
 
@@ -116,90 +131,55 @@
 		find-getter-for-overloaded-square-brackets
 		find-setter-for-overloaded-square-brackets
 
-		infix-operators-lst
-		get-infix-operators
-		set-infix-operators-lst!
-		replace-operator!
+		condx
+	
+		$nfx$
+	  
+		def
+		$bracket-apply$
+		;;$bracket-apply$next  ;; DONE: comment it
+
+		;;infix-operators-lst-for-parser-syntax infix-operators-lst-for-parser ;; for debug
+	     
+		<- ->
+		:= =:
+		← →
+		<+ +>
+		:+ +:
+		⥆ ⥅
+		
+		declare
+		$> $+>
 
 		condx
-		;;if
+		
+		≠
+		<> ;; is also used as keyword in srfi 26, comment this line if SRFI 26 is used and use the ≠ symbol in your code
+
+		**
+
+		<v v>
+		⇜ ⇝
+
+		repeat
+
+		%
+		<< >>
+		&
+		:
+		∣ 
 
 		) 
 
-  #:re-export-and-replace (if)
+  #:re-export-and-replace (if do when unless while)
   
-  ;;#:replace (if do when unless while)
-  #:replace (do when unless while)
+  
+  ;;#:replace (do when unless while)
 
-  #:export ( $nfx$
-	     !*prec
-
-	     def
-	     $bracket-apply$
-	     $bracket-apply$next
-
-	     ;;infix? n-arity !*prec-generic !*-generic ;; parse-square-brackets-arguments ; exported for debug
-	     ;;infix-operators-lst-for-parser-syntax infix-operators-lst-for-parser ;; for debug
-	     ;;check-syntax=? ;; for debug
-	     
-	     <- ← :=
-	     -> →
-	     <+ ⥆ :+
-	     +> ⥅
-	     declare
-	     $> $+>
-	     ;;condx
-	     ≠
-	     <> ;; is also used as keyword in srfi 26, comment this line if SRFI 26 is used and use the ≠ symbol in your code
-	     **
-	     <v v>
-	     ⇜ ⇝
-	     repeat
-	     %
-	     << >>
-	     &
-	     : ;;$
-	     ∣ ) 
-
-) ;; end module definitions
-
-
-;;(include-from-path "if.scm")
-;;(include-from-path "if-then-else.scm")
-
-(include-from-path "rest.scm")
-(include-from-path "def.scm")
-
-;; must know 'for' before use unless that scheme will suppose a procedural call instead of a macro expansion
-;; and will issue definition in expression context error
-
-(include-from-path "set-values-plus.scm")
-
-(include-from-path "declare.scm")
-(include-from-path "block.scm")
-(include-from-path "not-equal.scm")
-(include-from-path "exponential.scm")
-
-(include-from-path "when-unless.scm")
-(include-from-path "while-do.scm")
-(include-from-path "repeat-until.scm")
-(include-from-path "modulo.scm")
-(include-from-path "bitwise.scm")
+  #:export (rest)) ;; end module definitions
 
 
 
-(include-from-path "scheme-infix.scm")
-
-;;(include-from-path "scheme-infix-define-macro.scm")
-
-(include-from-path "slice.scm")
-;;(include-from-path "syntax.scm")
-(include-from-path "operation-redux.scm")
-(include-from-path "optimize-infix.scm")
-(include-from-path "optimize-infix-slice.scm")
-
-(include-from-path "assignment.scm")
-(include-from-path "apply-square-brackets.scm")
-
+(define rest cdr)
 
 

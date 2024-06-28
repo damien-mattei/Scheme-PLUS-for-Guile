@@ -1,14 +1,49 @@
-;; some optimizer procedures
+;; This file is part of Scheme+
+
+;; Copyright 2024 Damien MATTEI
+
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;; Guile version
 
 
+;; some optimizer procedures that parse square brackets arguments
+
+;; was optimise-infix-slice.scm
 
 
-;; !*prec is defined in optimize-infix.scm
+(define-module (parse-square-brackets)
 
+  ;;#:use-module ((guile))
+  
+  #:use-module (def)
+  #:use-module (declare)
+  #:use-module (block)
+  #:use-module (syntax)
+  #:use-module (slice)
+  #:use-module (infix-with-precedence-to-prefix)
+  #:use-module (infix)
+  ;;#:use-module (operators)
+  #:use-module (operators-list)
+   
+  #:export (parse-square-brackets-arguments-lister-syntax)) ; end module header
+
+  
 ;; split the expression using slice as separator
-(def (optimizer-parse-square-brackets-arguments args-brackets creator operator-precedence)
+(def (parse-square-brackets-arguments args-brackets creator operator-precedence)
 
-  ;;(display "optimizer-parse-square-brackets-arguments : args-brackets=") (display args-brackets) (newline)
+  ;;(display "parse-square-brackets-arguments : args-brackets=") (display args-brackets) (newline)
 
   (define operators-lst (apply append operator-precedence))
   
@@ -43,7 +78,7 @@
   	    ;;(display "psba : partial-result =") (display partial-result) (newline)
   	    (when (not (null? partial-result))
   		  ;;(display "not null") (newline)
-  		  (if (infix?  partial-result operators-lst) ;;  operateurs quotés ou syntaxés !
+  		  (if (infix? partial-result operators-lst) ;;  operateurs quotés ou syntaxés !
   		      (begin
   			;;(display "infix detected") (newline)
   			(set! result (append result (!*prec-generic partial-result  operator-precedence creator)))) ;; convert to prefix and store the expression
@@ -67,23 +102,26 @@
 
 
 
-(define (optimizer-parse-square-brackets-arguments-lister args-brackets)
-  ;;(display "optimizer-parse-square-brackets-arguments-lister : args-brackets=") (display args-brackets) (newline)
-  (optimizer-parse-square-brackets-arguments args-brackets
-					     (lambda (op a b) (list op a b))
-					     infix-operators-lst-for-parser))
+;; (define (parse-square-brackets-arguments-lister args-brackets)
+;;   ;;(display "parse-square-brackets-arguments-lister : args-brackets=") (display args-brackets) (newline)
+;;   (parse-square-brackets-arguments args-brackets
+;; 					     (lambda (op a b) (list op a b))
+;; 					     infix-operators-lst-for-parser))
 
 
-(define (optimizer-parse-square-brackets-arguments-lister-syntax args-brackets)
-  (display "optimizer-parse-square-brackets-arguments-lister-syntax : args-brackets=") (display args-brackets) (newline)
-  (optimizer-parse-square-brackets-arguments args-brackets ;; generic procedure
+(define (parse-square-brackets-arguments-lister-syntax args-brackets)
+  ;;(newline) (display "parse-square-brackets-arguments-lister-syntax : args-brackets=") (display args-brackets) (newline)
+  (parse-square-brackets-arguments args-brackets ;; generic procedure
 					     (lambda (op a b) (list op a b))
 					     infix-operators-lst-for-parser-syntax)) ;; defined elsewhere
+					     ;;(get-infix-operators-lst-for-parser-syntax)))
+					    
 
 ;; DEPRECATED
-;; (define (optimizer-parse-square-brackets-arguments-evaluator args-brackets)
-;;   ;;(display "optimizer-parse-square-brackets-arguments-evaluator : args-brackets=") (display args-brackets) (newline)
-;;   (optimizer-parse-square-brackets-arguments args-brackets
+;; (define (parse-square-brackets-arguments-evaluator args-brackets)
+;;   ;;(display "parse-square-brackets-arguments-evaluator : args-brackets=") (display args-brackets) (newline)
+;;   (parse-square-brackets-arguments args-brackets
 ;; 					     (lambda (op a b) (op a b))
 ;; 					     (get-operator-precedence)))
+
 

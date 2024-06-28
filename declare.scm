@@ -1,6 +1,6 @@
 ;; This file is part of Scheme+
 
-;; Copyright 2021 Damien MATTEI
+;; Copyright 2021-2024 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -18,6 +18,12 @@
 
 
 ;; (declare ls dyn) ;; declare multiple variables
+
+(define-module (declare)
+
+  ;;#:use-module ((guile))
+
+  #:export (declare))
 
 (define-syntax declare
   (syntax-rules ()

@@ -19,18 +19,20 @@
 
 
 (define-module (for_next_step)
+
+  ;;#:use-module ((guile)) ;; strangely this was absent
+  
+  #:use-module (increment)
+  
   #:export (for
 	    for-basic
 	    for-next
 	    for-basic/break
 	    for-basic/break-cont
 	    for/break-cont
-	    for-each-in
-	    in-range
-	    reversed
-	    ))
+	    for-each-in))
 
-(include-from-path "increment.scm")
+
 
 
 ;; > (for-basic ((k 5)) (display k) (newline))
@@ -420,30 +422,39 @@
 ;; insert in header:
 ;; (require (for-syntax r6rs/private/base-for-syntax))
 
-
+;; scheme@(guile-user)> (for ((define i 0) (< i 3) (set! i (+ i 1))) (display i) (newline))
+;; 0
+;; 1
+;; 2
 (define-syntax for
    (lambda (stx)
      (syntax-case stx ()
        ((kwd (init test incrmt) body ...)
         (with-syntax ((BREAK (datum->syntax (syntax kwd) 'break))
                       (CONTINUE (datum->syntax (syntax kwd) 'continue)))
+		     
 		     (syntax
+		      ;;(let ()
 		      (call/cc
 		       (lambda (escape)
+			 ;;init
 			 (let-syntax ((BREAK (identifier-syntax (escape))))
-			   init
-			   (let loop ((res 0)) ;; now we will return a result at the end if no break but if we continue? what happens?
-			     (if test
-				 (begin
-				   (call/cc
-				    (lambda (next)
-				      (set! res (let-syntax ((CONTINUE (identifier-syntax (next))))
+			   
+			     init
+			     (let loop ((res 0)) ;; now we will return a result at the end if no break but if we continue? what happens?
+			       (if test
+				   (begin
+				     (call/cc
+				      (lambda (next)
+					(set! res (let-syntax ((CONTINUE (identifier-syntax (next))))
 						  (let () ;; allow definitions
 						    body ...)))))
 				   incrmt
 				   (loop res))
 				 res)
-			     ))))
+			       ))))
+		      ;;) ; close (let () ...
+		      
 		      ) ; close syntax
 		     
 		     ) ; close with-syntax
@@ -529,55 +540,3 @@
     ((_ (i seq) stmt0 stmt1 ...) (for-each (lambda (i) stmt0 stmt1 ...)
 					   seq))))
 
-
-;; |kawa:2|# (in-range 5)
-;; (0 1 2 3 4)
-;; #|kawa:3|# (in-range 1 5)
-;; (1 2 3 4)
-;; #|kawa:4|# (in-range 1 5 2)
-;;(1 3)
-(define (in-range . arg-lst)
-  (define n (length arg-lst))
-  (when (or (= n 0) (> n 3))
-	(error "in-range: bad number of arguments"))
-  (define start 0)
-  (define stop 1)
-  (define step 1)
-  (define res '())
-  
-  (case n
-    ((0) (error "in-range : too few arguments"))
-    ((1) (set! stop (car arg-lst)))
-    ((2) (begin (set! start (car arg-lst))
-		(set! stop (cadr arg-lst))))
-    ((3) (begin (set! start (car arg-lst))
-		(set! stop (cadr arg-lst))
-		(when (= 0 step)
-		      (error "in-range: step is equal to zero"))
-		(set! step (caddr arg-lst)))))
-
-  (define (arret step index stop)
-    (if (> step 0)
-	(< index stop)
-	(> index stop)))
-  
-  (for ((define i start) (arret step i stop) (set! i (+ step i)))
-       (set! res (cons i res)))
-
-  (reverse res))
-
-
-
-;; #|kawa:3|# (in-range 1 11 3)
-;; (1 4 7 10)
-;; #|kawa:4|# (reversed (in-range 1 11 3))
-;; (10 7 4 1)
-;; #|kawa:5|# (in-range 8 1 -2)
-;; (8 6 4 2)
-;; #|kawa:6|# (reversed (in-range 8 1 -2))
-;; (2 4 6 8)
-;; #|kawa:7|# (in-range 8 1 -1)
-;; (8 7 6 5 4 3 2)
-;; #|kawa:8|# (reversed (in-range 8 1 -1))
-
-(define reversed reverse)

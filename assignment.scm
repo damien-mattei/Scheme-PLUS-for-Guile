@@ -1,4 +1,4 @@
-;; assignment version Guile (support my growable vectors)
+;; assignment version Guile (support also growable vectors,arrays,string,hash tables)
 
 ;; This file is part of Scheme+
 
@@ -19,10 +19,39 @@
 
 ;; note that slicing separator is now : , no more $ (see slice.scm)
 
+
+;; (use-modules (assignment))
+
+(define-module (assignment)
+  
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-69)
+  #:use-module (ice-9 match) ;; for assignment
+  #:use-module (parse-square-brackets)
+  #:use-module (for_next_step)
+  #:use-module (array)
+  #:use-module (slice)
+  #:use-module (declare)
+  #:use-module (block)
+  #:use-module (def)
+  #:use-module (bracket-apply)
+  #:use-module (overload)
+  #:use-module (growable-vector)
+  #:use-module (set-values-plus)
+
+  #:export (<- ->
+	    ← →
+	    :=  =:
+	    <v v>
+	    ⇜ ⇝))
+  
+
 ;; scheme@(guile-user)> {v <+ (vector 1 2 3 4 5 6 7 8 9)}
-;; scheme@(guile-user)>  {v[7 : 3 : -2] <- (vector -1 -2 -3)}
+;; scheme@(guile-user)> {v[7 : 3 : -2] <- (vector -1 -2 -3)}
+;; <- : #'(index ...) = (#<syntax:unknown file:7:3 7> #<syntax:unknown file:7:5 :> #<syntax:unknown file:7:7 3> #<syntax:unknown file:7:9 :> #<syntax:unknown file:7:11 -2>)
+;; <- : #'parsed-args=(#<syntax:assignment.scm:148:32 list> #<syntax:unknown file:7:3 7> #<syntax:unknown file:7:5 :> #<syntax:unknown file:7:7 3> #<syntax:unknown file:7:9 :> #<syntax:unknown file:7:11 -2>)
 ;; scheme@(guile-user)> v
-;; $2 = #(1 2 3 4 5 -2 7 -1 9)
+;; $1 = #(1 2 3 4 5 -2 7 -1 9)
 
 ;; scheme@(guile-user)> {a[2 4] <- 7}
 ;; $1 = 7
@@ -66,7 +95,7 @@
 
 ;; {s <+ (string-append "abcdefgh")}
 ;; "abcdefgh"
-;; > {s[2 * 3 - 4 $ 2 * 3 + 1 $ 2 * 4 - 6] <- "0000"}
+;; > {s[2 * 3 - 4 : 2 * 3 + 1 : 2 * 4 - 6] <- "0000"}
 ;; "ab0d0f0h"
 
 ;; $bracket-apply$ is from SRFI 105  bracket-apply is an argument of the macro
@@ -79,7 +108,7 @@
 
       ;; silly case
       ((_ ( ) expr)
-       #'(void)) ;; void is not portable ;'())
+       #'()) ;; void is not portable ;'())
 
       ;; one value in values !
       ;; > {(x) <- (values 7)}
@@ -97,10 +126,10 @@
       ((_ (brket-applynext container index ...) expr)  ; possible to have NO index :
 					; minimal form is (_ (brket-applynext container) expr)
 
-       ;; We will let the second $bracket-apply$ be executed and forbid the execution of first $bracket-apply$.
-       (cond ((equal? (quote $bracket-apply$next) (syntax->datum #'brket-applynext))  ;;  $bracket-apply$next , already parsed and optimised by parser
+       ;; We will let the RHS $bracket-apply$ be executed and forbid the execution of LHS $bracket-apply$. (Right/Left Hand S-expr)
+       (cond ;; ((equal? (quote $bracket-apply$next) (syntax->datum #'brket-applynext))  ;;  $bracket-apply$next , already parsed and optimised by parser
 
-	      #'(assignmentnext container expr index  ...)) ; possible to have NO index
+	     ;;  #'(assignmentnext container expr index  ...)) ; possible to have NO index
 
 
 
@@ -108,35 +137,25 @@
 	     ;; integrated curly-infix of guile (no parsing) at REPL
 	     ;; (define T (make-vector 7))
 	     ;; {T[2 + 1] <- -7}
-	     ((equal? (quote $bracket-apply$) (syntax->datum #'brket-applynext))
+	     ((equal? (quote $bracket-apply$) (syntax->datum #'brket-applynext)) ;; curly-infix
 
 	      (display "<- : #'(index ...) = ") (display #'(index ...)) (newline)
-	      ;;(display "<- : (syntax->datum #'(index ...)) = ") (display (syntax->datum #'(index ...))) (newline)
-	      
-	      ;;(display "<- : (number? (car (syntax->datum #'(index ...)))) = ") (display (number? (car (syntax->datum #'(index ...))))) (newline)
-	      
-	      ;; parse arguments at posteriori here:
-	      ;; (with-syntax ((parsed-args (datum->syntax stx ; #f
-	      ;; 						(cons #'list 
-	      ;; 						      (optimizer-parse-square-brackets-arguments-lister
-	      ;; 						       (syntax->datum #'(index ...)))))))
+	     	      
+	      ;; we parse arguments at posteriori of SRFI 105 parser
 
 	      (with-syntax ((parsed-args
 			     
 	      		     ;;(cons #'list ;; otherwise:Wrong type to apply: 0 ,list will be interpreted as code !
-			     ;;(optimizer-parse-square-brackets-arguments-lister-syntax #'(index ...)));)
+			     ;;(parse-square-brackets-arguments-lister-syntax #'(index ...)));)
 			     
-			     #`(list #,@(optimizer-parse-square-brackets-arguments-lister-syntax #'(index ...))))
+			     #`(list #,@(parse-square-brackets-arguments-lister-syntax #'(index ...))))
 
 			    ) ; end definitions
 			   
 			   (display "<- : #'parsed-args=") (display #'parsed-args) (newline)
-			   ;;(display "<- :  (syntax->datum #'parsed-args)=") (display (syntax->datum #'parsed-args)) (newline)
-			   
-			   ;;(case (length (cdr (syntax->datum #'parsed-args)))
+			  ;; we parse arguments at posteriori
 			   (case (length (cdr #'parsed-args)) ; putting code here optimise run-time
-			   ;;(case (length #'parsed-args)
-			       
+			  			       
 			     ;; 0 argument in []
 			     ;; T[]
 			     ;; {v[] <- #(1 2 3)}
@@ -336,43 +355,6 @@
 ;; #2((1 0)
 ;;    (0 1))
 
-;; (define-syntax ← ;; under Linux this symbol can be typed with the
-;;   ;; combination of keys: Ctrl-Shift-u 2190 where 2190 is the unicode of left arrow
-
-;;   (syntax-rules ()
-
-;;     ((_ var ...) (<- var ...))))
-
-
-
-;; (define-syntax ← ;; under Linux this symbol can be typed with the
-;;   ;; combination of keys: Ctrl-Shift-u 2190 where 2190 is the unicode of left arrow
-
-;;   (lambda (stx)
-    
-;;     (syntax-case stx ()
-
-;;       ((_ var ...) #'(<- var ...)))))
-
-
-
-;; (define-syntax ← ;; under Linux this symbol can be typed with the
-;;   ;; combination of keys: Ctrl-Shift-u 2190 where 2190 is the unicode of left arrow
-
-;;   (syntax-rules ()
-
-;;     ((_ ( ) expr) (<- ( ) expr))
-
-;;     ((_ (var) expr) (<- (var) expr))
-
-;;     ((_ (brket-applynext container index ...) expr) (<- (brket-applynext container index ...) expr))
-
-;;     ((_ var expr) (<- var expr))
-
-;;     ((_ var var1 ... expr) (<- var var1 ... expr))))
-
-
-;;(define-syntax-rule (← . args) (<- . args))
 
 
 (define-syntax ←
@@ -380,187 +362,6 @@
   (syntax-rules ()
     ((← . args)
      (<- . args))))
-
-
-;; (define-syntax ←
-  
-;;   (lambda (stx)
-    
-;;     (syntax-case stx ()
-
-
-;;       ;; silly case
-;;       ((_ ( ) expr)
-;;        #'(void)) ;; void is not portable ;'())
-
-;;       ;; one value in values !
-;;       ;; > {(x) ← (values 7)}
-;;       ;; > x
-;;       ;; 7
-;;       ((_ (var) expr)
-
-;;        #'(set!-values-plus (var) expr))
-      
-    
-
-;;       ;; example: {a[4] ← 7}
-;;       ;; $bracket-apply$ is from SRFI 105  bracket-apply is an argument of the macro
-      
-;;       ((_ (brket-applynext container index ...) expr)  ; possible to have NO index :
-;; 					; minimal form is (_ (brket-applynext container) expr)
-
-;;        ;; We will let the second $bracket-apply$ be executed and forbid the execution of first $bracket-apply$.
-;;        (cond ((equal? (quote $bracket-apply$next) (syntax->datum #'brket-applynext))  ;; already parsed and optimised by parser
-
-;; 	      #'(assignmentnext container expr index  ...)) ; possible to have NO index
-
-
-;; 	     ;; integrated curly-infix of guile (no parsing) at REPL
-;; 	     ((equal? (quote $bracket-apply$) (syntax->datum #'brket-applynext))
-
-;; 	      (display "← : #'(index ...) = ") (display #'(index ...)) (newline)
-;; 	      (display "← : (syntax->datum #'(index ...)) = ") (display (syntax->datum #'(index ...))) (newline)
-	      
-;; 	      ;;(display "← : (number? (car (syntax->datum #'(index ...)))) = ") (display (number? (car (syntax->datum #'(index ...))))) (newline)
-	      
-;; 	      ;; parse arguments at posteriori here:
-;; 	      (with-syntax ((parsed-args (datum->syntax stx ; #f
-;; 	      						(cons #'list 
-;; 	      						      (optimizer-parse-square-brackets-arguments-lister
-;; 							       (syntax->datum #'(index ...)))))))
-
-;; 	      ;; (with-syntax ((parsed-args 
-;; 	      ;; 		     (cons #'list ;; otherwise:Wrong type to apply: 0 ,list will be interpreted as code !
-;; 	      ;; 			   (optimizer-parse-square-brackets-arguments-lister #'(index ...)))))
-			   
-;; 			   (display "← : #'parsed-args=") (display #'parsed-args) (newline)
-;; 			   (display "← :  (syntax->datum #'parsed-args)=") (display (syntax->datum #'parsed-args)) (newline)
-			   
-;; 			   (case (length (cdr (syntax->datum #'parsed-args)))
-;; 			   ;;(case (length (cdr #'parsed-args))
-;; 			   ;;(case (length #'parsed-args)
-			       
-;; 			     ;; 0 argument in []
-;; 			     ;; T[]
-;; 			     ;; {v[] ← #(1 2 3)}
-;; 			     ;; > v
-;; 			     ;;'#(1 2 3)
-;; 			     ((0) 
-;; 			      #'(assignment-argument-0 container expr))  ; possible to have NO index
-
-;; 			     ;; 1 argument in [ ]
-;; 			     ;; T[index]
-;; 			     ((1)
-;; 			      #'(assignment-argument-1 container
-;; 						       (first parsed-args)
-;; 						       expr))
-
-;; 			     ;; 2 arguments in [ ]
-;; 			     ;; ex: T[i1 :] , T[: i2], T[i1 i2] , T[: :]   
-;; 			     ;; {#(1 2 3 4 5)[inexact->exact(floor(2.7)) :]}
-;; 			     ;; '#(3 4 5)
-;; 			     ((2)
-;; 			      #'(assignment-argument-2 container
-;; 						       (first parsed-args)
-;; 						       (second parsed-args)
-;; 						       expr))
-
-;; 			     ;; 3 arguments in [ ]
-;; 			     ;; T[i1 : i2] , T[i1 i2 i3] , T[: : s]
-;; 			     ((3)
-;; 			      #'(assignment-argument-3 container					  
-;; 						       (first parsed-args)
-;; 						       (second parsed-args)
-;; 						       (third parsed-args)
-;; 						       expr))
-			     
-;; 			     ;; 4 arguments in [ ]
-;; 			     ;; T[: i2 : s] , T[i1 : : s] , T[i1 : i3 :] , T[i1 i2 i3 i4]
-;; 			     ((4)
-;; 			      #'(assignment-argument-4 container
-;; 						       (first parsed-args)
-;; 						       (second parsed-args)
-;; 						       (third parsed-args)
-;; 						       (fourth parsed-args)
-;; 						       expr))
-
-;; 			     ;; 5 arguments in [ ]
-;; 			     ;; T[i1 : i3 : s] , T[i1 i2 i3 i4 i5]
-;; 			     ((5)
-;; 			      #'(assignment-argument-5 container
-;; 						       (first parsed-args)
-;; 						       (second parsed-args)
-;; 						       (third parsed-args)
-;; 						       (fourth parsed-args)
-;; 						       (fifth parsed-args)
-;; 						       expr))
-
-;; 			     ;; more than 5 arguments in [ ]
-;; 			     ;; T[i1 i2 i3 i4 i5 i6 ...]
-;; 			     (else ; case
-;; 			      #'(assignment-argument-6-and-more container parsed-args expr)))))
-
-;; 	     (else ; cond
-;; 	      #'(set!-values-plus (brket-applynext container index ...) expr)))) ; warning: the argument's names does not match the use
-      
-      
-      
-;;       ;;(← x 5)
-;;       ((_ var expr)
-       
-;;        #'(set! var expr))
-      
-      
-;;       ;; (declare x y z t)
-;;       ;; {x ← y ← z ← t ← 7}
-;;       ;; 7
-;;       ;; (list x y z t)
-;;       ;; (7 7 7 7)
-
-;;       ;; > (require srfi/25)
-;;       ;; > {I ← (make-array (shape 0 4 0 4))}
-;;       ;; #<array:srfi-9-record-type-descriptor>
-;;       ;; > {I[0 0] ← I[1 1] ← I[2 2] ← I[3 3] ← 1}
-;;       ;; 1
-;;       ;; > {I[0 0]}
-;;       ;; 1
-;;       ;; > {I[0 1]}
-;;       ;; 0
-;;       ;; > I
-;;       ;; #<array:srfi-9-record-type-descriptor>
-      
-;;       ;; > (declare a b c d)
-;;       ;; > {(a b) ← (c d) ← (values 5 7)}
-;;       ;; > a
-;;       ;; 5
-;;       ;; > b
-;;       ;; 7
-;;       ;; > c
-;;       ;; 5
-;;       ;; > d
-;;       ;; 7
-      
-;;       ;; without declare:
-;;       ;; > {(a b) ← (c d) ← (values 5 7)}
-;;       ;; > (list a b c d)
-;;       ;; '(5 7 5 7)
-;;       ((_ var var1 ... expr)
-       
-       
-;;        #'(begin ;; i do not do what the syntax says (assignation not in the good order) but it gives the same result
-;; 	   ;;(display "← : case (_ var var1 ... expr)") (newline)
-	   
-;; 	   (define return-values-of-expr (create-return-values expr))
-;; 	   (← var (return-values-of-expr))
-;; 	   ;;(display "← : case : passed (← var expr)") (newline)
-;; 	   ;;(display "← : case : var=") (display var) (newline) 
-	   
-;; 	   (← var1 (return-values-of-expr))
-;; 	   ...))
-      
-     
-;;       )))
-
 
 
 
@@ -698,138 +499,7 @@
 
 
 
-
-;; (define-syntax assignmentnext4list
-  
-;;   (lambda (stx)
-
-;;     (syntax-case stx ()
-
-      
-;;       ((_ container expr args-lst)
-
-
-;;        (begin
-;; 	 (display "assignmentnext : (syntax->datum #'args-lst)=")
-;; 	 (display (syntax->datum #'args-lst))
-;; 	 (newline)
-	 
-;;        (case (length  (syntax->datum #'args-lst))
-
-
-;; 	 ;; 0 argument in []
-;; 	 ;; T[]
-;; 	 ;; {v[] <- #(1 2 3)}
-;; 	 ;; > v
-;; 	 ;;'#(1 2 3)
-;; 	 ((0) 
-;; 	  #'(assignment-argument-0 container expr))
-
-;; 	 ;; 1 argument in [ ]
-;; 	 ;; T[index]
-;; 	 ((1)
-;; 	  #'(assignment-argument-1 container (first args-lst) expr))
-      
-;; 	 ;; 2 arguments in [ ]
-;; 	 ;; ex: T[i1 :] , T[: i2], T[i1 i2] , T[: :]   
-;; 	 ;; {#(1 2 3 4 5)[inexact->exact(floor(2.7)) :]}
-;; 	 ;; '#(3 4 5)
-
-;; 	 ((2)
-;; 	  #'(assignment-argument-2 container
-;; 				   (first args-lst)
-;; 				   (second args-lst)
-;; 				   expr))
-
-;; 	 ;; 3 arguments in [ ]
-;; 	 ;; T[i1 : i2] , T[i1 i2 i3] , T[: : s]
-;; 	 ((3)
-;; 	  #'(assignment-argument-3 container
-;; 				   (first args-lst)
-;; 				   (second args-lst)
-;; 				   (third args-lst)
-;; 				   expr))
-
-;; 	 ;; 4 arguments in [ ]
-;; 	 ;; T[: i2 : s] , T[i1 : : s] , T[i1 : i3 :] , T[i1 i2 i3 i4]
-;; 	 ((4)
-;; 	  #'(assignment-argument-4 container
-;; 				   (first args-lst)
-;; 				   (second args-lst)
-;; 				   (third args-lst)
-;; 				   (fourth args-lst)
-;; 				   expr))
-
-;; 	 ;; 5 arguments in [ ]
-;; 	 ;; T[i1 : i3 : s] , T[i1 i2 i3 i4 i5]
-;; 	 ((5)
-;; 	  #'(assignment-argument-5 container
-;; 				   (first args-lst)
-;; 				   (second args-lst)
-;; 				   (third args-lst)
-;; 				   (fourth args-lst)
-;; 				   (fifth args-lst)
-;; 				   expr))
-
-;;       ;; more than 5 arguments in [ ]
-;;       ;; T[i1 i2 i3 i4 i5 i6 ...]
-;;       (else
-;;        #'(assignment-argument-6-and-more container args-lst expr))
-      
-;;       ))))))
-
-
-
-
-;; (define-syntax assignmentnext
-  
-;;   (lambda (stx)
-
-;;     (syntax-case stx ()
-
-;;       ;; 0 argument in []
-;;       ;; T[]
-;;       ;; {v[] <- #(1 2 3)}
-;;       ;; > v
-;;       ;;'#(1 2 3)
-;;       ((_ container expr)
-;;        #'(assignment-argument-0 container expr))
-    
-;;       ;; 1 argument in [ ]
-;;       ;; T[index]
-;;       ((_ container expr arg1)
-;;        #'(assignment-argument-1 container arg1 expr))
-      
-;;       ;; 2 arguments in [ ]
-;;       ;; ex: T[i1 :] , T[: i2], T[i1 i2] , T[: :]   
-;;       ;; {#(1 2 3 4 5)[inexact->exact(floor(2.7)) :]}
-;;       ;; '#(3 4 5)
-;;       ((_ container expr arg1 arg2)
-;;        #'(assignment-argument-2 container arg1 arg2 expr))
-
-;;       ;; 3 arguments in [ ]
-;;       ;; T[i1 : i2] , T[i1 i2 i3] , T[: : s]
-;;       ((_ container expr arg1 arg2 arg3)
-;;        #'(assignment-argument-3 container arg1 arg2 arg3 expr))
-
-;;       ;; 4 arguments in [ ]
-;;       ;; T[: i2 : s] , T[i1 : : s] , T[i1 : i3 :] , T[i1 i2 i3 i4]
-;;       ((_ container expr arg1 arg2 arg3 arg4)
-;;        #'(assignment-argument-4 container arg1 arg2 arg3 arg4 expr))
-
-;;       ;; 5 arguments in [ ]
-;;       ;; T[i1 : i3 : s] , T[i1 i2 i3 i4 i5]
-;;       ((_ container expr arg1 arg2 arg3 arg4 arg5)
-;;        #'(assignment-argument-5 container arg1 arg2 arg3 arg4 arg5 expr))
-
-;;       ;; more than 5 arguments in [ ]
-;;       ;; T[i1 i2 i3 i4 i5 i6 ...]
-;;       ((_ container expr arg1 arg2 arg3 arg4 arg5 arg6 ...)
-;;        #'(assignment-argument-6-and-more container (list arg1 arg2 arg3 arg4 arg5 arg6 ...) expr))
-      
-;;       )))
-
-
+;; DEPRECATED
 (define-syntax assignmentnext
 
   (syntax-rules ()
@@ -853,9 +523,9 @@
        ((1) (assignment-argument-1 container (first args) expr))
        
        ;; 2 arguments in [ ]
-       ;; ex: T[i1 $] , T[$ i2], T[i1 i2] , T[$ $]
+       ;; ex: T[i1 :] , T[: i2], T[i1 i2] , T[: :]
        
-       ;; {#(1 2 3 4 5)[inexact->exact(floor(2.7)) $]}
+       ;; {#(1 2 3 4 5)[inexact->exact(floor(2.7)) :]}
        ;; '#(3 4 5)
        ((2) (assignment-argument-2 container
 				   (first args)
@@ -863,7 +533,7 @@
 				   expr))
 
        ;; 3 arguments in [ ]
-       ;; T[i1 $ i2] , T[i1 i2 i3] , T[$ $ s]
+       ;; T[i1 : i2] , T[i1 i2 i3] , T[: : s]
        ((3) (assignment-argument-3 container
 				   (first args)
 				   (second args)
@@ -872,7 +542,7 @@
 
 
        ;; 4 arguments in [ ]
-       ;; T[$ i2 $ s] , T[i1 $ $ s] , T[i1 $ i3 $] , T[i1 i2 i3 i4]
+       ;; T[: i2 : s] , T[i1 : : s] , T[i1 : i3 :] , T[i1 i2 i3 i4]
        ((4) (assignment-argument-4 container
 				   (first args)
 				   (second args)
@@ -883,7 +553,7 @@
        
 
        ;; 5 arguments in [ ]
-       ;; T[i1 $ i3 $ s] , T[i1 i2 i3 i4 i5]
+       ;; T[i1 : i3 : s] , T[i1 i2 i3 i4 i5]
        ((5) (assignment-argument-5 container
 				   (first args)
 				   (second args)
@@ -971,7 +641,7 @@
      (when (and (not (equal? i slice))  (< i 0))
 	   (<- i (+ (container-length container-eval) i))))))
 
-;; T[$]
+;; T[:]
 (define (assignment-argument-1-slice container-eval expr-eval)
 
   (cond ((or (vector? container-eval) (growable-vector? container-eval))
@@ -1049,7 +719,7 @@
 (define (assignment-argument-1 container-eval index-eval expr-eval)
   
   
-  (if (equal? index-eval slice)  ;; T[$]
+  (if (equal? index-eval slice)  ;; T[:]
       
        (assignment-argument-1-slice container-eval expr-eval)
 
@@ -1102,7 +772,7 @@
 	 
 	 ;;  {a <+ (make-vector 7 0)}
 	 ;; '#(0 0 0 0 0 0 0)
-	 ;; > {a[$ $] <- #(1 2 3)}
+	 ;; > {a[: :] <- #(1 2 3)}
 	 ;; > a
 	 ;; '#(1 2 3 0 0 0 0)
 
@@ -1123,7 +793,7 @@
 	 
 	 ;;  {s <+ (string-append "abcdefgh")}
 	 ;; "abcdefgh"
-	 ;; > {s[3 $] <- "zob"}
+	 ;; > {s[3 :] <- "zob"}
 	 ;; > s
 	 ;; "abczobgh"
 	 ;; >
@@ -1131,7 +801,7 @@
 	 ;; > {a <+ (make-vector 7 0)}
 	 ;; > a
 	 ;; '#(0 0 0 0 0 0 0)
-	 ;; > {a[3 $] <- "zob"}
+	 ;; > {a[3 :] <- "zob"}
 	 ;; > a
 	 ;; '#(0 0 0 #\z #\o #\b 0)
 	 ((i1 (? equal-slice?))
@@ -1145,7 +815,7 @@
 	 ;; > {a <+ (make-vector 7 0)}
 	 ;; > a
 	 ;; '#(0 0 0 0 0 0 0)
-	 ;; > {a[$ 3] <- (vector 1 2 3 4 5)}
+	 ;; > {a[: 3] <- (vector 1 2 3 4 5)}
 	 ;; > a
 	 ;; '#(1 2 3 0 0 0 0)
 	 (((? equal-slice?) i2) ;; make it work between vector and string
@@ -1160,8 +830,10 @@
 
 	  (cond ((vector? container-eval)  ;; normal case
 		 (function-array-n-dim-set! container-eval expr-eval (reverse (list i1 i2))))
+		
 		((array? container-eval)
 		 (srfi25-array-set! container-eval index1-or-keyword-eval index2-or-keyword-eval expr-eval)) ;; no SRFI 25 in Guile
+		
 		(else ;; overloaded
 		 ($+> ;; why let () here? because define forbidden in something up ?
 		   (define args-lst (list container-eval i1 i2))
@@ -1213,12 +885,12 @@
   (match (list index1-or-keyword-eval-pos index2-or-keyword-eval-pos index3-or-keyword-or-step-eval-pos)
 	 
 
-	 ;; T[$ i2 $]
+	 ;; T[: i2 :]
 	 ;;  make it work between vector and string
 	 ;; > {a <+ (make-vector 7 0)}
 	 ;; > a
 	 ;; '#(0 0 0 0 0 0 0)
-	 ;; > {a[$ 3 $] <- (vector 1 2 3 4 5)}
+	 ;; > {a[: 3 :] <- (vector 1 2 3 4 5)}
 	 ;; > a
 	 ;; '#(1 2 3 0 0 0 0)
 	 (( (? equal-slice?) i2 (? equal-slice?) )
@@ -1229,10 +901,10 @@
 							  1))
 
 	 
-	 ;; T[i1 $ $]
+	 ;; T[i1 : :]
 	 ;; make it work between vector and string
 	 ;; > {a <+ (make-vector 7 0)}
-	 ;; > {a[3 $ $] <- "zob"}
+	 ;; > {a[3 : :] <- "zob"}
 	 ;; > a
 	 ;; '#(0 0 0 #\z #\o #\b 0)
 	 ((i1 (? equal-slice?) (? equal-slice?))
@@ -1244,17 +916,17 @@
 					 1))
 	 
 	 
-	 ;; T[$ $ s3]
+	 ;; T[: : s3]
 	 ;; > {v <+ (vector 1 2 3 4 5 6 7 8 9)}
 	 ;; '#(1 2 3 4 5 6 7 8 9)
-	 ;; > {v[$ $ 2] <- (vector -1 -2 -3 -4 -5)}
+	 ;; > {v[: : 2] <- (vector -1 -2 -3 -4 -5)}
 	 ;;> v
 	 ;;'#(-1 2 -2 4 -3 6 -4 8 -5)
 
 
 	
 	 ;; > {v <+ (vector 1 2 3 4 5 6 7 8 9)}
-	 ;; >  {v[$ $ -2] <- (vector -1 -2 -3 -4 -5)}
+	 ;; >  {v[: : -2] <- (vector -1 -2 -3 -4 -5)}
 	 ;; > v
 	 ;; '#(-5 2 -4 4 -3 6 -2 8 -1)
 
@@ -1265,17 +937,17 @@
 	 ;; [-5, 2, -4, 4, -3, 6, -2, 8, -1]
 
 	 ;; > {v <+ (vector 1 2 3 4 5 6 7 8 9)}
-	 ;; > {v[$ $ -2] <- "abcde"}
+	 ;; > {v[: : -2] <- "abcde"}
 	 ;; > v
 	 ;; '#(#\e 2 #\d 4 #\c 6 #\b 8 #\a)
 
 	 ;; > {v <+ (vector 1 2 3 4 5 6 7 8 9)}
-	 ;; > {v[$ $ -2] <- (vector -1 -2 -3 -4 -5 -6 -7 -8 -9 -10 -11 -12 -13)[$ $ 2]}
+	 ;; > {v[: : -2] <- (vector -1 -2 -3 -4 -5 -6 -7 -8 -9 -10 -11 -12 -13)[: : 2]}
 	 ;; > v
 	 ;; '#(-9 2 -7 4 -5 6 -3 8 -1)
 
 	 ;;> {v <+ (vector 1 2 3 4 5 6 7 8 9)}
-	 ;; > {v[$ $ -2] <- "abcdefghijklmnop"[$ $ 2]}
+	 ;; > {v[: : -2] <- "abcdefghijklmnop"[: : 2]}
 	 ;; > v
 	 ;; '#(#\i 2 #\g 4 #\e 6 #\c 8 #\a)
 	 (((? equal-slice?) (? equal-slice?) step-not-used)
@@ -1292,7 +964,7 @@
 
 		;; > {s <+ (string-append "abcdefgh")}
 		;; "abcdefgh"
-		;;> {s[$ $ 2] <- "ABCD"}
+		;;> {s[: : 2] <- "ABCD"}
 		;;> s
 		;;"AbBdCfDh"
 		((string? container-eval)
@@ -1313,25 +985,25 @@
 	 
 
 
-	 ;; T[i1 $ i3]
+	 ;; T[i1 : i3]
 	 ;; {s <+ (string-append "abcdefgh")}
 	 ;; "abcdefgh"
-	 ;; > {s[2 $ 4] <- "zob"}
+	 ;; > {s[2 : 4] <- "zob"}
 	 ;; > s
 	 ;; "abzoefgh"
-	 ;; > {s[2 $ 4] <- "zo"}
+	 ;; > {s[2 : 4] <- "zo"}
 	 ;; > s
 	 ;; "abzoefgh"
 
 	 ;; 	 > {v <+ (vector 1 2 3 4)}
-	 ;; > {v[1 $ 3] <- "abcdef"[2 $ 4]}
+	 ;; > {v[1 : 3] <- "abcdef"[2 : 4]}
 	 ;; > v
 	 ;; '#(1 #\c #\d 4)
 
 	 ;; scheme@(guile-user)> {v <+ (vector 1 2 3 4)}
 	 ;; scheme@(guile-user)> v
 	 ;; $1 = #(1 2 3 4)
-	 ;; scheme@(guile-user)> {v[1 $ 3] <- "abcdef"[2 $ 4]}
+	 ;; scheme@(guile-user)> {v[1 : 3] <- "abcdef"[2 : 4]}
 	 ;; scheme@(guile-user)> v
 	 ;; $2 = #(1 #\c #\d 4)
 
@@ -1388,18 +1060,18 @@
   
   (match (list index1-or-keyword-eval-pos index2-or-keyword-eval-pos index3-or-keyword-eval-pos index4-or-step-eval-pos)
 
-	 ;; T[i1 $ i2 $]
+	 ;; T[i1 : i2 :]
 	 ((i1 (? equal-slice?) i2 (? equal-slice?)) {container-eval[i1 slice i2] <- expr-eval})
 	 
-	 ;; T[$ i2 $ s3]
+	 ;; T[: i2 : s3]
 	 ;; > {v <+ (vector 1 2 3 4 5 6 7 8 9)}
 	 ;; '#(1 2 3 4 5 6 7 8 9)
-	 ;; > {v[$ 6 $ 2] <- (vector -1 -2 -3 -4 -5)}
+	 ;; > {v[: 6 : 2] <- (vector -1 -2 -3 -4 -5)}
 	 ;; > v
 	 ;; '#(-1 2 -2 4 -3 6 7 8 9)
 	 
 	 ;; > {v <+ (vector 1 2 3 4 5 6 7 8 9)}
-	 ;; > {v[$ 6 $ -2] <- (vector -1 -2 -3 -4 -5)}
+	 ;; > {v[: 6 : -2] <- (vector -1 -2 -3 -4 -5)}
 	 ;; > v
 	 ;; '#(1 2 3 4 5 6 7 8 -1)
 	 (((? equal-slice?) i2 (? equal-slice?) step-not-used)
@@ -1427,7 +1099,7 @@
 	   ))
 	 
 	 
-	 ;; T[i1 $ $ s3]
+	 ;; T[i1 : : s3]
 	 ((i1 (? equal-slice?) (? equal-slice?) step-not-used)
 
 	  ($+>
@@ -1435,26 +1107,26 @@
 
 	   ;; > {s <+ (string-append "abcdefgh")}
 	   ;; "abcdefgh"
-	   ;; {s[3 $ $ 2] <- "0000"}
+	   ;; {s[3 : : 2] <- "0000"}
 	   ;; > s
 	   ;; "abc0e0g0"
 
-	   ;; {s[5 $ $ -2] <- "0000"}
+	   ;; {s[5 : : -2] <- "0000"}
 	  ;; s
 	  ;; "a0c0e0gh"
 
 	  ;; > {v <+ (vector 1 2 3 4 5 6 7 8)}
-	  ;; > {v[3 $ $ 2] <- (vector -1 -2 -3 -4)}
+	  ;; > {v[3 : : 2] <- (vector -1 -2 -3 -4)}
 	  ;; > v
 	  ;; '#(1 2 3 -1 5 -2 7 -3)
 	  
 	  ;; > {v <+ (vector 1 2 3 4 5 6 7 8)}
-	  ;; > {v[3 $ $ 2] <- (vector -1 -2 -3)}
+	  ;; > {v[3 : : 2] <- (vector -1 -2 -3)}
 	  ;; > v
 	  ;; '#(1 2 3 -1 5 -2 7 -3)
 
 	  ;; > {v <+ (vector 1 2 3 4 5 6 7 8)}
-	  ;; > {v[5 $ $ -2] <- (vector -1 -2 -3)}
+	  ;; > {v[5 : : -2] <- (vector -1 -2 -3)}
 	  ;; > v
 	  ;; '#(1 -3 3 -2 5 -1 7 8)
 
@@ -1465,7 +1137,7 @@
 	   ;; [1, -3, 3, -2, 5, -1, 7, 8, 9]
 
 	   ;; scheme@(guile-user)> {v <+ (vector 1 2 3 4 5 6 7 8)}
-	   ;; scheme@(guile-user)> {v[5 $ $ -2] <- (vector -1 -2 -3)}
+	   ;; scheme@(guile-user)> {v[5 : : -2] <- (vector -1 -2 -3)}
 	   ;; scheme@(guile-user)> v
 	   ;; $1 = #(1 -3 3 -2 5 -1 7 8)
 	   (check-step step)
@@ -1535,9 +1207,9 @@
   
   (match (list index1-eval-pos index2-or-keyword-eval-pos index3-eval-pos index4-or-keyword-eval-pos index5-or-step-eval-pos)
 
-	 ;; T[i1 $ i2 $ step]	 	 
+	 ;; T[i1 : i2 : step]	 	 
 	 ;; > {s <+ (string-append "abcdefgh")}
-	 ;; > {s[2 $ 7 $ 2] <- "1234"}
+	 ;; > {s[2 : 7 : 2] <- "1234"}
 	 ;; > s
 	 ;; "ab1d2f3h"
 
@@ -1553,12 +1225,12 @@
 	 ;; [1, 2, 3, -3, 5, -2, 7, -1, 9]
 	 
 	 ;; > {v <+ (vector 1 2 3 4 5 6 7 8 9)}
-	 ;; >  {v[7 $ 2 $ -2] <- (vector -1 -2 -3)}
+	 ;; >  {v[7 : 2 : -2] <- (vector -1 -2 -3)}
 	 ;; > v
 	 ;; '#(1 2 3 -3 5 -2 7 -1 9)
 
 	 ;; > {v <+ (vector 1 2 3 4 5 6 7 8 9)}
-	 ;; > {v[7 $ 3 $ -2] <- (vector -1 -2 -3)}
+	 ;; > {v[7 : 3 : -2] <- (vector -1 -2 -3)}
 	 ;; > v
 	 ;; '#(1 2 3 4 5 -2 7 -1 9)
 

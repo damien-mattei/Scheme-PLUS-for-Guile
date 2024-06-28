@@ -16,25 +16,28 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-(define-module (bitwise)
+(define-module (replace)
 
-  #:export (<<
-	    >>
-	    &
-	    ∣
-	    ^))
+  #:export (replace))
 
 
-
-(define (<< x n)
-  (ash x n))
-
-(define (>> x n)
-  (ash x (- n)))
-
-(define & logand)
-(define ∣ logior)
-(define ^ logxor)
-
-;;(define | logior)  ;; this pipe is weird
-
+;; > (replace '(1 (1 2 3 4) 3 4) 3 7)
+;; '(1 (1 2 7 4) 7 4)
+;; > (replace '() 7 3)
+;; '()
+;; > (replace '(1 (1 2 3 4) 3 4) 3 7)
+;; '(1 (1 2 7 4) 7 4)
+;; > (replace '(1 (1 2 3 4 (5 6 3) 3 4)) 3 7)
+;; '(1 (1 2 7 4 (5 6 7) 7 4))
+;;
+;;  (replace 4 4 5) -> 5
+;; warning : element to replace must not be () !!!
+(define (replace L old new)
+ 
+	(if (list? L)
+	    (map
+	     (lambda (lst) (replace lst old new))
+	     L)
+	    (if (equal? L old)
+		new
+		L)))

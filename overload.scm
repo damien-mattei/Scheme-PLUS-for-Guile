@@ -1,5 +1,22 @@
 ;; overload
 
+;; This file is part of Scheme+
+
+;; Copyright 2021-2024 Damien MATTEI
+
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 
 ;; guile version
 
@@ -8,11 +25,13 @@
 
 
 
-;;(use-modules (overload))
+;; (use-modules (overload))
 
 (define-module (overload)
-  #:use-module ((guile))
-  #:use-module (infix-operators)
+  
+  ;;#:use-module ((guile)) ;; is it necessary? and is it necessary 2 ( ... ) ?
+
+  ;;#:use-module (infix-operators)
   ;;  #:use-module (srfi srfi-69 ) ;; Basic hash tables 
   #:use-module (srfi srfi-1) ;; any,every
   #:export ( define-overload-procedure
@@ -41,13 +60,11 @@
 	     overload-square-brackets
 	     ;;find-getter-and-setter-for-overloaded-square-brackets
 	     find-getter-for-overloaded-square-brackets
-	     find-setter-for-overloaded-square-brackets
-	     
-	     ))
+	     find-setter-for-overloaded-square-brackets))
+
 
 
 (define $ovrld-square-brackets-lst$ '()) ;; for square brackets
-
 
 
 
@@ -359,7 +376,7 @@
   (display "old-funct: ") (display old-funct) (newline)
   (display "new-funct: ") (display new-funct) (newline)
 
-  (replace-operator! orig-funct new-funct) ;; if problem with infix precedence use insert-operator! see Kawa code
+  ;;(replace-operator! orig-funct new-funct) ;; if problem with infix precedence use insert-operator! see Kawa code
 
   new-funct)
 
@@ -403,7 +420,7 @@
   (display "new-funct: ") (display new-funct) (newline)
   (newline)
 
-  (replace-operator! orig-funct new-funct)
+  ;;(replace-operator! orig-funct new-funct)
 
   new-funct)
 

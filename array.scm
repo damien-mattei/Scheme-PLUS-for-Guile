@@ -43,8 +43,6 @@
 	    srfi25-array-set!))
 
 
-;;(include "./for_next_step.scm")
-
 
 ;; the value v should be put before in a let to avoid multiple evaluation after macro expand
 (define-syntax make-array-2d
@@ -107,16 +105,7 @@
 ;;     ((_ array x) (vector-ref array x))
 ;;     ((_ array x y ...) (vector-ref (array-n-dim-ref array y ...) x))))
 
-;; return the negative index depending of length of vector
-;; (define-syntax negative-vector-index
-  
-;;   (syntax-rules ()
-    
-;;     ((_ index v)
-     
-;;      (if (< index 0)
-;; 	 (+ (vector-length v) index)
-;; 	 index))))
+
 
 (define (negative-vector-index index v)
      
