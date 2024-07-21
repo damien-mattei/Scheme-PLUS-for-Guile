@@ -131,6 +131,11 @@
 
 ;; $22 = #t
 
+;; scheme@(guile-user)> (import (syntax))
+;; scheme@(guile-user)> (member-syntax #'+ (list - + / *))
+;; $1 = #f
+
+
 (define (member-syntax x lst)
   (any (lambda (y)
 	 ;;(display "member-syntax : x=") (display x) (newline)

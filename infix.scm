@@ -39,7 +39,8 @@
     ;;(display "infix-rec? : expr=") (display expr) (newline)
     (if (null? expr)
 	#t
-    	(and (member-syntax (car expr) oper-lst) ;; check (op1 e1 ...) 
+    	(and (not (null? (cdr expr))) ; forbids: op1 without e1
+	     (member-syntax (car expr) oper-lst) ;; check (op1 e1 ...) 
 	     (not (member-syntax (cadr expr) oper-lst)) ; check not (op1 op2 ...)
 	     (infix-rec? (cddr expr))))) ; continue with (op2 e2 ...) 
 
