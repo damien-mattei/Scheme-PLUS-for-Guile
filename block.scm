@@ -22,7 +22,8 @@
   ;;#:use-module ((guile))
 
   #:export ($>
-	    $+>))
+	    $+>
+	    begin-def))
 
 	    
 (define-syntax $>
@@ -44,6 +45,9 @@
     ((_ ev)  (let () ev)) ;;  there can be a <+ in it expanding with a 'define not allowed in expression context
     ((_ ev ...) (let () ev ...))))
 
+(define-syntax begin-def
+  (syntax-rules ()
+    ((_ ev ...) ($+> ev ...))))
 
 ;; then and else do as BEGINners ;-)
 (define-syntax then-block

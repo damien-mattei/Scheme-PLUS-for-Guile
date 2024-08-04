@@ -380,6 +380,14 @@
     ((_ var ...) (<- var ...))))
 
 
+(define-syntax =:
+
+  (syntax-rules () 
+
+    ((_ expr ...) (-> expr ...))))
+
+
+
 
 ;; (declare x y z)
 ;;  {(x y z) <v (values 2 4 5)}

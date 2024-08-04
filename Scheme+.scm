@@ -1,6 +1,6 @@
 ;; Scheme+.scm
 
-;; version 9.1 "Module Edition"
+;; version 9.2
 
 ;; author: Damien MATTEI
 
@@ -149,7 +149,7 @@
 		⥆ ⥅
 		
 		declare
-		$> $+>
+		$> $+> begin-def
 
 		condx
 		
