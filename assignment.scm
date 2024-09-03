@@ -145,85 +145,87 @@
 
 	      (with-syntax ((parsed-args
 			     
-	      		     ;;(cons #'list ;; otherwise:Wrong type to apply: 0 ,list will be interpreted as code !
-			     ;;(parse-square-brackets-arguments-lister-syntax #'(index ...)));)
+	      		     (cons #'list ;; otherwise:Wrong type to apply: 0 ,list will be interpreted as code !
+				   (parse-square-brackets-arguments-lister-syntax #'(index ...))))
 			     
-			     #`(list #,@(parse-square-brackets-arguments-lister-syntax #'(index ...))))
+			     ;;#`(list #,@(parse-square-brackets-arguments-lister-syntax #'(index ...))))
 
 			    ) ; end definitions
 			   
 			   (display "<- : #'parsed-args=") (display #'parsed-args) (newline)
-			  ;; we parse arguments at posteriori
-			   (case (length (cdr #'parsed-args)) ; putting code here optimise run-time
+
+			   #'(assignment-next4list-args container parsed-args expr))) 
+			  
+			   ;; (case (length (cdr #'parsed-args)) ; putting code here optimise run-time
 			  			       
-			     ;; 0 argument in []
-			     ;; T[]
-			     ;; {v[] <- #(1 2 3)}
-			     ;; > v
-			     ;;'#(1 2 3)
-			     ((0) 
-			      ;;#'(begin
-			      ;; 	  (display "<- case 0 : parsed-args=") (display parsed-args) (newline)
-				  #'(assignment-argument-0 container expr));)  ; possible to have NO index
+			   ;;   ;; 0 argument in []
+			   ;;   ;; T[]
+			   ;;   ;; {v[] <- #(1 2 3)}
+			   ;;   ;; > v
+			   ;;   ;;'#(1 2 3)
+			   ;;   ((0) 
+			   ;;    ;;#'(begin
+			   ;;    ;; 	  (display "<- case 0 : parsed-args=") (display parsed-args) (newline)
+			   ;; 	  #'(assignment-argument-0 container expr));)  ; possible to have NO index
 
-			     ;; 1 argument in [ ]
-			     ;; T[index]
-			     ((1)
-			      ;;#'(begin
-			       	;;  (display "<- case 1 : parsed-args=") (display parsed-args) (newline)
-				  #'(assignment-argument-1 container
-							   (first parsed-args)
-							   expr));)
+			   ;;   ;; 1 argument in [ ]
+			   ;;   ;; T[index]
+			   ;;   ((1)
+			   ;;    ;;#'(begin
+			   ;;     	;;  (display "<- case 1 : parsed-args=") (display parsed-args) (newline)
+			   ;; 	  #'(assignment-argument-1 container
+			   ;; 				   (first parsed-args)
+			   ;; 				   expr));)
 
-			     ;; 2 arguments in [ ]
-			     ;; ex: T[i1 :] , T[: i2], T[i1 i2] , T[: :]   
-			     ;; {#(1 2 3 4 5)[inexact->exact(floor(2.7)) :]}
-			     ;; '#(3 4 5)
-			     ((2)
-			      ;; #'(begin
-			      ;; 	  (display "<- case 2 : parsed-args=") (display parsed-args) (newline)
-				  #'(assignment-argument-2 container
-							   (first parsed-args)
-							   (second parsed-args)
-							   expr));)
+			   ;;   ;; 2 arguments in [ ]
+			   ;;   ;; ex: T[i1 :] , T[: i2], T[i1 i2] , T[: :]   
+			   ;;   ;; {#(1 2 3 4 5)[inexact->exact(floor(2.7)) :]}
+			   ;;   ;; '#(3 4 5)
+			   ;;   ((2)
+			   ;;    ;; #'(begin
+			   ;;    ;; 	  (display "<- case 2 : parsed-args=") (display parsed-args) (newline)
+			   ;; 	  #'(assignment-argument-2 container
+			   ;; 				   (first parsed-args)
+			   ;; 				   (second parsed-args)
+			   ;; 				   expr));)
 
-			     ;; 3 arguments in [ ]
-			     ;; T[i1 : i2] , T[i1 i2 i3] , T[: : s]
-			     ((3)
-			      ;; #'(begin
-			      ;; 	  (display  "<- case 3 : 'parsed-args=") (display 'parsed-args) (newline)
-				  ;;#'parsed-args);)
-				  #'(assignment-argument-3 container					  
-				  			 (first parsed-args)
-				  			 (second parsed-args)
-				  			 (third parsed-args)
-				  			 expr));)
+			   ;;   ;; 3 arguments in [ ]
+			   ;;   ;; T[i1 : i2] , T[i1 i2 i3] , T[: : s]
+			   ;;   ((3)
+			   ;;    ;; #'(begin
+			   ;;    ;; 	  (display  "<- case 3 : 'parsed-args=") (display 'parsed-args) (newline)
+			   ;; 	  ;;#'parsed-args);)
+			   ;; 	  #'(assignment-argument-3 container					  
+			   ;; 	  			 (first parsed-args)
+			   ;; 	  			 (second parsed-args)
+			   ;; 	  			 (third parsed-args)
+			   ;; 	  			 expr));)
 			     
-			     ;; 4 arguments in [ ]
-			     ;; T[: i2 : s] , T[i1 : : s] , T[i1 : i3 :] , T[i1 i2 i3 i4]
-			     ((4)
-			      #'(assignment-argument-4 container
-						       (first parsed-args)
-						       (second parsed-args)
-						       (third parsed-args)
-						       (fourth parsed-args)
-						       expr))
+			   ;;   ;; 4 arguments in [ ]
+			   ;;   ;; T[: i2 : s] , T[i1 : : s] , T[i1 : i3 :] , T[i1 i2 i3 i4]
+			   ;;   ((4)
+			   ;;    #'(assignment-argument-4 container
+			   ;; 			       (first parsed-args)
+			   ;; 			       (second parsed-args)
+			   ;; 			       (third parsed-args)
+			   ;; 			       (fourth parsed-args)
+			   ;; 			       expr))
 
-			     ;; 5 arguments in [ ]
-			     ;; T[i1 : i3 : s] , T[i1 i2 i3 i4 i5]
-			     ((5)
-			      #'(assignment-argument-5 container
-						       (first parsed-args)
-						       (second parsed-args)
-						       (third parsed-args)
-						       (fourth parsed-args)
-						       (fifth parsed-args)
-						       expr))
+			   ;;   ;; 5 arguments in [ ]
+			   ;;   ;; T[i1 : i3 : s] , T[i1 i2 i3 i4 i5]
+			   ;;   ((5)
+			   ;;    #'(assignment-argument-5 container
+			   ;; 			       (first parsed-args)
+			   ;; 			       (second parsed-args)
+			   ;; 			       (third parsed-args)
+			   ;; 			       (fourth parsed-args)
+			   ;; 			       (fifth parsed-args)
+			   ;; 			       expr))
 
-			     ;; more than 5 arguments in [ ]
-			     ;; T[i1 i2 i3 i4 i5 i6 ...]
-			     (else ; case
-			      #'(assignment-argument-6-and-more container parsed-args expr)))))
+			   ;;   ;; more than 5 arguments in [ ]
+			   ;;   ;; T[i1 i2 i3 i4 i5 i6 ...]
+			   ;;   (else ; case
+			   ;;    #'(assignment-argument-6-and-more container parsed-args expr)))))
 
 	     (else ; cond
 	      #'(set!-values-plus (brket-applynext container index ...) expr)))) ; warning: the argument's names does not match the use
@@ -287,6 +289,78 @@
       )))
 
 
+(define (assignment-next4list-args container parsed-args expr) 
+
+    (case (length parsed-args) ; putting code here optimise run-time
+			  			       
+			     ;; 0 argument in []
+			     ;; T[]
+			     ;; {v[] <- #(1 2 3)}
+			     ;; > v
+			     ;;'#(1 2 3)
+			     ((0) 
+			      ;;(begin
+			      ;; 	  (display "<- case 0 : parsed-args=") (display parsed-args) (newline)
+				  (assignment-argument-0 container expr));)  ; possible to have NO index
+
+			     ;; 1 argument in [ ]
+			     ;; T[index]
+			     ((1)
+			      ;;(begin
+			       	;;  (display "<- case 1 : parsed-args=") (display parsed-args) (newline)
+				  (assignment-argument-1 container
+							   (first parsed-args)
+							   expr));)
+
+			     ;; 2 arguments in [ ]
+			     ;; ex: T[i1 :] , T[: i2], T[i1 i2] , T[: :]   
+			     ;; {#(1 2 3 4 5)[inexact->exact(floor(2.7)) :]}
+			     ;; '#(3 4 5)
+			     ((2)
+			      ;; (begin
+			      ;; 	  (display "<- case 2 : parsed-args=") (display parsed-args) (newline)
+				  (assignment-argument-2 container
+							   (first parsed-args)
+							   (second parsed-args)
+							   expr));)
+
+			     ;; 3 arguments in [ ]
+			     ;; T[i1 : i2] , T[i1 i2 i3] , T[: : s]
+			     ((3)
+			      ;; (begin
+			      ;; 	  (display  "<- case 3 : 'parsed-args=") (display 'parsed-args) (newline)
+				  ;;#'parsed-args);)
+				  (assignment-argument-3 container					  
+				  			 (first parsed-args)
+				  			 (second parsed-args)
+				  			 (third parsed-args)
+				  			 expr));)
+			     
+			     ;; 4 arguments in [ ]
+			     ;; T[: i2 : s] , T[i1 : : s] , T[i1 : i3 :] , T[i1 i2 i3 i4]
+			     ((4)
+			      (assignment-argument-4 container
+						       (first parsed-args)
+						       (second parsed-args)
+						       (third parsed-args)
+						       (fourth parsed-args)
+						       expr))
+
+			     ;; 5 arguments in [ ]
+			     ;; T[i1 : i3 : s] , T[i1 i2 i3 i4 i5]
+			     ((5)
+			      (assignment-argument-5 container
+						       (first parsed-args)
+						       (second parsed-args)
+						       (third parsed-args)
+						       (fourth parsed-args)
+						       (fifth parsed-args)
+						       expr))
+
+			     ;; more than 5 arguments in [ ]
+			     ;; T[i1 i2 i3 i4 i5 i6 ...]
+			     (else ; case
+			      (assignment-argument-6-and-more container parsed-args expr))))
 
 
 
