@@ -466,6 +466,10 @@ content="text/html; charset=utf-8">Basic hash tables
 
 </pre>
 <br>
+<br>
+Note that infix programs needs to include the #!curly-infix statement.
+<br>
+<br>
 <br><del>Programs now needs to be parsed due to the use of optimization
 schemes, for parsing do:
 

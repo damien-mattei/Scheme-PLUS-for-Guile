@@ -22,6 +22,8 @@
 
 ;; (use-modules (assignment))
 
+#!curly-infix
+
 (define-module (assignment)
   
   #:use-module (srfi srfi-1)

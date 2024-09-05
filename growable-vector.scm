@@ -16,6 +16,8 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
+#!curly-infix
+
 ;; use:
 ;; (use-modules (growable-vector))
 ;; (use-modules (guile/growable-vector))  

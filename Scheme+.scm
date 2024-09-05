@@ -33,6 +33,9 @@
 ;; (use-modules (Scheme+))
 
 ;; install linux:
+
+;; mkdir -p /usr/share/guile/site/3.0
+
 ;; sudo cp *.scm /usr/share/guile/site/3.0
 
 ;; install Mac OS:

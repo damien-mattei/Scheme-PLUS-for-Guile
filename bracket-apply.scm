@@ -19,6 +19,8 @@
 
 ;; (use-modules (bracket-apply))
 
+#!curly-infix
+
 ;; as a module:
 (define-module (bracket-apply)
 
