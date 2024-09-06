@@ -1,6 +1,6 @@
 ;; Scheme+.scm
 
-;; version 9.2
+;; version 9.1.1
 
 ;; author: Damien MATTEI
 
@@ -32,6 +32,8 @@
 ;; use :
 ;; (use-modules (Scheme+))
 
+
+
 ;; install linux:
 
 ;; mkdir -p /usr/share/guile/site/3.0
@@ -43,6 +45,19 @@
 
 ; in case of problem: rm -rf .cache/guile/
 
+
+;; example:
+
+;; (define T (make-vector 7 1))
+;; scheme@(guile-user)> {T[2]}
+;; $bracket-apply$ : #'parsed-args=(#<syntax list> #<syntax 2>)
+;; 1
+;; scheme@(guile-user)> {T[2] <- 7}
+;; <- : #'(index ...) = (#<syntax 2>)
+;; <- : #'parsed-args=(#<syntax list> #<syntax 2>)
+;; scheme@(guile-user)> {T[2]}
+;; $bracket-apply$ : #'parsed-args=(#<syntax list> #<syntax 2>)
+;; 7
 
 
 (define-module (Scheme+)

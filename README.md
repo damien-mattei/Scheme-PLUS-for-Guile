@@ -19,7 +19,7 @@
     <p style="text-align: center;"><br>
     </p>
     <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span
-          style="color: #999999;"> <font size="+2">version 9.1 for Guile Scheme<br>
+          style="color: #999999;"> <font size="+2">version 9.1.1 for Guile Scheme<br>
           </font></span></b></h1>
     <p style="text-align: center;">
 	Display options for viewing this documentation:<br>
