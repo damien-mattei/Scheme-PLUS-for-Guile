@@ -426,39 +426,68 @@
 ;; 0
 ;; 1
 ;; 2
-(define-syntax for
-   (lambda (stx)
-     (syntax-case stx ()
-       ((kwd (init test incrmt) body ...)
-        (with-syntax ((BREAK (datum->syntax (syntax kwd) 'break))
-                      (CONTINUE (datum->syntax (syntax kwd) 'continue)))
+;; (define-syntax for
+;;    (lambda (stx)
+;;      (syntax-case stx ()
+;;        ((kwd (init test incrmt) body ...)
+;;         (with-syntax ((BREAK (datum->syntax (syntax kwd) 'break))
+;;                       (CONTINUE (datum->syntax (syntax kwd) 'continue)))
 		     
-		     (syntax
-		      ;;(let ()
-		      (call/cc
-		       (lambda (escape)
-			 ;;init
-			 (let-syntax ((BREAK (identifier-syntax (escape))))
+;; 		     (syntax
+;; 		      ;;(let ()
+;; 		      (call/cc
+;; 		       (lambda (escape)
+;; 			 ;;init
+;; 			 (let-syntax ((BREAK (identifier-syntax (escape))))
 			   
-			     init
-			     (let loop ((res 0)) ;; now we will return a result at the end if no break but if we continue? what happens?
-			       (if test
-				   (begin
-				     (call/cc
-				      (lambda (next)
-					(set! res (let-syntax ((CONTINUE (identifier-syntax (next))))
-						  (let () ;; allow definitions
-						    body ...)))))
-				   incrmt
-				   (loop res))
-				 res)
-			       ))))
-		      ;;) ; close (let () ...
+;; 			     init
+;; 			     (let loop ((res 0)) ;; now we will return a result at the end if no break but if we continue? what happens?
+;; 			       (if test
+;; 				   (begin
+;; 				     (call/cc
+;; 				      (lambda (next)
+;; 					(set! res (let-syntax ((CONTINUE (identifier-syntax (next))))
+;; 						  (let () ;; allow definitions
+;; 						    body ...)))))
+;; 				   incrmt
+;; 				   (loop res))
+;; 				 res)
+;; 			       ))))
+;; 		      ;;) ; close (let () ...
 		      
-		      ) ; close syntax
+;; 		      ) ; close syntax
 		     
-		     ) ; close with-syntax
-	))))
+;; 		     ) ; close with-syntax
+;; 	))))
+
+
+
+(define-syntax for
+  
+  (lambda (stx)
+    
+    (syntax-case stx ()
+      
+      ((_ (init test incrmt) body ...)
+       
+       (with-syntax ((BREAK (datum->syntax stx 'break))
+                     (CONTINUE (datum->syntax stx 'continue)))
+     (syntax
+      (call/cc
+       (lambda (escape)
+         (let ((BREAK escape))
+           init
+           (let loop ()
+         (when test
+           (call/cc
+            (lambda (next)
+              (let ((CONTINUE next))
+            (let () ;; allow definitions
+              body ...)))) ; end call/cc
+           incrmt
+           (loop))) ; end let loop
+           ))))) ;; close with-syntax
+       ))))
 
 
 ;; (for/bc ({k <+ 0} {k < 3} {k <- {k + 1}})

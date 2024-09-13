@@ -128,7 +128,8 @@
       
        (with-syntax ((parsed-args ;;#`(list #,@(parse-square-brackets-arguments-lister-syntax #`(#,@#'args-brackets)))))
 
-		      (cons #'list 
+		      (cons #'list ; list : cause ERROR in start-λογικι-guile+.scm (logic-test) : ice-9/boot-9.scm:1685:16: In procedure raise-exception:
+			    ;; In procedure variable-ref: Unbound variable: #<variable 785f3e25c8f0 value: #<undefined>>
 		      	    (parse-square-brackets-arguments-lister-syntax #'(arg-bracket ...))))) ; #`(#,@#'args-brackets)))))
 		      
 		    (display "$bracket-apply$ : #'parsed-args=") (display #'parsed-args) (newline)

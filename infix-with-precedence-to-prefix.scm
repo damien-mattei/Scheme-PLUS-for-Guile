@@ -36,7 +36,7 @@
 ;;; evaluates `terms` symbolically or numerically as a basic infix expression
 (define (!0-generic terms  operator-precedence creator)
   
-  ;; (display "!0-generic : terms=") (display terms) (newline)
+  ;;(display "!0-generic : terms=") (display terms) (newline)
   ;; (display "!0-generic : operator-precedence=") (display operator-precedence) (newline)
 
   (define rv

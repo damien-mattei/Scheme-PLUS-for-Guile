@@ -4,3 +4,6 @@ clean code
 add more infix without { } in do while / repeat until / ... ?
 in $nfx$ see TODO
 syntax in def.scm and in overload
+make it with sub modules of Scheme+ submodule
+modify for next step as racket version
+
