@@ -111,7 +111,7 @@
 
   ;; re-export because they are from modules
   #:re-export ( 
-		for
+		for continue break
 		for-basic
 		for-next
 		for-basic/break
@@ -153,7 +153,7 @@
 	
 		$nfx$
 	  
-		def
+		def return return-rec
 		$bracket-apply$
 		;;$bracket-apply$next  ;; DONE: comment it
 

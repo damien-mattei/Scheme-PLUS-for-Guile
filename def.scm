@@ -23,7 +23,7 @@
 
   #:use-module (srfi srfi-31) ;; rec
 
-  #:export (def
+  #:export (def return return-rec
 	    <+ +>
 	    ⥆ ⥅
 	    :+ +:))
@@ -80,6 +80,15 @@
 ;; 	 (if where #'iftrue #'iffalse))))))
 
 
+(define-syntax-parameter return
+  (lambda (stx)
+    (syntax-violation 'return "used outside of a def" stx)))
+
+(define-syntax-parameter return-rec
+  (lambda (stx)
+    (syntax-violation 'return-rec "used outside of a def" stx)))
+
+
 
 ;; scheme@(guile-user)> (def (foo) (when #t (return "hello") "bye"))
 ;; scheme@(guile-user)> (foo)
@@ -126,17 +135,47 @@
 	;;        (call/cc (lambda (#,ret-id) <body> <body>* ...)))))
 
 	
+	;; ((_ (<name> <arg> ...) <body> <body>* ...)
+	 
+        ;;  (let ((ret-id (datum->syntax stx 'return))
+	;;        (ret-rec-id (datum->syntax stx 'return-rec)))
+
+	;;    #`(define (<name> <arg> ...)
+
+	;;        (call/cc (lambda (#,ret-rec-id)
+			  
+	;; 		 (apply (rec <name> (lambda (<arg> ...)
+	;; 				      (call/cc (lambda (#,ret-id) <body> <body>* ...)))) (list <arg> ...)))))))
+
+
 	((_ (<name> <arg> ...) <body> <body>* ...)
 	 
-         (let ((ret-id (datum->syntax stx 'return))
-	       (ret-rec-id (datum->syntax stx 'return-rec)))
+	 #'(define (<name> <arg> ...)
 
-	   #`(define (<name> <arg> ...)
+	     (call/cc
 
-	       (call/cc (lambda (#,ret-rec-id)
-			  
-			 (apply (rec <name> (lambda (<arg> ...)
-					      (call/cc (lambda (#,ret-id) <body> <body>* ...)))) (list <arg> ...)))))))
+	      (lambda (ret-rec-id) ;(#,ret-rec-id)
+
+		(syntax-parameterize
+		 ([return-rec (syntax-rules ()
+				[(return-rec vals (... ...))
+				 (ret-rec-id vals (... ...))])])
+		 
+		 (apply (rec <name> (lambda (<arg> ...)
+				      
+				      (call/cc
+
+				       (lambda (ret-id) ;(#,ret-id)
+					 ;; In the body we adjust the 'return' keyword so that calls
+					 ;; to 'return' are replaced with calls to the escape
+					 ;; continuation.
+					 (syntax-parameterize
+					  ([return (syntax-rules ()
+						     [(return vals (... ...))
+						      (ret-id vals (... ...))])])
+					  <body> <body>* ...)))))
+			
+			(list <arg> ...)))))))
 
 	      
 

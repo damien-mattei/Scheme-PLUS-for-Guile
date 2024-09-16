@@ -24,7 +24,7 @@
   
   #:use-module (increment)
   
-  #:export (for
+  #:export (for continue break
 	    for-basic
 	    for-next
 	    for-basic/break
@@ -462,6 +462,64 @@
 
 
 
+;; (define-syntax for
+  
+;;   (lambda (stx)
+    
+;;     (syntax-case stx ()
+      
+;;       ((_ (init test incrmt) body ...)
+       
+;;        (with-syntax ((BREAK (datum->syntax stx 'break))
+;;                      (CONTINUE (datum->syntax stx 'continue)))
+;;      (syntax
+;;       (call/cc
+;;        (lambda (escape)
+;;          (let ((BREAK escape))
+;;            init
+;;            (let loop ()
+;;          (when test
+;;            (call/cc
+;;             (lambda (next)
+;;               (let ((CONTINUE next))
+;;             (let () ;; allow definitions
+;;               body ...)))) ; end call/cc
+;;            incrmt
+;;            (loop))) ; end let loop
+;;            ))))) ;; close with-syntax
+;;        ))))
+
+
+
+
+
+
+
+
+;; scheme@(guile-user)> (for ((define i 0) (< i 5) (set! i (+ i 1))) (define x 7) (display i) (continue) (newline) )
+;; 01234scheme@(guile-us(for ((define i 0) (< i 5) (set! i (+ i 1))) (define x 7) (display i) (newline) )ne) )
+;; 0
+;; 1
+;; 2
+;; 3
+;; 4
+;; scheme@(guile-user)> (define res (for ((define i 0) (< i 5) (set! i (+ i 1))) (define x 7) (display i) (newline) (when (= i 2) (break i))))
+;; 0
+;; 1
+;; 2
+
+
+
+(define-syntax-parameter break
+  (lambda (stx)
+    (syntax-violation 'break "can only be used inside for" stx)))
+
+(define-syntax-parameter continue
+  (lambda (stx)
+    (syntax-violation 'continue "can only be used inside for" stx)))
+  
+
+
 (define-syntax for
   
   (lambda (stx)
@@ -470,24 +528,36 @@
       
       ((_ (init test incrmt) body ...)
        
-       (with-syntax ((BREAK (datum->syntax stx 'break))
-                     (CONTINUE (datum->syntax stx 'continue)))
-     (syntax
-      (call/cc
-       (lambda (escape)
-         (let ((BREAK escape))
-           init
-           (let loop ()
-         (when test
-           (call/cc
-            (lambda (next)
-              (let ((CONTINUE next))
-            (let () ;; allow definitions
-              body ...)))) ; end call/cc
-           incrmt
-           (loop))) ; end let loop
-           ))))) ;; close with-syntax
-       ))))
+   	 (syntax
+	  
+	  (call/cc
+	   (lambda (escape)
+	     ;; In the body we adjust the 'break' keyword so that calls
+	     ;; to 'break' are replaced with calls to the escape
+	     ;; continuation.
+	     (syntax-parameterize
+	      ([break (syntax-rules ()
+			     [(break vals (... ...))
+			      (escape vals (... ...))])])
+		 
+               init
+               (let loop ()
+		 (when test
+		   (call/cc
+		    (lambda (next)
+		      ;; In the body we adjust the 'continue' keyword so that calls
+		      ;; to 'continue' are replaced with calls to the escape
+		      ;; continuation.
+		      (syntax-parameterize
+		       ([continue (syntax-rules ()
+				    [(continue vals (... ...))
+				     (next vals (... ...))])])
+		 
+		       (let () ;; allow definitions
+			 body ...)))) ; end call/cc
+		   incrmt
+		   (loop)))))))))))
+
 
 
 ;; (for/bc ({k <+ 0} {k < 3} {k <- {k + 1}})
