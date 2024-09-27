@@ -13,16 +13,6 @@
 ; fastest way: (load "exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile+.scm")
 
 
-; or build:
-
-;./curly-infix2prefix4guile.scm    ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile+.scm > ../AI_Deep_Learning/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile.scm
-
-; or: make -f Makefile.Guile
-
-; use: (load "exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile.scm")
-
-; or use : (load "exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile+.scm")
-
 ; in case of problem: rm -rf .cache/guile/
 
 #|  note: this file can run in two ways:
@@ -97,12 +87,14 @@ but will it works with all Scheme+ parser?
 	 
 	  ; the length of output and input layer with coeff. used for bias update
 	  {(len_layer_output len_layer_input_plus1forBias) <+ (dim-matrix M_i_o)} ; use values and define-values to create bindings
-        
+
+	  ;;(display "modification_des_poids ") (newline)
 	  {len_layer_input <+ len_layer_input_plus1forBias - 1}
 
 	  (for-each-in (j (in-range len_layer_output)) ; line
 		(for-each-in (i (in-range len_layer_input)) ; column , parcours les colonnes de la ligne sauf le bias
-		    {M_i_o[j {i + 1}]  <-  M_i_o[j {i + 1}] + η * z_input[i] * მzⳆმz̃(z_output[j] z̃_output[j]) * ᐁ_i_o[j]})
+			     {M_i_o[j {i + 1}]  <-  M_i_o[j {i + 1}] + η * z_input[i] * მzⳆმz̃(z_output[j] z̃_output[j]) * ᐁ_i_o[j]})
+			      ;;(display "modification_des_poids : after M_i_o") (newline))
 
 		; and update the bias
             	{M_i_o[j 0]  <-  M_i_o[j 0] + η * 1.0 * მzⳆმz̃(z_output[j] z̃_output[j]) * ᐁ_i_o[j]}))
@@ -199,7 +191,7 @@ but will it works with all Scheme+ parser?
   ;; propagation des entrées vers la sortie
 
   {n <+ vector-length(z)}
-  ;(display "n=") (display n) (newline)
+  ;;(display "n=") (display n) (newline)
 
   ;; hidden layers
   (declare z_1)
@@ -228,13 +220,13 @@ but will it works with all Scheme+ parser?
        
        {z_1 <- #(1) + z[i]} ; + operator has been overloaded to append scheme vectors
 
-       ;(display "z_1 = ") (display z_1) (newline)
+       ;;(display "z_1 = ") (display z_1) (newline)
 
-       ;(display "M=") (display M) (newline)
+       ;;(display "M=") (display M) (newline)
 	
        {z̃[i + 1] <- M[i] * z_1} ; z̃ = matrix * vector , return a vector
        
-       ;(display "z̃[i + 1] = ") (display {z̃[i + 1]}) (newline)
+       ;;(display "z̃[i + 1] = ") (display {z̃[i + 1]}) (newline)
 
        #| calcul des réponses des neurones cachés
        
@@ -250,7 +242,7 @@ but will it works with all Scheme+ parser?
        
        {z[i + 1] <- vector-map(activation_function_hidden_layer_indexed z̃[i + 1])}
 
-       ;(display "in for : z[i + 1] = ") (display {z[i + 1]}) (newline)
+       ;;(display "in for : z[i + 1] = ") (display {z[i + 1]}) (newline)
 
        ) ; end for
 
@@ -265,7 +257,7 @@ but will it works with all Scheme+ parser?
 
   ;; calcul des réponses des neurones de la couche de sortie
   {z[i + 1] <- vector-map(activation_function_output_layer_indexed z̃[i + 1])}
-  ;(display "z[i + 1] = ") (display {z[i + 1]}) (newline)
+  ;;(display "z[i + 1] = ") (display {z[i + 1]}) (newline)
 
   ; update the data
   (nbp-set-z! nbp z)
@@ -310,7 +302,8 @@ but will it works with all Scheme+ parser?
 
 		 {ns <+ vector-length(z[i])}
 		 
-
+		 ;;(display "apprentissage : before for-each-in k") (newline)
+		 
 		 ;; TEMPS 1. calcul des gradients locaux sur la couche k de sortie (les erreurs commises)
 		 (for-each-in (k (in-range ns))
 				{ᐁ[i][k] <- y[k] - z[i][k]}  )   ; gradient sur un neurone de sortie (erreur locale)
@@ -322,6 +315,8 @@ but will it works with all Scheme+ parser?
 		  ;     {eror <- err})               ; mémorisation de l'erreur totale à la dernière itération
 
 
+		 ;;(display "apprentissage : after for-each-in k") (newline)
+		 
 		 ;; modification des poids de la matrice de transition de la derniére couche de neurones cachés à la couche de sortie
 
 		 {მzⳆმz̃ <+ activation_function_output_layer_derivative}
@@ -332,16 +327,15 @@ but will it works with all Scheme+ parser?
 
 		 {მzⳆმz̃ <- activation_function_hidden_layer_derivative}
 
+		 ;;(display "apprentissage : before for-each-in i") (newline)
+		 
 		 (for-each-in (i (reversed (in-range 1 i_output_layer)))
 				{nc <+ vector-length(z[i])}
 				{ns <+ vector-length(z[i + 1])}
 				(for-each-in (j (in-range nc))
-					       {k <+ 0} ; should be commented ?
-					       {ᐁ[i][j] <- ($+>
-							    {sum <+ 0}  
-							    (for-each-in (k (in-range ns))
-								{sum <- sum + მzⳆმz̃(z[i + 1][k] z̃[i + 1][k]) * M[i][k {j + 1}] * ᐁ[i + 1][k]})
-							    sum)})
+					     {ᐁ[i][j] <- 0}
+					     (for-each-in (k (in-range ns))
+						{ᐁ[i][j] <- ᐁ[i][j] + მzⳆმz̃(z[i + 1][k] z̃[i + 1][k]) * M[i][k {j + 1}] * ᐁ[i + 1][k]}))
 				;; modification des poids de la matrice de transition de la couche i-1 à i
 				{modification_des_poids(M[i - 1] ηₛ  z[i - 1] z[i] z̃[i] ᐁ[i] მzⳆმz̃)})
 
@@ -470,7 +464,7 @@ but will it works with all Scheme+ parser?
 
 {Ltest <+ (vector-map (lambda (i x) (cons (vector x) (vector (sin x))))  ; use pairs in Scheme instead of vectors in Python
 		      (list->vector (map (lambda (n) (uniform-interval {(- pi) / 2} {pi / 2}))
-					 (in-range 10000))))}
+					 (in-range 10))))}
 
 
 (apprentissage Llearning r3)

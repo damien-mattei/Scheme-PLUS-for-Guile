@@ -68,35 +68,35 @@
   ;; 				  (while . while-guile)))
                                   ;;(if . if-scheme)))
 
-  #:use-module (def)
-  #:use-module (declare)
-  #:use-module (block)
-  #:use-module (not-equal)
-  #:use-module (exponential)
-  #:use-module (modulo)
-  #:use-module (bitwise)
-  #:use-module (when-unless)
-  #:use-module (while-do)
-  #:use-module (repeat-until)
-  #:use-module (slice)
+  #:use-module (Scheme+ def)
+  #:use-module (Scheme+ declare)
+  #:use-module (Scheme+ block)
+  #:use-module (Scheme+ not-equal)
+  #:use-module (Scheme+ exponential)
+  #:use-module (Scheme+ modulo)
+  #:use-module (Scheme+ bitwise)
+  #:use-module (Scheme+ when-unless)
+  #:use-module (Scheme+ while-do)
+  #:use-module (Scheme+ repeat-until)
+  #:use-module (Scheme+ slice)
   
-  #:use-module (if-then-else)
-  #:use-module (for_next_step)
+  #:use-module (Scheme+ if-then-else)
+  #:use-module (Scheme+ for_next_step)
 
-  #:use-module (range)
+  #:use-module (Scheme+ range)
   
-  #:use-module (growable-vector)
+  #:use-module (Scheme+ growable-vector)
   
   ;;#:use-module (ice-9 local-eval)
   
-  #:use-module (overload)
-  #:use-module (array)
+  #:use-module (Scheme+ overload)
+  ;;#:use-module (Scheme+ array)
   
-  #:use-module (condx)
+  #:use-module (Scheme+ condx)
   
-  #:use-module (bracket-apply)
-  #:use-module (assignment)
-  #:use-module (nfx)
+  #:use-module (Scheme+ bracket-apply)
+  #:use-module (Scheme+ assignment)
+  #:use-module (Scheme+ nfx)
   
   ;;;;#:use-module (srfi srfi-26) ;; cut <>
 

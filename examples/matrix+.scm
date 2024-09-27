@@ -1,7 +1,7 @@
 
 ;; guile version
 
-;; sudo cp matrix.scm /usr/local/share/guile/site/3.0/matrix+.scm
+;; sudo cp matrix+.scm /usr/local/share/guile/site/3.0/matrix+.scm
 
 ; ./curly-infix2prefix4guile.scm   ../AI_Deep_Learning/guile/matrix+.scm > ../AI_Deep_Learning/guile/matrix.scm
 
@@ -13,9 +13,9 @@
 
   #:use-module (Scheme+)
 
-  #:use-module (for_next_step)
+  ;;#:use-module (Scheme+ for_next_step)
 
-  #:use-module (array)
+  #:use-module (Scheme+ array)
 
   #:use-module (oop goops)
 
@@ -139,6 +139,7 @@
   {v[lin][col]})
 
 (define (matrix-set! M lin col x)
+  ;;(display "matrix-set!  : M =") (display M) (newline)
   {v <+ (matrix-v M)}
   {v[lin][col] <- x})
 
