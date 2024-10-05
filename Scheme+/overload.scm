@@ -25,7 +25,7 @@
 
 
 
-;; (use-modules (overload))
+;; (use-modules (Scheme+ overload))
 
 (define-module (Scheme+ overload)
   
