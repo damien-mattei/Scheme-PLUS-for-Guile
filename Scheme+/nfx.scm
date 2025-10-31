@@ -27,6 +27,7 @@
   #:use-module (Scheme+ infix-with-precedence-to-prefix)
   #:use-module (Scheme+ operators-list)
   #:use-module (Scheme+ operators)
+  #:use-module (Scheme+ infix)
   
   #:export ($nfx$))
 
@@ -51,9 +52,20 @@
 
 	 (with-syntax
 			 
-	     ((parsed-args
+	  ((parsed-args
 
-	       (let ((expr (car
+	    (begin
+
+	      ;; (display "$nfx$: #'(e1 op1 e2 op2 e3 op ...)=") (display #'(e1 op1 e2 op2 e3 op ...)) (newline)
+		 		
+	      ;; pre-check we have an infix expression because parser can not do it
+	      (when (not (infix? #'(e1 op1 e2 op2 e3 op ...)
+				 operators-lst-syntax))
+		
+		(error "$nfx$ : arguments do not form an infix expression : here is #'(e1 op1 e2 op2 e3 op ...) for debug:"
+		       #'(e1 op1 e2 op2 e3 op ...)))
+
+	      (let ((expr (car
 			    (!*prec-generic #'(e1 op1 e2 op2 e3 op ...) ; apply operator precedence rules
 				       infix-operators-lst-for-parser-syntax
 				       (lambda (op a b) (list op a b))))))
@@ -64,7 +76,7 @@
 			
 			
 		     (n-arity expr)
-		     expr))))
+		     expr)))))
 	   
 	   (display "$nfx$ : parsed-args=") (display #'parsed-args) (newline)
 	   #'parsed-args)))))

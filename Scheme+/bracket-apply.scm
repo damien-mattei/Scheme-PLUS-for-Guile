@@ -480,10 +480,10 @@
 	       ((equal? slice index2-or-keyword-eval) ;; T[i1 : i3]
 		
 		(when (< index1-or-keyword-eval 0) ;; negative index
-		      (set! index1-or-keyword-eval (+ (vector-length container-eval) index1-or-keyword-eval)))
+		      (set! index1-or-keyword-eval (+ (string-length container-eval) index1-or-keyword-eval)))
 		
 		(when (< index3-or-keyword-or-step-eval 0) ;; negative index
-		      (set! index3-or-keyword-or-step-eval (+ (vector-length container-eval) index3-or-keyword-or-step-eval)))
+		      (set! index3-or-keyword-or-step-eval (+ (string-length container-eval) index3-or-keyword-or-step-eval)))
 		
 		(substring container-eval index1-or-keyword-eval index3-or-keyword-or-step-eval))
 

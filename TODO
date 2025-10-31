@@ -1,9 +1,12 @@
-
-clean code
-( infix ) Racket
-add more infix without { } in do while / repeat until / ... ?
-in $nfx$ see TODO
 syntax in def.scm and in overload
+cheme@(guile-user)> (define-syntax defined-symbol?    (syntax-rules () ((_ x) (defined? (quote x)))))
+scheme@(guile-user)> (defined-symbol? cons)
+$1 = #t
+scheme@(guile-user)> (defined-symbol? toto)
+$2 = #f
+
+(defined? (syntax->datum #'toto))
+
 
 
 
