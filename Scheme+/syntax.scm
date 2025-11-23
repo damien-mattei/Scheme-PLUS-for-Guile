@@ -1,6 +1,6 @@
 ;; This file is part of Scheme+
 
-;; Copyright 2024 Damien MATTEI
+;; Copyright 2024-2025 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 
   #:export ( ;;check-syntax=?
 	    datum=?
-	    member-syntax
+	    member-generic
 	    ;;member-normal&syntax
 	    )
 
@@ -122,24 +122,24 @@
 ;; scheme@(guile-user)> (define op-lst (list #'* #'+ #'- #'/))
 ;; scheme@(guile-user)> (any (lambda (y) (check-syntax=? #'+ y)) op-lst)
 ;; $21 = #t
-;; scheme@(guile-user)> (member-syntax #'+ op-lst)
-;; member-syntax : x=#<syntax:unknown file:49:17 +>
-;; member-syntax : y=#<syntax:unknown file:47:23 *>
+;; scheme@(guile-user)> (member-generic #'+ op-lst)
+;; member-generic : x=#<syntax:unknown file:49:17 +>
+;; member-generic : y=#<syntax:unknown file:47:23 *>
 
-;; member-syntax : x=#<syntax:unknown file:49:17 +>
-;; member-syntax : y=#<syntax:unknown file:47:27 +>
+;; member-generic : x=#<syntax:unknown file:49:17 +>
+;; member-generic : y=#<syntax:unknown file:47:27 +>
 
 ;; $22 = #t
 
 ;; scheme@(guile-user)> (import (syntax))
-;; scheme@(guile-user)> (member-syntax #'+ (list - + / *))
+;; scheme@(guile-user)> (member-generic #'+ (list - + / *))
 ;; $1 = #f
 
 
-(define (member-syntax x lst)
+(define (member-generic x lst)
   (any (lambda (y)
-	 ;;(display "member-syntax : x=") (display x) (newline)
-	 ;;(display "member-syntax : y=") (display y) (newline)
+	 ;;(display "member-generic : x=") (display x) (newline)
+	 ;;(display "member-generic : y=") (display y) (newline)
 	 ;;(newline)
 	 ;;(check-syntax=? x y))
 	 (datum=? x y))
@@ -150,14 +150,14 @@
 ;; scheme@(guile-user)> (member-normal&syntax '* '(+ * -))
 ;; $27 = (* -)
 ;; scheme@(guile-user)> (member-normal&syntax #'+ op-lst)
-;; member-syntax : x=#<syntax:unknown file:66:24 +>
-;; member-syntax : y=#<syntax:unknown file:47:23 *>
+;; member-generic : x=#<syntax:unknown file:66:24 +>
+;; member-generic : y=#<syntax:unknown file:47:23 *>
 
-;; member-syntax : x=#<syntax:unknown file:66:24 +>
-;; member-syntax : y=#<syntax:unknown file:47:27 +>
+;; member-generic : x=#<syntax:unknown file:66:24 +>
+;; member-generic : y=#<syntax:unknown file:47:27 +>
 
 ;; $28 = #t
 
 ;; (define (member-normal&syntax x lst)
 ;;   (or (member x lst)
-;;       (member-syntax x lst)))
+;;       (member-generic x lst)))

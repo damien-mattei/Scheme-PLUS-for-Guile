@@ -1,6 +1,6 @@
 ;; This file is part of Scheme+
 
-;; Copyright 2024 Damien MATTEI
+;; Copyright 2024-2025 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@
 
 ;; syntax version
 (define (operator-syntax? x)
-  (member-syntax x operators-lst-syntax));;operators-lst))
+  (member-generic x operators-lst-syntax));;operators-lst))
 
 
 
@@ -167,14 +167,14 @@
   ;;     (eqv? oper '←) (eqv? oper '+>)))
 
   (or (memv oper definition-operator)
-      (member-syntax oper definition-operator-syntax)))
+      (member-generic oper definition-operator-syntax)))
 
 
   
 (define (ASSIGNMENT-op? oper)
   ;;(or (eqv? oper '<-) (eqv? oper '->)))
   (or (memv oper assignment-operator)
-      (member-syntax oper assignment-operator-syntax)))
+      (member-generic oper assignment-operator-syntax)))
 
 
 

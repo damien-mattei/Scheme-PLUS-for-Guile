@@ -4,7 +4,7 @@
 ; L'algorithme de rétro-propagation du gradient dans un
 ; réseau de neurones avec N couches cachées.
 
-;  D. Mattei	
+;  D. Mattei	  
 
 
 ; use MacVim to show ALL the characters of this file (not Emacs, not Aquamacs)

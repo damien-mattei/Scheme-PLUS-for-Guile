@@ -3,7 +3,7 @@
 
 ;; This file is part of Scheme+
 
-;; Copyright 2024 Damien MATTEI
+;; Copyright 2024-2025 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -40,17 +40,17 @@
     (if (null? expr)
 	#t
     	(and (not (null? (cdr expr))) ; forbids: op1 without e1
-	     (member-syntax (car expr) oper-lst) ;; check (op1 e1 ...) 
-	     (not (member-syntax (cadr expr) oper-lst)) ; check not (op1 op2 ...)
+	     (member-generic (car expr) oper-lst) ;; check (op1 e1 ...) 
+	     (not (member-generic (cadr expr) oper-lst)) ; check not (op1 op2 ...)
 	     (infix-rec? (cddr expr))))) ; continue with (op2 e2 ...) 
 
 
   (define rv
-    (cond ((not (list? expr)) (not (member-syntax expr oper-lst))) ; not an operator ! 
+    (cond ((not (list? expr)) (not (member-generic expr oper-lst))) ; not an operator ! 
 	  ((null? expr) #t) ; definition
 	  ((null? (cdr expr)) #f) ; (a) not allowed as infix
 	  (else
-	   (and (not (member-syntax (car expr) oper-lst)) ; not start with an operator !
+	   (and (not (member-generic (car expr) oper-lst)) ; not start with an operator !
 		(infix-rec? (cdr expr)))))) ; sublist : (op arg ...) match infix-rec
   
   ;;(display "infix? : rv=") (display rv) (newline)

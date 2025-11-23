@@ -4,7 +4,7 @@
 
 ;; This file is part of Scheme+
 
-;; Copyright 2024 Damien MATTEI
+;; Copyright 2024-2025 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -86,7 +86,7 @@
   
   (cond ((and (null? terms)
 	      (not (memq 'expt operators))
-	      (not (member-syntax #'expt operators)))
+	      (not (member-generic #'expt operators)))
 
 	 (reverse stack)) ; base case, stack is the result, we return the reverse because
 					; scheme's list-iteration is forwards-only and
@@ -110,7 +110,7 @@
 	      ;; test the finding of operator in precedence list
 	      (or
 	       (memq (car stack) operators) ; find an operator of the same precedence
-	       (member-syntax (car stack) operators)))	 ;  syntaxified !
+	       (member-generic (car stack) operators)))	 ;  syntaxified !
 
 	 
 	 ;; body if condition is true : ; found an operator of the same precedence
@@ -120,7 +120,7 @@
 		(calculus (begin
 			    ;;(display "checking exponential for calculus...")(newline)
 			    (if (or (memq 'expt operators) ; testing for exponential (expt or **)
-				    (member-syntax #'expt operators))
+				    (member-generic #'expt operators))
 			      (calc-generic op b a) ; op equal expt or **
 			      (calc-generic op a b)))))
 	   
