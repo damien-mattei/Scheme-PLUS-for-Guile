@@ -22,7 +22,8 @@
 	    >>
 	    &
 	    ∣
-	    ^))
+	    ^
+	    ~))
 
 
 
@@ -32,9 +33,11 @@
 (define (>> x n)
   (ash x (- n)))
 
-(define & logand)
+;; definitions based on SRFI 60 ,different than R6RS ! (not available in guile 3.0)
+(define & logand) ; esuivalent of bitwise-and in R6RS
 (define ∣ logior)
 (define ^ logxor)
+(define ~ lognot)
 
 ;;(define | logior)  ;; this pipe is weird
 

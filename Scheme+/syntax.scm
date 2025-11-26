@@ -15,7 +15,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
+;; version 17
 
 (define-module (Scheme+ syntax)
 
@@ -111,7 +111,33 @@
 ;;   rv)
 
 
+
+;; scheme@(guile-user)> (procedure->string sin)
+;; $2 = "sin"
+;; scheme@(guile-user)> (procedure->string *)
+;; $3 = "*"
+(define (procedure->string p)
+    (define o (open-output-string))
+    (write p o)
+    (define str (get-output-string o))
+    (define lst-split-str (string-split str #\space))
+    (cadr lst-split-str))
+
+
+(define (procedure->symbol p)
+    (string->symbol (procedure->string p)))
+
+;; (datum=? #'* *)
+;; #t
 (define (datum=? obj1 obj2)
+
+
+  (when (procedure? obj1)
+	 (set! obj1 (procedure->symbol obj1)))
+
+  (when (procedure? obj2)
+    (set! obj2 (procedure->symbol obj2)))
+       
   (eq? (syntax->datum obj1)
        (syntax->datum obj2)))
 
