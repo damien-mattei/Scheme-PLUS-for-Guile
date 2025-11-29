@@ -40,6 +40,8 @@
   #:use-module (Scheme+ overload)
   #:use-module (Scheme+ growable-vector)
   #:use-module (Scheme+ set-values-plus)
+  #:use-module (Scheme+ defvar)
+  #:use-module (Scheme+ return)
 
   #:export (<- ->
 	    ← →
@@ -238,6 +240,9 @@
       ((_ var expr)
        
        #'(set! var expr))
+       ;;#'(if-defined var
+	;;	   (set! var expr)
+	;;	   (define var expr)))
       
       
       ;; (declare x y z t)

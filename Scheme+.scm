@@ -8,7 +8,7 @@
 
 ;; Guile Scheme version
 
-;; Copyright 2021-2024 Damien MATTEI
+;; Copyright 2021-2025 Damien MATTEI
 
 ;; e-mail: damien.mattei@gmail.com
 
@@ -97,6 +97,8 @@
   #:use-module (Scheme+ bracket-apply)
   #:use-module (Scheme+ assignment)
   #:use-module (Scheme+ nfx)
+  #:use-module (Scheme+ return)
+  #:use-module (Scheme+ defvar)
   
   ;;;;#:use-module (srfi srfi-26) ;; cut <>
 

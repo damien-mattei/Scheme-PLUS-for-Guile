@@ -1,7 +1,7 @@
 
 ;; This file is part of Scheme+
 
-;; Copyright 2021-2024 Damien MATTEI
+;; Copyright 2021-2025 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -22,11 +22,9 @@
   ;;#:use-module ((guile)) ;; pourquoi (( et ))
 
   #:use-module (srfi srfi-31) ;; rec
+  #:use-module (Scheme+ return)
 
-  #:export (def return return-rec
-	    <+ +>
-	    ⥆ ⥅
-	    :+ +:))
+  #:export (def))
   
 
 
@@ -79,14 +77,6 @@
 ;; 	 (display "id=") (display #'id) (newline)
 ;; 	 (if where #'iftrue #'iffalse))))))
 
-
-(define-syntax-parameter return
-  (lambda (stx)
-    (syntax-violation 'return "used outside of a def" stx)))
-
-(define-syntax-parameter return-rec
-  (lambda (stx)
-    (syntax-violation 'return-rec "used outside of a def" stx)))
 
 
 
@@ -177,13 +167,55 @@
 			
 			(list <arg> ...)))))))
 
-	      
+		;; variadic arguments in list
+	;; (def (foo a . L) (when #t (return (cons a L))))
+	;; (foo 1 2 3)
+	;; '(1 2 3)
+	((_ (<name> <arg> . L) <body> <body>* ...)
+	 
+         
+	 #'(define (<name> <arg> . L)
+
+	     (call/cc
+
+	      (lambda (ret-rec-id) ;(#,ret-rec-id)
+		;; In the body we adjust the 'return-rec' keyword so that calls
+		;; to 'return-rec' are replaced with calls to the escape
+		;; continuation.
+
+		(syntax-parameterize
+		 ([return-rec (syntax-rules ()
+				[(return-rec vals (... ...))
+				 (ret-rec-id vals (... ...))])])
+		 
+		 (apply (rec <name> (lambda (<arg> . L)
+				      
+				      (call/cc
+
+				       (lambda (ret-id) ;(#,ret-id)
+					 ;; In the body we adjust the 'return' keyword so that calls
+					 ;; to 'return' are replaced with calls to the escape
+					 ;; continuation.
+					 (syntax-parameterize
+					  ([return (syntax-rules ()
+						     [(return vals (... ...))
+						      (ret-id vals (... ...))])])
+					  <body> <body>* ...)))))
+			
+			(cons <arg> L)))))))
+
 
 	
 	;; single definition without a value assigned
 	;; (def x)
 	((_ var) #`(define var '()))
 
+
+	;; TODO validate:
+	;; (def s  3 ² + 2 * 3 * 5 + 5 ²)
+	;; 64
+	;;((_ var expr expr-optional ...) #`(define var ($nfx$-rec expr expr-optional ...)))
+	
 	;; (def x 7)
 	((_ var expr) #`(define var expr))
 
@@ -191,128 +223,3 @@
 
 	)))
 
-
-
-;; definition and assignment
-;; { x <+ 7 } is equivalent to : (<- x 7) or (define x 7)
-
-;; > {(a b c) <+ (values 7 8 9)}
-;; 7
-;; 8
-;; 9
-;; > (list a b c)
-;; '(7 8 9)
-
-;; > { y <+ z <+ 7 } 
-;; > z
-;; 7
-;; > y
-;; 7
-;; > { x <+ y <+ z <+ 7 } 
-;; > (list x y z)
-;; '(7 7 7)
-
-;; > {(x y z) <+ (u v w) <+ (a b c)  <+ (values 2 4 5)}
-;; 2
-;; 4
-;; 5
-;; > (list x y z u v w a b c)
-;; '(2 4 5 2 4 5 2 4 5)
-(define-syntax <+
-  (syntax-rules ()
-    
-    ((_ (var1 ...) expr) 
-     (define-values (var1 ...) expr)
-     )
-			 
-    ;; (begin
-    ;;   (define var1 '())
-    ;;   ...
-    ;;   ;;(display "<+ multiple") (newline)
-    ;;   (set!-values (var1 ...) expr)))
-
-    ;; > {(x y z) <+ (u v w) <+ (a b c)  <+ (values 2 4 5)}
-    ;; 2
-    ;; 4
-    ;; 5
-    ;; > (list x y z u v w a b c)
-    ;; '(2 4 5 2 4 5 2 4 5)
-    ((_ (var10 ...) (var11 ...) ... expr) (begin  ;; i do not do what the syntax says (assignation not in the good order) but it gives the same result 
-					    (define-values (var10 ...) expr)
-					    (define-values (var11 ...) (values var10 ...))
-					    ...
-					    ))
-					   
-    
-    ((_ var expr) (define var expr))
-		  
-    
-     ;; > { y <+ z <+ 7 }
-     ;; 7
-     ;; > z
-     ;; 7
-     ;; > y
-     ;; 7
-     ;; > { x <+ y <+ z <+ 7 }
-     ;; 7
-     ;; > (list x y z)
-     ;; '(7 7 7)
-     ((_ var var1 ... expr) (begin ;; i do not do what the syntax says (assignation not in the good order) but it gives the same result 
-			      (define var expr)
-			      (define var1 var)
-			      ...
-			      ;;var))
-			      ))
-    
-     ))
-		 			
-
-(define-syntax ⥆
-  (syntax-rules ()
-
-     ((_ var ...) (<+ var ...))))
-
-
-
-;; scheme@(guile-user)> {x :+ 7}
-;; scheme@(guile-user)> x
-;; $1 = 7
-;; scheme@(guile-user)> {x := "hello"}
-;; scheme@(guile-user)> x
-;; $2 = "hello"
-
-(define-syntax :+
-  (syntax-rules ()
-
-    ((_ var ...) (<+ var ...))))
-
-
-
-
-;; > {(values 2 4 5) +> (x y z) +> (u v w) +> (a b c)} 
-;; 2
-;; 4
-;; 5
-(define-syntax +>
-  (syntax-rules ()
-
-    ((_ exp var ...) (<+ var ... exp)))) 
-
-
-(define-syntax +:
-  (syntax-rules ()
-
-    ((_ exp var ...) (<+ var ... exp))))
-
-
-   
-;; > {(values 2 4 5) ⥅ (x y z) ⥅ (u v w) ⥅ (a b c)} 
-;; 2
-;; 4
-;; 5
-;; > (list x y z u v w a b c)
-;; '(2 4 5 2 4 5 2 4 5)
-(define-syntax ⥅
-  (syntax-rules ()
-
-     ((_ expr ...) (+> expr ...))))

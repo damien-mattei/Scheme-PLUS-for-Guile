@@ -37,6 +37,7 @@
   ;;#:use-module (Scheme+ operators)
   #:use-module (Scheme+ operators-list)
   #:use-module (Scheme+ insert)
+  #:use-module (Scheme+ return)
    
   #:export (parse-square-brackets-arguments-lister-syntax)) ; end module header
 
