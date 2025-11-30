@@ -15,6 +15,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+; version 17
 
 (define-module (Scheme+ defvar)
 
@@ -38,7 +39,6 @@
 
 
 
-;; TODO put the definitions below in another file
 
 ;; definition and assignment
 ;; { x <+ 7 } is equivalent to : (<- x 7) or (define x 7)

@@ -99,18 +99,14 @@
   #:use-module (Scheme+ nfx)
   #:use-module (Scheme+ return)
   #:use-module (Scheme+ defvar)
+  #:use-module (Scheme+ conjunction)
+  #:use-module (Scheme+ disjunction)
   
   ;;;;#:use-module (srfi srfi-26) ;; cut <>
 
   ;;;;#:use-module (srfi srfi-43) ;; WARNING: (Scheme+): `vector-copy' imported from both (growable-vector) and (srfi srfi-43)
  
-  ;; use with scheme-infix-define-macro.scm (ok)
-  ;;;;#:export (infix-with-precedence2prefix ! quote-all overload overload-procedure overload-operator overload-function $nfx$ def $bracket-apply$ <- ← -> → <+ ⥆ +> ⥅ declare $ $>  condx ≠ ** <v v> ⇜ ⇝ repeat % << >> & | ) ;; <>
-  
-  ;; use only with scheme-infix-define-macro.scm enabled
-  ;;#:re-export (local-eval the-environment)
-
-
+ 
   ;; re-export because they are from modules
   #:re-export ( 
 		for continue break
@@ -122,6 +118,10 @@
 		for-each-in
 		in-range
 		reversed
+
+		;; functions
+		&& ; procedure and
+		|| ; procedure or
 		
 		define-overload-procedure
 		overload-procedure
