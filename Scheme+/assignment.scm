@@ -20,7 +20,7 @@
 ;; note that slicing separator is now : , no more $ (see slice.scm)
 
 
-;; (use-modules (assignment))
+;; (use-modules (Scheme+ assignment))
 
 #!curly-infix
 

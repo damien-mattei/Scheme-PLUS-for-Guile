@@ -17,7 +17,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;; (use-modules (bracket-apply))
+;; (use-modules (Scheme+ bracket-apply))
 
 #!curly-infix
 
@@ -25,17 +25,20 @@
 (define-module (Scheme+ bracket-apply)
 
   #:use-module (srfi srfi-1)
-  #:use-module (srfi srfi-69)
+  #:use-module (srfi srfi-69) ; hash tables
   #:use-module (Scheme+ parse-square-brackets)
   #:use-module (Scheme+ for_next_step)
   #:use-module (Scheme+ array)
   #:use-module (Scheme+ slice)
   #:use-module (Scheme+ overload)
   #:use-module (Scheme+ growable-vector)
-  #:use-module (ice-9 arrays) ;; for array-copy
-		
+  #:use-module (ice-9 arrays) ;; for array-copy, perheaps as SRFI 25 ?
+  #:use-module (Scheme+ block)
+  
   #:export ($bracket-apply$
-	    $bracket-apply$next))
+	    apply-square-brackets-argument-1
+	    ;;$bracket-apply$next
+	    ))
 
   
 

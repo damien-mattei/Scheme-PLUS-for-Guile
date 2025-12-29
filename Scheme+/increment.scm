@@ -3,7 +3,7 @@
 
 ; This file is part of Scheme+
 
-;; Copyright 2021-2024 Damien MATTEI
+;; Copyright 2021-2025 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
+;; version 17
 
 (define-module (Scheme+ increment)
 
@@ -32,6 +32,7 @@
     ((_ x)   (begin (set! x (+ x 1))
 		    x))))
 
+;; DEPRECATED
 (define-syntax inc!
   (syntax-rules ()
     ((_ x)   (begin (set! x (+ x 1))

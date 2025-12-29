@@ -15,6 +15,9 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+
+;; (use-modules (Scheme+ syntax))
+
 ;; version 17
 
 (define-module (Scheme+ syntax)
@@ -24,6 +27,8 @@
   #:export ( ;;check-syntax=?
 	    datum=?
 	    member-generic
+	    ;procedure->string
+	    ;procedure->symbol
 	    ;;member-normal&syntax
 	    )
 
@@ -157,9 +162,13 @@
 
 ;; $22 = #t
 
-;; scheme@(guile-user)> (import (syntax))
-;; scheme@(guile-user)> (member-generic #'+ (list - + / *))
-;; $1 = #f
+;;scheme@(guile-user)> (use-modules (Scheme+ syntax))
+;;; note: auto-compilation is enabled, set GUILE_AUTO_COMPILE=0
+;;;       or pass the --no-auto-compile argument to disable.
+;;; compiling /opt/homebrew/Cellar/guile/3.0.11/share/guile/site/3.0/Scheme+/syntax.scm
+;;; compiled /Users/mattei/.cache/guile/ccache/3.0-LE-8-4.7/opt/homebrew/Cellar/guile/3.0.11/share/guile/site/3.0/Scheme+/syntax.scm.go
+;;scheme@(guile-user)> (member-generic #'+ (list - + / *))
+;;$1 = #t
 
 
 (define (member-generic x lst)
