@@ -526,13 +526,13 @@ Short infix expressions also work at the REPL with the curly infix reader of Gui
     </p>
     <p>Including : (but not mandatory to use Scheme+)</p>
     <p style="margin-left: 40px;">The growable vector module class in the file
-      growable-vector.scm.</p>
+      Scheme+/growable-vector.scm.</p>
     <div style="margin-left: 40px;"> </div>
     <p style="margin-left: 40px;">The enhanced set of LET special forms in the
-      file let.scm.</p>
+      file deprecated/let.scm.</p>
     <div style="margin-left: 40px;"> </div>
     <p style="margin-left: 40px;">Many of the examples of this web page are in
-      the source file SssDyna.scm. </p>
+      the source file examples/SssDyna+.scm. </p>
     <p style="margin-left: 40px;">The .guile configuration file i use with Scheme+.</p>
     <h2><br>
     </h2>
@@ -553,12 +553,12 @@ Short infix expressions also work at the REPL with the curly infix reader of Gui
       <br>
       <br>
     </p>
-    <p>Guile offers infix notation that can be activated this way: for curly
+    <p>The programs of Scheme+ are converted by the parser (see the changes of version 20.2). For the REPL Guile offers infix notation that can be activated this way: for curly
       infix notation put in your <b>.guile </b>file :<b> (read-enable
         'curly-infix)</b><br>
     </p>
-    Also you need to activate in Guile the <b>OOP option (Object Oriented
-      Programming)</b><br>
+    Only the growable vector module and the programs that use it need the <b>OOP option (Object Oriented
+      Programming)</b> of Guile<br>
     <br>
     Also Guile can be more easy to use with history on command line, completion,
     as example here is my <b>.guile </b>init file:<br>
@@ -624,7 +624,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p><br>
     </p>
     <h2>5.<u>Installation:</u></h2>
-    <p>Scheme+ for Guile is the file Scheme+.scm and the directories Scheme+/ and SRFI-105/ (the reader and the type annotation used by the parser). Either give their directory to Guile :</p>
+    <p>Scheme+ for Guile is the file Scheme+.scm and the directories Scheme+/ , SRFI-105/ (the reader and the type annotation used by the parser) and SRFI-110/ (the reader of the sweet-expressions). Either give their directory to Guile :</p>
 <pre>
 guile -L &lt;directory of Scheme+ for Guile&gt; ...
 export GUILE_LOAD_PATH=&lt;directory of Scheme+ for Guile&gt;:$GUILE_LOAD_PATH
@@ -680,8 +680,7 @@ export GUILE_LOAD_PATH=&lt;directory of Scheme+ for Guile&gt;:$GUILE_LOAD_PATH
       <li>Assignment operator : <b>&lt;-</b> (can be used in infix syntax and
         from left to right and right to left)</li>
       <li>Square Bracket operator<b> []</b> working with Scheme <b>Vectors,
-          Arrays,Multidimentional Arrays</b>,Dynamic Arrays (my growable vector
-        class),<b>Hash Tables,Strings</b>...</li>
+          Arrays,Multidimentional Arrays</b>,<b>Hash Tables,Strings</b>...</li>
       <li>combination of Assignment operator &lt;- with [] operator for
         Vectors,Arrays,....</li>
       <li>RETURN : <b>return</b> keyword used in any procedure to return from
@@ -812,7 +811,7 @@ export GUILE_LOAD_PATH=&lt;directory of Scheme+ for Guile&gt;:$GUILE_LOAD_PATH
       of <b>Scheme+</b> is that it will work like the classic <b>set! </b>of
       Scheme on variables but also will work on more <b>complex object such as
         element of vectors,multidimensional arrays (as defined in
-        SRFIs),growable vectors (my class),... and much more in the next
+        SRFIs),... and much more in the next
         versions of Scheme+</b>. (we will see another more complex example with
       multidimentional array later)</p>
     <p>So <b>{x &lt;- 7} </b>simply assign 7 to the variable x but <b>{m[3]
@@ -859,8 +858,8 @@ export GUILE_LOAD_PATH=&lt;directory of Scheme+ for Guile&gt;:$GUILE_LOAD_PATH
 <h2><br>
     </h2>
     <h2><u>9.Short documentation</u></h2>
-    <p>Square bracket operator <b>[] </b>is used for vectors,arrays,growable
-      vectors,hash tables,etc.</p>
+    <p>Square bracket operator <b>[] </b>is used for vectors,arrays,
+      hash tables,etc.</p>
     <p>example: <b>{T[k]} </b>return value of vector or array T indexed by k.</p>
     <p><br>
     </p>
@@ -896,8 +895,8 @@ export GUILE_LOAD_PATH=&lt;directory of Scheme+ for Guile&gt;:$GUILE_LOAD_PATH
     </p>
     <br>
     <p><u>How to load a Scheme+ program:</u></p>
-    <p>Scheme+ programs are loaded the usual way,example:</p>
-    <pre>(load "start-λογικι-guile+.scm")<br><br>(infix-symb-min-dnf '{ {(not a) and (not b) and (not c) and (not d)} or {(not a) and (not b) and (not c) and d} or {(not a) and (not b) and c and (not d)} or {(not a) and b and (not c) and d} or {(not a) and b and c and (not d)} or {(not a) and b and c and d} or {a and (not b) and (not c) and (not d)} or {a and (not b) and (not c) and d} or {a and (not b) and c and (not d)} or {c and (not d)} } )
+    <p>Scheme+ programs are first converted by the parser (curly-infix2prefix4guile.scm , or sweet-infix2prefix4guile.scm for the sweet-expressions) , then the converted file is loaded the usual way,example:</p>
+    <pre>(load "start-λογικι-guile.scm")<br><br>(infix-symb-min-dnf '{ {(not a) and (not b) and (not c) and (not d)} or {(not a) and (not b) and (not c) and d} or {(not a) and (not b) and c and (not d)} or {(not a) and b and (not c) and d} or {(not a) and b and c and (not d)} or {(not a) and b and c and d} or {a and (not b) and (not c) and (not d)} or {a and (not b) and (not c) and d} or {a and (not b) and c and (not d)} or {c and (not d)} } )
 disj-norm-form = (or (and c (not d)) (and (not a) (not b) (not c) (not d)) (and (not a) (not b) (not c) d) (and (not a) b (not c) d) (and (not a) b c d) (and a (not b) (not c) (not d)) (and a (not b) (not c) d))
 <br>((!b ^ !c) v (c ^ !d) v (!a ^ b ^ d))</pre>
     <p>We can use a convention to name the Scheme+ programs and function with a
@@ -1343,35 +1342,27 @@ vector?))
     <p><br>
     </p>
     <h2>14.<u>Implementation:</u></h2>
-    <p>Mainly with <b>Scheme macros</b> which are not recursive (except in some
-      obsolete features),so expansion is fast and code also. It also allows a
-      great portabilty from one Scheme implementation to another one.</p>
+    <p>With <b>Scheme macros</b> which are not recursive (except in some
+      obsolete features),so expansion is fast and code also , and with a parser (curly infix , infix with operator
+      precedence , square brackets , type annotation) that converts the program before Guile loads it.</p>
     <p><br>
     </p>
     <p><br>
     </p>
     <h2>15.<u>Future:</u></h2>
-    <p>Scheme+ will be implemented for other Scheme. Racket (former DrScheme)
-      first,....</p>
+    <p>Scheme+ is also implemented for Racket (former DrScheme) , see its documentation , and will be
+      implemented for other Scheme.</p>
     <p><br>
     </p>
     <p><br>
     </p>
     <h2><u>16.Extra features:</u> </h2>
     <p>The <b>growable vector class</b> which is not specific to Scheme+ is
-      included in Scheme+ because it is intrinsic with <b>&lt;-</b> operator of
-      Scheme+.</p>
+      included in Scheme+ , as a separate module (it is not used by the <b>&lt;-</b> operator and
+      the <b>[]</b> operator of Scheme+ 20.2).</p>
     <p>"Growable vectors" are vectors with size growing dynamically when
       necessary. The documentation and examples are in the source code header.</p>
-    <p>Usage: <b>(use-modules (growable-vector))</b></p>
-    <p>Not using the module will just show a warning like "possibly undefined
-      function growable-vector?" as it is used in assignment.scm.No problem till
-      you do not create a growable vector, and when you will do it you will have
-      loaded the growable module class before and the warning message will
-      vanish.This is the force of Scheme on other language:you can have an
-      undefined function&nbsp; in your source code and it can run without
-      problem (till the function is not called of course! which is the case in
-      my code if no growable vector exist in your code too)</p>
+    <p>Usage: <b>(use-modules (Scheme+ growable-vector))</b></p>
     <p>Other features include a part of my personal functional library when
       functions are not existing already in some <a href="https://srfi.schemers.org/"
         target="_blank">SRFI (Scheme Request For Implementations)</a>.</p>
@@ -1385,8 +1376,8 @@ vector?))
       assignment operator but i release anyway those set of enhanced and
       simplified LETs, i just give some examples as names are self-explanatory.</p>
     <p>The way to be able to use the new set of LET special form is to load the
-      file let.scm which is available in the Scheme+ directory:</p>
-    <p><b>(load "let.scm")</b></p>
+      file let.scm which is available in the deprecated directory:</p>
+    <p><b>(load "deprecated/let.scm")</b></p>
     <p>Examples:</p>
     <p><!-- HTML generated using hilite.me --></p>
 
