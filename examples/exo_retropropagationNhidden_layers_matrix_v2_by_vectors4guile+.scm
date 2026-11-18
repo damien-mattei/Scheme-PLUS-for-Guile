@@ -52,14 +52,6 @@ ANNOTATION-ON
 ;; multiply-matrix-vector directly
 (require-overload-operator * (vector?) multiply-matrix-vector (matrix? vector?))
 
-;; ; first stage overloading
-;; (define-overload-existing-operator +)
-
-;; ; second stage overloading
-;; (overload-existing-operator + vector-append (vector? vector?))
-
-
-
 ;; overload [ ] , with the type of the result for the annotation : M[i j] is a real , M[i] a vector
 (overload-square-brackets (ℝ) matrix-ref matrix-set!  (matrix? number? number?))
 (overload-square-brackets (vector?) matrix-line-ref matrix-line-set! (matrix? number?))
