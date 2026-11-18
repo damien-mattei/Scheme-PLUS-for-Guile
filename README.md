@@ -21,18 +21,6 @@
     <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span
           style="color: #999999;"> <font size="+2">version 20.2 for Guile Scheme<br>
           </font></span></b></h1>
-    <p style="text-align: center;">
-	Display options for viewing this documentation:<br>
-  <br>
-  <br>
-    <a href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html">Click here for the light HTML page version of this
-  page.</a>
-  <br>
-  <br>
-    <a
-  href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+io.html">Click
-  here for the dark Hacker Theme version of this page.</a>
-   </p>
     <p><br>
     </p>
     <h2><u>Changes of version 20.2:</u></h2>
@@ -414,19 +402,7 @@ procedure as Scheme is not a typed language.<br>
   encapsuled between tags 'highlight scheme' and 'endhighlight'
   composed also with {} and % characters.<br>
   <br>
-  -if you read this page on github.io the code examples display
-  starting with 3 backquotes char , the tag 'scheme' and ending again
-  with 3 backquotes char. The curly brackets {} display in a
-  rectangular with red background because the Github Jekill rouge
-  theme (unfortunately the ony one available) does not understand the
-  infix notation of Scheme.This is,of course, not what i expected but i
-  can not find any issue to this problem.<br>
-  <br>
-  Those weirds Markdown and tags should not be displayed and are not part of Scheme+ examples.
-  <a
-    href="https://damien-mattei.github.io/Scheme-PLUS-for-Guile/Scheme+.html"
-    target="_blank">for a better view click here (or do not care of
-  highlighting tag and triple backquotes when code is displayed!)</a><br>
+  Those weirds Markdown and tags should not be displayed and are not part of Scheme+ examples.<br>
     </p>
 
 <br>
