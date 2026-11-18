@@ -23,6 +23,10 @@
           </font></span></b></h1>
     <p><br>
     </p>
+    <p><b>Documentation:</b> the API of Scheme+ for Guile is almost identical to the one of Scheme+ for Racket , see the
+    <a href="https://docs.racket-lang.org/Scheme-PLUS-for-Racket/index.html" target="_blank">documentation of Scheme+ for Racket</a>.
+    The differences with the Racket version are listed in the changes of version 20.2 below (mainly : &lt;- and := only assign , a variable is
+    defined with &lt;+ , and the programs are converted by a parser before Guile loads or compiles them).</p>
     <h2><u>Changes of version 20.2:</u></h2>
 <p>Scheme+ for Guile is updated to the level of <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Racket" target="_blank">Scheme+ for Racket</a> version 20.2 (the version number is now the one of Racket) : the modules of Scheme+ are translated from the Racket version , with the same features : infix with operator precedence (Pratt parser) , chained comparisons that evaluate a middle operand once ({0 &lt; f(x) &lt;= 3}) , superscripts , postfix , square brackets and slices , def with return , overloading , type annotation and inference (ANNOTATION-ON) , pragmas CARE-OF-QUOTES-ON / CARE-OF-QUOTES-OFF.</p>
 <p><b>The programs are converted by the parser curly-infix2prefix4guile.scm</b> , then loaded or compiled by Guile (Guile has no reader that a module can replace , as #lang reader SRFI-105 in Racket) :</p>
