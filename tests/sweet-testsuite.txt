@@ -1,0 +1,2239 @@
+; The test suite of the sweet-expression reader (SRFI 110) of the "Readable Lisp S-expressions Project",
+; file tests/sweet-testsuite of https://sourceforge.net/p/readable/code (git commit d07487b , 2014-07-05),
+; copied as it is below this header. Run it with : racket run-sweet-testsuite.rkt (SRFI 110 for Racket) ,
+; or in Scheme+ for Guile : guile -L .. run-sweet-testsuite.scm (in the directory tests/)
+;
+; Copyright (C) 2005-2014 by David A. Wheeler and Alan Manuel K. Gloria
+;
+; This software is released as open source software under the "MIT" license:
+;
+; Permission is hereby granted, free of charge, to any person obtaining a
+; copy of this software and associated documentation files (the "Software"),
+; to deal in the Software without restriction, including without limitation
+; the rights to use, copy, modify, merge, publish, distribute, sublicense,
+; and/or sell copies of the Software, and to permit persons to whom the
+; Software is furnished to do so, subject to the following conditions:
+;
+; The above copyright notice and this permission notice shall be included
+; in all copies or substantial portions of the Software.
+;
+; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+; IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+; THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+; OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+; ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+; OTHER DEALINGS IN THE SOFTWARE.
+
+; The following is a set of test cases for the sweet-expression reader.
+; The first line is the traditional S-expression format;
+; the second is the equivalent sweet-expression reader
+; (it's in this order so that if the sweet-expression reader screws up,
+; the data it's comparing to is known correct.)
+; Some of these tests are basically duplicative; it's better to have
+; "extra" tests than not enough.
+
+1
+#!sweet
+1
+
+x
+x
+
+; Fibonacci example
+(define (fibfast n)
+  (if (< n 2)
+    n
+    (fibup n 2 1 0)))
+
+define fibfast(n)
+  if {n < 2}
+    n
+    fibup(n 2 1 0)
+
+; Fibonacci example, no parens last line.
+(define (fibfast n)
+  (if (< n 2)
+    n
+    (fibup n 2 1 0)))
+define fibfast(n)
+  if {n < 2}
+    n
+    fibup n 2 1 0
+
+(define (fibup max count n-1 n-2)
+  (if (= max count)
+    (+ n-1 n-2)
+    (fibup max (+ count 1) (+ n-1 n-2) n-1)))
+
+define fibup(max count n-1 n-2)
+  if {max = count}
+    {n-1 + n-2}
+    fibup(max {count + 1} {n-1 + n-2} n-1)
+
+
+(define (factorial n)
+  (if (<= n 1)
+    1
+    (* n (factorial (- n 1)))))
+define factorial(n)
+  if {n <= 1}
+    1
+    {n * factorial{n - 1}}
+
+(define (gcd x y)
+  (if (= y 0)
+    x
+    (gcd y (rem x y))))
+define gcd(x y)
+  if {y = 0}
+    x
+    gcd y rem(x y)
+
+x
+x
+
+'y
+'y
+
+xyz
+; Hello
+  ; another comment
+xyz
+
+qqq
+qqq ; inline comment
+
+rrr
+; preceded with comment line
+rrr ; inline comment
+
+
+`(x ,y)
+`(x ,y)
+
+;
+`(x ,y)
+`    (x ,y)
+
+
+(abc def)
+
+abc def
+
+
+
+(abc def ghi)
+abc def ghi
+
+
+
+(abc def ghi klm)
+abc def ghi klm
+
+()
+()
+
+
+(a b)
+a
+  b
+
+(i j k)
+i
+  j
+  k
+
+(i (j k) m)
+i
+  j k
+  m
+
+()
+{}
+
+1
+{1}
+
+(- x)
+{- x}
+
+(+ 3 4)
+{3 + 4}
+
+($nfx$ 3 + 4 +)
+{3 + 4 +}
+
+(+ 3 4 5)
+{3 + 4 + 5}
+
+($nfx$ 3 + 4 + 5 +)
+{3 + 4 + 5 +}
+
+(+ 3 (* 5 6))
+{3 + {5 * 6}}
+
+($nfx$ 3 + 5 * 6)
+{3 + 5 * 6}
+
+($nfx$ a . z)
+{a . z}
+
+($nfx$ a + . z)
+{a + . z}
+
+($nfx$ a + b . z)
+{a + b . z}
+
+($nfx$ a + b + . z)
+{a + b + . z}
+
+($nfx$ a + b + c . z)
+{a + b + c . z}
+
+($nfx$ a + b + c + . z)
+{a + b + c + . z}
+
+; This isn't spec'ed, but we sure don't want to crash, so force this.
+z
+{. z}
+
+(f)
+f()
+
+(f x)
+f(x)
+
+
+(define (fibfast n)
+  (if (< n 2)
+    n
+    (fibup n 2 1 0)))
+
+define fibfast(n)  ; function notation
+  if {n < 2}       ; infix, indentation
+    n              ; single-atom
+    fibup(n 2 1 0) ; function call works.
+
+x
+; hi
+  ; there
+;hi
+x
+
+(x y)
+;hi
+x
+;sadfasd
+;  asdfsdf
+    ; sdfasdf
+  y
+
+
+(x (yabba dabba) z)
+; hi
+  ; there
+;hi
+x
+;sadfasd
+;  asdfsdf
+    ; sdfasdf
+  yabba dabba
+;asdfasdfasdf
+                ;a  adf
+ ; asdf
+  z
+; helllo
+
+
+q
+q
+
+; This tests to see that all-spaces is the same as "return":
+(x y)
+x
+  y
+           
+  z
+  z
+
+
+; Empty lines at beginning are ignored.
+(aa bb)
+
+
+
+
+
+
+
+  ; hi
+;hi
+                 ;hi
+aa
+; hi
+       bb
+
+
+(x y z)
+x
+  y
+  z
+
+(x y z)
+x y
+  z
+
+(a b c)
+a b c
+
+(hello)
+\\
+  hello
+
+((hello there))
+\\
+  hello there
+
+
+(hi \\)
+hi (. \\)
+
+(a (b c) (d e))
+a
+  b c
+  d e
+
+
+(a b (d e))
+a
+  b
+  d e
+
+(a (b c) d)
+a
+  b c
+  d
+
+(a (b c) (d e))
+a (b c)
+  d e
+
+
+(a (b c) (d e))
+a (b c) (d e)
+
+(x (y))
+x
+  \\
+     y
+
+(let ((x 1) (y 2)))
+let
+  \\
+    x 1
+    y 2
+
+(let
+  (
+    (var1 (cos a))
+    (var2 (sin a)))
+  body...)
+let ; Demo GROUP
+  \\
+    var1 cos(a)
+    var2 sin(a)
+  body...
+
+(cond
+  ((< y 1) (frob))
+  ((> y 1) (knob x))
+  ((= y 1) (blob y z)))
+cond
+  {y < 1} frob()
+  {y > 1} knob(x)
+  {y = 1} blob(y z)
+
+
+'x
+'x
+
+`x
+`x
+
+,x
+,x
+
+,@x
+,@x
+
+; Test SPLIT
+(a b c (d e f))
+a b
+  c \\ d e f
+
+; Test SPLIT
+(a c (d e f))
+a
+  c \\ d e f
+
+; test initial indent - this is a trivial test, it's hard to test this
+; using this test suite approach
+(first)
+
+  (first)
+
+((x y))
+\\
+  x y
+
+
+'(x y)
+' x y
+
+()
+(;comment
+)
+
+'((x y))
+' \\
+   x y
+
+`(,x)
+` \\
+   ,x
+
+`(,@x)
+` \\
+   ,@x
+
+; other examples
+; s-expr
+(define-module (foo bar quux)
+  :export (quux1 quux2))
+; sweet-expr
+define-module
+  foo bar quux
+  :export
+  \\
+    quux1
+    quux2
+
+; initial split
+x
+\\ \\ \\ \\ \\ x
+
+
+; Test "initial period".  This is tricky, because it could be a:
+; number: .5
+; symbol: .hello
+; cons separator: ( a . b)  and ( . x)
+; indent: .<space>a
+
+.5
+.5
+
+.hello
+.hello
+
+...
+...
+
+(foo ...)
+foo ...
+
+(bar ...)
+bar
+   ...
+
+(a . b)
+(a . b)
+
+(a . (b c))
+(a . (b c))
+
+xyz
+(. xyz)
+
+abc
+( . abc)
+
+.qq
+(. .qq)
+
+.qq
+( . .qq)
+
+(bar (x y))
+bar
+! x y
+
+
+(foo (a b) . c)
+foo
+  a b
+  .
+  c
+
+(foo nnn)
+foo
+  . nnn
+
+; Tests to focus on grouping (SPLIT symbol at beginning).
+
+(z)
+\\
+  z
+
+((z a))
+\\
+  z a
+
+(a b)
+\\ a
+  b
+
+(a (b c))
+\\ a
+  b c
+
+(a b (c d))
+\\ a b
+  c d
+
+(foo (a))
+foo
+  \\
+     a
+
+(foo ((a b)))
+foo
+  \\
+     a b
+
+(foo (z (a b)))
+foo
+  \\ z
+     a b
+
+(foo (a b))
+foo
+  \\
+  a b
+
+
+(foo7 nnn)
+foo7
+  \\
+  \\
+  \\
+  nnn
+
+
+; Tests for SPLIT in middle.
+
+(foo a b)
+foo
+  a \\ b
+
+
+(bar a (c b))
+bar
+  a \\ c b
+
+(bar2 (z a) (c b))
+bar2
+  z a \\ c b
+
+(bar3 (z a) c)
+bar3
+  z a \\ c
+
+(bar4 z y x w v)
+bar4
+   z \\ y \\ x \\ w \\ v
+
+; Check lots of parameters
+
+(foo a z y x w v)
+foo a z y x w v
+
+
+(foo1 a z y x w v)
+foo1
+  a
+  z
+  y
+  x
+  w
+  v
+
+
+(foo2 a z y x w v)
+foo2 a
+  z
+  y
+  x
+  w
+  v
+
+(foo3 a z y x w v)
+foo3 a z
+  y
+  x
+  w
+  v
+
+(f x q)
+f(x q)
+
+; Boring s-expressions should work too
+()
+()
+
+(a b)
+(a b)
+
+(a . b)
+(a . b)
+
+(z (q x) (f n))
+(z (q x) (f n))
+
+123
+123
+
+5.5
+5.5
+
+-7
+-7
+
++8
++8
+
+-5.5
+-5.5
+
+(->x)
+(->x)
+
+#\x
+#\x
+
+(#\newline #\space #\x)
+(#\newline #\space #\x)
+
+( #\( #\) #\[ #\] #\{ #\} )
+( #\( #\) #\[ #\] #\{ #\} )
+
+#b10101
+#b10101
+
+#xca9a
+#xca9a
+
+#t
+#t
+
+#f
+#f
+
+"I am a string"
+"I am a string"
+
+"String\n with embedded newline"
+"String\n with embedded newline"
+
+
+; Test indentation
+
+(foo z)
+foo
+                             z
+
+; tab:
+(foo2 z)
+foo2
+	z
+
+(foo3 z)
+foo3
+		z
+
+; Mixed:
+(foo4 a)
+foo4
+	 a
+
+(foo6 z)
+foo6
+! ! ! ! z
+
+
+; Initial quote + space:
+'ab
+' ab
+
+'(ab cd)
+' ab cd
+
+'(aa cc ff)
+' aa cc
+  ff
+
+'(aa cc (ff gg))
+' aa cc
+  ff gg
+
+'((a b))
+' \\
+  a b
+
+'((a b))
+' \\
+  a(b)
+
+'(aaa)
+' \\
+  aaa 
+
+'((ccc ddd))
+' \\
+  (ccc ddd)
+
+'(c (a b))
+' \\ c
+  a b
+
+; Quote followed by newline: interpret ' as quote.
+
+'(aaa bbb)
+'
+  (aaa bbb)
+
+
+'(aa bb)
+'
+  aa bb
+
+; quote followed by space + newline should be same as just followed by newline:
+
+'(e f)
+' 
+  e f
+
+'(f)
+'
+  f()
+
+'((f) (g))
+'
+  f() g()
+
+; Test support for multi-argument quasiquote.
+; (quasiquote abc def)
+; `
+;   abc
+;   def
+
+; Test comments.
+(zz aa)
+; before
+zz
+; ignore
+    ; ignore
+  aa
+     ; ignore
+
+
+($bracket-apply$ b)
+b[]
+
+
+($bracket-apply$ b q)
+b[q]
+
+(a . port)
+a(. port)
+
+
+(b c . port)
+b(c . port)
+
+(f)
+f()
+
+(f)
+f{}
+
+(f (+ a b))
+f{a + b}
+
+(f (+ a b))
+f({a + b})
+
+(f ($nfx$ a + b * c))
+f{a + b * c}
+
+(- 5)
+-(5)
+
+(- b c)
+-(b c)
+
+(* x y)
+*(x y)
+
+(/ n d)
+/(n d)
+
+(->x)
+->x()
+
+(a->b 0)
+a->b(0)
+
+(+ a (* b c))
+{a + {b * c}}
+
+("Hello" 3)
+"Hello"(3)
+
+(q (a b c) (d e (f h (i j))))
+q(a(b c) d(e f(h i(j))))
+
+(qq (a b c) (d e (f h (i j))))
+qq(   a(b c) 
+  d(e f(h i(j))))
+
+((f a) c d)
+f(a)(c d)
+
+((g h) ((f a) c d))
+g(h) f(a)(c d)
+
+((((hello))))
+((((hello))))
+
+(1 (2 (3 (4 (5 (6 (7 (8 (9 9) 8) 7) 6) 5) 4) 3) 2) 1)
+(1 (2 (3 (4 (5 (6 (7 (8 (9 9) 8) 7) 6) 5) 4) 3) 2) 1)
+
+(a (2 (3 (4 (5 (6 (7 (8 (9 9) 8) 7) 6) 5) 4) 3) 2) 1)
+a(2(3(4(5(6(7(8(9(9) 8) 7) 6) 5) 4) 3) 2) 1)
+
+; SUBLIST
+
+(foo bar)
+foo $ bar ; not a subLIST, so disable sublist behavior
+
+(probe (let ((var val))
+  (secretify var (do innocuous stuff))))
+probe $ let ((var val))
+  secretify var $ do innocuous stuff
+
+(run (head -10 README))
+run $ head(-10 README)
+
+(run (head -10 README))
+run $ head -10 README
+
+(cleanup (run (cat README)))
+cleanup $ run $ cat(README)
+
+(cleanup 'nicely (run (cat README)))
+cleanup 'nicely $ run $ cat(README)
+
+(aa bb (cc (dd ee)))
+aa bb $ cc
+  dd ee
+
+(a b c d)
+a b c $ d
+
+(a b (c d))
+a b $ c d
+
+(a (b c d))
+a $ b c d
+
+((a b c d))
+$ a b c d
+
+(q)
+$ q
+
+((f g))
+$ f g
+
+((f x))
+$ f(x)
+
+((f (a b)))
+$ f
+  a b
+
+((f a))
+$ f
+  a
+
+((f q (a b)))
+$ f q
+  a b
+
+(solo (z))
+solo
+  $ z
+
+(foo ((a b)))
+foo
+  $ a b
+
+(far ((a b (c d))))
+far
+  $ a b
+    c d
+
+(((f x) xyz))
+$ f(x)
+  xyz
+
+; multiline comments
+
+x
+#|
+ #|
+  |#
+ |#
+x
+
+(x88 y88)
+#| shouldn't disable t-expression mode
+   #|
+    |#
+   |#
+x88 y88
+
+x89
+x89 #|
+   #|
+    |#
+   |#
+
+(x91
+  y91)
+x91
+ #|
+  #|
+   |#
+  |# y91
+
+(x93 y93)
+x93 y93
+  #|  hello1  |#
+  #|  hello2  |#
+
+(yaa zaa)
+yaa zaa
+  #; x y z
+
+(ya1 za1 zb3)
+ya1
+  za1
+  #; this line is ignored
+  zb3
+
+
+(m1 p1 p2)
+m1
+  p1
+  #;
+    q1 q2
+    r1 r2 r3
+      f4
+  p2
+
+(m7 p8 p9)
+m7
+  p8
+  p9
+  #; n1 n2
+    q1 q2
+    r1 r2 r3
+      f4
+
+(x1 z1)
+x1 #; y z1
+
+(a88 . b89)
+a88 . #; qqq b89
+
+(x2 y2)
+x2 #|comment|# y2
+
+(f
+ (x3 y3))
+f
+  x3 #|comment|# y3
+
+
+(define (f x4) x5 x6)
+define f(x4)
+  x5
+  x6
+
+(define (f x) x)
+define f(x) x
+
+(defun x (a b) (q a b) (n a b))
+defun x (a b)
+  q a b
+  n a b
+
+(car (gettimeofday))
+car $ gettimeofday()
+
+(list-test aa bb . cc)
+list-test
+  aa
+  bb
+  .
+  cc
+
+(another aa . bb)
+another
+  aa
+  .
+  bb
+
+; MORE
+
+
+one
+one
+
+(one two)
+one two
+
+(one two three)
+one two three
+
+(one two three four)
+one two three
+  four
+
+(one two three four five)
+one two three
+  four
+  five
+
+(one two three four five six)
+one two three
+  four
+  five
+  six
+
+(a b c (d e))
+a b
+  c
+  d e
+
+(a (quote (c d e (g h i))))
+a
+   ' c d e
+      g h i
+
+(cos 0)
+cos 0
+
+42
+42
+
+7.0
+7.0
+
+#xffff
+#xffff
+
+#i#b1001
+#i#b1001
+
+#b#e1001
+#b#e1001
+
+#e42
+#e42
+
+one
+#! SRFI-22
+one
+
+two
+#!/bin/sh
+  weird script should be ignored
+!#
+two
+
+three
+#!sweet
+three
+
+four
+#!
+four
+
+(a)
+$ a
+
+((a b))
+$ a b
+
+((a b c))
+$ a b c
+
+(x a)
+x $ a
+
+(x (a b))
+x $ a b
+
+(x (a b c))
+x $ a b c
+
+(x y a)
+x y $ a
+
+(x y (a b))
+x y $ a b
+
+(x y (a b c))
+x y $ a b c
+
+(x y z a)
+x y z $ a
+
+(x y z (a b))
+x y z $ a b
+
+(x y z (a b c))
+x y z $ a b c
+
+((a b))
+$ a
+  b
+
+((a (b c)))
+$ a
+  b c
+
+((a z (o p)))
+$ a z
+  o p
+
+; "$" is different from \\; initial "$" always makes another list. Since:
+; \\
+;   d
+; would create (d), a "$" inserts another (...) level vs \\, making ((d)):
+((d))
+$ \\
+  d
+
+(((d e)))
+$ \\
+  d e
+
+(((d e f)))
+$ \\
+  d e f
+
+(fee (fie (foe fum)))
+fee $ fie
+  foe fum
+
+'(a b (c d))
+' a b
+  c d
+
+(m 'n o (p q))
+m ' n o
+  p q
+
+('x y z (c d))
+'x y z
+  c d
+
+('a b c)
+'a b c
+
+(a 'c e)
+a 'c e
+
+(m n 'o)
+m n 'o
+
+(q1)
+\\
+  q1
+
+((q1 q2))
+\\
+  q1 q2
+
+((q1 q2 q3))
+\\
+  q1 q2 q3
+
+((a1 a2) (b1 b2) (c1 c2))
+\\
+  a1 a2
+  b1 b2
+  c1 c2
+
+a
+\\ a
+
+(a b)
+\\ a
+  b
+
+(a (b c))
+\\ a
+  b c
+
+
+(x y z (aa bb) (cc dd) (ee ff))
+\\ x y z
+  aa bb
+  cc dd
+  ee ff
+
+(a b c d (e f) (g h) (i j k) (l m n) (o p q))
+a b
+  c \\ d
+  e f \\ g h
+  i j k \\ l m n \\ o p q
+
+use-dash
+use-dash
+
+(let ())
+let <* *>
+
+(let (hello))
+let <* hello *>
+
+(let ((var1 value1)))
+let <* var1 value1 *>
+
+(let ((var1 value1) (var2 value2)))
+let <* var1 value1 \\ var2 value2 *>
+
+(let ((var1 value1)) (fact var1))
+let <* var1 value1 *>
+  fact var1
+
+; "$" inside parens is just another atom.
+(a b $ c d)
+(a b $ c d)
+
+($ x)
+($ x)
+
+; Test tabs
+
+(f a b)
+f
+	a
+	b
+
+(g h)
+g
+! h
+
+(h i)
+h
+; ignore me.
+  ; ignore me, too.
+  i
+
+(import (scheme short) ())
+import (scheme short) <* *>
+
+
+(import (scheme base) (begin (define (make n m) (do-make)) (define (rows grid) (vector-length grid))))
+import (scheme base) <* begin
+
+define make(n m)
+  do-make()
+
+define rows(grid)
+  vector-length(grid)
+*>
+
+
+(import (scheme base) ( (begin stuff)
+(define (make n m) (do-make))
+(define (rows grid) (vector-length grid)) ))
+
+import (scheme base) <* begin stuff
+
+define make(n m)
+  do-make()
+
+define rows(grid)
+  vector-length(grid)
+*>
+
+
+(f 1 2 (a 3 4 (b 5 6 (c 7 8) (d 9 9))))
+; Check deep nesting - does it dedent?
+f 1 2
+  a 3 4
+    ; Embedded comments should be ignored.
+    b 5 6
+      c 7 8
+      d 9 9
+
+(a 1 2 (b 2 3) (c 4 5 (d 6 7) (e 8 9 (f 10 11))) (g again))
+a 1 2
+  b 2 3
+  c 4 5
+    d 6 7
+    e 8 9
+      f 10 11
+  g again
+
+((1 2))
+\\
+  1 2
+
+((4 5))
+\\ #| Ignore this |#
+  4 5
+
+((1 2) (3 4))
+\\
+  1 2
+  3 4
+
+((4 5) (a b))
+\\ #| Ignore this |#
+  4 5
+  a b
+
+((6 7) (8 9))
+#| Ignore this |#
+  6 7
+  8 9
+
+((1 2) (3 4))
+\\
+  1 2
+  3 4
+
+(((1 2) (3 4)))
+$ \\
+  1 2
+  3 4
+
+(f a b)
+f
+  a
+  \\
+  b
+
+(x . y)
+x . y
+
+(x y . z)
+x y . z
+
+()
+{}
+
+solo
+{solo}
+
+(+ x)
+{+ x}
+
+(eq a b)
+{a eq b}
+
+(+ a b c)
+{a + b + c}
+
+($nfx$ a + b + c +)
+{a + b + c +}
+
+(x y z)
+(  x  y  z  )
+
+(x y)
+(  x  y  )
+
+(x)
+(  x  )
+
+()
+(  )
+
+a
+(  . a  )
+
+(a . b)
+(  a . b  )
+
+(a b . c)
+(  a  b  .  c  )
+
+; NO TEST:
+; (  .  )
+; (  quote  .  )
+
+(f)
+f()
+
+(f x)
+f(x)
+
+(f a b)
+f(a b)
+
+(f a b c)
+f(a b c)
+
+($bracket-apply$ f)
+f[]
+
+($bracket-apply$ f x)
+f[x]
+
+(f)
+f{}
+
+(f x)
+f{x}
+
+(f (+ x))
+f{+ x}
+
+(f (+ x 1))
+f{x + 1}
+
+((x a) b)
+x(a)(b)
+
+#t
+#t
+
+#f
+#f
+
+(#\Q 1 #\( 2 #\a 3 #\newline 4)
+#\Q 1 #\( 2 #\a 3 #\newline 4
+
+#(1 2 3)
+#(1 2 3)
+
+#u8(5 6 7)
+#u8(5 6 7)
+
+(* n (factorial (- n 1)))
+{n * factorial{n - 1}}
+
+; NOTE: This is not a valid test, because different Scheme specifications
+; differ on whether or not "#" is a delimiter.
+; In particular, in R7RS draft 9 the "#" is NOT a delimiter, producing "z".
+; So let's not use this as a test case at all.
+; ((x) z)
+; #;a#|hi|#(x) z
+
+()
+<* *>
+
+(hi)
+<* hi *>
+
+((a b))
+<* a b *>
+
+((a b c))
+<* a b c *>
+
+(((x) (y) (z)))
+<* (x) (y) (z) *>
+
+((this) is a test)
+<* this *> is a test
+
+((((define x 5) (define y 7))) is a test)
+<* define(x 5) define(y 7) *> is a test
+
+(library (amkg animals (1 0)) (export cat (rename (rover dog))) (import (only (amkg pets (1 0)) rover)) (define cat (quote meow)))
+<*
+library \\ amkg animals $ 1 0
+export
+  cat
+  rename $ rover dog
+import
+  only
+    amkg pets $ 1 0
+    rover
+
+define cat 'meow
+
+*>
+
+
+(let ((x (cos (f c)))) (dostuff x))
+let ((x cos(f(c))))
+! dostuff x
+
+(x (cos (f c)))
+x $ cos $ f c
+
+; This next test checks for an old bug in the Scheme implementation
+; (the ANTLR BNF already passed it). It involves collecting-end on the
+; same line after other operators.
+
+(let ((x (cos (f c)))) (dostuff x))
+let <* x $ cos $ f c *>
+! dostuff x
+
+(let ((var1 value1) (var2 (min 5 (sin var1)))) (domore stuff))
+let <* var1 value1 \\ var2 $ min 5 $ sin var1 *>
+! domore stuff
+
+( ((a b (c d (e f)))) body... )
+<* a b $ c d $ e f *>
+! body...
+
+(test ((x 1)) ((y 2)) (((a 3)) ((b 4))))
+test <* x 1 *> <* y 2 *>
+  <* a 3 *> <* b 4 *>
+
+(((t 1)) ((u 2)))
+<* t 1 *>
+   <* u 2 *>
+
+
+(fuss library (amkg animals (1 0)))
+fuss
+  library \\ amkg animals $ 1 0
+
+another
+another
+
+(amkg animals (1 0))
+amkg animals $ 1 0
+
+(define cuddle-first-parameter '(
+  if when unless case define lambda define-module library export import
+  letrec let let* let1 let-syntax letcrec-syntax define-syntax syntax-rules
+  set! do setq block typecase))
+define cuddle-first-parameter '(
+  if when unless case
+  define lambda
+  define-module                  ; Guile modules
+  library export import          ; R6RS library modules
+  letrec let let* let1
+  let-syntax letcrec-syntax
+  define-syntax syntax-rules
+  set! do
+  setq block typecase)           ; Common Lisp
+
+fred
+fred
+
+all-okay
+all-okay
+
+(define f before (let (begin (define x 1) (define y 2)) q) after)
+define f
+  before
+  let <* begin
+define x 1
+define y 2
+*> q
+  after
+
+after-okay
+after-okay
+
+
+(let (first last))
+let <*
+first
+
+last
+*>
+
+((hello) (f x))
+<* hello *>
+  f x
+
+((bye) a b (f x))
+<* bye *> a b
+  f x
+
+((one) (two) (three) ((four) (five)) (f x))
+<* one *> <* two *> <* three *>
+  <* four *> <* five *>
+  f x
+
+(n expr)
+. n(expr)
+
+(foo1 foo2)
+foo1
+  \\ ; comment_eol
+  ; same followed by comment_eol
+  foo2
+
+(foo a b)
+foo
+  a
+  \\
+  b
+
+(foo c d)
+foo
+! c \\ d
+
+(foo c d)
+foo
+! c
+! \\
+! d
+
+(f a b c)
+f
+ \\ a
+ \\ b
+ \\ c
+
+
+
+(foo (bar batz) (nitz koo))
+foo
+! bar batz
+; comment
+! nitz koo
+
+(car (gettimeofday))
+car $ gettimeofday()
+
+'hi
+'
+  hi
+
+'hi
+' hi
+
+'(one two)
+'
+  one two
+
+'(one two)
+' one two
+
+'(f)
+'
+  f()
+
+'(f)
+' f()
+
+'((f) (g))
+'
+  f() g()
+
+
+'((f) (g))
+' f() g()
+
+
+'((f))
+'
+  ((f))
+
+'((f))
+' ((f))
+
+'((f 1) (g 1))
+' f(1) g(1)
+
+; ; Multiline - interpret this way so you can access weird extensions
+; ; such as multi-line quasiquote ("Bawden quasiquote")
+
+(quote (f 1) (g 1))
+'
+  f(1)
+  g(1)
+
+(quote a b)
+'
+  a
+  b
+
+(quote (a b))
+' a b
+
+
+(dd1 ee1 . ff1)
+(dd1 ee1 . ff1)
+
+
+(foo1 (bar aa1 bb1 . cc1))
+foo1
+ bar
+  aa1
+  bb1
+  .
+  cc1
+
+
+(define-library
+  (srfi 41 primitive)
+  (export
+    stream-cons
+    stream-null
+    stream-pair?
+    stream-null?
+    stream?
+    stream-car
+    stream-cdr
+    stream-lambda))
+<* define-library \\ (srfi 41 primitive)
+export . (
+stream-cons stream-null
+stream-pair? stream-null? stream?
+stream-car stream-cdr
+stream-lambda
+)
+*>
+
+; Must handle "." in middle of line with (..) list on RHS followed by *>
+
+(define-library
+  (srfi 41 primitive)
+  (export
+    stream-cons
+    stream-null
+    stream-pair?
+    stream-null?
+    stream?
+    stream-car
+    stream-cdr
+    stream-lambda))
+<* define-library \\ (srfi 41 primitive)
+export . (
+stream-cons stream-null
+stream-pair? stream-null? stream?
+stream-car stream-cdr
+stream-lambda
+) *>
+
+((a . b))
+<* a . b *>
+
+
+(g (- (cos 0)) (factorial 7))
+g -(cos(0)) factorial(7)
+
+(aaa bbb (cc dd))
+aaa bbb
+      ; Comment indent ignored
+  cc dd
+
+(f (a . b))
+f ; Demo improper lists
+  a . b
+
+'(a b ('c d e) (f g h))
+' a b ; Demo abbreviations
+  'c d e \\ f g h
+
+(quote (a b
+  (quote (c d e)) ((quote f) g h)))
+' a b
+  ' c d e \\ 'f g h
+
+(ff
+  (t1 t2)
+  (t3 t4
+    (t5 t6)
+    (t7 t9)))
+ff ; Comments
+  #| qq |# t1 t2
+  t3 t4
+    t5 #| xyz |# t6
+    t7 #;t8(q) t9
+
+
+(define (init win area)
+  (let
+    ((style (get-style win)))
+    (set! back-pen (black style))
+    (set! fore-pen (white style))
+    (let
+      (
+        (config (make-c area))
+        (expose (make-e area)))
+      (set! now expose)
+      (dostuff config expose))))
+define init(win area)
+  let
+    $ style $ get-style win
+    set! back-pen $ black style
+    set! fore-pen $ white style
+    let
+      \\
+        config $ make-c area
+        expose $ make-e area
+      set! now expose
+      dostuff config expose
+
+
+(define (represent-as-infix? x)
+  (and
+    (pair? x)
+    (is-infix-operator? (car x))
+    (list? x)
+    (<= (length x) 6)))
+
+define represent-as-infix?(x)
+  and
+    pair? x
+    is-infix-operator? car(x)
+    list? x
+    {length(x) <= 6}
+
+(define (line-tail x)
+  (cond
+    ((null? x) (quote ()))
+    ((pair? x)
+      (append '(#\space)
+        (exposed-unit (car x))
+        (line-tail (cdr x))))
+    (#t
+      (append LISTSP.SP (exposed-unit x)))))
+define line-tail(x)
+  cond
+    null?(x)  '()
+    pair?(x)
+      append '(#\space)
+        exposed-unit car(x)
+        line-tail cdr(x)
+    #t
+      append LISTSP.SP exposed-unit(x)
+
+(g (factorial 7) (my-pi) (#f) 0-i (- (cos 0)))
+g factorial(7) my-pi() #f() -i -(cos(0))
+
+0-i
+-i
+
+-v
+-v
+
+(myfunction
+  x: xpos
+  y: ypos)
+myfunction ; Demo SPLIT
+  x: \\ xpos
+  y: \\ ypos
+
+(run (grep |-v| "xx.*zz" (< oldfile) (> newfile)))
+run $ grep |-v| "xx.*zz" <(oldfile) >(newfile)
+
+(a b (c d e f g))
+a b $ c d e f $ g
+
+(define (extract c i) (cond
+  ((vector? c) (vector-ref c i))
+  ((string? c) (string-ref c i))
+  ((pair? c) (list-ref c i))
+  (else (error "Not a collection"))))
+define extract(c i) $ cond
+  vector?(c) $ vector-ref c i
+  string?(c) $ string-ref c i
+  pair?(c)   $ list-ref c i
+  else       $ error "Not a collection"
+
+
+(define (merge < as bs) (cond
+  ((null? as) bs)
+  ((null? bs) as)
+  ((< (car as) (car bs)) (cons
+    (car as)
+    (merge < (cdr as) bs)))
+  (else (cons
+    (car bs)
+    (merge < as (cdr bs))))))
+define merge(< as bs) $ cond
+  null?(as)           $ bs
+  null?(bs)           $ as
+  {car(as) < car(bs)} $ cons
+                         car as
+                         merge < cdr(as) bs
+  else                $ cons
+                         car bs
+                         merge < as cdr(bs)
+
+(let ((x (sqrt a)))
+  (g (+ x 1) (- x 1)))
+let <* x sqrt(a) *>
+! g {x + 1} {x - 1}
+
+(let ((x (- oldx 1)) (y (- oldy 1)))
+  (+ (* x x) (* y y)))
+let <* x $ {oldx - 1} \\ y $ {oldy - 1} *>
+! {{x * x} + {y * y}}
+
+(let ((x (cos (f c))))
+  (dostuff x))
+let <* x $ cos $ f c *>
+! dostuff x
+
+(struct: pt ((x : Real) (y : Real)))
+struct: pt ((x : Real) (y : Real))
+
+(: distance (pt pt -> Real))
+{distance : (pt pt -> Real)}
+
+(define (distance p1 p2)
+  (sqrt (+ (sqr (- (pt-x p2) (pt-x p1)))
+           (sqr (- (pt-y p2) (pt-y p1))))))
+define distance(p1 p2)
+  sqrt{sqr{pt-x(p2) - pt-x(p1)} +
+       sqr{pt-y(p2) - pt-y(p1)}}
+
+xyzzy
+xyzzy
+
+(define-library
+  (example grid)
+  (export make rows cols ref each (rename put! set!))
+  (import (scheme base))
+  (begin
+
+    (define (make n m)
+      (let ((grid (make-vector n)))
+        (do ((i 0 (+ i 1)))
+            ((= i n) grid)
+            (let ((v (make-vector m #f alse)))
+              (vector-set! grid i v)))))
+
+    (define (rows grid) (vector-length grid))
+    (define (cols grid)
+      (vector-length (vector-ref grid 0)))
+
+    (define (ref grid n m)
+      (and
+        (< -1 n (rows grid))
+        (< -1 m (cols grid))
+        (vector-ref (vector-ref grid n) m)))
+
+    (define (put! grid n m v)
+      (vector-set! (vector-ref grid n) m v))))
+define-library
+  example grid
+  export make rows cols ref each rename(put! set!)
+  import (scheme base)
+  <* begin
+
+define make(n m)
+  let (grid(make-vector(n)))
+    do <* i 0 {i + 1} *>
+    ! {i = n} grid
+    ! let <* v make-vector(m #f alse) *>
+    !   vector-set! grid i v
+
+define rows(grid) vector-length(grid)
+define cols(grid)
+  vector-length(vector-ref(grid 0))
+
+define ref(grid n m)
+  and
+    {-1 < n < rows(grid)}
+    {-1 < m < cols(grid)}
+    vector-ref vector-ref(grid n) m
+
+define put!(grid n m v)
+  vector-set! vector-ref(grid n) m v
+*>
+
+(aa1 bb1 ((aa2 bb2)) ((aa3 bb3)) ddd (eee fff))
+aa1 bb1 <* aa2 bb2 *> <* aa3 bb3 *> ddd
+  eee fff
+
+
+(define-library
+  (example grid)
+  (export make rows cols ref each (rename put! set!))
+  (import (scheme base))
+  (define (make n m)
+    (let ((grid (make-vector n)))
+      (do ((i 0 (+ i 1)))
+          ((= i n) grid)
+          (let ((v (make-vector m #f alse)))
+            (vector-set! grid i v)))))
+
+  (define (rows grid) (vector-length grid))
+  (define (cols grid)
+    (vector-length (vector-ref grid 0)))
+
+  (define (ref grid n m)
+    (and
+      (< -1 n (rows grid))
+      (< -1 m (cols grid))
+      (vector-ref (vector-ref grid n) m)))
+
+  (define (put! grid n m v)
+    (vector-set! (vector-ref grid n) m v)))
+define-library (example grid) . <*
+
+export make rows cols ref each rename(put! set!)
+import scheme(base)
+
+define make(n m)
+  let (grid(make-vector(n)))
+    do (i(0 {i + 1}))
+    ! {i = n} grid
+    ! let (v(make-vector(m #f alse))) vector-set!(grid i v)
+
+define rows(grid) vector-length(grid)
+define cols(grid) vector-length(vector-ref(grid 0))
+
+define ref(grid n m)
+  and
+    {-1 < n < rows(grid)}
+    {-1 < m < cols(grid)}
+    vector-ref vector-ref(grid n) m
+
+define put!(grid n m v) vector-set!(vector-ref(grid n) m v)
+*>
+
+
+(let ((var1 value1) (var2 let ((x 0)))) (+ var1 var2))
+let <*
+var1 value1
+var2 let <* x 0 *> *>
+  {var1 + var2}
+
+(a (b))
+a $ <* b *>
+
+(foo ((a (b c))) (x (y) z))
+foo
+  <* a $ b c *>
+  x <* y *> z
+
+(foo2 ((a (b c))) (x (y) z))
+foo2
+  <* a $ b c *> \\ x <* y *> z
+
+
+(quote (foo2 ((a (b c))) (x (y) z)))
+' foo2
+  <* a $ b c *> \\ x <* y *> z
+
+(quasiquote (x (unquote y) (a (unquote b))))
+` x ,y $ a ,b
+
+(quasiquote zz)
+` zz
+
+(define x1 (define x2 2) (define x3 3))
+define x1 . <*
+
+define x2 2
+
+define x3 3
+*>
+
+
+(define x5 (define x6 2) (define x7 3))
+define x5 . <*
+define x6 2
+
+define x7 3 *>
+
+
+(define (foo x) (define (bar y) y) (define (baz z) z))
+define foo(x) . <*
+
+define bar(y)
+! y
+
+define baz(z)
+! z
+*>
+
+; This is a lame test, but the test framework makes this hard to really test
+(a b)
+#1=(a b)
+
+#t
+#true
+
+#f
+#false
+
+(combiney1 (a b (xx yy)) (zz1 zz2))
+combiney1
+  a b . <* xx yy *> \\ zz1 zz2
+
+(combiney2 (a b (xx yy) (zz1 zz2)))
+combiney2
+  a b . <* xx yy *> $ zz1 zz2
+
+(inside (x y (a b ((c d)))) qqqq)
+inside
+  x y . <* a b <* c d *> *> \\ qqqq
+
+(a8 b8 . c8)
+#|1|# #|2|# a8 #|3|# #|4|# b8 #|5|# #|6|#  .  #|7|# #|8|# c8 #|9|# #|a|#  
+
+|a!b|
+|a\x21;b|
+
+
+
+7
+7
+
+(syntax x)
+#'x
+
+(syntax (x y))
+#'(x y)
+
+(qq (syntax (x y)))
+(qq #'(x y))
+
+(quote (abcd efgh))
+'(abcd efgh)
+
+(quote (#f))
+'#f()
+
+(syntax (x))
+#'(x)
+
+(syntax (x a))
+#'x(a)
+
+(syntax x)
+#' x
+
+(syntax (x a))
+#' x a
+
+
+(syntax (q1 q2 (q3 q4)))
+#' q1 q2
+  q3 q4
+
+(a7 b7 . c7)
+a7 b7 #; ignore1 . #; ignore2 c7 #; ignore3
+
+(a8 b8)
+a8 b8 #; ignorethis #; (ignore this too)
+
+(xyzz (stuff) last-one)
+xyzz <* stuff *>  #; ignore11 #; ignore12 last-one
+
+(!x1 !x2 (!x2a !x2b) !x3 . !x4)
+|!x1|   !x2  (  !x2a  !x2b  )   #; stuff  !x3  . !x4
+
+(module mod (define (z a) (* 2 a)))
+<* module \\ mod
+define z(a) {2 * a}
+*>
+
+(a1 ())
+a1 <* #; hello *>
+
+
+(a2 ())
+a2 <* #; hello  
+*>
+
+(a3 ())
+a3 <* #; hello stuff  
+*>
+
+(a4 (stuff))
+a4 <* #; hello
+stuff  
+*>
+
+(a5 (stuff))
+a5 <* #;hello stuff  
+*>
+
+(a6 (stuff))
+a6 <* stuff #; hello
+*>
+
+(a () (b))
+a <* #; hi *> <* b *>
+
+(() () ())
+<* #; 1 *> <* #; 2 *> <* #; 3 *>
+
+; This is not required by SRFI-110, but is a local extension:
+; \\ at the end as line-continuation
+(a b c (d e f g))
+a b c
+  d e \\
+  f g
+
+(a b c (d e f))
+a b c
+  d e \\
+  f
+
+(a b c (d e f (g h)))
+a b c
+  d e \\
+  f $ g h
+
+(a b c (d e f g))
+a b c
+  d e \\
+  f $ g
+
+(a b c (d e f g))
+a b c
+  d e \\
+  ; Test1
+  f g
+
+(a b c (d e f g))
+a b c
+  d e \\ ; Test2
+  f g
+
+(a b c (q e f . g))
+a b c
+  q e \\ ; Test "."
+  f . g
+
+(a b c (q e . z))
+a b c
+  q e \\ ; Test "."
+  . z
+
+(1 (2 3 4 5 6))
+1
+  2 3 \\
+  4 5 \\
+  6
+
+(+ 11/13 7/8)
+{11/13 + 7/8}
+

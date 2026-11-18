@@ -1,31 +1,36 @@
-; This file is part of Scheme+
-
-;; Copyright 2025 Damien MATTEI
-
-;; This program is free software: you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-; version 17
+;; Translated from Scheme+ for Racket (return.rkt) for Guile.
 
 (define-module (Scheme+ return)
+  #:use-module (Scheme+ racket-compat))
 
-  #:export (return return-rec))
+	
+
+	
+
+#;(define err-string "can only be used inside def,def+,lambda+")
+#;(define err-string "can only be used inside def") ; def+ and lambda-x are deprecated
+(define err-string "can only be used inside def or lambda+")
+	
+(define-syntax-parameter return-rec
+  ;;(lambda (stx)
+  (syntax-rules ()
+     ((_ . _)
+      #;(raise-syntax-error 'return-rec "can only be used inside def,def+,rec+")
+      (raise-syntax-error 'return-rec "can only be used inside def"))) ; def+ and rec+ are deprecated
+  )
 
 (define-syntax-parameter return
-  (lambda (stx)
-    (syntax-violation 'return "used outside of a def" stx)))
+  ;;(lambda (stx)
+  (syntax-rules ()
+     ((_ . _)
+    #;(raise-syntax-error 'return "can only be used inside def,def+,lambda+")
+    #;(raise-syntax-error 'return "can only be used inside def") ; def+ and lambda-x are deprecated
+    (raise-syntax-error 'return "can only be used inside def or lambda+")))
+  )
 
-(define-syntax-parameter return-rec
-  (lambda (stx)
-    (syntax-violation 'return-rec "used outside of a def" stx)))
+
+
+(export
+	return
+	return-rec)
 

@@ -1,6 +1,8 @@
+;; Translated from Scheme+ for Racket (while-do.rkt) for Guile.
+
 ;; This file is part of Scheme+
 
-;; Copyright 2021-2024 Damien MATTEI
+;; Copyright 2024 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -17,11 +19,14 @@
 
 
 (define-module (Scheme+ while-do)
+  #:use-module (Scheme+ racket-compat))
 
-  #:use-module ((guile) #:select ((do . do-scheme)
-  				  (while . while-guile)))
+
   
-  #:replace (do while))
+
+  (use-modules
+	((guile) #:select ((do . do-scheme)))) ;; backup original Scheme 'do'
+
 
 
 ;; warning: 'do is already part of R6RS (reserved keyword) 'while is not in R5RS,R6RS, R7RS-small
@@ -30,7 +35,7 @@
 
 ;; syntax defined in this file are inspired from Pascal language, C , Java,Javascript
 
-;; scheme@(guile-user)> (use-modules (Scheme+))
+;; scheme@(guile-user)> (use-modules (Scheme+R6RS))
 ;; scheme@(guile-user)> (define i 0)
 ;; scheme@(guile-user)> (define do '())
 ;; scheme@(guile-user)> (while {i < 4}
@@ -55,6 +60,8 @@
 ;;     ((_ pred do b1 ...)
 ;;      (let loop () (when pred b1 ... (loop))))))
 
+;; bug: 1+ return #f with SRFI 105 reader of Racket
+
 ;; (do ((i 1 (1+ i))
 ;;      (p 3 (* 3 p)))
 ;;     ((> i 4)
@@ -75,7 +82,7 @@
 
 
 ;; with a definition inside only the new version works:
-;; (do ((i 1 (1+ i))
+;; (do ((i 1 (+ 1 i))
 ;;      (p 3 (* 3 p)))
 ;;     ((> i 4)
 ;;      p)
@@ -84,7 +91,7 @@
 ;; $3 = 1257
 
 
-;; 'do is redefined here only to allow 'define in body as allowed in Scheme+
+;; 'do is redefined here only to allow 'define in body as allowed in Scheme+R6RS
 ;; (define-syntax do
 
 ;;   (syntax-rules ()
@@ -106,7 +113,7 @@
 ;;                ;;(begin
 ;; 	       (let ()
 
-;;                  ;;#f ; avoid empty begin but with (let () i don't care !
+;;      		 ;;#f ; avoid empty begin but with (let () i don't care ! (bigloo use: (if #f #f) which creates a never executed instruction !)
 ;; 		 '() ;; avoid while-do-when-unless.scm: let: bad syntax (missing binding pairs or body) in: (let ())
 ;;                  expr ...)
 
@@ -130,6 +137,7 @@
 ;;     ((do "step" x y)
 
 ;;      y)))
+
 
 
 ;; > (define i 0) 
@@ -160,20 +168,82 @@
 (define-syntax do
   (syntax-rules (while)
 
-    ((do ((variable init step ...) ...) (test expr ...) body ...)
+    ;; original do from scheme
+    #;((do ((variable init step ...) ...) (test expr ...) body ...)
      (do-scheme ((variable init step ...) ...) (test expr ...) body ...))
-    
+
+    ;; original do from scheme , without body
+    ((do ((variable init step ...) ...) (test expr ...))
+     (do-scheme ((variable init step ...) ...) (test expr ...)))
+
+    ;; original do from scheme , its body can contain definitions as in Scheme+ (let () is free at run time , the
+    ;; (void) allows a body that ends with a definition : the value of the body is not used)
+    ((do ((variable init step ...) ...) (test expr ...) body ...)
+     (do-scheme ((variable init step ...) ...) (test expr ...) (let () body ... (void))))
+
+    ;; do from scheme+
     ((do b1 ...
        while pred)
      (let loop () b1 ... (when pred (loop))))))
 
 
+
+
+;; > (define x 0)
+;; > (while (< x 10)
+;;           (define y x)  
+;;             (display y)
+;;             (newline)
+;;             (set! x (+ x 1)))
+;; 0
+;; 1
+;; 2
+;; 3
+;; 4
+;; 5
+;; 6
+;; 7
+;; 8
+;; 9
+;; > 
+;; (define-syntax-rule (while condition body ...)
+;;   (let loop ()
+;;     (when condition
+;;       body ...
+;;       (loop))))
+
+
 (define-syntax while
+
   (syntax-rules ()
+    
+    ((while condition body ...)
+  
+     (let loop ()
+       (when condition
+	     body ...
+	     (loop))))))
 
-    ((while test body ...) (while-guile test
-					(let ()
-					  body
-					  ...)))))
 
+;; note: as 'do' already exist in scheme it is not possible to define this:
+
+;; (define-syntax while
+
+;;   (syntax-rules (do)
+    
+;;     ((while condition do body ...)
+  
+;;      (let loop ()
+;;        (when condition
+;; 	     body ...
+;; 	     (loop))))))
+
+
+
+
+
+
+(eval-when (expand load eval)
+  (module-replace! (current-module) '(while do)))
+ ; end library
 

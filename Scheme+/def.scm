@@ -1,3 +1,5 @@
+;; Translated from Scheme+ for Racket (def.rkt) for Guile.
+
 
 ;; This file is part of Scheme+
 
@@ -17,67 +19,32 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
+
+
+
 (define-module (Scheme+ def)
-
-  ;;#:use-module ((guile)) ;; pourquoi (( et ))
-
-  #:use-module (srfi srfi-31) ;; rec
-  #:use-module (Scheme+ return)
-
-  #:export (def))
-  
+  #:use-module (Scheme+ racket-compat))
 
 
+	
 
-;; scheme@(guile-user)> (defined-symbol? x)
-;;$1 = #f
-;; (define-syntax defined-symbol?              
-;;   (syntax-rules ()
-    
-;;     ((_ x) (defined? (quote x)))))
-
-;; Warning: does not works in all context ! (limitation/bug in Guile) :
-;; scheme@(guile-user)> (let () (define x 3) (defined? 'x))
-;; $1 = #f ;; !!!!!!
+	(use-modules
+	(srfi srfi-31)
+	(Scheme+ nfx)
+	(Scheme+ return))
+	  
 
 
-;; scheme@(guile-user)> (defined-symbol? d)
-;; ;;; <stdin>:20:17: warning: possibly unbound variable `d'
-;; $3 = #f
-;; (define-syntax defined-symbol?
-;;   (syntax-rules ()
-;;     ((_ x) (call-with-current-continuation 
-;; 	    (lambda (exit)
-;; 	      (with-exception-handler
-;; 	       (lambda (e)
-;; 		 (display "defined-symbol? : undefined") (newline)
-;; 		 (exit #f)) ; eval failed => not defined
-;; 	       (lambda ()
-;; 		 (eval x (interaction-environment))
-;; 		 #t))))))) ; eval suceeded => defined
 
 
-;; scheme@(guile-user)> (define r 2)
-;; scheme@(guile-user)> (if-defined r 'defined (define r 7))
-;; if-defined : where=#t
-;; $16 = defined
-;; scheme@(guile-user)> (if-defined t3 'defined (define t3 7))
-;; if-defined : where=#f
-;; scheme@(guile-user)> t3
-;; $17 = 7
-;; scheme@(guile-user)> (if-defined z (list z) 'not-defined)
-;; if-defined : where=#f
-;; $18 = not-defined
-;; (define-syntax if-defined
-;;   (lambda (stx)
-;;     (syntax-case stx ()
-;;       ((_ id iftrue iffalse)
-;;        (let ((where (defined-symbol? #'id))) ;;(quote id))))
-;; 	 (display "if-defined : where=") (display where) (newline)
-;; 	 (display "id=") (display #'id) (newline)
-;; 	 (if where #'iftrue #'iffalse))))))
-
-
+;; Welcome to DrRacket, version 8.14 [cs].
+;; Language: racket, with debugging; memory limit: 8192 MB.
+;; > (require Scheme+/def)
+;; > (def (foo) (display "hello") (newline) (return) (display "world") (newline))
+;; > (foo)
+;; hello
+;; > (return)
+;; return: can only be used inside def
 
 
 ;; scheme@(guile-user)> (def (foo) (when #t (return "hello") "bye"))
@@ -86,99 +53,83 @@
 
 ;; (def x)
 
+;;(define return '()) ;; for debug of Typed Racket
 
 
-;; (def (foo n)
-;;      (cond ((= n 0) 'end0)
-;; 	   ((= n 7) (return 'end7))
-;; 	   (else (cons n (foo {n - 1})))))
+;;(def (foo) (return 1 2 3))
+
+;; (foo)
+;; 1
+;; 2
+;; 3
+
+;; list of the arguments from the formals of a procedure
+;; (formals->list (a b)) -> (cons a (cons b '()))
+;; (formals->list (a b . L)) -> (cons a (cons b L))
+;; (formals->list L) -> L
+(define-syntax formals->list
+
+  (syntax-rules ()
+
+    ((_ ()) '())
+    ((_ (a . rest)) (cons a (formals->list rest)))
+    ((_ r) r)))
 
 
-;; scheme@(guile-user)> (foo 5)
-;; (5 4 3 2 1 . end0)
-;; scheme@(guile-user)> (foo 10)
-;; (10 9 8 . end7)
+;; the symbol sym is written in the datum d (the body of a def) : the call/cc of return and return-rec are made only
+;; when they are used (a return produced by another macro of the body is not seen)
+(eval-when (expand load eval)
+  (define (uses-symbol? sym d)
+    (cond ((eq? d sym) #t)
+	  ((pair? d) (or (uses-symbol? sym (car d))
+			 (uses-symbol? sym (cdr d))))
+	  ((vector? d) (uses-symbol? sym (vector->list d)))
+	  (else #f))))
 
-;; (def (bar n)
-;;      (cond ((= n 0) 'end0)
-;; 	   ((= n 7) (return-rec 'end7))
-;; 	   (else (cons n (bar {n - 1})))))
 
-;; scheme@(guile-user)> (bar 5)
-;; $4 = (5 4 3 2 1 . end0)
-;; scheme@(guile-user)> (bar 10)
-;; $5 = end7
 (define-syntax def
-  
+
   (lambda (stx)
     
       (syntax-case stx ()
 
 	;; multiple definitions without values assigned
 	;; (def (x y z))
-	((_ (var1 ...)) #`(begin (define var1 '()) ...))
-	
-	;;  (def (foo) (when #t (return "hello") "bye"))
-        ;; ((_ (<name> <arg> ...) <body> <body>* ...)
-        ;;  (let ((ret-id (datum->syntax stx 'return)))
-        ;;    #`(define (<name> <arg> ...)
-	;;        (call/cc (lambda (#,ret-id) <body> <body>* ...)))))
+	;; TODO: remove? redundant with (declare x y z)
+	((_ (var1 ...)) #'(begin (define var1 '()) ...))
 
-	
-	;; ((_ (<name> <arg> ...) <body> <body>* ...)
-	 
-        ;;  (let ((ret-id (datum->syntax stx 'return))
-	;;        (ret-rec-id (datum->syntax stx 'return-rec)))
+	;; function definition without return nor return-rec in its body : a define , no call/cc (17 times faster for
+	;; a call , and the procedure can be inlined)
+	((_ (<name> . <formals>) <body> <body>* ...)
+	 (let ((body (syntax->datum #'(<body> <body>* ...))))
+	   (not (or (uses-symbol? 'return body)
+		    (uses-symbol? 'return-rec body))))
+	 #'(define (<name> . <formals>)
+	     <body> <body>* ...))
 
-	;;    #`(define (<name> <arg> ...)
-
-	;;        (call/cc (lambda (#,ret-rec-id)
-			  
-	;; 		 (apply (rec <name> (lambda (<arg> ...)
-	;; 				      (call/cc (lambda (#,ret-id) <body> <body>* ...)))) (list <arg> ...)))))))
-
-
-	((_ (<name> <arg> ...) <body> <body>* ...)
-	 
-	 #'(define (<name> <arg> ...)
-
+	;; with return but without return-rec : one call/cc by call , as lambda+
+	((_ (<name> . <formals>) <body> <body>* ...)
+	 (not (uses-symbol? 'return-rec (syntax->datum #'(<body> <body>* ...))))
+	 #'(define (<name> . <formals>)
 	     (call/cc
-
-	      (lambda (ret-rec-id) ;(#,ret-rec-id)
-
+	      (lambda (ret-id)
 		(syntax-parameterize
-		 ([return-rec (syntax-rules ()
-				[(return-rec vals (... ...))
-				 (ret-rec-id vals (... ...))])])
-		 
-		 (apply (rec <name> (lambda (<arg> ...)
-				      
-				      (call/cc
+		 ([return (syntax-rules ()
+			    [(return vals (... ...))
+			     (ret-id vals (... ...))])])
+		 <body> <body>* ...)))))
 
-				       (lambda (ret-id) ;(#,ret-id)
-					 ;; In the body we adjust the 'return' keyword so that calls
-					 ;; to 'return' are replaced with calls to the escape
-					 ;; continuation.
-					 (syntax-parameterize
-					  ([return (syntax-rules ()
-						     [(return vals (... ...))
-						      (ret-id vals (... ...))])])
-					  <body> <body>* ...)))))
-			
-			(list <arg> ...)))))))
+	;; function definition, with fixed, variadic or only rest arguments , with return-rec in its body
+	;; (def (foo a b . L) (when #t (return (list a b L))))
+	;; (foo 1 2 3 4)
+	;; '(1 2 (3 4))
+	((_ (<name> . <formals>) <body> <body>* ...)
 
-		;; variadic arguments in list
-	;; (def (foo a . L) (when #t (return (cons a L))))
-	;; (foo 1 2 3)
-	;; '(1 2 3)
-	((_ (<name> <arg> . L) <body> <body>* ...)
-	 
-         
-	 #'(define (<name> <arg> . L)
+	 #'(define (<name> . <formals>)
 
 	     (call/cc
 
-	      (lambda (ret-rec-id) ;(#,ret-rec-id)
+	      (lambda (ret-rec-id)
 		;; In the body we adjust the 'return-rec' keyword so that calls
 		;; to 'return-rec' are replaced with calls to the escape
 		;; continuation.
@@ -187,39 +138,78 @@
 		 ([return-rec (syntax-rules ()
 				[(return-rec vals (... ...))
 				 (ret-rec-id vals (... ...))])])
-		 
-		 (apply (rec <name> (lambda (<arg> . L)
-				      
-				      (call/cc
 
-				       (lambda (ret-id) ;(#,ret-id)
-					 ;; In the body we adjust the 'return' keyword so that calls
-					 ;; to 'return' are replaced with calls to the escape
-					 ;; continuation.
-					 (syntax-parameterize
-					  ([return (syntax-rules ()
-						     [(return vals (... ...))
-						      (ret-id vals (... ...))])])
-					  <body> <body>* ...)))))
-			
-			(cons <arg> L)))))))
+		 (apply (letrec ((<name> (lambda <formals>
+
+					   (call/cc
+
+					    (lambda (ret-id)
+					      ;; In the body we adjust the 'return' keyword so that calls
+					      ;; to 'return' are replaced with calls to the escape
+					      ;; continuation.
+					      (syntax-parameterize
+					       ([return (syntax-rules ()
+							  [(return vals (... ...))
+							   (ret-id vals (... ...))])])
+					       <body> <body>* ...))))))
+			  <name>)
+
+			(formals->list <formals>)))))))
 
 
-	
 	;; single definition without a value assigned
 	;; (def x)
-	((_ var) #`(define var '()))
+	((_ var) #'(define var '()))
 
-
-	;; TODO validate:
 	;; (def s  3 ² + 2 * 3 * 5 + 5 ²)
 	;; 64
-	;;((_ var expr expr-optional ...) #`(define var ($nfx$-rec expr expr-optional ...)))
-	
-	;; (def x 7)
-	((_ var expr) #`(define var expr))
+	;; DEPRECATED (Scheme+ 18.0) : kept for the compatibility but no more documented nor improved , its infix parsing
+	;; is done at expansion time ($nfx$-rec) and knows only the procedures of Racket : use (def s {3 ² + 2 * 3 * 5 + 5 ²})
+	((_ var expr expr* ...) #'(define var ($nfx$-rec expr expr* ...)))
 
-	((_ err ...) #`(syntax-error "Bad def form"))
+	((_ . err) #'(error "Bad def form"))
 
 	)))
 
+
+
+
+;; (def t 3 * (+ 2 4) - 1)
+;; t
+;; 17
+
+
+;; (def z (3 + 1) * (2 * (+ 2 1) - (sin 0.3)) + ((* 2 5) - 5))
+;; z
+;; 27.817919173354642
+
+
+;; (def x 1 + 2 + 3)
+;; x
+;; 6
+
+
+;; (def k 10.0 - 3.0 - 4.0 + 1 - 5.0 * 2.0 ** 3.0 / 7.0 ** 3.0)
+;; k
+;; 3.883381924198251
+
+
+;; (def s 3 ² + 2 * 3 * 5 + 5 ²)
+;; s
+;; 64
+
+
+
+
+
+
+
+
+
+
+(export
+	def)
+(re-export
+	return
+	return-rec)
+ ; end module

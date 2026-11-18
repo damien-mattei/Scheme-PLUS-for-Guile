@@ -1,9 +1,8 @@
 
 ;; guile version
 
-;; sudo cp matrix+.scm /usr/local/share/guile/site/3.0/matrix+.scm
-
-; ./curly-infix2prefix4guile.scm   ../AI_Deep_Learning/guile/matrix+.scm > ../AI_Deep_Learning/guile/matrix.scm
+;; parsed by the Makefile of this directory (make) in parsed_files_directory/matrix+.scm , the module (matrix+) is then
+;; found with guile -L parsed_files_directory
 
 ;; (use-modules (matrix+))
 
@@ -36,9 +35,18 @@
 	    matrix-line-ref
 	    matrix-line-set!
 	    vector->matrix-column
-	    matrix-column->vector)
-  
+	    matrix-column->vector
+	    multiply-matrix-matrix
+	    multiply-matrix-vector)
+
+  #:replace (*) ; the * overloaded by overload-operator (Scheme+) , in place of the * of Guile
+
   )
+
+
+;; the type annotation (as in matrix-by-vectors+.rkt of Scheme+ for Racket) : v[lin][col] of a vector of vectors is
+;; specialized for vectors when the module is parsed
+ANNOTATION-ON
 
 
 
@@ -52,11 +60,11 @@
   )
 
 
-(define-method (matrix vinit)
+(define (matrix vinit)
   (make <matrix> #:v vinit))
 
-(define-method (matrix? obj)
-  (equal? (class-name (class-of obj)) (class-name <matrix>)))
+(define (matrix? obj)
+  (is-a? obj <matrix>))
 
 ;; (define M (create-matrix-by-function (lambda (l c) (+ l c)) 2 3))
 ;; $1 = #<<matrix> 1078a0a70>
@@ -73,6 +81,7 @@
 	(error "argument is not of type matrix"))
   
   {v <+ (matrix-v M)}
+  (type vector? v {v[]}) ; a vector of vectors
   {lin <+ (vector-length v)}
   {col <+ (vector-length {v[0]})}
   (values lin col))
@@ -88,7 +97,7 @@
 ;; scheme@(guile-user)> (matrix-v M1*M2)
 ;; $2 = #(#(5 2) #(8 2))
 
-(define-method (* (M1 <matrix>) (M2 <matrix>))
+(define (multiply-matrix-matrix M1 M2)
   
   {(n1 p1) <+ (dim-matrix M1)}
   {(n2 p2) <+ (dim-matrix M2)}
@@ -97,9 +106,15 @@
   
   {v1 <+ (matrix-v M1)}
   {v2 <+ (matrix-v M2)}
-  
+  (type vector? v1 v2 {v1[]} {v2[]}) ; vectors of vectors : v1[i][k] and v2[k][j] are specialized for vectors
+  ;; of reals : the * and + of the sum are the original ones of Guile , not the generic * of GOOPS of this module
+  ;; (define-method) that dispatches on its arguments at each call
+  (type ℝ {v1[][]} {v2[][]})
+
   (define (res i j)
+    (type ℕ i j k)
     {sum <+ 0}
+    (type ℝ sum)
     (for ({k <+ 0} {k < p1} {k <- k + 1})
 	 {sum <- sum + v1[i][k] * v2[k][j]})
     sum)
@@ -112,6 +127,10 @@
 
 
 
+;; the overloading of Scheme+ : M1 * M2 , a binary overload of * , returns a matrix
+(overload-operator * (guile) (matrix?) multiply-matrix-matrix (matrix? matrix?)) ; the original * of the module (guile) (the #:replace of the module header has already created a local *)
+
+
 (define (vector->matrix-column v)
   (matrix (vector-map (lambda (i x)
 			(make-vector 1 x))
@@ -119,7 +138,9 @@
 
 (define (matrix-column->vector Mc)
   {v <+ (matrix-v Mc)}
-  (vector-map (lambda (i v2) {v2[0]})
+  (vector-map (lambda (i v2)
+		(type vector? v2) ; a line of the column matrix
+		{v2[0]})
 	      v))
 
 ;; scheme@(guile-user)> (define M1 (create-matrix-by-function (lambda (l c) (+ l c)) 2 3))
@@ -127,20 +148,28 @@
 ;; $1 = #(#(0 1 2) #(1 2 3))
 ;; scheme@(guile-user)> {M1 * #(1 2 3)}
 ;; $2 = #(8 14)
-(define-method (* (M <matrix>) (v <vector>)) ;; args: matrix ,vector ;  return vector
+(define (multiply-matrix-vector M v) ;; args: matrix ,vector ;  return vector
   {Mc <+ (vector->matrix-column v)}
+  (type matrix? M Mc) ; {M * Mc} calls multiply-matrix-matrix directly
   ;(display Mc)
   (matrix-column->vector {M * Mc}))
+
+;; M * v , a binary overload of * , returns a vector
+(overload-operator * (guile) (vector?) multiply-matrix-vector (matrix? vector?))
 
 
 ;; define getter,setter
 (define (matrix-ref M lin col)
   {v <+ (matrix-v M)}
+  (type vector? v {v[]}) ; a vector of vectors : v[lin][col] is specialized for vectors
+  (type ℕ lin col)
   {v[lin][col]})
 
 (define (matrix-set! M lin col x)
   ;;(display "matrix-set!  : M =") (display M) (newline)
   {v <+ (matrix-v M)}
+  (type vector? v {v[]}) ; a vector of vectors : v[lin][col] is specialized for vectors
+  (type ℕ lin col)
   {v[lin][col] <- x})
 
 
@@ -163,9 +192,13 @@
 ;; > 
 (define (matrix-line-ref M lin)
   {v <+ (matrix-v M)}
+  (type vector? v {v[]}) ; a vector of vectors : v[lin] is specialized for vectors
+  (type ℕ lin)
   {v[lin]})
 
 
 (define (matrix-line-set! M lin vect-line)
   {v <+ (matrix-v M)}
+  (type vector? v {v[]}) ; a vector of vectors : v[lin] is specialized for vectors
+  (type ℕ lin)
   {v[lin] <- vect-line})

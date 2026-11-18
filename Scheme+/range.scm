@@ -1,6 +1,8 @@
+;; Translated from Scheme+ for Racket (range.rkt) for Guile.
+
 ;; This file is part of Scheme+
 
-;; Copyright 2021-2024 Damien MATTEI
+;; Copyright 2024 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -16,13 +18,20 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
+;; this whole module is DEPRECATED for Racket as already exists 'range'  
+
 
 (define-module (Scheme+ range)
+  #:use-module (Scheme+ racket-compat))
 
-  #:use-module (Scheme+ for_next_step)
+
   
-  #:export (in-range
-	    reversed))
+  
+  (use-modules
+	(Scheme+ for_next_step))
+
+  
+
 
 
 ;; |kawa:2|# (in-range 5)
@@ -33,12 +42,21 @@
 ;;(1 3)
 (define (in-range . arg-lst)
   (define n (length arg-lst))
-  (when (or (= n 0) (> n 3))
-	(error "in-range: bad number of arguments"))
+  
   (define start 0)
   (define stop 1)
   (define step 1)
   (define res '())
+
+  (define (arret step index stop)
+    (if (> step 0)
+	(< index stop)
+	(> index stop)))
+
+  (define i 0)
+
+  (when (or (= n 0) (> n 3))
+	(error "in-range: bad number of arguments"))
   
   (case n
     ((0) (error "in-range : too few arguments"))
@@ -51,17 +69,17 @@
 		      (error "in-range: step is equal to zero"))
 		(set! step (caddr arg-lst)))))
 
-  (define (arret step index stop)
-    (if (> step 0)
-	(< index stop)
-	(> index stop)))
   
-  (for ((define i start) (arret step i stop) (set! i (+ step i)))
-  ;;(define i start)
-  ;;(for ('() (arret step i stop) (set! i (+ step i)))
+  (set! i start)
+  
+  ;;(for ((define i start) (arret step i stop) (set! i (+ step i)))
+  (for ('() (arret step i stop) (set! i (+ step i)))
        (set! res (cons i res)))
 
   (reverse res))
+
+
+
 
 
 ;; #|kawa:3|# (in-range 1 11 3)
@@ -77,4 +95,54 @@
 ;; #|kawa:8|# (reversed (in-range 8 1 -1))
 
 (define reversed reverse)
+
+
+
+
+
+
+
+
+(export
+	in-range
+	reversed)
+ ; end module
+
+
+
+
+
+;; below is old version of reversed but probably buggy
+
+;; ;> (for ([x (in-range 0 3)]) (display x) (newline) )
+;; ;0
+;; ;1
+;; ;2
+;; ;> (for ([x (reversed (in-range 0 3))]) (display x) (newline) )
+;; ;2
+;; ;1
+;; ;0
+;; (define-syntax reversed ; same as Python : reversed(range(0,3))
+  
+;;   		(syntax-rules ()
+
+;;     			((_ (name end)) (begin
+;; 					  (unless (equal? (quote in-range) (quote name)) 
+;; 	       					(error "first argument is not in-range:" (quote name)))
+;; 					  ;;(in-range {end - 1} -1 -1)))
+;; 					  (in-range (- end 1) -1 -1)))
+
+;; 			((_ (name start end)) (begin
+;; 					  	(unless (equal? (quote in-range) (quote name)) 
+;; 	       						(error "first argument is not in-range:" (quote name)))
+;; 					  	;;(in-range {end - 1} {start - 1} -1)))))
+;; 						(in-range (- end 1) (- start 1) -1)))
+
+;; 			((_ (name start end step)) (begin
+;; 						     (unless (equal? (quote in-range) (quote name)) 
+;; 							     (error "first argument is not in-range:" (quote name)))
+;; 						     ;;(in-range {end - 1} {start - 1} (- step))))))
+;; 						     (in-range (+ (- end step) 1) (- start 1) (- step)))))) ;; ERROR
+
+
 

@@ -1,8 +1,12 @@
-;; overload
+;; overload.scm
+
+;; Guile Scheme version
+
+;; Damien Mattei
 
 ;; This file is part of Scheme+
 
-;; Copyright 2021-2024 Damien MATTEI
+;; Copyright 2021-2026 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -18,495 +22,410 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-;; guile version
+;; The overloading of operators and procedures , in Guile.
+;;
+;; The mechanism is the one of the previous versions of Scheme+ for Guile : the overloaded operator is a procedure
+;; (a closure) that keeps the original operator , the program redefines the operator with it :
+;;    (define + <the overloaded + , that falls back on the original +>)
+;; There is no table indexed by the names of the operators and no definition introduced by a macro at the top level
+;; (in Guile two expansions of a macro that introduce a top-level definition of the same name share one variable).
+;; The overloads of an operator are kept with its closure : each overloaded operator has its own state (a record
+;; found by the procedure itself , in a weak table).
+;;
+;; The interface is the one of Scheme+ for Racket (overload.rkt) :
+;;   (overload-operator + (vector?) vector-append (vector? vector?)) ; 2 predicates : binary overload
+;;   (overload-operator + string-append (string?))                   ; 1 predicate : n-ary overload
+;;   (overload-unary-operator - vector-negate (vector?))              ; unary overload
+;;   (overload-procedure length vector-length (vector?))             ; procedure : exact number of arguments
+;;   (overload-operator proc (module name) funct (pred ...))         ; the original operator is taken from a module
+;; The optional list of the return values ((vector?) above) is only read by the type annotation pass.
+;; The first overload of a name defines the overloaded operator (its original is the current binding of the name ,
+;; or the one of the given module) , the next ones add an overload.
+;; A call tries , in order : the arithmetic operators (+ - * / · ×) with numbers only go straight to the original
+;; operator ; the overloads with an exact number of arguments (binary , unary , procedures) , the most recent first ;
+;; the n-ary overloads (all the arguments satisfy the predicate) ; for more than 2 arguments and an operator with
+;; binary overloads , the left associativity : (op a b c) = (op (op a b) c) ; the original operator ; else an error.
+;; The predicates must accept any value and answer #t or #f , never raise an error.
+;;
+;; The two steps macros of the old versions (define-overload-operator , overload-existing-operator ...) are kept for
+;; compatibility.
 
-;; use with Scheme+:
-;;  sudo cp overload.scm /usr/local/share/guile/site/3.0
-
-
-
-;; (use-modules (Scheme+ overload))
-
-
-;; version 17
 
 (define-module (Scheme+ overload)
-  
-  ;;#:use-module ((guile)) ;; is it necessary? and is it necessary 2 ( ... ) ?
 
-  ;;#:use-module (infix-operators)
-  ;;  #:use-module (srfi srfi-69 ) ;; Basic hash tables 
-  #:use-module (srfi srfi-1) ;; any,every
-  #:export ( define-overload-procedure
-	     overload-procedure
-	     
-	     define-overload-existing-procedure
-	     overload-existing-procedure
-	     
-	     define-overload-operator
-	     overload-operator
-	     
-	     define-overload-existing-operator
-	     overload-existing-operator
-	     
-	     define-overload-n-arity-operator
-	     overload-n-arity-operator
+  #:use-module ((srfi srfi-1) #:select (every any first second))
+  #:use-module (srfi srfi-9) ; records
 
-	     define-overload-existing-n-arity-operator
-	     overload-existing-n-arity-operator
-	     
-	     overload-function ;; see how to do the same for operator, see the possible problem with infix precedence?
+  #:export (overload-operator
+	    overload-unary-operator
+	    overload-procedure
+	    require-overload-operator
+	    require-overload-unary-operator
+	    require-overload-procedure
 
+	    define-overload-operator
+	    define-overloaded-operator
+	    define-overload-existing-operator
+	    define-overload-existing-operator-annot
+	    overload-existing-operator
+	    define-overload-n-ary-associative-operator
+	    define-overload-existing-n-ary-associative-operator
+	    define-overload-existing-n-ary-associative-operator-annot
+	    overload-n-ary-operator
+	    overload-existing-n-ary-operator
 
-	     $ovrld-square-brackets-lst$
-	     
-	     overload-square-brackets
-	     ;;find-getter-and-setter-for-overloaded-square-brackets
-	     find-getter-for-overloaded-square-brackets
-	     find-setter-for-overloaded-square-brackets))
+	    ;; the names of the previous versions of Scheme+ for Guile
+	    define-overload-procedure
+	    define-overload-existing-procedure
+	    overload-existing-procedure
+	    overload-function
+	    define-overload-n-arity-operator
+	    define-overload-existing-n-arity-operator
+	    overload-n-arity-operator
+	    overload-existing-n-arity-operator
 
+	    $ovrld-square-brackets-lst$
+	    overload-square-brackets
+	    require-overload-square-brackets
+	    find-getter-for-overloaded-square-brackets
+	    find-setter-for-overloaded-square-brackets
 
-
-(define $ovrld-square-brackets-lst$ '()) ;; for square brackets
-
-
-
-
-
-(define-syntax define-overload-existing-procedure
-
-  (syntax-rules ()
-
-    ((_ proc) '())))
-
-     ;; (begin
-
-     ;;   (define qproc (quote proc))
-
-     ;;   (hash-table-set! $ovrld-meta$ qproc (list 'procedure 'existing))))))
+	    overloaded?
+	    check-arguments))
 
 
+;; ---------- the state of an overloaded operator or procedure
 
-(define-syntax define-overload-procedure
+(define-record-type <overloaded>
+  (make-overloaded name kind original exact n-ary)
+  overloaded-state?
+  (name overloaded-name) ; the symbol , for the messages
+  (kind overloaded-kind) ; operator or procedure
+  (original overloaded-original) ; the original procedure , or #f for a new one
+  (exact overloaded-exact set-overloaded-exact!) ; list of (funct . predicates) , exact number of arguments
+  (n-ary overloaded-n-ary set-overloaded-n-ary!)) ; list of (funct . predicate) , any number of arguments
 
-  (syntax-rules ()
+;; the overloaded procedure -> its state
+(define states (make-weak-key-hash-table))
 
-    ((_ proc)
+(define (overloaded? p) (and (procedure? p) (hashq-ref states p) #t))
 
-     (begin
-       
-       (define qproc (quote proc))
-       (define (proc . args-lst) (error 'overload "failed because procedure can not be applied to arguments list. procedure , arguments list = " qproc args-lst))
-       ;;(display "define-overload-procedure : proc =") (display proc) (newline)
+;; the arithmetic operators keep a fast path for numbers
+(define arithmetic-names '(+ - * / · ×))
 
-       ;(hash-table-set! $ovrld-meta$ qproc (list 'procedure))
-       ))))
+;; (check-arguments (list number? string?) '(3 "a")) -> #t : as many arguments as predicates , each one satisfies its
+;; predicate
+(define (check-arguments pred-list args)
+  (and (= (length pred-list) (length args))
+       (every (lambda (pred arg) (pred arg)) pred-list args)))
 
+;; create the overloaded procedure of name (a symbol) , with original (a procedure or #f)
+(define (make-overloaded-procedure name kind original)
+  (define state (make-overloaded name kind original '() '()))
+  (define fast? (and original (eq? kind 'operator) (memq name arithmetic-names) #t))
+  (define (overloaded . args)
+    (cond
+     ((and fast? (every number? args)) (apply original args))
+     ((any (lambda (entry) (and (check-arguments (cdr entry) args) entry))
+	   (overloaded-exact state))
+      => (lambda (entry) (apply (car entry) args)))
+     ((and (pair? args)
+	   (any (lambda (entry) (and (every (cdr entry) args) entry))
+		(overloaded-n-ary state)))
+      => (lambda (entry) (apply (car entry) args)))
+     ((and (eq? kind 'operator)
+	   (> (length args) 2)
+	   (pair? (overloaded-exact state)))
+      ;; left associativity : (op a b c ...) = (op (op a b) c ...)
+      (apply overloaded (cons (overloaded (first args) (second args)) (cddr args))))
+     (original (apply original args))
+     (else (error 'overload
+		  (format #f "failed because procedure ~a can not be applied to arguments list ~a" name args)))))
+  (hashq-set! states overloaded state)
+  overloaded)
+
+;; the overloaded procedure of name : current if it is already one , else a new one that falls back on current
+;; (a procedure , or #f when the name was not bound)
+(define (overloaded-procedure-of current name kind)
+  (if (overloaded? current)
+      current
+      (make-overloaded-procedure name kind current)))
+
+;; add an overload to the overloaded procedure of name , made from current if needed , and return it
+;; kind of overload : exact (binary , unary , procedure) or n-ary
+(define (overload-add! current name kind overload-kind funct preds)
+  (define p (overloaded-procedure-of current name kind))
+  (define state (hashq-ref states p))
+  (case overload-kind
+    ((exact) (set-overloaded-exact! state (cons (cons funct preds) (overloaded-exact state))))
+    ((n-ary) (set-overloaded-n-ary! state (cons (cons funct (car preds)) (overloaded-n-ary state))))
+    (else (error 'overload "unknown kind of overload" overload-kind)))
+  p)
+
+
+;; ---------- expansion time : the original of the name
+
+;; the names already overloaded in each module , at expansion time : the next overloads of a name refer to the
+;; overloaded procedure already defined in the module
+(eval-when (expand load eval)
+  (define overloaded-in-modules (make-hash-table))
+
+  (define (note-overloaded! id)
+    (hash-set! overloaded-in-modules (cons (module-name (current-module)) (syntax->datum id)) #t))
+
+  (define (already-overloaded? id)
+    (hash-ref overloaded-in-modules (cons (module-name (current-module)) (syntax->datum id)) #f))
+
+  ;; is the identifier bound (defined or imported) in the module being expanded ?
+  (define (bound-in-current-module? id)
+    (let ((v (module-variable (current-module) (syntax->datum id))))
+      (and v #t)))
+
+  ;; in (overload-operator proc x funct (pred ...)) , is x a module name rather than the list of return values ?
+  ;; a module name is a list of symbols naming an existing module , as (guile) or (srfi srfi-1)
+  (define (module-name? stx)
+    (let ((d (syntax->datum stx)))
+      (and (pair? d)
+	   (list? d)
+	   (every symbol? d)
+	   (false-if-exception (resolve-interface d))
+	   #t)))
+
+  ;; the name of the imported module that provides the binding of sym in the module being expanded , or #f
+  (define (imported-from sym)
+    (let ((v (module-variable (current-module) sym)))
+      (and v
+	   (not (module-local-variable (current-module) sym))
+	   (let loop ((uses (module-uses (current-module))))
+	     (cond ((null? uses) #f)
+		   ((eq? (module-variable (car uses) sym) v) (module-name (car uses)))
+		   (else (loop (cdr uses))))))))
+
+  ;; the expression of the current procedure of the name proc-stx : the name itself when it is already overloaded in
+  ;; this module (the next overloads add to it , even with a module given) ; the binding of the given module ; the name
+  ;; itself when it is defined in this module ; (@ module proc) when it is imported (in a compiled
+  ;; module , the proc of (define proc (... proc ...)) would be the variable of the module , not yet defined) ; #f for a
+  ;; new name
+  (define (current-expression proc-stx module-stx)
+    (define sym (syntax->datum proc-stx))
+    (cond ((already-overloaded? proc-stx) proc-stx) ; the next overloads add to the overloaded procedure of the module
+	  (module-stx (with-syntax ((proc proc-stx) (module module-stx)) #'(@ module proc)))
+	  ((imported-from sym) => (lambda (name) (with-syntax ((proc proc-stx) (module (datum->syntax proc-stx name)))
+						    #'(@ module proc))))
+	  ((bound-in-current-module? proc-stx) proc-stx)
+	  (else #'#f)))
+
+  ;; (define proc (overload-add! <current> 'proc kind overload-kind funct (list pred ...)))
+  (define (overload-expansion stx proc-stx module-stx kind overload-kind funct-stx preds-stx)
+    (syntax-case preds-stx ()
+      ((pred ...) #t)
+      (_ (syntax-violation 'overload "expected a list of predicates" stx preds-stx)))
+    (let ((current (current-expression proc-stx module-stx)))
+      (note-overloaded! proc-stx)
+      (with-syntax ((proc proc-stx) (current current) (kind (datum->syntax proc-stx kind))
+		    (overload-kind (datum->syntax proc-stx overload-kind))
+		    (funct funct-stx) ((pred ...) preds-stx))
+	#'(define proc (overload-add! current 'proc 'kind 'overload-kind funct (list pred ...))))))
+
+  ;; the kind of an overload of an operator from its predicates : 1 predicate n-ary , 2 predicates binary
+  (define (operator-overload-kind stx preds-stx)
+    (syntax-case preds-stx ()
+      ((pred) 'n-ary)
+      ((pred1 pred2) 'exact)
+      (_ (syntax-violation 'overload-operator
+			   "expected 1 predicate (n-ary overload : all arguments of that type) or 2 predicates (binary overload)"
+			   stx preds-stx))))
+
+  ;; (define proc <the overloaded procedure , without overload yet>) : the first step of the old macros
+  (define (definition-expansion proc-stx module-stx kind)
+    (let ((current (current-expression proc-stx module-stx)))
+      (note-overloaded! proc-stx)
+      (with-syntax ((proc proc-stx) (current current) (kind (datum->syntax proc-stx kind)))
+	#'(define proc (overloaded-procedure-of current 'proc 'kind))))))
+
+
+;; ---------- the interface
+
+;; (overload-operator proc funct (pred ...))
+;; (overload-operator proc (ret-val ...) funct (pred ...))   ; list of the return values , for the annotation
+;; (overload-operator proc module-name funct (pred ...))     ; the original operator is taken from module-name
+;; (overload-operator proc module-name (ret-val ...) funct (pred ...))
+(define-syntax overload-operator
+  (lambda (stx)
+    (syntax-case stx ()
+      ((_ proc funct preds)
+       (overload-expansion stx #'proc #f 'operator (operator-overload-kind stx #'preds) #'funct #'preds))
+      ((_ proc x funct preds)
+       (overload-expansion stx #'proc (and (module-name? #'x) #'x) 'operator (operator-overload-kind stx #'preds)
+			   #'funct #'preds))
+      ((_ proc module-name (ret-val ...) funct preds)
+       (overload-expansion stx #'proc #'module-name 'operator (operator-overload-kind stx #'preds) #'funct #'preds)))))
+
+;; (overload-unary-operator - vector-negate (vector?)) : an overload of exactly one argument
+(define-syntax overload-unary-operator
+  (lambda (stx)
+    (define (check preds-stx)
+      (syntax-case preds-stx ()
+	((pred) #t)
+	(_ (syntax-violation 'overload-unary-operator "expected 1 predicate (the type of the single argument)"
+			     stx preds-stx))))
+    (syntax-case stx ()
+      ((_ proc funct preds)
+       (begin (check #'preds) (overload-expansion stx #'proc #f 'operator 'exact #'funct #'preds)))
+      ((_ proc x funct preds)
+       (begin (check #'preds)
+	      (overload-expansion stx #'proc (and (module-name? #'x) #'x) 'operator 'exact #'funct #'preds)))
+      ((_ proc module-name (ret-val ...) funct preds)
+       (begin (check #'preds) (overload-expansion stx #'proc #'module-name 'operator 'exact #'funct #'preds))))))
+
+;; (overload-procedure area area-square (number?)) : any number of predicates , exact match
+(define-syntax overload-procedure
+  (lambda (stx)
+    (syntax-case stx ()
+      ((_ proc funct preds)
+       (overload-expansion stx #'proc #f 'procedure 'exact #'funct #'preds))
+      ((_ proc x funct preds)
+       (overload-expansion stx #'proc (and (module-name? #'x) #'x) 'procedure 'exact #'funct #'preds))
+      ((_ proc module-name (ret-val ...) funct preds)
+       (overload-expansion stx #'proc #'module-name 'procedure 'exact #'funct #'preds)))))
+
+;; the overloads made in an imported module , restated for the type annotation pass : nothing at run time
+(define-syntax require-overload-operator
+  (syntax-rules () ((_ . args) (if #f #f))))
+(define-syntax require-overload-unary-operator
+  (syntax-rules () ((_ . args) (if #f #f))))
+(define-syntax require-overload-procedure
+  (syntax-rules () ((_ . args) (if #f #f))))
+
+
+;; ---------- the two steps macros of the old versions
+
+(define-syntax define-overload-operator ; a new binary operator
+  (lambda (stx)
+    (syntax-case stx ()
+      ((_ proc) (definition-expansion #'proc #f 'operator)))))
+
+(define-syntax define-overload-n-ary-associative-operator ; a new n-ary operator
+  (lambda (stx)
+    (syntax-case stx ()
+      ((_ proc) (definition-expansion #'proc #f 'operator)))))
+
+(define-syntax define-overloaded-operator ; an operator , existing or not
+  (lambda (stx)
+    (syntax-case stx ()
+      ((_ proc) (definition-expansion #'proc #f 'operator))
+      ((_ proc module-name) (definition-expansion #'proc #'module-name 'operator)))))
 
 (define-syntax define-overload-existing-operator
+  (lambda (stx)
+    (syntax-case stx ()
+      ((_ proc) (definition-expansion #'proc #'(guile) 'operator))
+      ((_ proc module-name) (definition-expansion #'proc #'module-name 'operator)))))
 
+(define-syntax define-overload-existing-n-ary-associative-operator
+  (lambda (stx)
+    (syntax-case stx ()
+      ((_ proc) (definition-expansion #'proc #'(guile) 'operator))
+      ((_ proc module-name) (definition-expansion #'proc #'module-name 'operator)))))
+
+;; the *-annot macros also define orig-proc , the original operator , under the name given
+(define-syntax define-overload-existing-operator-annot
   (syntax-rules ()
-
-    ((_ proc) '()))) ;; do nothing
-
-
-(define-syntax define-overload-existing-n-arity-operator
-
-  (syntax-rules ()
-
-    ((_ proc) '())))
-
-
-
-(define-syntax define-overload-operator
-
-  (syntax-rules ()
-
-    ((_ proc)
-
+    ((_ proc orig-proc) (define-overload-existing-operator-annot proc orig-proc (guile)))
+    ((_ proc orig-proc module-name)
      (begin
-       
-       (define qproc (quote proc))
-       (define (proc . args-lst) (error 'overload "failed because operator can not be applied to arguments list. operator , arguments list = " qproc args-lst))
-       (display "define-overload-operator : proc =") (display proc) (newline)
-       ))))
+       (define orig-proc (@ module-name proc))
+       (define-overload-existing-operator proc module-name)))))
 
-
-(define-syntax define-overload-n-arity-operator
-
+(define-syntax define-overload-existing-n-ary-associative-operator-annot
   (syntax-rules ()
-
-    ((_ proc)
-
+    ((_ proc orig-proc) (define-overload-existing-n-ary-associative-operator-annot proc orig-proc (guile)))
+    ((_ proc orig-proc module-name)
      (begin
-       
-       (define qproc (quote proc))
-       (define (proc . args-lst) (error 'overload "failed because operator can not be applied to arguments list. operator , arguments list = " qproc args-lst))
-       (display "define-overload-operator : proc =") (display proc) (newline)
-       ))))
+       (define orig-proc (@ module-name proc))
+       (define-overload-existing-n-ary-associative-operator proc module-name)))))
+
+;; the second step : add an overload to an operator defined by the first step
+(define-syntax overload-existing-operator ; binary : exact number of arguments
+  (syntax-rules ()
+    ((_ proc funct (pred ...)) (overload-add! proc 'proc 'operator 'exact funct (list pred ...)))
+    ((_ proc (ret-val ...) funct (pred ...)) (overload-existing-operator proc funct (pred ...)))))
+
+(define-syntax overload-n-ary-operator ; n-ary : all the arguments satisfy the predicate
+  (syntax-rules ()
+    ((_ proc funct (pred ...)) (overload-add! proc 'proc 'operator 'n-ary funct (list pred ...)))
+    ((_ proc (ret-val ...) funct (pred ...)) (overload-n-ary-operator proc funct (pred ...)))))
+
+(define-syntax overload-existing-n-ary-operator
+  (syntax-rules ()
+    ((_ proc funct (pred ...)) (overload-add! proc 'proc 'operator 'n-ary funct (list pred ...)))
+    ((_ proc (ret-val ...) funct (pred ...)) (overload-existing-n-ary-operator proc funct (pred ...)))))
 
 
+;; ---------- the names of the previous versions of Scheme+ for Guile
 
+(define-syntax define-overload-procedure ; a new procedure
+  (lambda (stx)
+    (syntax-case stx ()
+      ((_ proc) (definition-expansion #'proc #f 'procedure)))))
 
-
-
-;; (define (mult-num-vect k v) (map (λ (x) (* k x)) v))
-  
-;; (overload * mult-num-vect (number? list?) 'operator) 
-
-;; (* 3 (+ '(1 2 3) '(4 5 6)))
-
-;; (15 21 27)
-
-;; (+ (* 3 '(1 2 3)) '(4 5 6))
-;; (7 11 15)
-
-;; {3 * '(1 2 3) + '(4 5 6)}
-;; (7 11 15)
-
-;; {3 * '(1 2 3) + '(4 5 6) + '(7 8 9)}
-;; (14 19 24)
-
-
-;; scheme@(guile-user)> {3 * '(1 2 3)}
-;; $3 = (3 6 9)
-
-;; scheme@(guile-user)> (define (add-vect v) v)
-;; scheme@(guile-user)> (overload + add-vect (list?) 'operator)
-;; scheme@(guile-user)> (+ '(1 2 3))
-;; $7 = (1 2 3)
-
-;; (define (add-pair p1 p2) (cons (+ (car p1) (car p2)) (+ (cdr p1) (cdr p2))))
-;; (overload + add-pair (pair? pair?) 'operator)
-;; (+ (cons 1 2) (cons 3 4))
-;; '(4 . 6)
-
-
-;; overload
+(define-syntax define-overload-existing-procedure ; an existing procedure (of (guile) by default)
+  (lambda (stx)
+    (syntax-case stx ()
+      ((_ proc) (definition-expansion #'proc #'(guile) 'procedure))
+      ((_ proc module-name) (definition-expansion #'proc #'module-name 'procedure)))))
 
 (define-syntax overload-existing-procedure
-  
   (syntax-rules ()
+    ((_ proc funct (pred ...)) (overload-add! proc 'proc 'procedure 'exact funct (list pred ...)))))
 
-    ((_ orig-funct funct (pred-arg1 ...))
-     (define orig-funct (create-overloaded-procedure orig-funct funct (list pred-arg1 ...))))))
-
-
-
-(define-syntax overload-procedure
-  
+;; (overload-function (proc (arg pred) ...) body ...) : an overload written as a lambda
+(define-syntax overload-function
   (syntax-rules ()
+    ((_ (proc (arg pred) ...) body ...)
+     (overload-add! proc 'proc 'procedure 'exact (lambda (arg ...) body ...) (list pred ...)))))
 
-    ((_ orig-funct funct (pred-arg1 ...))
-     (overload-existing-procedure orig-funct funct (pred-arg1 ...)))))
-
-
-;; note: expt is right to left evaluated by convention, is not associative
-;; (overload-existing-operator expt expt (number? number?))
-
-;; scheme@(guile-user)> (expt 2 3)
-;; $1 = 8
-;; scheme@(guile-user)> (expt 2 3 4)
-;; $2 = 2417851639229258349412352
-
-
-;; (overload-existing-operator ** ** (number? number?))
-;; scheme@(guile-user)> (** 2 3)
-;; $4 = 8
-;; scheme@(guile-user)> (** 2 3 4)
-;; $5 = 2417851639229258349412352
-
-;; scheme@(guile-user)> {2 ** 3}
-;; $6 = 8
-;; scheme@(guile-user)> {2 ** 3 ** 4}
-;; $7 = 2417851639229258349412352
-(define-syntax overload-existing-operator
-  
-  (syntax-rules ()
-
-    ((_ orig-funct funct (pred-arg1 ...))
-     (define orig-funct (create-overloaded-existing-operator orig-funct funct (list pred-arg1 ...))))))
-
-(define-syntax overload-operator
-  
-  (syntax-rules ()
-
-    ((_ orig-funct funct (pred-arg1 ...))
-     (overload-existing-operator orig-funct funct (pred-arg1 ...)))))
-        ;; note: same as existing as we create it in first stage (declare/define)
-       
-
-(define-syntax overload-existing-n-arity-operator
-  
-  (syntax-rules ()
-
-    ((_ orig-funct funct (pred-arg1 ...))
-     (define orig-funct (create-overloaded-existing-n-arity-operator orig-funct funct (list pred-arg1 ...))))))
-
-
+(define-syntax define-overload-n-arity-operator
+  (syntax-rules () ((_ . args) (define-overload-n-ary-associative-operator . args))))
+(define-syntax define-overload-existing-n-arity-operator
+  (syntax-rules () ((_ . args) (define-overload-existing-n-ary-associative-operator . args))))
 (define-syntax overload-n-arity-operator
-  
-  (syntax-rules ()
-
-    ((_ orig-funct funct (pred-arg1 ...))
-     (overload-existing-n-arity-operator orig-funct funct (pred-arg1 ...)))))
-     
-    
- 
+  (syntax-rules () ((_ . args) (overload-n-ary-operator . args))))
+(define-syntax overload-existing-n-arity-operator
+  (syntax-rules () ((_ . args) (overload-existing-n-ary-operator . args))))
 
 
-(define (check-arguments pred-list args)
-  (if (= (length pred-list) (length args))
-      (let ((pred-arg-list (map cons pred-list args)))
-	;;(andmap (λ (p) ((car p) (cdr p)))
-	;; replace andmap with every in Guile
-	(every (λ (p) ((car p) (cdr p)))
-	       pred-arg-list))
-      #f))
+;; ---------- the square brackets : T[i ...] for a type of the program (as in Scheme+ for Racket)
 
-
-;; args can be not the same number as predicates and their types must all match 
-(define (check-arguments-for-n-arity pred-list args)
-  (define type (car pred-list)) ;; i suppose all predicate are same
-  (define lbd-assign (lambda (arg) (cons type arg)))
-  (define pred-arg-list (map lbd-assign args))
-  ;;(andmap (λ (p) ((car p) (cdr p)))
-  ;; replace andmap with every in Guile
-  (every (λ (p) ((car p) (cdr p)))
-	 pred-arg-list))
-
-
-
-;; (define (add-list-list L1 L2) (map + L1 L2))
-;; (define + (overload-proc + add-list-list (list list? list?)))
-;; (+ '(1 2 3) '(4 5 6))
-;; (define (add-pair p1 p2) (cons (+ (car p1) (car p2)) (+ (cdr p1) (cdr p2))))
-;; (define + (overload-proc + add-pair (list pair? pair?)))
-;; (+ (cons 1 2) (cons 3 4))
-
-
-;; when a function that overload an operator has more than 2 args (f a1 a2 a3 ...) and only (f a1 a2) is defined
-;; we do: (f a1 (f a2 a3 ...)) associativeness for operators like this.
-;; + - * / ^ and other if any... we know,from overloading those operators are separate distinct case from simple functions.They are n-arity operators.
-(define (create-overloaded-procedure orig-funct funct pred-list)
-
-  (display "create-overloaded-procedure")
-  (display " : pred-list = ") (display pred-list) (newline)
-  (define old-funct orig-funct)
-  (define new-funct (lambda args ;; args is the list of arguments
-		      ;;(display "new-funct: ") (display new-funct) (newline)
-		      ;;(display "new-funct : pred-list = ") (display pred-list) (newline)
-		      ;;(display "new-funct : args = ") (display args) (newline)
-		      (if (check-arguments pred-list args)
-			  ;;(begin
-			    ;;(display "new funct :calling:") (display funct) (newline)
-			    (apply funct args);)
-			  ;;(begin
-			    ;;(display "new funct :calling:") (display old-funct) (newline)
-			    (apply old-funct args))));)
-				    
-  (display "funct: ") (display funct) (newline)
-  (display "orig-funct: ") (display orig-funct) (newline)
-  (display "old-funct: ") (display old-funct) (newline)
-  (display "new-funct: ") (display new-funct) (newline)
-
-  new-funct)
-
-
-;; scheme@(guile-user)> (use-modules (overload))
-;; ;;; note: source file /usr/local/share/guile/site/3.0/overload.scm
-;; ;;;       newer than compiled /Users/mattei/.cache/guile/ccache/3.0-LE-8-4.6/usr/local/share/guile/site/3.0/overload.scm.go
-;; ;;; note: auto-compilation is enabled, set GUILE_AUTO_COMPILE=0
-;; ;;;       or pass the --no-auto-compile argument to disable.
-;; ;;; compiling /usr/local/share/guile/site/3.0/overload.scm
-;; ;;; compiled /Users/mattei/.cache/guile/ccache/3.0-LE-8-4.6/usr/local/share/guile/site/3.0/overload.scm.go
-;; scheme@(guile-user)> (define (add-vect-vect v1 v2) (map + v1 v2))
-;; scheme@(guile-user)> (overload + add-vect-vect (list? list?) 'operator)
-;; create-overloaded-operator : pred-list = (#<procedure list? (_)> #<procedure list? (_)>)
-;; funct: #<procedure add-vect-vect (v1 v2)>
-;; orig-funct: #<procedure + (#:optional _ _ . _)>
-;; old-funct: #<procedure + (#:optional _ _ . _)>
-;; new-funct: #<procedure new-funct args>
-;; scheme@(guile-user)> (+ '(1 2 3) '(4 5 6))
-;; new-funct: #<procedure new-funct args>
-;; new-funct : pred-list = (#<procedure list? (_)> #<procedure list? (_)>)
-;; new-funct : args = ((1 2 3) (4 5 6))
-;; new funct :calling:#<procedure add-vect-vect (v1 v2)>
-;; $1 = (5 7 9)
-;; scheme@(guile-user)> (+ 2 3)
-;; new-funct: #<procedure new-funct args>
-;; new-funct : pred-list = (#<procedure list? (_)> #<procedure list? (_)>)
-;; new-funct : args = (2 3)
-;; new funct :calling:#<procedure + (#:optional _ _ . _)>
-;; $2 = 5
-;; scheme@(guile-user)> (+ '(1 2 3) '(4 5 6) '(7 8 9))
-;; new-funct: #<procedure new-funct args>
-;; new-funct : pred-list = (#<procedure list? (_)> #<procedure list? (_)>)
-;; new-funct : args = ((1 2 3) (4 5 6) (7 8 9))
-;; $3 = (12 15 18)
-
-;; scheme@(guile-user)> {'(1 2 3) + '(4 5 6) + '(7 8 9)}
-;; new-funct: new-funct = #<procedure new-funct args>
-;; new-funct : pred-list = (#<procedure list? (_)> #<procedure list? (_)>)
-;; new-funct : args = ((1 2 3) (4 5 6) (7 8 9))
-;; new-funct : nb-args = 3
-;; (12 15 18)
-
-
-(define (create-overloaded-existing-operator orig-funct funct pred-list) ;; works for associative operators
-
-  (display "create-overloaded-existing-operator")
-  (display " : pred-list = ") (display pred-list) (newline)
-  (define old-funct orig-funct)
-  (define new-funct (lambda args ;; args is the list of arguments
-		      ;; (display "new-funct: new-funct = ") (display new-funct) (newline)
-		      ;; (display "new-funct : pred-list = ") (display pred-list) (newline)
-		      ;; (display "new-funct : args = ") (display args) (newline)
-		      (define nb-args (length args))
-		      ;;(display "new-funct : nb-args = ") (display nb-args) (newline)
-		      (cond ((check-arguments pred-list args) ;;(begin
-								;;(display "new funct :calling:") (display funct) (newline)
-								(apply funct args));;)
-			    ((> nb-args 2) (new-funct (car args)
-						      (apply new-funct (cdr args)))) ;; op(a,b,...) = op(a,op(b,...))
-			    (else
-			     ;;(begin
-			       ;;(display "new funct :calling: ") (display old-funct) (newline)
-			       (apply old-funct args)))));;)
-				    
-  (display "funct: ") (display funct) (newline)
-  (display "orig-funct: ") (display orig-funct) (newline)
-  (display "old-funct: ") (display old-funct) (newline)
-  (display "new-funct: ") (display new-funct) (newline)
-
-  ;;(replace-operator! orig-funct new-funct) ;; if problem with infix precedence use insert-operator! see Kawa code
-
-  new-funct)
-
-
-
-(define (create-overloaded-existing-n-arity-operator orig-funct funct pred-list) ;; works for associative operators
-
-  (newline)
-  (display "create-overloaded-existing-n-arity-operator")
-  (display " : pred-list = ") (display pred-list) (newline)
-  (display "orig-funct = ") (display orig-funct) (newline)
-  (display "funct = ") (display funct) (newline)
-  (define old-funct orig-funct)
-  (define new-funct (lambda args ;; args is the list of arguments
-		      ;; (newline)
-		      ;; (display "overloaded-existing-n-arity-operator") (newline)
-		      ;; (display "orig-funct = ") (display orig-funct) (newline)
-		      ;; (display "funct = ") (display funct) (newline)
-		      ;; (display "new-funct : new-funct = ") (display new-funct) (newline)
-		      ;; (display "new-funct : pred-list = ") (display pred-list) (newline)
-		      ;; (display "new-funct : args = ") (display args) (newline)
-		      (define nb-args (length args))
-		      ;;(display "new-funct : nb-args = ") (display nb-args) (newline)
-		      (if (check-arguments-for-n-arity pred-list args)
-			     ;;(begin
-			       ;;(display "new funct : calling:") (display funct) (newline)
-			       (apply funct args);;)
-			    ;; ((> nb-args 2)
-			    ;;  (begin
-			    ;;    (display "new funct : calling:") (display new-funct) (newline)
-			    ;;    (new-funct (car args) (apply new-funct (cdr args))))) 
-			    ;; op(a,b,...) = op(a,op(b,...))
-			    ;;(else
-			     ;;(begin
-			       ;;(display "new funct : calling: ") (display old-funct) (newline)
-			       (apply old-funct args))));;) ;; "recursively" call the older functions
-				    
-  (display "funct: ") (display funct) (newline)
-  (display "orig-funct: ") (display orig-funct) (newline)
-  (display "old-funct: ") (display old-funct) (newline)
-  (display "new-funct: ") (display new-funct) (newline)
-  (newline)
-
-  ;;(replace-operator! orig-funct new-funct)
-
-  new-funct)
-
+(define $ovrld-square-brackets-lst$ '()) ; list of ((pred ...) (getter . setter))
 
 (define-syntax overload-square-brackets
-
   (syntax-rules ()
+    ;; with the list of the return values of the getter , for the type annotation pass (ignored here) :
+    ;; (overload-square-brackets (flonum?) matrix-vect-ref matrix-vect-set! (matrix-vect? number? number?))
+    ((_ (ret-val ...) getter setter (pred-arg pred-arg1 ...))
+     (overload-square-brackets getter setter (pred-arg pred-arg1 ...)))
+    ((_ getter setter (pred-arg pred-arg1 ...)) ; getter setter and list of predicate to check the arguments
+     (modify-$ovrld-square-brackets-lst$ (list (list pred-arg pred-arg1 ...)
+					       (cons getter setter))))))
 
-    ((_ getter setter (pred-arg pred-arg1 ...))   ;; getter setter and list of predicate to check the arguments
+(define-syntax require-overload-square-brackets
+  (syntax-rules () ((_ . args) (if #f #f))))
 
-	(modify-$ovrld-square-brackets-lst$ (list (list pred-arg pred-arg1 ...)
-						  (cons getter setter))))))
-
-
-;; avoid: set!: cannot mutate module-required identifier in: $ovrld-square-brackets-lst$
 (define (modify-$ovrld-square-brackets-lst$ arg)
   (set! $ovrld-square-brackets-lst$ (cons arg $ovrld-square-brackets-lst$)))
 
+;; the (getter . setter) whose predicates match the arguments (the container and the indexes)
+(define (find-getter-and-setter-for-overloaded-square-brackets args-lst)
+  (or (any (lambda (pred-proc-list)
+	     (and (check-arguments (car pred-proc-list) args-lst)
+		  (cadr pred-proc-list)))
+	   $ovrld-square-brackets-lst$)
+      (error '$bracket-apply$
+	     (format #f "no matching found in $ovrld-square-brackets-lst$ : failed with those arguments list ~a" args-lst))))
 
-;; example, return : '(#<procedure:vector-ref> . #<procedure:vector-set!>)
-(define (find-getter-and-setter-for-overloaded-square-brackets args-lst) 
+(define (find-getter-for-overloaded-square-brackets args-lst)
+  (car (find-getter-and-setter-for-overloaded-square-brackets args-lst)))
 
-  	 
-	 (define (check-args-lst pred-list) ; check arguments list match predicates
-	   (check-arguments pred-list args-lst))
-	 
-	 (define (test-proc pred-proc-list) ; test the procedure if it matches with arguments
-	   (if (check-args-lst (car pred-proc-list))
-	       (car (cdr  pred-proc-list))
-	       #f))
-	 
-	 (define proc-search-result (any test-proc $ovrld-square-brackets-lst$ )) ; search for a procedure matching arguments
-	 
-	 (if proc-search-result
-	     proc-search-result
-	     (error '$bracket-apply$ "failed with those arguments list ~a" args-lst)))
-       
-
-;; > (find-getter-for-overloaded-square-brackets '(#(1 2 3) 1))
-;; #<procedure:vector-ref>
-(define (find-getter-for-overloaded-square-brackets args-lst) 
-
-  	 
-	 (define (check-args-lst pred-list) ; check arguments list match predicates
-	   (check-arguments pred-list args-lst))
-	 
-	 (define (test-proc pred-proc-list) ; test the procedure if it matches with arguments
-	   (if (check-args-lst (car pred-proc-list))
-	       (car (cdr  pred-proc-list))
-	       #f))
-	 
-	 (define proc-search-result (any test-proc $ovrld-square-brackets-lst$ )) ; search for a procedure matching arguments
-	 
-	 (if proc-search-result
-	     (car proc-search-result)
-	     (error '$bracket-apply$ "no matching found in $ovrld-square-brackets-lst$ : failed with those arguments list ~a" args-lst)))
-       
-
-(define (find-setter-for-overloaded-square-brackets args-lst) 
-	 
-	 (define (check-args-lst pred-list) ; check arguments list match predicates
-	   (check-arguments pred-list args-lst))
-	 
-	 (define (test-proc pred-proc-list) ; test the procedure if it matches with arguments
-	   (if (check-args-lst (car pred-proc-list))
-	       (car (cdr  pred-proc-list))
-	       #f))
-	 
-	 (define proc-search-result (any test-proc $ovrld-square-brackets-lst$ )) ; search for a procedure matching arguments
-	 
-	 (if proc-search-result
-	     (cdr proc-search-result)
-	     (error '$bracket-apply$ "no matching found in $ovrld-square-brackets-lst$ : failed with those arguments list ~a" args-lst)))
-       
-
-
-
-;; this macro do the two overload steps in one for an existing procedure, (see the potential problem with infix precedence?)
-(define-syntax overload-function
-  
-  (syntax-rules ()
-
-    ((_ (orig-funct (arg1 pred-arg1) ...) expr ...) (create-overloaded-procedure orig-funct
-										 (lambda (arg1 ...) expr ...)
-										 (pred-arg1 ...)))))
-
+(define (find-setter-for-overloaded-square-brackets args-lst)
+  (cdr (find-getter-and-setter-for-overloaded-square-brackets args-lst)))

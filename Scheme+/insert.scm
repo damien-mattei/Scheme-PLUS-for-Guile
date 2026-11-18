@@ -1,3 +1,5 @@
+;; Translated from Scheme+ for Racket (insert.rkt) for Guile.
+
 ;; This file is part of Scheme+
 
 ;; Copyright 2021-2024 Damien MATTEI
@@ -15,42 +17,64 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;; version 17
+
+
 
 (define-module (Scheme+ insert)
+  #:use-module (Scheme+ racket-compat))
 
-  #:export ( insert
-	     insert-set!
-	     insert-tail
-	     insert-tail-set!
-	     append-tail-set!)) ;; end module declaration
+  
+  
 
+  (define insert cons)
 
-;; library procedures and macro
-(define insert cons)
+  ;; insert and set it to the new result list
+  (define-syntax insert-set!
+    (syntax-rules ()
+      ((_ elem lst)
+       (set! lst (insert elem lst)))))
 
-;; insert and set 
-(define-syntax insert-set!
-  (syntax-rules ()
-    ((_ expr var)
-     (set! var (insert expr var)))))
+  ;; insert and set it to the new result list
+  (define-syntax append-tail-set!
+    (syntax-rules ()
+      ((_ lst lst-tail)
+       (set! lst (append lst lst-tail)))))
 
-;; insert and set it to the new result list
-(define-syntax append-tail-set!
-  (syntax-rules ()
-    ((_ lst lst-tail)
-     (set! lst (append lst lst-tail)))))
-
-;; insert at the tail of a list 
-(define (insert-tail lst elem)
-  (append lst (list elem)))
-
-;; insert at the tail of a list and set it to the new result list
-(define-syntax insert-tail-set!
-  (syntax-rules ()
-    ((_ lst elem)
-     (set! lst (insert-tail lst elem)))))
+  ;; insert at the tail of a list 
+  (define (insert-tail lst elem)
+    (append lst (list elem)))
 
 
+
+  
+  ;; insert at the tail of a list and set it to the new result list
+  ;; (define L '())
+
+  ;; (insert-tail-set! L 'A)
+
+  ;; L
+  ;; '(A)
+
+  ;; (insert-tail-set! L 'B)
+
+  ;; L
+  ;; '(A B)
+
+  (define-syntax insert-tail-set!
+    (syntax-rules ()
+      ((_ lst elem)
+       (set! lst (insert-tail lst elem)))))
+
+  
+
+
+
+(export
+	insert
+	insert-set!
+	insert-tail
+	insert-tail-set!
+	append-tail-set!)
+ ;; end module declaration
 
 

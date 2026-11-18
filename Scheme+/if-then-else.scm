@@ -1,3 +1,5 @@
+;; Translated from Scheme+ for Racket (if-then-else.rkt) for Guile.
+
 ;; This file is part of Scheme+
 
 ;; Copyright 2024 Damien MATTEI
@@ -15,169 +17,32 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;; version 17
 
+;; Welcome to DrRacket, version 8.14 [cs].
+;; Language: racket, with debugging; memory limit: 8192 MB.
+;; > (require Scheme+/if-then-else)
+;; > (if #t then 7)
+;; if : parsed-args=.#<syntax:Dropbox/git/Scheme-PLUS-for-Racket/main/Scheme-PLUS-for-Racket/if-parser.rkt:108:41 (cond (#t 7))>
+;; 7
+;; > (if #t then 1 2 else 3 4)
+;; if : parsed-args=.#<syntax:Dropbox/git/Scheme-PLUS-for-Racket/main/Scheme-PLUS-for-Racket/if-parser.rkt:171:21 (cond (#t (let () 1 2)) (else...>
+;; 2
 
 (define-module (Scheme+ if-then-else)
-
-  ;;#:use-module (guile)
-
-  #:use-module (srfi srfi-1) ; first ,third
-  #:use-module (Scheme+ insert)
-  #:use-module (Scheme+ syntax)
-  
-  ;;#:replace ( if )
-  #:export ( if )
-
-  ) ;; end module declaration
-
-
-
-;; usefull procedures and macro for the next part of code
-(define (then=? arg)
-
-  (or (datum=? arg 'then)
-      (datum=? arg 'THEN)))
-
-  ;; (or (equal? arg 'then)
-  ;;     (equal? arg 'THEN)
-  ;;     (check-syntax=? #'then arg)
-  ;;     (check-syntax=? #'THEN arg)))
-
-(define (else=? arg)
-
-  (or (datum=? arg 'else)
-      (datum=? arg 'ELSE)))
-
-  ;; (or (equal? arg 'else)
-  ;;     (equal? arg 'ELSE)
-  ;;     (check-syntax=? #'else arg)
-  ;;     (check-syntax=? #'ELSE arg)))
-
-
-;; > (if #f else 3)
-;; 3
-;; > (if #t else 3)
-;; > (if #t 2 else 3)
-;; 2
-;; > (if #t then 2 else 3)
-;; 2
-;; > (if #f then 2 else 3)
-;; 3
-;; > (if #f then 1 2 else 3 4)
-;; 4
-;; > (if #t then 1 2 else 3 4)
-;; 2
-;; > (if #t 1 2 3)
-;; 3
-;; > (if #t then 1 2 else 3 4 then 5)
-;; . . SRFI-105.rkt:181:17: if: then after else near : '(then 5)
-;; > (if #t then 1 2 else 3 4 else 5)
-;; . . SRFI-105.rkt:181:17: if: 2 else inside near: '(else 5)
-;; > (if #t else 1 2 then 3 4)
-;; . . SRFI-105.rkt:181:17: if: then after else near : '(then 3 4)
-;; > (if #t then 1 2 then 3 4)
-;; . . SRFI-105.rkt:181:17: if: 2 then inside near: '(then 3 4)
-
-
-
-
-
-(define (call-parse-if-args-syntax Largs) ; Largs = (test e1 ...)
-
-  ;;(display "Largs=") (display Largs) (newline)
-  (define lenL (length Largs))
-
-  (cond ((< lenL 2)
-	 (error "if: too few arguments:" Largs)))
-
-  (define test (car Largs))
-  (define e1 (cadr Largs))
+  #:use-module (Scheme+ racket-compat))
 
   
-  ; deal with the old 2 args 'if' but modified
-  (cond ((and (= lenL 2) (then=? e1))
-	 (error "if: syntax error,found (if test then) only: near " Largs))
-	((and (= lenL 2) (else=? e1))
-	 (error "if: syntax error,found (if test else) only: near " Largs))
-	((= lenL 2) #`(cond (#,test #,e1))) ; (if test e1)
-	
-	 ((and (= lenL 3) (then=? e1)) #`(cond (#,test ; (if test then e2)
-						#,(third Largs))))
-	 ((and (= lenL 3) (else=? e1)) #`(cond ((not #,test) ; (if test else e2)
-						 #,(third Largs))))
-	 ((= lenL 3) #`(cond (#,test #,e1)
-			     (else #,(third Largs))))
-
-	 (else
-
-	  (let ()
-	    (define L-then '())
-	    (define L-else '())
-	    (define cpt-then 0)
-	    (define cpt-else 0)
-	    
-	    (define (parse-if-args L)
-	    
-	    (cond ((null? L) (set! L-then (reverse L-then))
-		             (set! L-else (reverse L-else)))
-		   		   			 		   
-		   ((then=? (car L)) (cond ((= cpt-else 1)
-				       (error "if: then after else near :" L)))
-		                     (cond ((= cpt-then 1)
-				       (error "if: 2 then inside near:" L)))
-		                     (set! cpt-then (+ 1 cpt-then))
-		                     (parse-if-args (cdr L))) ; recurse
-		   
-		   ((else=? (car L)) (cond ((= cpt-else 1)
-				       (error "if: 2 else inside near:" L)))
-		                     (set! cpt-else (+ 1 cpt-else))
-		                     (parse-if-args (cdr L))) ; recurse
-
-		   
-		   ((and (>= cpt-then 1) (= cpt-else 0)) (insert-set! (car L) L-then)
-		                                         (parse-if-args (cdr L))) ; recurse
-
-		   
-		   ((>= cpt-else 1) (insert-set! (car L) L-else)
-		                    (parse-if-args (cdr L)))  ; recurse
-		   
-		   (else ; start with 'then' directives but without 'then' keyword !
-		    ;; i allow this syntax but this is dangerous:  risk of confusion with regular scheme syntax
-		    
-		    (insert-set! (car L) L-then)
-		    
-		    (set! cpt-then 1)
-		    (parse-if-args (cdr L))))) ; recurse
-	    
-	    (define Lr (cdr Largs)) ; list of arguments of 'if' without the test
-						    
-	    (parse-if-args Lr) ; call the parsing of arguments
-	    
-	    (cond ((null? L-then) #`(cond ((not #,test)
-					   (let ()
-					     #,@L-else))))
-		  ((null? L-else) #`(cond (#,test
-					   (let ()
-					     #,@L-then))))
-		  (else ;; `(if-scheme ,test
-			;; 	    (let ()
-			;; 	      ,@L-then)
-			;; 	    (let ()
-			;; 	      ,@L-else)))))))
-		   #`(cond  (#,test (let ()
-				      #,@L-then))
-			    (else
-			     (let ()
-			       #,@L-else)))))))))
+  
+  (use-modules
+	((guile) #:select ((if . if-scheme)))
+	(Scheme+ declare)
+	(Scheme+ insert)
+	(Scheme+ syntax)
+	(Scheme+ if-parser))
 
 
 
-
-
-
-
-
+  
 (define-syntax if
   
   (lambda (stx)
@@ -186,13 +51,20 @@
       
       ((if tst ...)
 
-       (with-syntax ((parsed-args  (call-parse-if-args-syntax #'(tst ...))))
+       (with-syntax ((parsed-args  ;;#'(cond (#t 3))))
+	      
+		      (call-parse-if-args-syntax (syntax->list #'(tst ...)))))
 
 		    ;;(display "if : parsed-args=") (display #'parsed-args) (newline)
        		    #'parsed-args)))))
 		    
 
 
+
+
+(eval-when (expand load eval)
+  (module-replace! (current-module) '(if)))
+ ; end module
 
 
 ;; scheme@(guile-user)> (if #t 7)

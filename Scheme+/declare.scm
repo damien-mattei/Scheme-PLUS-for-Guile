@@ -1,6 +1,8 @@
+;; Translated from Scheme+ for Racket (declare.rkt) for Guile.
+
 ;; This file is part of Scheme+
 
-;; Copyright 2021-2024 Damien MATTEI
+;; Copyright 2021 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -15,20 +17,25 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-; version 17
 
-;; (declare ls dyn) ;; declare multiple variables
+;; code from r6rs version
 
 (define-module (Scheme+ declare)
+  #:use-module (Scheme+ racket-compat))
 
-  ;;#:use-module ((guile))
+  
 
-  #:export (declare))
+  ;; (declare ls dyn) ;; declare multiple variables
 
-(define-syntax declare
-  (syntax-rules ()
-    ((_ var1 ...) (begin
+  (define-syntax declare
+    (syntax-rules ()
+      ((_ var1 ...) (begin
 		      (define var1 '())
 		      ...))))
 
 
+  
+
+(export
+	declare)
+ ; end library

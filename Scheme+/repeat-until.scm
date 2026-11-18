@@ -1,3 +1,5 @@
+;; Translated from Scheme+ for Racket (repeat-until.rkt) for Guile.
+
 ; This file is part of Scheme+
 
 ;; Copyright 2021-2024 Damien MATTEI
@@ -17,9 +19,15 @@
 
 
 
-(define-module (Scheme+ repeat-until)
 
-  #:export (repeat))
+(define-module (Scheme+ repeat-until)
+  #:use-module (Scheme+ racket-compat))
+
+	
+
+  	(use-modules
+	(Scheme+ nfx))
+
 
 ;; scheme@(guile-user)> (define i 5)
 ;; scheme@(guile-user)> (repeat (display i) (newline) (set! i (- i 1)) until (< i 0))
@@ -30,8 +38,29 @@
 ;; 1
 ;; 0
 
-(define-syntax repeat
-  (syntax-rules (until)
-    ((repeat b1 ...
-       until pred)
-     (let loop () b1 ... (when (not pred) (loop))))))
+	(define-syntax repeat
+	  
+	  (syntax-rules (until)
+	    
+	    ((repeat b1 ...
+		     until pred)
+	     ;;until pred e1 ...) ; ellipsis not allowed here ! was to try to allow direct infix expressions too
+	     ;; this can only be done the way i made it for 'if' : with-syntax and parser
+	     
+	     (let loop ()
+	       b1
+	       ...
+	       (when (not pred) ;;(not ($nfx$ pred e1 ...))
+		 (loop))))))
+
+
+	
+	    
+	    
+
+	
+
+(export
+	repeat)
+ ; end library
+

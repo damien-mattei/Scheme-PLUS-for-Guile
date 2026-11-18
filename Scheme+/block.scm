@@ -1,6 +1,8 @@
+;; Translated from Scheme+ for Racket (block.rkt) for Guile.
+
 ; This file is part of Scheme+
 
-;; Copyright 2021-2024 Damien MATTEI
+;; Copyright 2021 - 2024 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -15,17 +17,15 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-; version 17
+
+;; code from r6rs version
 
 (define-module (Scheme+ block)
+  #:use-module (Scheme+ racket-compat))
 
-  ;;#:use-module ((guile))
+  
 
-  #:export ($>
-	    $+>
-	    begin-def))
-
-	    
+    
 (define-syntax $>
   (syntax-rules ()
     ((_ ev)  ev)
@@ -42,12 +42,13 @@
 ;; $2 = 10
 (define-syntax $+>
   (syntax-rules ()
-    ((_ ev)  (let () ev)) ;;  there can be a <+ in it expanding with a 'define not allowed in expression context
+    ((_ ev)  (let () ev)) ;;  there can be a <+ in it expanding with a 'define'
     ((_ ev ...) (let () ev ...))))
 
 (define-syntax begin-def
   (syntax-rules ()
     ((_ ev ...) ($+> ev ...))))
+
 
 ;; then and else do as BEGINners ;-)
 (define-syntax then-block
@@ -62,9 +63,9 @@
 
 
 
-;; damned... this one makes syntax enlightning bug in Emacs
-;; (define-syntax |
-;;   (syntax-rules ()
-;;     ((_ ev)  ev)
-;;     ((_ ev ...) (begin ev ...))))
 
+(export
+	$>
+	$+>
+	begin-def)
+ ; end library

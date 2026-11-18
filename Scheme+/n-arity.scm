@@ -1,3 +1,5 @@
+;; Translated from Scheme+ for Racket (n-arity.rkt) for Guile.
+
 ;; This file is part of Scheme+
 
 ;; Copyright 2024 Damien MATTEI
@@ -15,15 +17,18 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;; Guile version
+
 
 (define-module (Scheme+ n-arity)
-  
-  #:use-module (Scheme+ operators-list)
-  #:use-module (Scheme+ operators)
-  
-  #:export (n-arity))
+  #:use-module (Scheme+ racket-compat))
 
+  
+
+  (use-modules
+	(Scheme+ operators))
+	  
+
+  ; transform a binary expression in n-ary one
   
 ;; initially written for logical expression of OR / AND
 ;; should works for every associative operator
@@ -110,7 +115,7 @@
 	       append
 	       (map (make-collect-leaves-operator opera) (args expr))))))
      
-     (else ;; safe else, will not touch non associative operators
+     (else ;; safe else, will not touch non always associative operators (- could be or not !) TODO: deal operator like -
       (let ((opera (operator expr)))
 	(cons opera
 	      (map n-arity (args expr)))))))
@@ -136,6 +141,7 @@
 	  ((ADD-op? oper) isADD?)
 	  ((DEFINE-op? oper) isDEFINE?)
 	  ((ASSIGNMENT-op? oper) isASSIGNMENT?)
+	  ((FLOW-op? oper) isFLOW?)
 
 	  (else ; fonction generique pour tous les operateurs ( non syntaxiques )
 	   (lambda (expr) (and (pair? expr) (equal? (car expr) oper)))))))
@@ -158,5 +164,9 @@
 		 (else (list (n-arity expr)))))))
 
         collect-leaves-operator)))
+
+(export
+	n-arity)
+ ;  end module
 
 

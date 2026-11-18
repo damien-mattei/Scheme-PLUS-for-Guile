@@ -1,16 +1,8 @@
-;; Scheme+.scm
+;; Translated from Scheme+ for Racket (Scheme+.rkt) for Guile.
 
-;; version 9.7
+;; This file is part of Scheme+
 
-;; author: Damien MATTEI
-
-;; location: France
-
-;; Guile Scheme version
-
-;; Copyright 2021-2025 Damien MATTEI
-
-;; e-mail: damien.mattei@gmail.com
+;; Copyright 2023-2025 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -25,183 +17,295 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+;; version 20.2
 
-;;  for curly infix notation put in your .guile:
-;; (read-enable 'curly-infix)  
+;; use: (use-modules (Scheme+))
 
-;; use :
-;; (use-modules (Scheme+))
-
-
-
-;; install linux:
-
-;; mkdir -p /usr/share/guile/site/3.0
-
-;; sudo cp *.scm /usr/share/guile/site/3.0
-
-;; install Mac OS:
-;; sudo cp *.scm /usr/local/share/guile/site/3.0
-
-; in case of problem: rm -rf .cache/guile/
-
-
-;; example:
-
-;; (define T (make-vector 7 1))
-;; scheme@(guile-user)> {T[2]}
-;; $bracket-apply$ : #'parsed-args=(#<syntax list> #<syntax 2>)
-;; 1
-;; scheme@(guile-user)> {T[2] <- 7}
-;; <- : #'(index ...) = (#<syntax 2>)
-;; <- : #'parsed-args=(#<syntax list> #<syntax 2>)
-;; scheme@(guile-user)> {T[2]}
-;; $bracket-apply$ : #'parsed-args=(#<syntax list> #<syntax 2>)
-;; 7
+;; in case of rare bug (only when modifying the language itself, so not for user but developers of Scheme+) like 'undefined something'
+;; which is defined and provided remove all the 'compiled' directories from Scheme+ and restart Racket
+;; this is not a Scheme+ bug but a Racket bug !
 
 
 (define-module (Scheme+)
+  #:use-module ((Scheme+ racket-compat) #:hide (do))) ; the do of Scheme+ (while-do) is exported
 
-  ;;#:use-module (guile)
+   ; the types nonzero-fixnum? and positive-fixnum? , reserved names
 
-  ;; #:use-module ((guile) #:select ((do . do-scheme)
-  ;; 				  (while . while-guile)))
-                                  ;;(if . if-scheme)))
 
-  #:use-module (Scheme+ def)
-  #:use-module (Scheme+ declare)
-  #:use-module (Scheme+ block)
-  #:use-module (Scheme+ not-equal)
-  #:use-module (Scheme+ exponential)
-  #:use-module (Scheme+ modulo)
-  #:use-module (Scheme+ bitwise)
-  #:use-module (Scheme+ when-unless)
-  #:use-module (Scheme+ while-do)
-  #:use-module (Scheme+ repeat-until)
-  #:use-module (Scheme+ slice)
   
-  #:use-module (Scheme+ if-then-else)
-  #:use-module (Scheme+ for_next_step)
 
-  #:use-module (Scheme+ range)
+  (use-modules
+	(Scheme+ def)
+	(Scheme+ defvar)
+	(Scheme+ def+)
+	(Scheme+ def-nfx)
+	(Scheme+ declare)
+	(Scheme+ block)
+	(Scheme+ return)
+	(Scheme+ lambda-x)
+	(Scheme+ lambda+)
+	(Scheme+ defun)
+	(Scheme+ rec+)
+	(Scheme+ slice)
+	(Scheme+ bracket-apply)
+	(Scheme+ assignment)
+	(Scheme+ nfx)
+	(Scheme+ if-then-else)
+	(Scheme+ for_next_step)
+	(Scheme+ condx)
+	(Scheme+ while-do)
+	(Scheme+ repeat-until)
+	(Scheme+ not-equal)
+	(Scheme+ exponentiation)
+	(Scheme+ bitwise)
+	(Scheme+ modulo)
+	(Scheme+ multiply)
+	(Scheme+ little-greater-or-equal)
+	(Scheme+ conjunction)
+	(Scheme+ disjunction)
+	(Scheme+ square-and-cubic-root)
+	(Scheme+ int)
+	(Scheme+ overload)
+	(Scheme+ infix-with-precedence-to-prefix)
+	(Scheme+ operators-list)
+	(Scheme+ factorial)
+	((Scheme+ parser-declarations) #:select (declare-postfix-operator declare-prefix-operator))
+	(Scheme+ type)
+	(Scheme+ flonum-fixnum)
+	((Scheme+ multiply) #:select ((· . orig-·) (× . orig-×)))
+	((Scheme+ exponentiation) #:select ((** . orig-**)))
+	((Scheme+ not-equal) #:select ((≠ . orig-≠) (<> . orig-<>)))
+	((guile) #:select ((* . orig-*) (- . orig--) (+ . orig-+) (/ . orig-/) (expt . orig-expt) (< . orig-<) (> . orig->) (<= . orig-<=) (>= . orig->=) (= . orig-=)))) ; end import
+
+
+
+  ;; Guile : the version of Scheme+ (in Racket it is read in info.rkt)
+  (define version "20.2")
+
+  (define verbose #f) ; otherwise make garbage in curly-infix2prefix4racket
   
-  #:use-module (Scheme+ growable-vector)
+  (when verbose
+    (newline)
+    (display (string-append "Scheme+ v" version " by Damien Mattei.")) (newline)
+    (newline))
+
+
   
-  ;;#:use-module (ice-9 local-eval)
-  
-  #:use-module (Scheme+ overload)
-  ;;#:use-module (Scheme+ array)
-  
-  #:use-module (Scheme+ condx)
-  
-  #:use-module (Scheme+ bracket-apply)
-  #:use-module (Scheme+ assignment)
-  #:use-module (Scheme+ nfx)
-  #:use-module (Scheme+ return)
-  #:use-module (Scheme+ defvar)
-  #:use-module (Scheme+ conjunction)
-  #:use-module (Scheme+ disjunction)
-  
-  ;;;;#:use-module (srfi srfi-26) ;; cut <>
 
-  ;;;;#:use-module (srfi srfi-43) ;; WARNING: (Scheme+): `vector-copy' imported from both (growable-vector) and (srfi srfi-43)
- 
- 
-  ;; re-export because they are from modules
-  #:re-export ( 
-		for continue break
-		for-basic
-		for-next
-		for-basic/break
-		for-basic/break-cont
-		for/break-cont
-		for-each-in
-		in-range
-		reversed
+(re-export
+	def
+	def+
+	return
+	return-rec
+	define+
+	lambda-x
+	lambda+
+	defun
+	rec+
+	<+
+	+>
+	⥆
+	⥅
+	:+
+	+:
+	declare
+	$>
+	$+>
+	begin-def
+	:
+	$nfx$
+	$bracket-apply$
+	$bracket-apply-vector$
+	$bracket-apply-string$
+	$bracket-apply-vector-natural$
+	$bracket-apply-vector-integer$
+	$bracket-apply-string-natural$
+	$bracket-apply-string-integer$
+	$bracket-apply-hash-table$
+	$bracket-apply-array$
+	$bracket-apply-overloaded$
+	<-
+	->
+	<-vector-vector*
+	<-string-string*
+	←
+	→
+	:=
+	=:
+	:=>
+	<v
+	v>
+	⇜
+	⇝
+	for
+	continue
+	break
+	for-basic
+	for-next
+	for-basic/break
+	for-basic/break-cont
+	for/break-cont
+	for-each-in
+	condx
+	repeat
+	<>
+	≠
+	fx≠
+	fl≠
+	≤
+	≥
+	**
+	%
+	<<
+	>>
+	&
+	∣
+	^
+	·
+	×
+	~
+	√
+	∛
+	&&
+	∣∣
+	int
+	!
+	overload-procedure
+	require-overload-procedure
+	define-overload-operator
+	overload-operator
+	define-overload-existing-operator
+	define-overload-existing-operator-annot
+	require-overload-operator
+	overload-unary-operator
+	require-overload-unary-operator
+	define-overloaded-operator
+	overload-existing-operator
+	define-overload-n-ary-associative-operator
+	overload-n-ary-operator
+	define-overload-existing-n-ary-associative-operator
+	define-overload-existing-n-ary-associative-operator-annot
+	overload-existing-n-ary-operator
+	overload-square-brackets
+	require-overload-square-brackets
+	find-getter-for-overloaded-square-brackets
+	find-setter-for-overloaded-square-brackets
+	!*prec-generic-infix-parser-runtime
+	infix-operators-lst-for-parser
+	declare-postfix-operator
+	declare-prefix-operator
+	type
+	orig-*
+	orig--
+	orig-·
+	orig-×
+	orig-/
+	orig-**
+	orig-expt
+	orig-+
+	orig-%
+	orig-<
+	orig->
+	orig-<=
+	orig->=
+	orig-=
+	orig-≠
+	orig-<>
+	flabs
+	flmin
+	flmax
+	flsin
+	flcos
+	fltan
+	flatan
+	flexp
+	flsqrt
+	fllog
+	flexpt
+	flfloor
+	flceiling
+	flround
+	fltruncate
+	fl+
+	fl-
+	fl*
+	fl/
+	fl<
+	fl>
+	fl<=
+	fl>=
+	fl=
+	fx+
+	fx-
+	fx*
+	fxquotient
+	fxmodulo
+	fxnot
+	fxremainder
+	fxabs
+	fxmin
+	fxmax
+	fx->fl
+	fx<
+	fx>
+	fx<=
+	fx>=
+	fx=
+	fl+/fx
+	fx/fl+
+	fl-/fx
+	fx/fl-
+	fl*/fx
+	fx/fl*
+	fl//fx
+	fx/fl/
+	flmin/fx
+	fx/flmin
+	fl</fx
+	fx/fl<
+	fl>/fx
+	fx/fl>
+	fl<=/fx
+	fx/fl<=
+	fl>=/fx
+	fx/fl>=
+	fl=/fx
+	fx/fl=
+	fl≠/fx
+	fx/fl≠
+	ANNOTATION-ON
+	ANNOTATION-OFF
+	:print-type
+	ℕ
+	ℤ
+	ℝ
+	ℚ
+	ℂ
+	ℝ⁺
+	ℤ*
+	ℕ*)
+;; Guile : the names of the previous versions of Scheme+ for Guile , kept for the programs written for them
+(use-modules ((Scheme+ range) #:select (in-range reversed))
+	     ((Scheme+ racket-compat) #:select (rest)))
+(define || ∣∣) ; the procedure or (∣∣ is U+2223 , | is reserved in Racket)
+(export ||)
+(re-export in-range reversed rest
+	   define-overload-procedure define-overload-existing-procedure overload-existing-procedure overload-function
+	   define-overload-n-arity-operator define-overload-existing-n-arity-operator
+	   overload-n-arity-operator overload-existing-n-arity-operator)
+;; when and unless with definitions allowed in the body : the ones of (Scheme+ racket-compat)
+(eval-when (expand load eval)
+  (module-re-export! (current-module) '(when unless) #:replace? #t))
 
-		;; functions
-		&& ; procedure and
-		|| ; procedure or
-		
-		define-overload-procedure
-		overload-procedure
-		
-		define-overload-existing-procedure
-		overload-existing-procedure
-		
-		define-overload-operator
-		overload-operator
-		
-		define-overload-existing-operator
-		overload-existing-operator
-		
-		define-overload-n-arity-operator
-		overload-n-arity-operator
-
-		define-overload-existing-n-arity-operator
-		overload-existing-n-arity-operator
-		
-		overload-function ;; see how to do the same for operator, see the possible problem with infix precedence?
+(eval-when (expand load eval)
+  (module-re-export! (current-module) '(define if do while) #:replace? #t))
+ ; end library
 
 
-		;;$ovrld-square-brackets-lst$
-		
-		overload-square-brackets
-		;;find-getter-and-setter-for-overloaded-square-brackets
-		find-getter-for-overloaded-square-brackets
-		find-setter-for-overloaded-square-brackets
+;; note: under Linux and on a PC (french) keyboard superscript characters
+;; can be generated with the keystroke sequence: ^ n where n is  a number or sign
+;; under MacOS the keystroke sequence is : Command Shift + n (you really need to type + key for superscript)
 
-		condx
-	
-		$nfx$
-	  
-		def return return-rec
-		$bracket-apply$
-		;;$bracket-apply$next  ;; DONE: comment it
-
-		;;infix-operators-lst-for-parser-syntax infix-operators-lst-for-parser ;; for debug
-	     
-		<- ->
-		:= =:
-		← →
-		<+ +>
-		:+ +:
-		⥆ ⥅
-		
-		declare
-		$> $+> begin-def
-
-		condx
-		
-		≠
-		<> ;; is also used as keyword in srfi 26, comment this line if SRFI 26 is used and use the ≠ symbol in your code
-
-		**
-
-		<v v>
-		⇜ ⇝
-
-		repeat
-
-		%
-		<< >>
-		&
-		:
-		∣
-		^
-		~
-
-		) 
-
-  #:re-export-and-replace (if do when unless while)
-  
-  
-  ;;#:replace (do when unless while)
-
-  #:export (rest)) ;; end module definitions
-
-
-
-(define rest cdr)
+;; Using the text editor vim, one can produce subscripted and superscripted numbers by using the digraphs control-k-ns for subscription and control-k-nS for superscription, where n is an Arabic numeral.
 
 

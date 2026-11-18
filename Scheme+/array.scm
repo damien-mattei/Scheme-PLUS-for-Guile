@@ -1,6 +1,10 @@
+;; Translated from Scheme+ for Racket (array.rkt) for Guile.
+
 ;; arrays
 
-;; guile version
+
+;; racket version
+
 
 ;; This file is part of Scheme+
 
@@ -19,32 +23,27 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+;; could useful:
 
-
-;; TODO : make a version vector with resizable arrays using classes
-;; cf: https://www.gnu.org/software/guile/manual/html_node/GOOPS.html
-
-(define-module (Scheme+ array)
-
-  #:use-module (Scheme+ for_next_step)
-
-  #:export (make-array-2d
-	    array-2d-ref
-	    array-2d-set!
-	    create-vector-2d
-	    negative-vector-index
-	    function-array-n-dim-ref
-	    function-array-n-dim-set!
-	    display-array-2d
-	    dv-2d
-	    funct-array-2d-set!
-	    funct-array-2d-ref
-	    array-ref-set!
-	    srfi25-array-set!))
-
+;; for macro syntax : identifier-syntax: undefined; use: (require (for-syntax r6rs/private/base-for-syntax))
 
 
 ;; the value v should be put before in a let to avoid multiple evaluation after macro expand
+
+(define-module (Scheme+ array)
+  #:use-module (Scheme+ racket-compat))
+
+	
+
+
+
+	
+	(use-modules
+	(Scheme+ for_next_step)) ;; with some scheme (guile) must be before use in array (see guile code for explaination)
+
+
+
+	
 (define-syntax make-array-2d
   (syntax-rules ()
     ((_ lin col) (let* ((array (make-vector lin)))
@@ -55,7 +54,6 @@
 		   (for-basic (i 0 (- lin 1))
 			(vector-set! array i (make-vector col v)))
 		   array))
-    ;; error :same form as previous?
     ;; ((_ array sx sy) (begin
     ;; 		       (set! (quote array) (make-vector sy))
     ;; 		       (for-basic (i 0 (- sy 1))
@@ -66,21 +64,21 @@
 			      (vector-set! (quote array) i (make-vector col v)))))))
 
 
-;; order of indexes match Matrix and arrays conventions
+;; order of indexes  match Matrix and arrays conventions: line column
 (define-syntax array-2d-ref
   (syntax-rules ()
     ((_ array lin col) (vector-ref (vector-ref array lin) col))))
 
 (define-syntax array-2d-set!
   (syntax-rules ()
-    ((_ array lin col val) (vector-set! (vector-ref array lin) col val))))
+    ((_ array lin col val)
+       (vector-set! (vector-ref array lin) col val))))
 
+;; Scheme+ version
 ;; create a vector of line and column with a function
 ;; (define (create-vector-2d fct lin col)
-;;   {v <+ (make-vector lin)}
-;;   ;;(display "ok") (newline)
+;;   {v <+ (make-array-2d lin col)}
 ;;   (for ({l <+ 0} {l < lin} {l <- l + 1})
-;;        {v[l] <- (make-vector col)}
 ;;        (for ({c <+ 0} {c < col} {c <- c + 1})
 ;; 	    {v[l][c] <- (fct l c)}))
 ;;   v)
@@ -88,11 +86,18 @@
 ;; create a vector (or array) of line and column with a function
 (define (create-vector-2d fct lin col)
   (define v (make-vector lin))
+  ;;;(for-racket ([l (in-range lin)])
   (for ((define l 0) (< l lin) (set! l (+ l 1)))
+       ;;(display "l=") (display l) (newline)
        (vector-set! v l (make-vector col))
+       ;;(for-racket ([c (in-range col)])
        (for ((define c 0) (< c col) (set! c (+ c 1)))
+	    ;;(display "c=") (display c) (newline)
 	    (array-2d-set! v l c (fct l c))))
+  ;;(display "create-vector-2d : v = ") (display v) (newline)
   v)
+
+
 
 ;; scheme@(guile-user)> (define arr (make-array-2d 10 7 0))
 ;; scheme@(guile-user)> (array-n-dim-ref arr 4 3)
@@ -105,31 +110,68 @@
 ;;     ((_ array x) (vector-ref array x))
 ;;     ((_ array x y ...) (vector-ref (array-n-dim-ref array y ...) x))))
 
+;; (define (funct-array-n-dim-ref array x . more-indexs)
+;;   (if (null? more-indexs)
+;;       (vector-ref array x)
+;;       (let ((rev-args (reverse (cons x more-indexs))))
+;; 	(vector-ref (apply funct-array-n-dim-ref (cons array (cdr rev-args)))
+;; 		    (car rev-args)))))
+
+;; return the negative index depending of length of vector
+;; (define-syntax negative-vector-index
+  
+;;   (syntax-rules ()
+    
+;;     ((_ index v)
+     
+;;      (if (< index 0)
+;; 	 (+ (vector-length v) index)
+;; 	 index))))
 
 
 (define (negative-vector-index index v)
+
+  ;; (display "array.rkt : negative-vector-index : index =") (display index) (newline)
+  ;; (display "array.rkt : negative-vector-index : v =") (display v) (newline)
      
   (if (< index 0)
       (+ (vector-length v) index)
       index))
 
+
+
 ;; this one is used by array.scm
 (define (function-array-n-dim-ref array L-reversed-indexes)
-  ;;(display L-reversed-indexes) (newline)
-  (if (= 1 (length L-reversed-indexes))
-      (vector-ref array (negative-vector-index (car L-reversed-indexes) ;; compatible with negative indexes
-					       array))
-      (vector-ref (function-array-n-dim-ref array (cdr L-reversed-indexes))
+  ;;(display "array.rkt : negative-vector-index : L-reversed-indexes =") (display L-reversed-indexes) (newline)
+  (if (= 1 (length L-reversed-indexes)) ; base case : array of dimension 1 : vector
+      ;; vector
+      (vector-ref array
+		  (negative-vector-index (car L-reversed-indexes) ;; compatible with negative indexes
+					 array))
+
+      ;; vector of vectors
+      ;; a negative index counts from the end of the sub-array where it applies , not of the whole array (wrong when
+      ;; the rows have not the length of the vector of rows , M = #(#(1 2 3) #(4 5 6)) : M[0 -1] gave 2)
+      #;(vector-ref (function-array-n-dim-ref array (cdr L-reversed-indexes)) ; the sub-array
 		  (negative-vector-index (car L-reversed-indexes)
-					 array))))
+					 array))
+      (let ((sub-array (function-array-n-dim-ref array (cdr L-reversed-indexes))))
+	(vector-ref sub-array
+		    (negative-vector-index (car L-reversed-indexes) sub-array)))))
 
-
+  
 ;; (define-syntax array-n-dim-set!
 ;;   (syntax-rules ()
 ;;     ((_ array val x) (vector-set! array x val))
 ;;     ((_ array val x y ...) (vector-set! (array-n-dim-ref array y ...) x val))))
 
-
+;; (define (funct-array-n-dim-set! array val x . more-indexs)
+;;   (if (null? more-indexs)
+;;       (vector-set! array x val)
+;;       (let ((rev-args (reverse (cons x more-indexs))))
+;; 	(vector-set! (apply funct-array-n-dim-ref (cons array (cdr rev-args)))
+;; 		     (car rev-args)
+;; 		     val))))
 
 (define (function-array-n-dim-set! array val L-reversed-indexes)
   (if (= 1 (length L-reversed-indexes))
@@ -137,19 +179,22 @@
 		   (negative-vector-index (car L-reversed-indexes)
 					  array)
 		   val)
-      (vector-set! (function-array-n-dim-ref array (cdr L-reversed-indexes))
+      ;; a negative index counts from the end of the sub-array where it applies (as in function-array-n-dim-ref)
+      #;(vector-set! (function-array-n-dim-ref array (cdr L-reversed-indexes))
 		   (negative-vector-index (car L-reversed-indexes)
 					  array)
-		   val)))
-
+		   val)
+      (let ((sub-array (function-array-n-dim-ref array (cdr L-reversed-indexes))))
+	(vector-set! sub-array
+		     (negative-vector-index (car L-reversed-indexes) sub-array)
+		     val))))
 
 
 (define-syntax display-array-2d
   (syntax-rules ()
     ((_ array)
      (for-basic (y 0 (- (vector-length array) 1))
-		(display (vector-ref array y))
-		(newline)))))
+	  (display (vector-ref array y)) (newline)))))
 
 
 ;; > (define _quai 34)
@@ -160,7 +205,7 @@
     ((_ var) (begin
 	       ;;(display (symbol->string (quote var)))
 	       (display (quote var))
-	       (display " = ")(newline)
+	       (display " = ") (newline)
 	       (display-array-2d var)
 	       (newline)))))
 
@@ -177,12 +222,23 @@
 (define-syntax array-ref-set!
   (syntax-rules ()
     ((_ array expr x y) (let ((v expr))
-			  (array-set! array v x y)
+			  (array-set! array x y v) ;; as in srfi 25 not guile where v is before indexes !
 			  v))))
 
-;; this use srfi 25 syntax to be compatible with the non srfi 25 syntax of guile's arrays
-;; obj argument not at the same place in srfi 25 and guile's arrays
-(define-syntax srfi25-array-set!
-  (syntax-rules ()
-    ((_ array index ... obj) (array-set! array obj index ...))))
 
+
+
+(export
+	make-array-2d
+	array-2d-ref
+	array-2d-set!
+	create-vector-2d
+	negative-vector-index
+	function-array-n-dim-ref
+	function-array-n-dim-set!
+	display-array-2d
+	dv-2d
+	funct-array-2d-set!
+	funct-array-2d-ref
+	array-ref-set!)
+ ;; end module

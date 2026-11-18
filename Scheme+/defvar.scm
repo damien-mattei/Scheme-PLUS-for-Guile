@@ -1,42 +1,79 @@
-;; This file is part of Scheme+
-
-;; Copyright 2025 Damien MATTEI
-
-;; This program is free software: you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-; version 17
+;; Translated from Scheme+ for Racket (defvar.rkt) for Guile.
 
 (define-module (Scheme+ defvar)
-
-  #:export (if-defined
-	    <+ +>
-	    ⥆ ⥅
-	    :+ +:
-	    ))
-  
+  #:use-module (Scheme+ racket-compat))
 
 
-;; tested with assignment : do not works as in Racket
+	
+
+	
+
+
+
+; Tests
+;; (define x 3)
+;; (if (defined? x) 'defined 'not-defined) ; -> defined
+
+;; (let ([y 4])
+;;    (if (defined? y) 'defined 'not-defined)) ; -> defined
+
+;; (if (defined? z) 'defined 'not-defined) ; -> not-defined
+;; (define-syntax (defined? stx)
+;;   (syntax-case stx ()
+;;     [(_ id)
+;;      (with-syntax ([v (identifier-binding #'id)]) ; Racket feature , not RnRS
+;;        #''v)]))
+
+; Tests
+;; (if-defined z (list z) 'not-defined) ; -> not-defined
+
+;; (if-defined t (void) (define t 5))
+;; t ; -> 5
+
+;; (define x 3)
+;; (if-defined x (void) (define x 6))
+;; x ; -> 3
+
+;; not reliable : namespace-mapped-symbols does not list exactly the variables defined in the REPL
+#;(define-for-syntax (top-level-defined? id)
+  (and (not (syntax-transforming-module-expression?))
+       (memq (syntax-e id) (namespace-mapped-symbols (current-namespace)))
+       #t))
+
+;; no more used : a new name assigned in a procedure typed in the REPL became a variable of the REPL , not a local one
+;; out of a module (the REPL of Racket in command line , racket -i , racket -e) identifier-binding gives #f even for a
+;; defined variable , and the expansion can not know if the variable exists : at run time the variable is created
+;; (with '()) in the namespace of the REPL when it does not exist yet , then the assignment is done
+#;(define absent-variable (string->uninterned-symbol "absent-variable"))
+
+#;(define (ensure-top-level-variable! sym)
+  (when (eq? (namespace-variable-value sym #t (lambda () absent-variable))
+	     absent-variable)
+    (namespace-set-variable-value! sym '() #t)))
+
+;;(define-syntax (if-defined stx)
 (define-syntax if-defined
     (lambda (stx)
       (syntax-case stx ()
 	[(_ id iftrue iffalse)
-	 '(let ([exist-id (defined? (syntax->datum #'id))])
-	   ;;(display "id=") (display #'id) (newline)
-	   ;;(display "if-defined : exist-id=") (display exist-id) (newline) (newline)
-	   (if exist-id #'iftrue #'iffalse))])))
-
+	 #;(let ([exist-id (identifier-binding #'id)])
+	   (if exist-id
+	       #'iftrue
+	       #'iffalse))
+	 #;(let ([exist-id (or (identifier-binding #'id)
+			     (top-level-defined? #'id))]) ; a variable defined in the REPL , out of a module
+	   (if exist-id
+	       #'iftrue
+	       #'iffalse))
+	 #;(cond ((identifier-binding #'id) #'iftrue) ; a variable bound in a module , locally or imported
+	       ((syntax-transforming-module-expression?) #'iffalse) ; in a module : a new variable
+	       (else ; out of a module (REPL) : the variable is created at run time if needed , then iftrue (set! ...)
+		#'(begin
+		    (ensure-top-level-variable! 'id)
+		    iftrue)))
+	 ;; Guile : <- and := are assignments only (set!) , they never define a variable : a definition is written with
+	 ;; <+ (or define). The expansion is always iftrue (in Racket : iffalse , a definition , when id is not bound).
+	 #'iftrue])))
 
 
 
@@ -65,13 +102,27 @@
 ;; 5
 ;; > (list x y z u v w a b c)
 ;; '(2 4 5 2 4 5 2 4 5)
+
+;; to define vector based on another vector slice:
+;; {T0 <+ #(1 2 3 4 5 6 7 8 9)}
+;; '#(1 2 3 4 5 6 7 8 9)
+;; > '{T <+ {T0[3 / 5]}}
+;; '(<+ T ($bracket-apply$ T0 3 / 5))
+;; > {T <+ {T0[3 / 5]}}
+;; '#(4 5)
+;; > T0
+;; '#(1 2 3 4 5 6 7 8 9)
+;; > T
+;; '#(4 5)
+
 (define-syntax <+
   (syntax-rules ()
     
-    ((_ (var1 ...) expr) 
-     (define-values (var1 ...) expr)
-     )
-			 
+    ((_ (var1 ...) expr) ;;(begin
+			   (define-values (var1 ...) expr)
+			   )
+    ;;)
+			   ;;(values var1 ...)))
     ;; (begin
     ;;   (define var1 '())
     ;;   ...
@@ -85,14 +136,20 @@
     ;; > (list x y z u v w a b c)
     ;; '(2 4 5 2 4 5 2 4 5)
     ((_ (var10 ...) (var11 ...) ... expr) (begin  ;; i do not do what the syntax says (assignation not in the good order) but it gives the same result 
-					    (define-values (var10 ...) expr)
-					    (define-values (var11 ...) (values var10 ...))
-					    ...
+    					    (define-values (var10 ...) expr)
+    					    (define-values (var11 ...) (values var10 ...))
+    					    ...
 					    ))
-					   
+    					    ;;(values var10 ...)))
     
-    ((_ var expr) (define var expr))
-		  
+   			    
+
+    
+    ((_ var expr)
+     ;; (begin
+     ;;   (define var expr)
+     ;;   var))
+     (define var expr))
     
      ;; > { y <+ z <+ 7 }
      ;; 7
@@ -112,7 +169,11 @@
 			      ))
     
      ))
-		 			
+
+
+
+
+
 
 (define-syntax ⥆
   (syntax-rules ()
@@ -121,18 +182,10 @@
 
 
 
-;; scheme@(guile-user)> {x :+ 7}
-;; scheme@(guile-user)> x
-;; $1 = 7
-;; scheme@(guile-user)> {x := "hello"}
-;; scheme@(guile-user)> x
-;; $2 = "hello"
-
 (define-syntax :+
   (syntax-rules ()
 
     ((_ var ...) (<+ var ...))))
-
 
 
 
@@ -149,8 +202,7 @@
 (define-syntax +:
   (syntax-rules ()
 
-    ((_ exp var ...) (<+ var ... exp))))
-
+    ((_ exp var ...) (<+ var ... exp)))) 
 
    
 ;; > {(values 2 4 5) ⥅ (x y z) ⥅ (u v w) ⥅ (a b c)} 
@@ -159,7 +211,25 @@
 ;; 5
 ;; > (list x y z u v w a b c)
 ;; '(2 4 5 2 4 5 2 4 5)
+;; (define-syntax ⥅
+;;   (syntax-rules ()
+
+;;      ((_ expr ...) (+> expr ...))))
+
 (define-syntax ⥅
   (syntax-rules ()
 
-     ((_ expr ...) (+> expr ...))))
+    ((_ exp var ...) (<+ var ... exp)))) 
+
+
+
+
+(export
+	<+
+	+>
+	⥆
+	⥅
+	:+
+	+:
+	if-defined)
+

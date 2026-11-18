@@ -1,6 +1,8 @@
-; This file is part of Scheme+
+;; Translated from Scheme+ for Racket (slice.rkt) for Guile.
 
-;; Copyright 2023-2024 Damien MATTEI
+;; This file is part of Scheme+
+
+;; Copyright 2024 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -16,22 +18,21 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-;; (use-modules (slice))
+;; code from r6rs version
+
 
 (define-module (Scheme+ slice)
+  #:use-module (Scheme+ racket-compat))
 
-  ;;#:use-module ((guile))
+  
 
-  #:export (:
-	    slice
-	    equal-slice?))
 
 (define : ':)
 (define slice :)
 
-;;(define slice-syntax #':)
-
-(define (equal-slice? x)
-  (equal? x slice))
 
 
+(export
+	:
+	slice)
+ ; end library

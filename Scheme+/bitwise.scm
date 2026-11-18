@@ -1,6 +1,8 @@
+;; Translated from Scheme+ for Racket (bitwise.rkt) for Guile.
+
 ;; This file is part of Scheme+
 
-;; Copyright 2021-2024 Damien MATTEI
+;; Copyright 2024-2025 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -15,30 +17,52 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;; version 17
 
 (define-module (Scheme+ bitwise)
+  #:use-module (Scheme+ racket-compat))
 
-  #:export (<<
-	    >>
-	    &
-	    ∣
-	    ^
-	    ~))
 
+  
 
 
 (define (<< x n)
-  (ash x n))
+  (arithmetic-shift x n))
 
 (define (>> x n)
-  (ash x (- n)))
+  (arithmetic-shift x (- n)))
 
-;; definitions based on SRFI 60 ,different than R6RS ! (not available in guile 3.0)
-(define & logand) ; esuivalent of bitwise-and in R6RS
-(define ∣ logior)
-(define ^ logxor)
-(define ~ lognot)
+(define & bitwise-and)
+(define ∣ bitwise-ior) ;; this is U+2223  because vertical line is reserved in Racket
+(define ^ bitwise-xor)
 
-;;(define | logior)  ;; this pipe is weird
+(define ~ bitwise-not) 
+
+
+
+(export
+	<<
+	>>
+	&
+	∣
+	^
+	~)
+ ; end library
+
+;; > {1 & 1 ^ 1 ∣ (~ 1)}
+;; (∣ (^ (& 1 1) 1) (~ 1))
+;; -2
+
+
+;; > (~ 1)
+
+
+;; (~ 1)
+;; -2
+
+
+;; > (bitwise-not 1)
+
+
+;; (bitwise-not 1)
+;; -2
 

@@ -1,3 +1,7 @@
+;; Translated from Scheme+ for Racket (map-nested.rkt) for Guile.
+
+;; map on nested lists
+
 ;; This file is part of Scheme+
 
 ;; Copyright 2025 Damien MATTEI
@@ -15,16 +19,35 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+
+
 (define-module (Scheme+ map-nested)
+  #:use-module (Scheme+ racket-compat))
 
-  #:export (map-nested))
 
-;; (map-nested sin '(0.1 0.2 (0.3) 0.4))
-;; '(0.09983341664682815 0.19866933079506122 (0.29552020666133955) 0.3894183423086505)
+	
 
-(define (map-nested f L)
 
-  (if (list? L)
+  ;; (map-nested sin '(0.1 0.2 (0.3) 0.4))
+  ;; '(0.09983341664682815 0.19866933079506122 (0.29552020666133955) 0.3894183423086505)
+
+  (define (map-nested f L)
+
+    (if (list? L)
       (map (lambda (x) (map-nested f x))
 	   L)
       (f L)))
+
+  (define (map-nested-pair f s)
+
+    (cond ((null? s) s)
+	  ((pair? s) (cons (map-nested-pair f (car s))
+			   (map-nested-pair f (cdr s))))
+	  (else (f s))))      
+
+
+
+(export
+	map-nested
+	map-nested-pair)
+ 

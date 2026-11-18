@@ -1,3 +1,5 @@
+;; Translated from Scheme+ for Racket (in-equalities.rkt) for Guile.
+
 ;; This file is part of Scheme+
 
 ;; Copyright 2025 Damien MATTEI
@@ -15,27 +17,20 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;; version 17
-
-
 (define-module (Scheme+ in-equalities)
+  #:use-module (Scheme+ racket-compat))
 
- 
 
-  #:use-module (Scheme+ alternating-parameters)
-  #:use-module (Scheme+ operators)
-  #:use-module (Scheme+ insert)
-  #:use-module (Scheme+ def-function)
-  #:use-module (Scheme+ list)
-  #:use-module (Scheme+ conjunction)
-  
-  #:export ( in-equality?
-	     multiple-in-equalities?
-	     infix->prefix-in-equality
-	     infix->prefix-in-equality-runtime
-	     in/equalities-state-1)
+	
 
-  ) ;; end module declaration
+	(use-modules
+	(Scheme+ alternating-parameters)
+	(Scheme+ operators)
+	(Scheme+ insert)
+	(Scheme+ def-function)
+	(Scheme+ list)
+	(Scheme+ conjunction))
+
 
 	;; this module implements a FSM (Finite State Machine) described in the file in-equality (.odg)
 
@@ -75,13 +70,71 @@
   ;; '(and (< x 3) (< 3 y) (<= y z))
   (define (infix->prefix-in-equality x) ; multiple in/equalities in infix expression, ex: (x < 3 < y <= z)
 
-    (cons 'and (get-in-equalities x)))
+    #;(cons 'and (get-in-equalities x))
+    (chained-comparisons (car x) (cdr x) list))
+
+
+  ;; an operand evaluated in two comparisons must be evaluated once , as in Python : a variable or a constant can be
+  ;; written twice , an other expression is put in a variable. The operands are data or syntax objects.
+  (define (simple-operand? e)
+    (let ((d (if (syntax? e) (syntax-e e) e)))
+      (or (symbol? d) (number? d) (string? d) (boolean? d) (char? d))))
+
+  ;; first : the first operand , rest : (op operand op operand ...) , make : (make op left right) builds a comparison
+  ;; (chained-comparisons 'x '(< 3 < y <= z) list) = (and (< x 3) (< 3 y) (<= y z))
+  ;; {0 < f() <= 3} : (let (($chain-operand-1$ (f))) (and (< 0 $chain-operand-1$) (<= $chain-operand-1$ 3)))
+  ;; the operands are evaluated from left to right , and those after a false comparison are not evaluated
+  (define (chained-comparisons first rest make)
+
+    (define (operand-variable n)
+      (string->symbol (string-append "$chain-operand-" (number->string n) "$")))
+
+    (define (conjunction clauses)
+      (if (null? (cdr clauses))
+	  (car clauses)
+	  (cons 'and clauses)))
+
+    ;; the conjuncts of the comparisons of left with rest = (op right ...)
+    (define (clauses left rest n)
+      (let ((op (car rest))
+	    (right (cadr rest))
+	    (more (cddr rest)))
+	(cond ((null? more) ; the last operand is evaluated once
+	       (list (make op left right)))
+	      ((simple-operand? right)
+	       (cons (make op left right)
+		     (clauses right more n)))
+	      (else
+	       (let ((v (operand-variable n)))
+		 (list (list 'let (list (list v right))
+			     (conjunction (cons (make op left v)
+						(clauses v more (+ n 1)))))))))))
+
+    (if (or (simple-operand? first) ; nothing to evaluate before the next operand
+	    (null? (cddr rest))
+	    (simple-operand? (cadr rest)))
+	(conjunction (clauses first rest 1))
+	(let ((v (operand-variable 0))) ; the first operand stays evaluated before the second one
+	  (list 'let (list (list v first))
+		(conjunction (clauses v rest 1))))))
 
   (define (infix->prefix-in-equality-runtime x) ; multiple in/equalities in infix expression, ex: (x < 3 < y <= z)
 
     (cons && (get-in-equalities x)))
 
-  
+
+  ;; operators with a lower precedence than the in/equalities (see infix-operators-lst-for-parser in operators-list.rkt) :
+  ;; they end an in/equality expression
+  ;; not only and/or but also the assignment and definition operators, otherwise :
+  ;; (b := 1 < 2 < 3) was grouped as ((b := 1) < 2 < 3) and (1 < 2 < 3 =: b) as (1 < 2 < (3 =: b))
+  ;; now : (b := (1 < 2 < 3)) and ((1 < 2 < 3) =: b)
+  (define (lower-precedence-than-in/equalities? f)
+    (or (LOGIC-N-ARY-op? f) ; and , or
+	(FLOW-op? f) ; ~>
+	(ASSIGNMENT-op? f) ; <- , := , ...
+	(DEFINE-op? f))) ; <+ , ...
+
+
 
   ;; we have to deal with something like that
   ;; (1 + d < x - xw < 7 and 0 < y - yw < 5)
@@ -129,8 +182,8 @@
 					 result-lst
 					 (insert-tail possible-result-lst f)))
 
-	  ;; and / or
-	  ((LOGIC-N-ARY-op? f) (not-N-ary-in/equality r
+	  ;; and / or , and the other operators with a lower precedence : ~> , assignment , definition
+	  ((lower-precedence-than-in/equalities? f) (not-N-ary-in/equality r
 						      '() ; inner list , drop the results because it is not in/equalities
 						      '() ; outer list
 						      result-lst
@@ -192,8 +245,8 @@
 				      result-lst
 				      (insert-tail possible-result-lst f)))
 	  
-	  ;; and / or
-	  ((LOGIC-N-ARY-op? f) (not-N-ary-in/equality r
+	  ;; and / or , and the other operators with a lower precedence : ~> , assignment , definition
+	  ((lower-precedence-than-in/equalities? f) (not-N-ary-in/equality r
 						      '() ; inner list , drop the results because it is not in/equalities
 						      '() ; outer list
 						      result-lst
@@ -250,8 +303,8 @@
 				      result-lst
 				      (insert-tail possible-result-lst f)))
 
-	  ;; and / or
-	  ((LOGIC-N-ARY-op? f)
+	  ;; and / or , and the other operators with a lower precedence : ~> , assignment , definition
+	  ((lower-precedence-than-in/equalities? f)
 	   
 	   ;; things to do with expressions:
 	   ;;(display "state-3 outer-lst =") (display outer-lst)  (newline)
@@ -275,7 +328,16 @@
 				      (insert-tail possible-result-lst f)))))
 
   
- 
+  
+
+(export
+	in-equality?
+	multiple-in-equalities?
+	infix->prefix-in-equality
+	infix->prefix-in-equality-runtime
+	chained-comparisons
+	in/equalities-state-1)
+ ; end module
 
 
 ;; (in/equalities-state-1 '(x + 2 < 3 and a + 1 < 3 * b <= c - 1 < d + 2)  '() '() '()  '())

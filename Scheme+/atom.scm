@@ -1,3 +1,5 @@
+;; Translated from Scheme+ for Racket (atom.rkt) for Guile.
+
 ;; This file is part of Scheme+
 
 ;; Copyright 2024-2025 Damien MATTEI
@@ -15,19 +17,20 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;; version 17
 
 (define-module (Scheme+ atom)
+  #:use-module (Scheme+ racket-compat))
 
- 
-  #:export (atom? atom)
+  
 
-  ) ; end module declaration
-
-
-(define (atom x) ; near Lisp definition (allow '() but do not allow pairs that are not lists
+  (define (atom x) ; near Lisp definition (allow '() but do not allow pairs that are not lists
     (not (pair? x)))
 
-(define (atom? x) ; as atom in Lisp but allow pairs that are not lists but do not allow '()
+  (define (atom? x) ; as atom in Lisp but allow pairs that are not lists but do not allow '()
     (and (not (list? x))
 	 (not (null? x))))
+
+(export
+	atom?
+	atom)
+

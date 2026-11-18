@@ -10,21 +10,19 @@
 ; use MacVim to show ALL the characters of this file (not Emacs, not Aquamacs)
 ; jeu de couleurs: Torte ou Koehler
 
-; fastest way: (load "exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile+.scm")
+; how to run it (Scheme+ for Guile 20.2) , in the directory examples/ of Scheme+ for Guile :
+;   make
+;     parses the Scheme+ files of the directory , this program and the module (matrix+) of matrix+.scm ,
+;     in parsed_files_directory/
+;   guile -L parsed_files_directory -L .. parsed_files_directory/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile+.scm
+;     -L parsed_files_directory : the parsed module (matrix+) ; -L .. : the Scheme+ of this repository , before an older
+;     version installed in the site directory of Guile
+; NOT and XOR : about 3 s , SINE : about 1 min 30 s (with the type annotation , Guile 3.0.9 , 2026)
 
-
-; in case of problem: rm -rf .cache/guile/
-
-#|  note: this file can run in two ways:
-          - directly loaded in Guile
-	  - parsed and loaded
-|#
-
-; modify file to force re-compilation with Guile    
+; after an update of Scheme+ : make clean , and rm -rf ~/.cache/guile/
 
 (use-modules (Scheme+)
 	     (matrix+)
-	     ;(srfi srfi-42) ; import all definitions
              ((srfi srfi-42) 
 		#:renamer (lambda (sym) ; this avoid conflict with scheme+ slicing symbol
                               (if (eq? sym ':)
@@ -37,11 +35,22 @@
 	     (srfi srfi-43)) ; vectors
 
 
+;; the type annotation (as in the version for Racket) : with the types the parser resolves the square brackets (vector-ref ,
+;; matrix-ref ...) , the assignments of vectors and the overloads when it parses the program. In Guile the arithmetic
+;; stays generic (+ , * ...) : the flonum operations of Guile are slower.
+ANNOTATION-ON
+
+
 ;scheme@(guile-user)> {#(1 2) + #(3 4 5)}
 ;$1 = #(1 2 3 4 5)
 ;scheme@(guile-user)> {#(1 2) + #(3 4 5) + #(6 7)}
 ;$2 = #(1 2 3 4 5 6 7)
-(define-method (+ (x <vector>) (y <vector>)) (vector-append x y))
+;; the overloading of Scheme+ : + of two vectors appends them (binary overload , returns a vector)
+(overload-operator + (vector?) vector-append (vector? vector?))
+
+;; the overload of * made in the module (matrix+) , restated for the type annotation : M[i] * z_1 calls
+;; multiply-matrix-vector directly
+(require-overload-operator * (vector?) multiply-matrix-vector (matrix? vector?))
 
 ;; ; first stage overloading
 ;; (define-overload-existing-operator +)
@@ -51,30 +60,35 @@
 
 
 
-;; overload [ ] 
-(overload-square-brackets matrix-ref matrix-set!  (matrix? number? number?))
-(overload-square-brackets matrix-line-ref matrix-line-set! (matrix? number?))
+;; overload [ ] , with the type of the result for the annotation : M[i j] is a real , M[i] a vector
+(overload-square-brackets (ℝ) matrix-ref matrix-set!  (matrix? number? number?))
+(overload-square-brackets (vector?) matrix-line-ref matrix-line-set! (matrix? number?))
 
-(define (uniform-dummy dummy1 dummy2) {-1 + (random 2.0)}) 
+(define (uniform-dummy dummy1 dummy2) {-1 + (random 2.0)})
 
 ; return a random number between [inf, sup]
 (define (uniform-interval inf sup)
+  (type ℝ inf sup)
   {gap <+ sup - inf}
   {inf + (random {gap * 1.0})})
 
 ; sigmoïde
-(define (σ z̃) 
-  {1 / {1 + (exp (- z̃))}})
+(define (σ z̃)
+  (type ℝ z̃)
+  {1 / (1 + (exp (- z̃)))})
 
 ; some derivatives
 (define (der_tanh z z̃)
-  {1 - z ** 2})	
+  (type ℝ z)
+  {1 - z ** 2})
 
 (define (der_σ z z̃)
-    {z * {1 - z}})
+  (type ℝ z)
+  {z * {1 - z}})
 
 (define (der_atan z z̃)
-  {1 / {1 + z̃ ** 2}})
+  (type ℝ z̃)
+  {1 / (1 + z̃ ** 2)})
 
 
 
@@ -84,14 +98,21 @@ but will it works with all Scheme+ parser?
 
 ; modify coefficients layer
 (define (modification_des_poids M_i_o η z_input z_output z̃_output ᐁ_i_o მzⳆმz̃) ; derivative of activation function of the layer
-	 
+
+	  (type matrix? M_i_o) ; M_i_o[j {i + 1}] calls matrix-ref / matrix-set! directly
+	  (type ℝ η)
+	  (type #(ℝ) ᐁ_i_o z_input z_output z̃_output) ; vectors of reals : z_input[i] is a vector-ref
+	  (type ((ℝ) procedure? (ℝ ℝ)) მzⳆმz̃) ; the derivative : 2 reals , returns a real
+
 	  ; the length of output and input layer with coeff. used for bias update
 	  {(len_layer_output len_layer_input_plus1forBias) <+ (dim-matrix M_i_o)} ; use values and define-values to create bindings
 
 	  ;;(display "modification_des_poids ") (newline)
 	  {len_layer_input <+ len_layer_input_plus1forBias - 1}
 
+	  (type ℕ j)
 	  (for-each-in (j (in-range len_layer_output)) ; line
+		(type ℕ i)
 		(for-each-in (i (in-range len_layer_input)) ; column , parcours les colonnes de la ligne sauf le bias
 			     {M_i_o[j {i + 1}]  <-  M_i_o[j {i + 1}] + η * z_input[i] * მzⳆმz̃(z_output[j] z̃_output[j]) * ᐁ_i_o[j]})
 			      ;;(display "modification_des_poids : after M_i_o") (newline))
@@ -179,8 +200,12 @@ but will it works with all Scheme+ parser?
 
   
 (define (accepte_et_propage x nbp) ; on entre des entrées et on les propage
-  
+
+  (type vector? x)
+
   {z <+ (nbp-get-z nbp)}
+  (type vector? z {z[]}) ; a vector of vectors (z[i] : the layer i)
+  (type ℝ {z[][]}) ; of reals
 
   (when {vector-length(x) ≠ vector-length(z[0])} 
 	(display "Mauvais nombre d'entrées !") (newline)
@@ -195,10 +220,15 @@ but will it works with all Scheme+ parser?
 
   ;; hidden layers
   (declare z_1)
+  (type vector? z_1)
 
   {z̃ <+ (nbp-get-z̃ nbp)}
+  (type vector? z̃ {z̃[]})
+  (type ℝ {z̃[][]})
 
   {M <+ (nbp-get-M nbp)}
+  (type vector? M) ; M is a vector
+  (type matrix? {M[]}) ; of matrices
 
   {activation_function_hidden_layer <+ (nbp-get-activation_function_hidden_layer nbp)}
 
@@ -211,6 +241,7 @@ but will it works with all Scheme+ parser?
 	(activation_function_output_layer z̃))
 
   (declare i) ; because the variable will be used outside the 'for' loop too
+  (type ℕ i)
 
   (for ({i <- 0} {i < n - 2} {i <- i + 1}) ; private 'for' definition as in Javascript,C,C++,Java
 
@@ -267,20 +298,35 @@ but will it works with all Scheme+ parser?
 
 
 (define (apprentissage Lexemples nbp) ; apprentissage des poids par une liste d'exemples
-  
+
+  (type vector? Lexemples)
+
   {ip <+ 0} ; numéro de l'exemple courant
+  (type ℕ ip)
 
   {z <+ (nbp-get-z nbp)}
+  (type vector? z {z[]})
+  (type ℝ {z[][]})
   {z̃ <+ (nbp-get-z̃ nbp)}
+  (type vector? z̃ {z̃[]})
+  (type ℝ {z̃[][]})
   {M <+ (nbp-get-M nbp)}
+  (type vector? M)
+  (type matrix? {M[]}) ; M[i][k {j + 1}] calls matrix-ref directly
   {ᐁ <+ (nbp-get-ᐁ nbp)}
+  (type vector? ᐁ {ᐁ[]}) ; a vector of vectors
+  (type ℝ {ᐁ[][]}) ; of reals
   {activation_function_output_layer_derivative <+ (nbp-get-activation_function_output_layer_derivative nbp)}
   {activation_function_hidden_layer_derivative <+ (nbp-get-activation_function_hidden_layer_derivative nbp)}
   {ηₛ <+ (nbp-get-ηₛ nbp)}
+  (type ℝ ηₛ)
   {nbiter <+ (nbp-get-nbiter nbp)}
+  (type ℕ nbiter)
 
 
   (declare x y)
+  (type vector? x y)
+  (type ℕ it)
   (for-each-in (it (in-range nbiter)) ; le nombre d'itérations est fixé !
 		 (when {it % 1000 = 0}
 		       (display it)(newline))
@@ -299,6 +345,7 @@ but will it works with all Scheme+ parser?
 		 ;; RETRO_PROPAGATION VERS L'ARRIERE, EN DEUX TEMPS
 
 		 {i <+ i_output_layer <+ vector-length(z) - 1} ; start at index i of the ouput layer
+		 (type ℕ i k)
 
 		 {ns <+ vector-length(z[i])}
 		 
@@ -320,6 +367,7 @@ but will it works with all Scheme+ parser?
 		 ;; modification des poids de la matrice de transition de la derniére couche de neurones cachés à la couche de sortie
 
 		 {მzⳆმz̃ <+ activation_function_output_layer_derivative}
+		 (type ((ℝ) procedure? (ℝ ℝ)) მzⳆმz̃) ; the derivative : 2 reals , returns a real
 
 		 {modification_des_poids(M[i - 1] ηₛ z[i - 1] z[i] z̃[i] ᐁ[i] მzⳆმz̃)}
 
@@ -332,8 +380,9 @@ but will it works with all Scheme+ parser?
 		 (for-each-in (i (reversed (in-range 1 i_output_layer)))
 				{nc <+ vector-length(z[i])}
 				{ns <+ vector-length(z[i + 1])}
+				(type ℕ j)
 				(for-each-in (j (in-range nc))
-					     {ᐁ[i][j] <- 0}
+					     {ᐁ[i][j] <- 0.0}
 					     (for-each-in (k (in-range ns))
 						{ᐁ[i][j] <- ᐁ[i][j] + მzⳆმz̃(z[i + 1][k] z̃[i + 1][k]) * M[i][k {j + 1}] * ᐁ[i + 1][k]}))
 				;; modification des poids de la matrice de transition de la couche i-1 à i
@@ -357,11 +406,15 @@ but will it works with all Scheme+ parser?
 (define (test Lexemples nbp)
 
 	  {z <+ (nbp-get-z nbp)}
+	  (type vector? z {z[]})
+	  (type ℝ {z[][]})
 
           (display "Test des exemples :") (newline)
           {err <+ 0}
 
 	  (declare entree sortie_attendue ᐁ)
+	  (type vector? sortie_attendue)
+	  (type ℝ ᐁ)
 	  (for-each-in (entree-sortie_attendue (vector->list Lexemples))
 		       
 		{entree <- (car entree-sortie_attendue)} 

@@ -19,7 +19,7 @@
     <p style="text-align: center;"><br>
     </p>
     <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span
-          style="color: #999999;"> <font size="+2">version 9.5 for Guile Scheme<br>
+          style="color: #999999;"> <font size="+2">version 20.2 for Guile Scheme<br>
           </font></span></b></h1>
     <p style="text-align: center;">
 	Display options for viewing this documentation:<br>
@@ -35,6 +35,43 @@
    </p>
     <p><br>
     </p>
+    <h2><u>Changes of version 20.2:</u></h2>
+<p>Scheme+ for Guile is updated to the level of <a href="https://github.com/damien-mattei/Scheme-PLUS-for-Racket" target="_blank">Scheme+ for Racket</a> version 20.2 (the version number is now the one of Racket) : the modules of Scheme+ are translated from the Racket version , with the same features : infix with operator precedence (Pratt parser) , chained comparisons that evaluate a middle operand once ({0 &lt; f(x) &lt;= 3}) , superscripts , postfix , square brackets and slices , def with return , overloading , type annotation and inference (ANNOTATION-ON) , pragmas CARE-OF-QUOTES-ON / CARE-OF-QUOTES-OFF.</p>
+<p><b>The programs are converted by the parser curly-infix2prefix4guile.scm</b> , then loaded or compiled by Guile (Guile has no reader that a module can replace , as #lang reader SRFI-105 in Racket) :</p>
+<pre>
+guile -L &lt;directory of Scheme+ for Guile&gt; -e main -s curly-infix2prefix4guile.scm program+.scm &gt; program.scm
+guile -L &lt;directory of Scheme+ for Guile&gt; program.scm
+</pre>
+<p>The parser gives the same code as the parser of Racket (curly-infix2prefix4racket.rkt) , checked on 44 programs of Scheme+ , with the differences of Guile below.</p>
+<p><b>Differences with Scheme+ for Racket:</b></p>
+<ul>
+<li><b>&lt;- and := only assign</b> (set!) , they never define a variable : a variable is defined with <b>&lt;+</b> (or define , declare). In Racket := and &lt;- define a name not yet bound. The parser writes a warning on stderr for an assignment to a name defined nowhere in the program.</li>
+<li><b>The type annotation</b> infers the types , resolves the overloads , the square brackets and the assignments of vectors at conversion time (2 to 5 times faster on the benchmarks) , but writes the generic operations of Guile (+ , * , &lt; ...) instead of fl+ , fx* ... : in Guile the operations of (rnrs arithmetic flonums) and (rnrs arithmetic fixnums) check their arguments and are not compiled inline , the annotated code was 5 to 11 times slower with them.</li>
+<li>The procedures known by the infix parser (a procedure is not an operand) are those of the module (guile) , not those of racket/base : for example string-split is a procedure in Guile.</li>
+<li>The overloaded operator gets its original from the current binding of its name , or from a Guile module given by its name : (overload-procedure first (srfi srfi-1) vector-first (vector?)).</li>
+<li>No source locations (the converted file is a new file) , no exact complex numbers in Guile (0+2i is read 0.0+2.0i).</li>
+<li>A datum comment #;(...) at the top level of a file is removed by the parser.</li>
+</ul>
+<p><b>The overloading</b> keeps the mechanism of the previous versions for Guile (the overloaded operator is a closure that keeps the original one) with the interface of Racket : overload-operator (1 predicate : n-ary , 2 predicates : binary) , overload-unary-operator , overload-procedure , overload-square-brackets , with the optional list of the return types. The names of the previous versions are kept.</p>
+<p><b>Sweet-expressions (SRFI 110):</b> a program can be written with the indentation instead of the parenthesis , as with <a href="https://github.com/damien-mattei/SRFI-110-for-Racket" target="_blank">SRFI 110 for Racket</a> (its reader is translated for Guile : SRFI-110/kernel.scm) , with the curly infix and all of Scheme+. It is converted by the parser sweet-infix2prefix4guile.scm :</p>
+<pre>
+guile -L &lt;directory of Scheme+ for Guile&gt; -e main -s sweet-infix2prefix4guile.scm program-sweet+.scm &gt; program.scm
+</pre>
+<p>Example (examples/example-sweet+.scm) :</p>
+<pre>
+use-modules (Scheme+)
+
+define (fib n)
+  if {n &lt; 2}
+    n
+    {fib{n - 1} + fib{n - 2}}
+
+display fib(25)
+</pre>
+<p>is <code>(use-modules (Scheme+)) (define (fib n) (if (&lt; n 2) n (+ (fib (- n 1)) (fib (- n 2))))) (display (fib 25))</code>. An empty line ends an expression. As specified by SRFI 110 , a directive written alone at the beginning of a line changes the reading from the next datum : <code>#!curly-infix</code> reads the rest of the file with the rules of SRFI 105 , <code>#!sweet</code> goes back to the sweet-expressions , <code>#!no-sweet</code> reads with the read of Guile. A file written with parenthesis gives the same forms as with curly-infix2prefix4guile.scm , except two forms glued without a space : in sweet-expressions <code>(display x)(newline)</code> is the call <code>((display x) newline)</code>. The parser gives the same code as the one of SRFI 110 for Racket , checked on 9 programs. The Makefile of examples/ converts the files named *-sweet+.scm with this parser , the other ones with curly-infix2prefix4guile.scm.</p>
+<p><b>After an update of Scheme+ , remove the compiled files of Guile</b> (rm -rf ~/.cache/guile) : Guile does not recompile a module when a module it imports has changed.</p>
+<p><b>Tests:</b> tests/run-tests.sh (693 checks , the tests of Scheme+ for Racket and of SRFI 110 for Racket written with SRFI 64 , and the test suite of the sweet-expression reader of the <a href="https://sourceforge.net/p/readable/code" target="_blank">Readable project</a> : the 456 tests pass in the strict SRFI 105 mode).</p>
+<br>
     <h2><u>1. Scheme+ at a glance:&nbsp;</u></h2>
     <p><b>Scheme+ is an extension of the syntax of the <a href="https://en.wikipedia.org/wiki/Scheme_%28programming_language%29"
           target="_blank">Scheme</a> language.</b><br>
@@ -472,18 +509,15 @@ content="text/html; charset=utf-8">Basic hash tables
 </pre>
 <br>
 <br>
-Note that infix programs needs to include the #!curly-infix statement if you have not configured your guile init file for curly infix.
+Programs are parsed by curly-infix2prefix4guile.scm (infix with operator precedence , square brackets , type annotation ...) :
 <br>
-<br>
-<br><del>Programs now needs to be parsed due to the use of optimization
-schemes, for parsing do:
-
 <pre>
 
-curly-infix2prefix4guile.scm your_scheme_file_in_scheme+.scm > your_scheme_file_in_scheme.scm
+guile -L &lt;directory of Scheme+ for Guile&gt; -e main -s curly-infix2prefix4guile.scm your_scheme_file_in_scheme+.scm &gt; your_scheme_file_in_scheme.scm
 
 </pre>
-</del>
+Short infix expressions also work at the REPL with the curly infix reader of Guile (#!curly-infix , or (read-enable 'curly-infix) in your guile init file) and the macros of Scheme+ , without the type annotation.
+<br>
 
 ![Scheme+ schema](schema-scheme+.jpg "Scheme+ schema")
 
@@ -533,9 +567,9 @@ curly-infix2prefix4guile.scm your_scheme_file_in_scheme+.scm > your_scheme_file_
         title="Guile Scheme" alt="Guile Scheme web site" width="156" height="76"
         border="0"></a><br>
     <br>
-    <p>This version needs Guile Scheme version 3. It has been developed with
-      Guile 3.0.7 on <b>Mac</b><font color="#9999ff"><b> </b><b>OS</b></font>
-      and Guile 3.0.1 under <b>Linux</b>.<br>
+    <p>This version needs Guile Scheme version 3. Version 20.2 has been developed and tested with Guile 3.0.9 under <b>Linux</b>
+      (the previous versions with Guile 3.0.7 on <b>Mac</b><font color="#9999ff"><b> </b><b>OS</b></font>
+      and Guile 3.0.1 under <b>Linux</b>).<br>
       <br>
       <br>
     </p>
@@ -610,8 +644,15 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p><br>
     </p>
     <h2>5.<u>Installation:</u></h2>
-    <p>documented here: <a href="https://www.gnu.org/software/guile/manual/html_node/Installing-Site-Packages.html"
+    <p>Scheme+ for Guile is the file Scheme+.scm and the directories Scheme+/ and SRFI-105/ (the reader and the type annotation used by the parser). Either give their directory to Guile :</p>
+<pre>
+guile -L &lt;directory of Scheme+ for Guile&gt; ...
+export GUILE_LOAD_PATH=&lt;directory of Scheme+ for Guile&gt;:$GUILE_LOAD_PATH
+</pre>
+    <p>or copy them in the site directory of Guile , as documented here: <a href="https://www.gnu.org/software/guile/manual/html_node/Installing-Site-Packages.html"
         target="_blank">https://www.gnu.org/software/guile/manual/html_node/Installing-Site-Packages.html</a></p>
+    <p>After an update of Scheme+ remove the compiled files of Guile : rm -rf ~/.cache/guile</p>
+    <p>Run the tests : tests/run-tests.sh</p>
 		<br>
 <h2><u>6. Idea and rationale:</u></h2>
     <p>The core language of <a href="https://en.wikipedia.org/wiki/Scheme_%28programming_language%29"

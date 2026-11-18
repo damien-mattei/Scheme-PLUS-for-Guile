@@ -1,6 +1,8 @@
+;; Translated from Scheme+ for Racket (disjunction.rkt) for Guile.
+
 ;; This file is part of Scheme+
 
-;; Copyright 2025 Damien MATTEI
+;; Copyright 2023-2025 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -15,15 +17,22 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-; version 17
 
 (define-module (Scheme+ disjunction)
+  #:use-module (Scheme+ racket-compat))
 
-  #:export (||))
 
-(define (|| f . r)
-  
-  (cond ((null? r) f)
-	(f #t)
-	(else
-	 (apply || r))))
+	  ; this symbol is probably composed by other than | which is a reserved char in Racket, do not trust the apparence !
+
+	(define (∣∣ f . r) ; there exist many vertical pipe in the charset !
+	     
+	   (cond ((null? r) f)
+		 (f #t)
+		 (else
+		  (apply ∣∣ r))))
+
+
+
+(export
+	∣∣)
+ ;  end library

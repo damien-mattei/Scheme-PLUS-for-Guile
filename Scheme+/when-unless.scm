@@ -1,7 +1,8 @@
+;; Translated from Scheme+ for Racket (when-unless.rkt) for Guile.
 
 ;; This file is part of Scheme+
 
-;; Copyright 2021-2024 Damien MATTEI
+;; Copyright 2024 Damien MATTEI
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -18,27 +19,40 @@
 
 
 (define-module (Scheme+ when-unless)
+  #:use-module (Scheme+ racket-compat))
 
-  #:export (when
-	    unless))
+  
+
 
 
 
 ;; definitions redefined here only to allow 'define in body as allowed in Scheme+
-(define-syntax when
-  (syntax-rules ()
-    ;;((when test result1 result2 ...)
-    ((when test result1  ...)
-     (cond (test
-         ;;(begin result1 result2 ...)))))
-	 ;;(let () result1 result2 ...)))))
-	 (let () result1 ...))))))
 
+;; implémenté de base en Racket
+;; (define-syntax when
+;;   (syntax-rules ()
+;;     ;;((when test result1 result2 ...)
+;;     ((when test result1  ...)
+;;      (if test
+;;          ;;(begin result1 result2 ...)))))
+;; 	 ;;(let () result1 result2 ...)))))
+;; 	 (let () result1 ...)))))
+
+;; deprecated ,seems to exist already now in Racket
 (define-syntax unless
   (syntax-rules ()
     ;;((unless test result1 result2 ...)
     ((unless test result1 ...)
-     (cond ((not test)
-         ;;(begin result1 result2 ...)))))
-	 ;;(let () result1 result2 ...)))))
-	 (let () result1 ...))))))
+     (when (not test)
+       	 ;;(let () result1 result2 ...)))))
+	   result1 ...))))
+
+
+
+
+
+(eval-when (expand load eval)
+  (module-replace! (current-module) '(unless)))
+ ; end library
+
+
