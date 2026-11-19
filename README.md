@@ -624,7 +624,7 @@ style="color: #fb660a">%load-path</span><span style="color: #ffffff">))))</span>
     <p><br>
     </p>
     <h2>5.<u>Installation:</u></h2>
-    <p>Scheme+ for Guile is the file Scheme+.scm and the directories Scheme+/ , SRFI-105/ (the reader and the type annotation used by the parser) and SRFI-110/ (the reader of the sweet-expressions). Either give their directory to Guile :</p>
+    <p>Scheme+ for Guile is the file Scheme+.scm and the directories Scheme+/ , SRFI-105/ (the reader and the type annotation used by the parser ; the type annotation SRFI-105/annot+.scm is generated from its source written in Scheme+ , SRFI-105/bootstrapping/annot+.scm : make , then make install in SRFI-105/bootstrapping/) and SRFI-110/ (the reader of the sweet-expressions). Either give their directory to Guile :</p>
 <pre>
 guile -L &lt;directory of Scheme+ for Guile&gt; ...
 export GUILE_LOAD_PATH=&lt;directory of Scheme+ for Guile&gt;:$GUILE_LOAD_PATH
