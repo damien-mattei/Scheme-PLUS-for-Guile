@@ -19,7 +19,7 @@
     <p style="text-align: center;"><br>
     </p>
     <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span
-          style="color: #999999;"> <font size="+2">version 20.3 for Guile Scheme<br>
+          style="color: #999999;"> <font size="+2">version 20.4 for Guile Scheme<br>
           </font></span></b></h1>
     <p><br>
     </p>
@@ -27,6 +27,8 @@
     <a href="https://docs.racket-lang.org/Scheme-PLUS-for-Racket/index.html" target="_blank">documentation of Scheme+ for Racket</a>.
     The differences with the Racket version are listed in the changes of version 20.2 below (mainly : &lt;- and := only assign , a variable is
     defined with &lt;+ , and the programs are converted by a parser before Guile loads or compiles them).</p>
+    <h2><u>Changes of version 20.4:</u></h2>
+<p>The back propagation neural network example (examples/exo_retropropagationNhidden_layers_matrix_v2_by_vectors4guile+.scm) : the index of the weights update is written with parenthesis in the square brackets , M_i_o[j (i + 1)] (the parser gives the same code as with M_i_o[j {i + 1}]).</p>
     <h2><u>Changes of version 20.3:</u></h2>
 <p>The type annotation of the parser is written in Scheme+ (curly infix) , as in Scheme+ for Racket : its source SRFI-105/bootstrapping/annot+.scm (translated from the one of SRFI 105 for Racket) is converted by the parser of Guile into SRFI-105/annot+.scm (bootstrapping : make , then make install in SRFI-105/bootstrapping/ ; the module generated is the same as the one of version 20.2).</p>
 <p>The documentation of this page is updated to version 20.2 and refers to the documentation of Scheme+ for Racket (the API is almost identical) ; the references to the old HTML pages are removed.</p>
@@ -550,7 +552,7 @@ Short infix expressions also work at the REPL with the curly infix reader of Gui
         title="Guile Scheme" alt="Guile Scheme web site" width="156" height="76"
         border="0"></a><br>
     <br>
-    <p>This version needs Guile Scheme version 3. Version 20.3 has been developed and tested with Guile 3.0.9 under <b>Linux</b>
+    <p>This version needs Guile Scheme version 3. Version 20.4 has been developed and tested with Guile 3.0.9 under <b>Linux</b>
       (the previous versions with Guile 3.0.7 on <b>Mac</b><font color="#9999ff"><b> </b><b>OS</b></font>
       and Guile 3.0.1 under <b>Linux</b>).<br>
       <br>

@@ -106,7 +106,7 @@ but will it works with all Scheme+ parser?
 	  (for-each-in (j (in-range len_layer_output)) ; line
 		(type ℕ i)
 		(for-each-in (i (in-range len_layer_input)) ; column , parcours les colonnes de la ligne sauf le bias
-			     {M_i_o[j {i + 1}]  <-  M_i_o[j {i + 1}] + η * z_input[i] * მzⳆმz̃(z_output[j] z̃_output[j]) * ᐁ_i_o[j]})
+			     {M_i_o[j (i + 1)]  <-  M_i_o[j (i + 1)] + η * z_input[i] * მzⳆმz̃(z_output[j] z̃_output[j]) * ᐁ_i_o[j]})
 			      ;;(display "modification_des_poids : after M_i_o") (newline))
 
 		; and update the bias
