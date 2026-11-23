@@ -44,7 +44,7 @@
 
 
 (define version "17.2") ; the version of SRFI 105 for Racket that this parser follows
-(define scheme+-version "20.4")
+(define scheme+-version "20.5")
 
 (define stderr (current-error-port))
 (define stdout (current-output-port))
@@ -60,7 +60,7 @@
   (let loop ((acc '()))
     (define result (curly-infix-read in src))
     (cond ((eof-object? result) (reverse acc))
-	  ((read-was-a-datum-comment?) (loop acc)) ; #;<datum> at the top level : dropped (curly-infix2prefix4racket keeps it)
+	  ((read-was-a-datum-comment?) (loop acc)) ; #;<datum> at the top level : dropped (as by SRFI 105 for Racket since its version 17.3)
 	  ((begin
 	     (process-annotation-pragma result)
 	     (or (process-strict-pragma result) ; BEGIN-STRICT-SRFI-105-REGION / END-STRICT-SRFI-105-REGION

@@ -1290,9 +1290,19 @@
 		; comments the next line (or the indented block) , #;datum the next datum
 		((char=? c #\;)
 		 (if in-list
-		     (let ((comy (no-indent-read port))) ; commented expression
+		     #;(let ((comy (no-indent-read port))) ; commented expression
 		       (set! comment #t)
 		       (list 'normal comy)) ; must be returned but will be dropped later
+		     ; #;#; a b comments two datums (as in Racket) : when the datum read is itself commented by a #; (the
+		     ; flag comment is set) , it is dropped and this #; comments the next datum
+		     (let loop ()
+		       (set! comment #f)
+		       (let ((comy (no-indent-read port))) ; commented expression
+			 (if comment
+			     (loop) ; the datum read was #;datum : read the datum that this #; comments
+			     (begin
+			       (set! comment #t)
+			       (list 'normal comy))))) ; must be returned but will be dropped later
 		     (if (memv (my-peek-char port)
 			       `(#\space #\tab ,linefeed ,carriage-return))
 			 '(datum-commentw ())

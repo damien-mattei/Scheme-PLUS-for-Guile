@@ -1387,13 +1387,24 @@
             ;; (cons 1 2 #;(foo bar))
             ;; (cons 1 2)
             ;;'(1 . 2)
-	    ((char=? c #\;) ;(read-error "SRFI-105 REPL : Unsupported #; extension"))
+	    #;((char=? c #\;) ;(read-error "SRFI-105 REPL : Unsupported #; extension"))
              (let ((comy (my-read port))) ; commented expression
                (set! comment #t)
                comy) ; must be returned but will be dropped later
              ;(read-error "debug #; "
                      ;(my-read port)
              );)
+            ; #;#; a b comments two datums (as in Racket) : when the datum read is itself commented by a #; (the flag
+            ; comment is set) , it is dropped and this #; comments the next datum
+	    ((char=? c #\;)
+             (let loop ()
+               (set! comment #f)
+               (let ((comy (my-read port))) ; commented expression
+                 (if comment
+                     (loop) ; the datum read was #;datum : read the datum that this #; comments
+                     (begin
+                       (set! comment #t)
+                       comy))))) ; must be returned but will be dropped later
 
             
 	    ;; this remove #lang racket on anything else but i do not want it to be like that

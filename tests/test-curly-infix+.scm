@@ -1543,6 +1543,13 @@
   (check-equal? (p47-g-positive 2 3) 9)
   (check-equal? (p47-g-literal 2) 9)
 
+  ;; 48. Datum comments : #;#; comments two datums , #;#;#; three (as in Racket) , the commented datums can be the last
+  ;;     elements of the list (before the closing parenthesis)
+  (check-equal? (list 1 #;#;2 3 4) '(1 4))
+  (check-equal? (list 1 #;#;#;2 3 4 5) '(1 5))
+  (check-equal? (list 1 #;#;2 3) '(1))
+  (check-equal? (list 1 #;{2 + 3} 4) '(1 4))
+
   ;; If rackunit printed no FAILURE / ERROR block above, every check passed.
   (displayln "test-curly-infix+ : done")
 
