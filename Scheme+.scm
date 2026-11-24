@@ -17,7 +17,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;; version 20.5
+;; version 20.6
 
 ;; use: (use-modules (Scheme+))
 
@@ -80,7 +80,7 @@
 
 
   ;; Guile : the version of Scheme+ (in Racket it is read in info.rkt)
-  (define version "20.5")
+  (define version "20.6")
 
   (define verbose #f) ; otherwise make garbage in curly-infix2prefix4racket
   

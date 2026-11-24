@@ -19,7 +19,7 @@
     <p style="text-align: center;"><br>
     </p>
     <h1 style="text-align: center;"><b><span style="color: #000099;">Scheme+</span></b><b><span
-          style="color: #999999;"> <font size="+2">version 20.5 for Guile Scheme<br>
+          style="color: #999999;"> <font size="+2">version 20.6 for Guile Scheme<br>
           </font></span></b></h1>
     <p><br>
     </p>
@@ -27,6 +27,8 @@
     <a href="https://docs.racket-lang.org/Scheme-PLUS-for-Racket/index.html" target="_blank">documentation of Scheme+ for Racket</a>.
     The differences with the Racket version are listed in the changes of version 20.2 below (mainly : &lt;- and := only assign , a variable is
     defined with &lt;+ , and the programs are converted by a parser before Guile loads or compiles them).</p>
+    <h2><u>Changes of version 20.6:</u></h2>
+<p>The module (Scheme+ for_next_step) is renamed (Scheme+ for-next-step) , as in Scheme+ for Racket version 20.3 , the usual naming of the files. make-array-2d and display-array-2d (Scheme+ array) use the for of Scheme+ instead of the deprecated for-basic.</p>
     <h2><u>Changes of version 20.5:</u></h2>
 <p>Datum comments in a list : #;#; now comments two datums and #;#;#; three , as in Racket : (list 1 #;#;2 3 4) is (1 4) , it was (1 3 4) (the readers of SRFI 105 and SRFI 110 , as in SRFI 105 for Racket version 17.3 and SRFI 110 for Racket version 3.4). A #; at the top level of the file was already dropped by the parser. Tests : section 48 of tests/test-curly-infix+.scm.</p>
     <h2><u>Changes of version 20.4:</u></h2>
@@ -554,7 +556,7 @@ Short infix expressions also work at the REPL with the curly infix reader of Gui
         title="Guile Scheme" alt="Guile Scheme web site" width="156" height="76"
         border="0"></a><br>
     <br>
-    <p>This version needs Guile Scheme version 3. Version 20.5 has been developed and tested with Guile 3.0.9 under <b>Linux</b>
+    <p>This version needs Guile Scheme version 3. Version 20.6 has been developed and tested with Guile 3.0.9 under <b>Linux</b>
       (the previous versions with Guile 3.0.7 on <b>Mac</b><font color="#9999ff"><b> </b><b>OS</b></font>
       and Guile 3.0.1 under <b>Linux</b>).<br>
       <br>
