@@ -43,7 +43,7 @@
 	     ((Scheme+ care-of-quotes) #:select (process-care-of-quotes)))
 
 
-(define version "17.2") ; the version of SRFI 105 for Racket that this parser follows
+(define version "17.3") ; the version of SRFI 105 for Racket that this parser follows
 (define scheme+-version "20.6")
 
 (define stderr (current-error-port))
