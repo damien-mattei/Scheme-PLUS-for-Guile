@@ -33,7 +33,7 @@
 	((srfi srfi-1) #:select (first second third fourth fifth))
 	(srfi srfi-69)
 	(Scheme+ parse-square-brackets)
-	(Scheme+ for_next_step)
+	(Scheme+ for-next-step)
 	(Scheme+ array)
 	(Scheme+ slice)
 	(Scheme+ overload)

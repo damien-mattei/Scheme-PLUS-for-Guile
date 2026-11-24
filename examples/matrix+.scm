@@ -12,7 +12,7 @@
 
   #:use-module (Scheme+)
 
-  ;;#:use-module (Scheme+ for_next_step)
+  ;;#:use-module (Scheme+ for-next-step)
 
   #:use-module (Scheme+ array)
 

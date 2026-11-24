@@ -51,7 +51,7 @@
 	(Scheme+ assignment)
 	(Scheme+ nfx)
 	(Scheme+ if-then-else)
-	(Scheme+ for_next_step)
+	(Scheme+ for-next-step)
 	(Scheme+ condx)
 	(Scheme+ while-do)
 	(Scheme+ repeat-until)

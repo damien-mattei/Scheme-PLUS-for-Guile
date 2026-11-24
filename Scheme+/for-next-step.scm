@@ -1,4 +1,4 @@
-;; Translated from Scheme+ for Racket (for_next_step.rkt) for Guile.
+;; Translated from Scheme+ for Racket (for-next-step.rkt) for Guile.
 
 ;; Copyright 2022-2024 Damien MATTEI
 
@@ -20,7 +20,7 @@
 
 
 
-(define-module (Scheme+ for_next_step)
+(define-module (Scheme+ for-next-step)
   #:use-module (Scheme+ racket-compat)
   #:use-module ((system syntax) #:select (syntax-local-binding)))
 
@@ -475,7 +475,7 @@
 
 ;; Welcome to DrRacket, version 8.14 [cs].
 ;; Language: racket, with debugging; memory limit: 8192 MB.
-;; > (require Scheme+/for_next_step)
+;; > (require Scheme+/for-next-step)
 ;; > (for ((define i 0) (< i 5) (set! i (+ i 1))) (define x 7) (display i) (newline) (break i))
 ;; 0
 ;; > (for ((define i 0) (< i 5) (set! i (+ i 1))) (define x 7) (display i) (newline) (break))
@@ -520,7 +520,7 @@
 
 ;; Welcome to DrRacket, version 8.14 [cs].
 ;; Language: racket, with debugging; memory limit: 8192 MB.
-;; > (require Scheme+/for_next_step)
+;; > (require Scheme+/for-next-step)
 ;; > (define res (for ((define i 0) (< i 5) (set! i (+ i 1))) (define x 7) (display i) (newline) (when (= i 2) (break i))))
 ;; 0
 ;; 1
